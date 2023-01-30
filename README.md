@@ -1,12 +1,12 @@
 # Assignment A2: Mesh Generator
 
-  - Author #1 [email@mcmaster.ca]
-  - Author #2 [email@mcmaster.ca]
-  - Author #3 [email@mcmaster.ca]
+  - Hady Ibrahim #1 [ibrahh14@mcmaster.ca]
+  - Cyruss Amante #2 [amantec@mcmaster.ca]
+  - Richard Li #3 [li1502@mcmaster.ca]
 
 ## How to run the product
 
-_This section needs to be edited to reflect how the user can interact with thefeature released in your project_
+_This section needs to be edited to reflect how the user can interact with the feature released in your project_
 
 ### Installation instructions
 
@@ -24,6 +24,12 @@ After installation, you'll find an application named `generator.jar` in the `gen
 
 To run the generator, go to the `generator` directory, and use `java -jar` to run the product. The product takes one single argument (so far), the name of the file where the generated mesh will be stored as binary.
 
+**Ours**
+```
+cd generator
+java -jar generator.jar sample.mesh
+```
+
 ```
 mosser@azrael A2 % cd generator 
 mosser@azrael generator % java -jar generator.jar sample.mesh
@@ -35,6 +41,12 @@ mosser@azrael generator %
 ### Visualizer
 
 To visualize an existing mesh, go the the `visualizer` directory, and use `java -jar` to run the product. The product take two arguments (so far): the file containing the mesh, and the name of the file to store the visualization (as an SVG image).
+
+**Ours**
+```
+cd visualizer
+java -jar visualizer.jar ../generator/sample.mesh sample.svg
+```
 
 ```
 mosser@azrael A2 % cd visualizer 
