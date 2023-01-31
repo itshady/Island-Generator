@@ -2,6 +2,7 @@ package ca.mcmaster.cas.se2aa4.a2.generator;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.Random;
 
@@ -18,22 +19,29 @@ public class DotGen {
     private final int square_size = 20;
 
     public Mesh generate() {
-        Set<Vertex> vertices = createVertices();
+        Set<Vertex> vertices = createEmptyVertices();
         Set<Segment> segments = createSegments(vertices);
 
         // Distribute colors randomly. Vertices are immutable, need to enrich them
-        Set<Vertex> verticesWithColors = new HashSet<>();
+        Set<Vertex> verticesWithColors = new LinkedHashSet<>();
         Random bag = new Random();
+        int counter = 0;
         for(Vertex v: vertices){
-            int red = bag.nextInt(255);
-            int green = bag.nextInt(255);
-            int blue = bag.nextInt(255);
+            int red = 0;// bag.nextInt(255);
+            int green = 0;// bag.nextInt(255);
+            int blue = 0;// bag.nextInt(255);
             String colorCode = red + "," + green + "," + blue;
+            if (counter < 25) {
+                colorCode = 11+","+178+","+11;
+                System.out.println("HERE "+counter);
+            }
+            counter++;
             Property color = Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
             Vertex colored = Vertex.newBuilder(v).addProperties(color).build();
             verticesWithColors.add(colored);
         }
-        return Mesh.newBuilder().addAllVertices(verticesWithColors).build();    // .addAllSegments(segments)
+        System.out.println(verticesWithColors);
+        return Mesh.newBuilder().addAllVertices(verticesWithColors).addAllSegments(segments).build();
     }
 
     private Set<Segment> createSegments(Set<Vertex> vertices) {
@@ -48,8 +56,8 @@ public class DotGen {
         return (new HashSet<>());
     }
 
-    private Set<Vertex> createVertices() {
-        Set<Vertex> vertices = new HashSet<>();
+    private Set<Vertex> createEmptyVertices() {
+        Set<Vertex> vertices = new LinkedHashSet<>();
 
         // Create all the vertices
         for(int x = 0; x < width; x += square_size) {
