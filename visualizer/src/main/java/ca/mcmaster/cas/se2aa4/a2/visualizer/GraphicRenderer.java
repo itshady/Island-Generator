@@ -3,12 +3,14 @@ package ca.mcmaster.cas.se2aa4.a2.visualizer;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.util.List;
 
 public class GraphicRenderer {
@@ -24,9 +26,18 @@ public class GraphicRenderer {
             Color old = canvas.getColor();
             canvas.setColor(extractColor(v.getPropertiesList()));
             Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, THICKNESS, THICKNESS);
+            Ellipse2D ad = new Ellipse2D.Double();
             canvas.fill(point);
             canvas.setColor(old);
         }
+        for (int i = 0; i < aMesh.getVerticesCount()-1; i++) {
+            Color old = canvas.getColor();
+            canvas.setColor(Color.BLACK);
+            Line2D line = new Line2D.Double(aMesh.getVerticesList().get(i).getX(), aMesh.getVerticesList().get(i).getY(), aMesh.getVerticesList().get(i+1).getX(), aMesh.getVerticesList().get(i+1).getY());
+            canvas.draw(line);
+            canvas.setColor(old);
+        }
+
     }
 
     private Color extractColor(List<Property> properties) {
