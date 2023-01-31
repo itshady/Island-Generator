@@ -15,8 +15,7 @@ This product is handled by Maven, as a multi-module project. We assume here that
 To install the different tooling on your computer, simply run (while in A2):
 ```
 mvn clean install
-java -jar generator/generator.jar sample.mesh
-java -jar visualizer/visualizer.jar generator/sample.mesh visualizer/sample.svg
+make run
 ```
 
 
