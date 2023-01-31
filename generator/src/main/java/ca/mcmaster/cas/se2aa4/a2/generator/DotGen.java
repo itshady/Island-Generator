@@ -14,8 +14,8 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
 public class DotGen {
 
-    private final int width = 500;
-    private final int height = 500;
+    private final int width = 500-20;
+    private final int height = 500-20;
     private final int square_size = 20;
 
     public Mesh generate() {
@@ -31,7 +31,7 @@ public class DotGen {
             int green = 0;// bag.nextInt(255);
             int blue = 0;// bag.nextInt(255);
             String colorCode = red + "," + green + "," + blue;
-            if (counter < 25) {
+            if (counter < 53) {
                 colorCode = 11+","+178+","+11;
                 System.out.println("HERE "+counter);
             }
