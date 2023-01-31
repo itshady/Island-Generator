@@ -30,13 +30,13 @@ public class GraphicRenderer {
             canvas.fill(point);
             canvas.setColor(old);
         }
-        for (int i = 0; i < aMesh.getVerticesCount()-1; i++) {
-            Color old = canvas.getColor();
-            canvas.setColor(Color.BLACK);
-            Line2D line = new Line2D.Double(aMesh.getVerticesList().get(i).getX(), aMesh.getVerticesList().get(i).getY(), aMesh.getVerticesList().get(i+1).getX(), aMesh.getVerticesList().get(i+1).getY());
-            canvas.draw(line);
-            canvas.setColor(old);
-        }
+//        for (int i = 0; i < aMesh.getVerticesCount()-1; i++) {
+//            Color old = canvas.getColor();
+//            canvas.setColor(Color.BLACK);
+//            Line2D line = new Line2D.Double(aMesh.getVerticesList().get(i).getX(), aMesh.getVerticesList().get(i).getY(), aMesh.getVerticesList().get(i+1).getX(), aMesh.getVerticesList().get(i+1).getY());
+//            canvas.draw(line);
+//            canvas.setColor(old);
+//        }
 
     }
 
