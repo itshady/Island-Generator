@@ -19,30 +19,13 @@ public class DotGen {
     private final int square_size = 20;
 
     public Mesh generate() {
-        Set<Segment> segments = new HashSet<>();//createSegments(vertices);
-        Set<Vertex> vertices = createEmptyVertices(segments);
+        Set<Segment> segments = new HashSet<>();
+        Set<Vertex> vertices = createColorVerticesWithSegments(segments);
 
-        // Distribute colors randomly. Vertices are immutable, need to enrich them
-//        Set<Vertex> verticesWithColors = new LinkedHashSet<>();
-//        Random bag = new Random();
-//        int counter = 0;
-//        for(Vertex v: vertices){
-//            int red = 0;// bag.nextInt(255);
-//            int green = 0;// bag.nextInt(255);
-//            int blue = 0;// bag.nextInt(255);
-//            String colorCode = red + "," + green + "," + blue;
-//            if (counter < 74) {
-//                colorCode = 11+","+178+","+11;
-//                System.out.println("HERE "+counter);
-//            }
-//            counter++;
-//            Property color = Property.newBuilder().setKey("rgb_color").setValue(colorCode).build();
-//            // Property test = Property.newBuilder().setKey("hehe").setValue("123").build();
-//            Vertex colored = Vertex.newBuilder(v).addProperties(color).build();
-//            verticesWithColors.add(colored);
-//            System.out.println(colored.getPropertiesList());
-//        }
-//        System.out.println(verticesWithColors);
+
+//        Set<Vertex> vertices = createColorVertices();
+//        Set<Segment> segments = createColorSegments(vertices);
+
         return Mesh.newBuilder().addAllVertices(vertices).addAllSegments(segments).build();
     }
 
@@ -96,12 +79,12 @@ public class DotGen {
         return avgColor;
     }
 
-    private Set<Vertex> createEmptyVertices(Set<Segment> segments) {
+    private Set<Vertex> createColorVerticesWithSegments(Set<Segment> segments) {
         Set<Vertex> vertices = new LinkedHashSet<>();
 
         // Create all the vertices
-        for(int x = 0; x < width; x += square_size) {
-            for(int y = 0; y < height; y += square_size) {
+        for(int x = 0; x < width; x += square_size*2) {
+            for(int y = 0; y < height; y += square_size*2) {
                 ArrayList<String> colorCodes = generateColors(4);
 
                 Property colorTopLeft = Property.newBuilder().setKey("rgb_color").setValue(colorCodes.get(0)).build();
@@ -131,4 +114,49 @@ public class DotGen {
         return vertices;
     }
 
+    private Set<Vertex> createColorVertices() {
+        Set<Vertex> vertices = new LinkedHashSet<>();
+
+        // Create all the vertices
+        for(int x = 0; x < width; x += square_size) {
+            for(int y = 0; y < height; y += square_size) {
+                ArrayList<String> colorCodes = generateColors(1);
+                Property color = Property.newBuilder().setKey("rgb_color").setValue(colorCodes.get(0)).build();
+
+                Vertex vertex = Vertex.newBuilder().setX(x).setY(y).addProperties(color).build();
+                vertices.add(vertex);
+            }
+        }
+        return vertices;
+    }
+
+    private Set<Segment> createColorSegments(Set<Vertex> verticesSet) {
+        Vertex[] vertices = verticesSet.toArray(new Vertex[verticesSet.size()]);
+        Vertex[][] vertices2D = new Vertex[height/square_size][width/square_size];
+
+//        for (Vertex vertex : vertices) {
+//            System.out.println(vertex.getX() + ", " + vertex.getY());
+//        }
+        int outerBound = height/square_size;
+        int innerBound = width/square_size;
+        System.out.println(outerBound + ", " + innerBound);
+        for (int y = 0; y < outerBound; y++) {
+            for (int x = 0; x < innerBound; x++) {
+//                System.out.println(y +", " +x + ", " + (y+x*innerBound));
+                vertices2D[y][x] = vertices[y+x*square_size];
+//                System.out.println(vertices[y+x*square_size].getX() + ", " + vertices[y+x*square_size].getY());
+                // UP TO HERE WORKS, VERTICES AND THE LOOP, VERTICES2D DOESNT POPULATE PROPERLY THO
+            }
+        }
+        for (Vertex[] outer : vertices2D) {
+            System.out.print("[");
+            for (Vertex inner : outer) {
+                System.out.print("["+inner.getX() + "," + inner.getY()+"], ");
+            }
+            System.out.print("]");
+            System.out.println();
+        }
+
+        return new HashSet<>();
+    }
 }
