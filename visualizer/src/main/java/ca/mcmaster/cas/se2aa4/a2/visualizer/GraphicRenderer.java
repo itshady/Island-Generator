@@ -23,7 +23,7 @@ public class GraphicRenderer {
         canvas.setStroke(stroke);
         for (Segment segment : aMesh.getSegmentsList()) {
             Color old = canvas.getColor();
-            canvas.setColor(Color.BLACK);
+            canvas.setColor(extractColor(segment.getPropertiesList()));
             Line2D line = new Line2D.Double(extractV1(segment.getPropertiesList()), extractV2(segment.getPropertiesList()));
             canvas.draw(line);
             canvas.setColor(old);
@@ -84,7 +84,6 @@ public class GraphicRenderer {
         String val = null;
         for(Property p: properties) {
             if (p.getKey().equals("rgb_color")) {
-                System.out.println(p.getValue());
                 val = p.getValue();
             }
         }
