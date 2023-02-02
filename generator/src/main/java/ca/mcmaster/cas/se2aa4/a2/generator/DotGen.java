@@ -1,7 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.generator;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Stream;
@@ -12,7 +11,6 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
-import javax.swing.plaf.IconUIResource;
 
 public class DotGen {
 
@@ -85,10 +83,16 @@ public class DotGen {
         Set<Vertex> vertices = new LinkedHashSet<>();
         ArrayList<Vertex> previousVertex = new ArrayList<>();
         ArrayList<Property> previousColors = new ArrayList<>();
-        // Create all the vertices
-
+        ArrayList<Vertex> topVertex = new ArrayList<>();
+        ArrayList<Property> topColors = new ArrayList<>();
+        ArrayList<Vertex> bottomVertex = new ArrayList<>();
+        ArrayList<Property> bottomColors = new ArrayList<>();
+        int i = 0;
+        // Create all the
         for(int x = 0; x < width; x += square_size*2) {
+
             for(int y = 0; y < height; y += square_size*2) {
+
                 ArrayList<String> colorCodes = generateColors(4);
 
                 Property colorTopLeft = Property.newBuilder().setKey("rgb_color").setValue(colorCodes.get(0)).build();
@@ -97,14 +101,19 @@ public class DotGen {
                 Property colorBottomRight = Property.newBuilder().setKey("rgb_color").setValue(colorCodes.get(3)).build();
 
                 Vertex topLeft = Vertex.newBuilder().setX(x).setY(y).addProperties(colorTopLeft).build();
-                Vertex bottomLeft = Vertex.newBuilder().setX(x).setY(y+square_size).addProperties(colorBottomLeft).build();
-                Vertex topRight = Vertex.newBuilder().setX(x+square_size).setY(y).addProperties(colorTopRight).build();
-                Vertex bottomRight = Vertex.newBuilder().setX(x+square_size).setY(y+square_size).addProperties(colorBottomRight).build();
+                Vertex bottomLeft = Vertex.newBuilder().setX(x).setY(y + square_size).addProperties(colorBottomLeft).build();
+                Vertex topRight = Vertex.newBuilder().setX(x + square_size).setY(y).addProperties(colorTopRight).build();
+                Vertex bottomRight = Vertex.newBuilder().setX(x + square_size).setY(y + square_size).addProperties(colorBottomRight).build();
 
                 vertices.add(topLeft);
                 vertices.add(topRight);
                 vertices.add(bottomLeft);
                 vertices.add(bottomRight);
+
+                topVertex.add(topRight);
+                topColors.add(colorTopRight);
+                bottomVertex.add(bottomRight);
+                bottomColors.add(colorBottomRight);
 
                 Segment topLeftToTopRight = createSegment(topLeft, topRight, averageColor(colorTopLeft.getValue(), colorTopRight.getValue()));
                 Segment topLeftToBottomLeft = createSegment(topLeft, bottomLeft, averageColor(colorTopLeft.getValue(), colorBottomLeft.getValue()));
@@ -115,15 +124,24 @@ public class DotGen {
                 segments.add(bottomRightToBottomLeft);
                 segments.add(bottomRightToTopRight);
 
-                if (y > 0) {
-                    for (int k = square_size; k < height; k+= square_size*2) {
+                if (y > 0) { // vertical segments
+                    for (int k = square_size; k < height; k += square_size * 2) {
                         Segment leftSegment = createSegment(previousVertex.get(0), topRight, averageColor(previousColors.get(0).getValue(), colorTopRight.getValue()));
                         Segment rightSegment = createSegment(previousVertex.get(1), topLeft, averageColor(previousColors.get(1).getValue(), colorTopLeft.getValue()));
                         segments.add(leftSegment);
                         segments.add(rightSegment);
                     }
+
                 }
 
+                if (x > 0) { // horizontal segments
+                    Segment top = createSegment(topVertex.get(i), topLeft, averageColor(topColors.get(i).getValue(), colorTopLeft.getValue()));
+                    Segment bottom = createSegment(bottomVertex.get(i), bottomLeft, averageColor(bottomColors.get(i).getValue(), colorBottomLeft.getValue()));
+                    segments.add(top);
+                    segments.add(bottom);
+                    i++;
+
+                }
                 previousVertex.clear();
                 previousVertex.add(bottomRight);
                 previousVertex.add(bottomLeft);
@@ -132,9 +150,7 @@ public class DotGen {
                 previousColors.add(colorBottomRight);
                 previousColors.add(colorBottomLeft);
             }
-
         }
-
         return vertices;
     }
 
