@@ -10,13 +10,19 @@ public class Vertex {
     private Structs.Vertex vertex;
     private Color color;
 
-    public Vertex(int x, int y) {
+    public Vertex(Double x, Double y) {
         color = generateColors();
         Structs.Property colorProperty = setColorProperty(color);
         vertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(colorProperty).build();
     }
 
-    public Vertex(int x, int y, Color color) {
+    public Vertex(Double x, Double y, Color color) {
+        this.color = color;
+        Structs.Property colorProperty = setColorProperty(color);
+        vertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(colorProperty).build();
+    }
+
+    public Vertex(Integer x, Integer y, Color color) {
         this.color = color;
         Structs.Property colorProperty = setColorProperty(color);
         vertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(colorProperty).build();
@@ -24,6 +30,14 @@ public class Vertex {
 
     public Structs.Vertex getVertex() {
         return vertex;
+    }
+
+    public Double getX() {
+        return vertex.getX();
+    }
+
+    public Double getY() {
+        return vertex.getY();
     }
 
     public Color getColor() {

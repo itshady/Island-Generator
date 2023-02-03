@@ -34,7 +34,7 @@ public class DotGen {
         // Create all the vertices
         for(int x = 0; x < width; x += square_size) {
             for(int y = 0; y < height; y += square_size) {
-                vertices.add(new ca.mcmaster.cas.se2aa4.a2.generator.Vertex(x,y, new Color(0,0,0)));
+                vertices.add(new ca.mcmaster.cas.se2aa4.a2.generator.Vertex(x, y, new Color(0,0,0)));
             }
         }
         return vertices;
