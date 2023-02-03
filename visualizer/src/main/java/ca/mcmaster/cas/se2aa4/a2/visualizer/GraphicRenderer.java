@@ -21,13 +21,13 @@ public class GraphicRenderer {
         canvas.setColor(Color.BLACK);
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
-        for (Segment segment : aMesh.getSegmentsList()) {
-            Color old = canvas.getColor();
-            canvas.setColor(extractColor(segment.getPropertiesList()));
-            Line2D line = new Line2D.Double(extractV1(segment.getPropertiesList()), extractV2(segment.getPropertiesList()));
-            canvas.draw(line);
-            canvas.setColor(old);
-        }
+//        for (Segment segment : aMesh.getSegmentsList()) {
+//            Color old = canvas.getColor();
+//            canvas.setColor(extractColor(segment.getPropertiesList()));
+//            Line2D line = new Line2D.Double(extractV1(segment.getPropertiesList()), extractV2(segment.getPropertiesList()));
+//            canvas.draw(line);
+//            canvas.setColor(old);
+//        }
         
         for (Vertex v: aMesh.getVerticesList()) {
             double centre_x = v.getX() - (THICKNESS/2.0d);
