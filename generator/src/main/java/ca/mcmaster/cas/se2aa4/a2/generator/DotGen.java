@@ -88,18 +88,20 @@ public class DotGen {
         ArrayList<Vertex> bottomVertex = new ArrayList<>();
         ArrayList<Property> bottomColors = new ArrayList<>();
         int i = 0;
-        // Create all the
+        // Create all the vertices with segments
         for(int x = 0; x < width; x += square_size*2) {
 
             for(int y = 0; y < height; y += square_size*2) {
 
                 ArrayList<String> colorCodes = generateColors(4);
 
+                // Setting the colour properties
                 Property colorTopLeft = Property.newBuilder().setKey("rgb_color").setValue(colorCodes.get(0)).build();
                 Property colorBottomLeft = Property.newBuilder().setKey("rgb_color").setValue(colorCodes.get(2)).build();
                 Property colorTopRight = Property.newBuilder().setKey("rgb_color").setValue(colorCodes.get(1)).build();
                 Property colorBottomRight = Property.newBuilder().setKey("rgb_color").setValue(colorCodes.get(3)).build();
 
+                // Creating the vertices
                 Vertex topLeft = Vertex.newBuilder().setX(x).setY(y).addProperties(colorTopLeft).build();
                 Vertex bottomLeft = Vertex.newBuilder().setX(x).setY(y + square_size).addProperties(colorBottomLeft).build();
                 Vertex topRight = Vertex.newBuilder().setX(x + square_size).setY(y).addProperties(colorTopRight).build();
@@ -115,6 +117,7 @@ public class DotGen {
                 bottomVertex.add(bottomRight);
                 bottomColors.add(colorBottomRight);
 
+                // Establishing segments
                 Segment topLeftToTopRight = createSegment(topLeft, topRight, averageColor(colorTopLeft.getValue(), colorTopRight.getValue()));
                 Segment topLeftToBottomLeft = createSegment(topLeft, bottomLeft, averageColor(colorTopLeft.getValue(), colorBottomLeft.getValue()));
                 Segment bottomRightToBottomLeft = createSegment(bottomRight, bottomLeft, averageColor(colorBottomRight.getValue(), colorBottomLeft.getValue()));
