@@ -10,9 +10,9 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
 public class DotGen {
 
-    private final int width = 500;
-    private final int height = 500;
-    private final double precision = 1;
+    private final int width = 10;
+    private final int height = 10;
+    private final double precision = 0.01;
     private final int matrixWidth = (int) (width/precision);
     private final int matrixHeight = (int) (height/precision);
     private final int square_size = (int) (20/precision);
@@ -20,25 +20,18 @@ public class DotGen {
     public Mesh generate() {
         // map out points and store id in segment
         // depth first search
-        // 1 2 3 4
-        // 5 6 7 8
+
         // list is <x,y>
         Map<Integer, List<Integer>> coords = new HashMap<>();
-        System.out.println("HERE 1");
         List<List<Integer>> matrix = initializeMatrix(coords);
-        System.out.println("HERE 2");
-        Map<Integer, Vertex> vertices = new HashMap<>();
-        System.out.println("HERE 3");
-        //printMatrix(matrix);
+        Map<Integer, Vertex> vertices = initializeSquareVerticies(coords);
 
-//        for (int i=0; i<matrixHeight; i++) {
-//            for (int j=0; j<matrixWidth; j++) {
-//                Integer pos = i*(j+1)+j;
-//                List<Integer> xy = coords.get(pos);
-//                vertices.put(pos, new Vertex(xy.get(0), xy.get(1), new Color(0,0,0)));
-//            }
-//        }
-        System.out.println("HERE 4");
+        Set<Structs.Vertex> toRudimentaryVertex = extractLameVertices(vertices);
+        return Mesh.newBuilder().addAllVertices(toRudimentaryVertex).build();
+    }
+
+    private Map<Integer, Vertex> initializeSquareVerticies(Map<Integer, List<Integer>> coords) {
+        Map<Integer, Vertex> vertices = new HashMap<>();
 
         for (int i=0; i<matrixHeight; i+=square_size) {
             for (int j=0; j<matrixWidth; j+=square_size) {
@@ -47,15 +40,8 @@ public class DotGen {
                 List<Integer> xy = coords.get(pos);
                 vertices.put(pos, new Vertex(xy.get(0),xy.get(1), new Color(0,0,0)));
             }
-            //System.out.println("---------------ROW "+i+"----------------");
         }
-        System.out.println("HERE 5");
-
-        // Map<> verticesMap = new LinkedHashMap<>();
-        //Set<Vertex> vertices = createColorVertices(verticesMap);
-//        Set<Segment> segments = createColorSegments(vertices);
-        Set<Structs.Vertex> toRudimentaryVertex = extractLameVertices(vertices);
-        return Mesh.newBuilder().addAllVertices(toRudimentaryVertex).build();
+        return vertices;
     }
 
     private List<List<Integer>> initializeMatrix(Map<Integer, List<Integer>> coords) {
