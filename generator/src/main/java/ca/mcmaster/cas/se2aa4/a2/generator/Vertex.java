@@ -16,6 +16,12 @@ public class Vertex {
         vertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(colorProperty).build();
     }
 
+    public Vertex(Integer x, Integer y) {
+        color = generateColors();
+        Structs.Property colorProperty = setColorProperty(color);
+        vertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(colorProperty).build();
+    }
+
     public Vertex(Double x, Double y, Color color) {
         this.color = color;
         Structs.Property colorProperty = setColorProperty(color);

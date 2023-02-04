@@ -28,8 +28,9 @@ public class GraphicRenderer {
 //            canvas.draw(line);
 //            canvas.setColor(old);
 //        }
-        
+        int counter = 0;
         for (Vertex v: aMesh.getVerticesList()) {
+            System.out.println(counter++);
             double centre_x = v.getX() - (THICKNESS/2.0d);
             double centre_y = v.getY() - (THICKNESS/2.0d);
             Color old = canvas.getColor();
