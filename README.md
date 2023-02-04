@@ -6,8 +6,6 @@
 
 ## How to run the product
 
-_This section needs to be edited to reflect how the user can interact with the feature released in your project_
-
 ### Installation instructions
 
 This product is handled by Maven, as a multi-module project. We assume here that you have cloned the project in a directory named `A2`
@@ -19,6 +17,14 @@ mosser@azrael A2 % mvn install
 ```
 
 After installation, you'll find an application named `generator.jar` in the `generator` directory, and a file named `visualizer.jar` in the `visualizer` one. 
+
+### Running the product
+
+To run the product, simply run:
+
+```
+mosser@azrael A2 % make run
+```
 
 ### Generator
 
@@ -71,12 +77,12 @@ When you develop features and enrich the product, remember that you have first t
 
 ### Definition of Done
 
--- Insert here your definition of done for your features --
+Feature is permanently completed with consideration of edge cases. Code is either readable, commented, or documented. Code passes all tests.
 
 ### Product Backlog
 
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
-|    |               |      |       |     |        |
+| F01 | Square visualization | All | 01/09/23 | 02/03/23 | D |
 
 
