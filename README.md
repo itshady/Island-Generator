@@ -10,7 +10,13 @@
 
 This product is handled by Maven, as a multi-module project. We assume here that you have cloned the project in a directory named `A2`
 
-To install the different tooling on your computer, simply run:
+To install the different tooling on your computer, simply run (while in A2):
+```
+mvn clean install
+make run
+```
+
+
 
 ```
 mosser@azrael A2 % mvn install
