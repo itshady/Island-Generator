@@ -23,19 +23,68 @@ public class DotGen {
 
         // list is <x,y>
         Map<Long, List<Long>> coords = new HashMap<>();
-        System.out.println("HERE 1");
         //List<List<Integer>> matrix = initializeMatrix(coords);
         Map<Long, Vertex> vertices = initializeSquareVerticies(coords);
-        System.out.println("HERE 2");
+//        for (Long num : vertices.keySet()) {
+//            if (vertices.get(num).getY() == 20.0)
+//            System.out.println(num+" ("+vertices.get(num).getX()+","+vertices.get(num).getY()+")");
+//        }
+        Map<Integer, Segment> segments = initializeSquareSegments(vertices);
 
-        Set<Structs.Vertex> toRudimentaryVertex = extractLameVertices(vertices);
-        System.out.println("HERE 3");
-        return Mesh.newBuilder().addAllVertices(toRudimentaryVertex).build();
+        Set<Structs.Vertex> rudimentaryVertecies = extractLameVertices(vertices);
+        Set<Structs.Segment> rudimentarySegments = extractLameSegments(segments);
+        return Mesh.newBuilder().addAllVertices(rudimentaryVertecies).addAllSegments(rudimentarySegments).build();
+    }
+
+    private Map<Integer, Segment> initializeSquareSegments(Map<Long, Vertex> vertices) {
+        Map<Integer, Segment> segments = new HashMap<>();
+        Integer counter = 0;
+        for (int i=0; i<matrixHeight; i+=square_size) {
+            for (int j=0; j<matrixWidth-square_size; j+=square_size) {
+
+                Long currPos = i*(matrixWidth)+j;
+                Long nextPos = i*(matrixWidth)+j+square_size;
+                Vertex currVertex = vertices.get(currPos);
+                Vertex nextVertex = vertices.get(nextPos);
+//                System.out.print("("+i+","+j+") ");
+//                System.out.print(currVertex.getVertex()+" ");
+//                System.out.print(nextVertex.getVertex());
+//                System.out.println();
+
+                    segments.put(counter, new Segment(currVertex, nextVertex));
+                counter++;
+            }
+//            System.out.println("NEW ROW");
+        }
+
+//        System.out.println("HEREEEEE");
+
+        for (int i=0; i<matrixWidth; i+=square_size) {
+            for (int j=0; j<matrixHeight-square_size; j+=square_size) {
+                Long currPos = j*(matrixWidth)+i;
+                Long nextPos = (j+square_size)*(matrixWidth)+i;
+                Vertex currVertex = vertices.get(currPos);
+                Vertex nextVertex = vertices.get(nextPos);
+
+//                System.out.print("("+i+","+j+","+currPos+","+nextPos+") ");
+//                System.out.print(currVertex.getVertex()+" ");
+//                System.out.print(nextVertex.getVertex());
+//                System.out.println();
+
+                segments.put(counter, new Segment(currVertex, nextVertex));
+                counter++;
+            }
+//            System.out.println("NEW COL");
+        }
+
+//        System.out.println("HEREEEEE 2");
+        return segments;
     }
 
     private Map<Long, Vertex> initializeSquareVerticies(Map<Long, List<Long>> coords) {
         Map<Long, Vertex> vertices = new HashMap<>();
 
+        int counter = 0;
         for (int i=0; i<matrixHeight; i+=square_size) {
             for (int j=0; j<matrixWidth; j+=square_size) {
                 Long pos = i*(matrixWidth)+j;
@@ -45,7 +94,8 @@ public class DotGen {
                     xy.add((long)j);
                     xy.add((long)i);
                     coords.put(pos, xy);
-                    vertices.put(pos, new Vertex(xy.get(0),xy.get(1), new Color(0,0,0)));
+                    vertices.put(pos, new Vertex(xy.get(0),xy.get(1), new Color(counter%2 == 0 ? 255 : 0,0,0)));
+                    counter++;
                 }
                 System.out.println("i: "+i+" j: "+j+"("+pos+", "+coords.get(pos)+")");
             }
@@ -56,10 +106,10 @@ public class DotGen {
     private List<List<Integer>> initializeMatrix(Map<Integer, List<Integer>> coords) {
         List<List<Integer>> matrix = new ArrayList<List<Integer>>((int) (matrixHeight*matrixWidth));
         Integer counter = 0;
-        for (Integer i=0; i<matrixHeight; i++) {
+        for (int i=0; i<matrixHeight; i++) {
             List<Integer> row = new ArrayList<>();
             matrix.add(row);
-            for (Integer j=0; j<matrixWidth; j++) {
+            for (int j = 0; j<matrixWidth; j++) {
                 row.add(counter);
                 List<Integer> xy = new ArrayList<>();
                 xy.add(j);
@@ -100,6 +150,14 @@ public class DotGen {
         Set<Structs.Vertex> lameSet = new LinkedHashSet<>();
         for (Vertex vertex : vertices.values()) {
             lameSet.add(vertex.getVertex());
+        }
+        return lameSet;
+    }
+
+    private Set<Structs.Segment> extractLameSegments(Map<Integer, Segment> segments) {
+        Set<Structs.Segment> lameSet = new LinkedHashSet<>();
+        for (Segment segment : segments.values()) {
+            lameSet.add(segment.getSegment());
         }
         return lameSet;
     }

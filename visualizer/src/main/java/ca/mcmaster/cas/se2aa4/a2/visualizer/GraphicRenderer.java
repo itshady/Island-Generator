@@ -21,16 +21,17 @@ public class GraphicRenderer {
         canvas.setColor(Color.BLACK);
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
-//        for (Segment segment : aMesh.getSegmentsList()) {
-//            Color old = canvas.getColor();
-//            canvas.setColor(extractColor(segment.getPropertiesList()));
-//            Line2D line = new Line2D.Double(extractV1(segment.getPropertiesList()), extractV2(segment.getPropertiesList()));
-//            canvas.draw(line);
-//            canvas.setColor(old);
-//        }
-        int counter = 0;
+        for (Segment segment : aMesh.getSegmentsList()) {
+            System.out.println(segment);
+            System.out.println("NEXT");
+            Color old = canvas.getColor();
+            canvas.setColor(extractColor(segment.getPropertiesList()));
+            Line2D line = new Line2D.Double(extractV1(segment.getPropertiesList()), extractV2(segment.getPropertiesList()));
+            canvas.draw(line);
+            canvas.setColor(old);
+        }
+
         for (Vertex v: aMesh.getVerticesList()) {
-            System.out.println(counter++);
             double centre_x = v.getX() - (THICKNESS/2.0d);
             double centre_y = v.getY() - (THICKNESS/2.0d);
             Color old = canvas.getColor();
@@ -39,13 +40,6 @@ public class GraphicRenderer {
             canvas.fill(point);
             canvas.setColor(old);
         }
-//        for (int i = 0; i < aMesh.getVerticesCount()-1; i++) {
-//            Color old = canvas.getColor();
-//            canvas.setColor(Color.BLACK);
-//            Line2D line = new Line2D.Double(aMesh.getVerticesList().get(i).getX(), aMesh.getVerticesList().get(i).getY(), aMesh.getVerticesList().get(i+1).getX(), aMesh.getVerticesList().get(i+1).getY());
-//            canvas.draw(line);
-//            canvas.setColor(old);
-//        }
 
     }
 
@@ -58,7 +52,7 @@ public class GraphicRenderer {
         }
         if (val == null)
             return null;
-        String[] raw = val.substring( 1, val.length() - 1 ).split(",");  // String: [5,10]
+        String[] raw = val.split(",");  // String: [5,10]
         // ["5","10"]
         Double x = Double.parseDouble(raw[0]);
         Double y = Double.parseDouble(raw[1]);
@@ -74,7 +68,7 @@ public class GraphicRenderer {
         }
         if (val == null)
             return null;
-        String[] raw = val.substring( 1, val.length() - 1 ).split(",");  // String: [5,10]
+        String[] raw = val.split(",");  // String: [5,10]
         // ["5","10"]
         Double x = Double.parseDouble(raw[0]);
         Double y = Double.parseDouble(raw[1]);

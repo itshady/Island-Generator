@@ -13,26 +13,22 @@ public class Vertex {
 
     public Vertex(Double x, Double y) {
         color = generateColors();
-        Structs.Property colorProperty = setColorProperty(color);
-        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(colorProperty).build();
+        setVertex(x, y, color);
     }
 
-    public Vertex(Integer x, Integer y) {
+    public Vertex(Long x, Long y) {
         color = generateColors();
-        Structs.Property colorProperty = setColorProperty(color);
-        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(colorProperty).build();
+        setVertex(x, y, color);
     }
 
     public Vertex(Double x, Double y, Color color) {
         this.color = color;
-        Structs.Property colorProperty = setColorProperty(color);
-        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(colorProperty).build();
+        setVertex(x, y, color);
     }
 
     public Vertex(Long x, Long y, Color color) {
         this.color = color;
-        Structs.Property colorProperty = setColorProperty(color);
-        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(colorProperty).build();
+        setVertex(x, y, color);
     }
 
     public Structs.Vertex getVertex() {
@@ -49,6 +45,14 @@ public class Vertex {
 
     public Color getColor() {
         return color;
+    }
+
+    private void setVertex(Double x, Double y, Color color) {
+        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).build();
+    }
+
+    private void setVertex(Long x, Long y, Color color) {
+        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).build();
     }
 
     private Structs.Property setColorProperty(Color color) {
