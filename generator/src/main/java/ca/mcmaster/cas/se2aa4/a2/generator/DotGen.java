@@ -10,11 +10,11 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
 public class DotGen {
 
-    private final int width = 10;
-    private final int height = 10;
+    private final int width = 500;
+    private final int height = 500;
     private final double precision = 0.01;
-    private final int matrixWidth = (int) (width/precision);
-    private final int matrixHeight = (int) (height/precision);
+    private final long matrixWidth = Math.round(width/precision);
+    private final long matrixHeight = Math.round(height/precision);
     private final int square_size = (int) (20/precision);
 
     public Mesh generate() {
@@ -22,30 +22,39 @@ public class DotGen {
         // depth first search
 
         // list is <x,y>
-        Map<Integer, List<Integer>> coords = new HashMap<>();
-        List<List<Integer>> matrix = initializeMatrix(coords);
-        Map<Integer, Vertex> vertices = initializeSquareVerticies(coords);
+        Map<Long, List<Long>> coords = new HashMap<>();
+        System.out.println("HERE 1");
+        //List<List<Integer>> matrix = initializeMatrix(coords);
+        Map<Long, Vertex> vertices = initializeSquareVerticies(coords);
+        System.out.println("HERE 2");
 
         Set<Structs.Vertex> toRudimentaryVertex = extractLameVertices(vertices);
+        System.out.println("HERE 3");
         return Mesh.newBuilder().addAllVertices(toRudimentaryVertex).build();
     }
 
-    private Map<Integer, Vertex> initializeSquareVerticies(Map<Integer, List<Integer>> coords) {
-        Map<Integer, Vertex> vertices = new HashMap<>();
+    private Map<Long, Vertex> initializeSquareVerticies(Map<Long, List<Long>> coords) {
+        Map<Long, Vertex> vertices = new HashMap<>();
 
         for (int i=0; i<matrixHeight; i+=square_size) {
             for (int j=0; j<matrixWidth; j+=square_size) {
-                Integer pos = i*(matrixWidth)+j;
-                //System.out.println("i: "+i+" j: "+j+"("+pos+", "+coords.get(pos)+")");
-                List<Integer> xy = coords.get(pos);
-                vertices.put(pos, new Vertex(xy.get(0),xy.get(1), new Color(0,0,0)));
+                Long pos = i*(matrixWidth)+j;
+
+                if (!coords.containsKey(pos)) {
+                    List<Long> xy = new ArrayList<>();
+                    xy.add((long)j);
+                    xy.add((long)i);
+                    coords.put(pos, xy);
+                    vertices.put(pos, new Vertex(xy.get(0),xy.get(1), new Color(0,0,0)));
+                }
+                System.out.println("i: "+i+" j: "+j+"("+pos+", "+coords.get(pos)+")");
             }
         }
         return vertices;
     }
 
     private List<List<Integer>> initializeMatrix(Map<Integer, List<Integer>> coords) {
-        List<List<Integer>> matrix = new ArrayList<List<Integer>>(matrixHeight*matrixWidth);
+        List<List<Integer>> matrix = new ArrayList<List<Integer>>((int) (matrixHeight*matrixWidth));
         Integer counter = 0;
         for (Integer i=0; i<matrixHeight; i++) {
             List<Integer> row = new ArrayList<>();
@@ -87,7 +96,7 @@ public class DotGen {
 //        return vertices;
 //    }
 
-    private Set<Structs.Vertex> extractLameVertices(Map<Integer, Vertex> vertices) {
+    private Set<Structs.Vertex> extractLameVertices(Map<Long, Vertex> vertices) {
         Set<Structs.Vertex> lameSet = new LinkedHashSet<>();
         for (Vertex vertex : vertices.values()) {
             lameSet.add(vertex.getVertex());
