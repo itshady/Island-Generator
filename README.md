@@ -6,8 +6,6 @@
 
 ## How to run the product
 
-_This section needs to be edited to reflect how the user can interact with the feature released in your project_
-
 ### Installation instructions
 
 This product is handled by Maven, as a multi-module project. We assume here that you have cloned the project in a directory named `A2`
@@ -25,6 +23,14 @@ mosser@azrael A2 % mvn install
 ```
 
 After installation, you'll find an application named `generator.jar` in the `generator` directory, and a file named `visualizer.jar` in the `visualizer` one. 
+
+### Running the product
+
+To run the product, simply run:
+
+```
+mosser@azrael A2 % make run
+```
 
 ### Generator
 
@@ -77,12 +83,18 @@ When you develop features and enrich the product, remember that you have first t
 
 ### Definition of Done
 
--- Insert here your definition of done for your features --
+Feature is permanently completed with consideration of edge cases. Code is either readable, commented, or documented. Code passes all tests.
 
 ### Product Backlog
 
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
-|    |               |      |       |     |        |
+| F01 | Square visualization | All | 01/30/23 | 02/03/23 | D |
+| F02 | Add support for representing squares as polygons |  | 02/04/23 |  | S |
+| F03 | Determine the centroid location for each polygon |  | 02/04/23 |  | S |
+| F04 | RGBA support (alpha value for transparency affect) |  | 02/04/23 |  | S |
+| F05 | Manipulate the thickness of vertices, polygons, segments |  | 02/04/23 |  | S |
+| F06 | Allow visualizer to take in Command line args, to display colours indicated by the user |  | 02/04/23 |  | S |
+| F07 | Add support for a debug mode |  | 02/04/23 |  | S |
 
 
