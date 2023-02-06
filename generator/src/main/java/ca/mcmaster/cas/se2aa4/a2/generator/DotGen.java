@@ -24,7 +24,7 @@ public class DotGen {
         // list is <x,y>
         Map<Long, List<Long>> coords = new HashMap<>();
         //List<List<Integer>> matrix = initializeMatrix(coords);
-        Map<Long, Vertex> vertices = initializeSquareVerticies(coords);
+        Map<Long, Vertex> vertices = initializeSquareVertices(coords);
 //        for (Long num : vertices.keySet()) {
 //            if (vertices.get(num).getY() == 20.0)
 //            System.out.println(num+" ("+vertices.get(num).getX()+","+vertices.get(num).getY()+")");
@@ -51,7 +51,7 @@ public class DotGen {
 //                System.out.print(nextVertex.getVertex());
 //                System.out.println();
 
-                    segments.put(counter, new Segment(currVertex, nextVertex));
+                segments.put(counter, new Segment(currVertex, nextVertex, 3f));
                 counter++;
             }
 //            System.out.println("NEW ROW");
@@ -81,7 +81,7 @@ public class DotGen {
         return segments;
     }
 
-    private Map<Long, Vertex> initializeSquareVerticies(Map<Long, List<Long>> coords) {
+    private Map<Long, Vertex> initializeSquareVertices(Map<Long, List<Long>> coords) {
         Map<Long, Vertex> vertices = new HashMap<>();
 
         int counter = 0;
@@ -94,7 +94,8 @@ public class DotGen {
                     xy.add((long)j);
                     xy.add((long)i);
                     coords.put(pos, xy);
-                    vertices.put(pos, new Vertex(xy.get(0),xy.get(1), new Color(counter%2 == 0 ? 255 : 0,0,0)));
+                    vertices.put(pos, new Vertex(xy.get(0),xy.get(1), new Color(counter%2 == 0 ? 255 : 0,0,0) ,counter%2 == 0 ? 3f : 6f ));
+                    //vertices.put(pos, new Vertex(xy.get(0),xy.get(1), 4f));
                     counter++;
                 }
                 System.out.println("i: "+i+" j: "+j+"("+pos+", "+coords.get(pos)+")");
