@@ -16,9 +16,19 @@ public class Vertex {
         setVertex(x, y, color);
     }
 
+    public Vertex(Double x, Double y, Float thickness) {
+        color = generateColors();
+        setVertex(x, y, color, thickness);
+    }
+
     public Vertex(Long x, Long y) {
         color = generateColors();
         setVertex(x, y, color);
+    }
+
+    public Vertex(Long x, Long y, Float thickness) {
+        color = generateColors();
+        setVertex(x, y, color, thickness);
     }
 
     public Vertex(Double x, Double y, Color color) {
@@ -26,9 +36,19 @@ public class Vertex {
         setVertex(x, y, color);
     }
 
+    public Vertex(Double x, Double y, Color color, Float thickness) {
+        this.color = color;
+        setVertex(x, y, color, thickness);
+    }
+
     public Vertex(Long x, Long y, Color color) {
         this.color = color;
         setVertex(x, y, color);
+    }
+
+    public Vertex(Long x, Long y, Color color, Float thickness) {
+        this.color = color;
+        setVertex(x, y, color, thickness);
     }
 
     public Structs.Vertex getVertex() {
@@ -51,14 +71,28 @@ public class Vertex {
         vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).build();
     }
 
+    private void setVertex(Double x, Double y, Color color, Float thickness) {
+        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+    }
+
     private void setVertex(Long x, Long y, Color color) {
         vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).build();
     }
 
+    private void setVertex(Long x, Long y, Color color, Float thickness) {
+        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+    }
+
     private Structs.Property setColorProperty(Color color) {
-        String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue();
+        String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
         Structs.Property colorProperty = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorStr).build();
         return colorProperty;
+    }
+
+    private Structs.Property setThicknessProperty(Float thickness) {
+        String vertexThickness = Float.toString(thickness);
+        Structs.Property thicknessProperty = Structs.Property.newBuilder().setKey("vertex_thickness").setValue(vertexThickness).build();
+        return thicknessProperty;
     }
 
     private Color generateColors() {
@@ -66,6 +100,7 @@ public class Vertex {
         int red = bag.nextInt(255);
         int green = bag.nextInt(255);
         int blue = bag.nextInt(255);
-        return new Color(red, green, blue);
+        int alpha = bag.nextInt(1,255);
+        return new Color(red, green, blue, alpha);
     }
 }
