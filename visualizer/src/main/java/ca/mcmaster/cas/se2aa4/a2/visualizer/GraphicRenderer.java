@@ -5,10 +5,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
 
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.BasicStroke;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -32,6 +29,15 @@ public class GraphicRenderer {
             canvas.draw(line);
             canvas.setColor(old);
         }
+
+        Color old2 = canvas.getColor();
+        canvas.setColor(Color.BLUE);
+        int[] xPoints = {0, 0, 20, 20, 0};
+        int[] yPoints = {0, 20, 20, 0, 0};
+        int nPoints = 5;
+        Polygon polygon = new Polygon(xPoints, yPoints, nPoints);
+        canvas.fillPolygon(polygon);
+        canvas.setColor(old2);
 
         for (Vertex v: aMesh.getVerticesList()) {
             float vertexThickness = extractVertexThickness(v.getPropertiesList());

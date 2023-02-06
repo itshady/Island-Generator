@@ -8,7 +8,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
 
-public class DotGen {
+public class DotGen {   //802 8.02
 
     private final int width = 500;
     private final int height = 500;
@@ -94,7 +94,7 @@ public class DotGen {
                     xy.add((long)j);
                     xy.add((long)i);
                     coords.put(pos, xy);
-                    vertices.put(pos, new Vertex(xy.get(0),xy.get(1), new Color(counter%2 == 0 ? 255 : 0,0,0) ,counter%2 == 0 ? 3f : 6f ));
+                    vertices.put(pos, new Vertex(xy.get(0),xy.get(1), new Color(counter%3 == 0 ? 255 : 0,0,0) ,counter%2 == 0 ? 3f : 6f ));
                     //vertices.put(pos, new Vertex(xy.get(0),xy.get(1), 4f));
                     counter++;
                 }
