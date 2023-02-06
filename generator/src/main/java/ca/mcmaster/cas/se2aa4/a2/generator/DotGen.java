@@ -3,12 +3,8 @@ package ca.mcmaster.cas.se2aa4.a2.generator;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Stream;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 
 
@@ -16,11 +12,14 @@ public class DotGen {
 
     private final int width = 500;
     private final int height = 500;
-    private final int square_size = 20;
+    private final double precision = 0.01;
+    private final long matrixWidth = Math.round(width/precision);
+    private final long matrixHeight = Math.round(height/precision);
+    private final int square_size = (int) (20/precision);
 
     public Mesh generate() {
-        Set<Segment> segments = new HashSet<>();
-        Set<Vertex> vertices = createColorVerticesWithSegments(segments);
+        // map out points and store id in segment
+        // depth first search
 
 
 //        Set<Vertex> vertices = createColorVertices();
@@ -180,26 +179,136 @@ public class DotGen {
 //        for (Vertex vertex : vertices) {
 //            System.out.println(vertex.getX() + ", " + vertex.getY());
 //        }
-        int outerBound = height/square_size;
-        int innerBound = width/square_size;
-        System.out.println(outerBound + ", " + innerBound);
-        for (int y = 0; y < outerBound; y++) {
-            for (int x = 0; x < innerBound; x++) {
-//                System.out.println(y +", " +x + ", " + (y+x*innerBound));
-                vertices2D[y][x] = vertices[y+x*square_size];
-//                System.out.println(vertices[y+x*square_size].getX() + ", " + vertices[y+x*square_size].getY());
-                // UP TO HERE WORKS, VERTICES AND THE LOOP, VERTICES2D DOESNT POPULATE PROPERLY THO
+        Map<Integer, Segment> segments = initializeSquareSegments(vertices);
+
+        Set<Structs.Vertex> rudimentaryVertecies = extractLameVertices(vertices);
+        Set<Structs.Segment> rudimentarySegments = extractLameSegments(segments);
+        return Mesh.newBuilder().addAllVertices(rudimentaryVertecies).addAllSegments(rudimentarySegments).build();
+    }
+
+    private Map<Integer, Segment> initializeSquareSegments(Map<Long, Vertex> vertices) {
+        Map<Integer, Segment> segments = new HashMap<>();
+        Integer counter = 0;
+        for (int i=0; i<matrixHeight; i+=square_size) {
+            for (int j=0; j<matrixWidth-square_size; j+=square_size) {
+
+                Long currPos = i*(matrixWidth)+j;
+                Long nextPos = i*(matrixWidth)+j+square_size;
+                Vertex currVertex = vertices.get(currPos);
+                Vertex nextVertex = vertices.get(nextPos);
+//                System.out.print("("+i+","+j+") ");
+//                System.out.print(currVertex.getVertex()+" ");
+//                System.out.print(nextVertex.getVertex());
+//                System.out.println();
+
+                    segments.put(counter, new Segment(currVertex, nextVertex));
+                counter++;
             }
-        }
-        for (Vertex[] outer : vertices2D) {
-            System.out.print("[");
-            for (Vertex inner : outer) {
-                System.out.print("["+inner.getX() + "," + inner.getY()+"], ");
-            }
-            System.out.print("]");
-            System.out.println();
+//            System.out.println("NEW ROW");
         }
 
-        return new HashSet<>();
+//        System.out.println("HEREEEEE");
+
+        for (int i=0; i<matrixWidth; i+=square_size) {
+            for (int j=0; j<matrixHeight-square_size; j+=square_size) {
+                Long currPos = j*(matrixWidth)+i;
+                Long nextPos = (j+square_size)*(matrixWidth)+i;
+                Vertex currVertex = vertices.get(currPos);
+                Vertex nextVertex = vertices.get(nextPos);
+
+//                System.out.print("("+i+","+j+","+currPos+","+nextPos+") ");
+//                System.out.print(currVertex.getVertex()+" ");
+//                System.out.print(nextVertex.getVertex());
+//                System.out.println();
+
+                segments.put(counter, new Segment(currVertex, nextVertex));
+                counter++;
+            }
+//            System.out.println("NEW COL");
+        }
+
+//        System.out.println("HEREEEEE 2");
+        return segments;
+    }
+
+    private Map<Long, Vertex> initializeSquareVerticies(Map<Long, List<Long>> coords) {
+        Map<Long, Vertex> vertices = new HashMap<>();
+
+        int counter = 0;
+        for (int i=0; i<matrixHeight; i+=square_size) {
+            for (int j=0; j<matrixWidth; j+=square_size) {
+                Long pos = i*(matrixWidth)+j;
+
+                if (!coords.containsKey(pos)) {
+                    List<Long> xy = new ArrayList<>();
+                    xy.add((long)j);
+                    xy.add((long)i);
+                    coords.put(pos, xy);
+                    vertices.put(pos, new Vertex(xy.get(0),xy.get(1), new Color(counter%2 == 0 ? 255 : 0,0,0)));
+                    counter++;
+                }
+                System.out.println("i: "+i+" j: "+j+"("+pos+", "+coords.get(pos)+")");
+            }
+        }
+        return vertices;
+    }
+
+    private List<List<Integer>> initializeMatrix(Map<Integer, List<Integer>> coords) {
+        List<List<Integer>> matrix = new ArrayList<List<Integer>>((int) (matrixHeight*matrixWidth));
+        Integer counter = 0;
+        for (int i=0; i<matrixHeight; i++) {
+            List<Integer> row = new ArrayList<>();
+            matrix.add(row);
+            for (int j = 0; j<matrixWidth; j++) {
+                row.add(counter);
+                List<Integer> xy = new ArrayList<>();
+                xy.add(j);
+                xy.add(i);
+                coords.put(counter, xy);
+                counter++;
+            }
+        }
+        return matrix;
+    }
+
+    private static void printMatrix(List<List<Integer>> matrix) {
+        for (List<Integer> row : matrix) {
+            for (Integer cell : row) {
+                System.out.print(""+cell+" ");
+            }
+            System.out.println();
+        }
+    }
+
+
+//    private Set<Vertex> createColorVertices(Map<Integer, Vertex> verticesMap) {
+//        Set<Vertex> vertices = new LinkedHashSet<>();
+//        Integer counter = 0;
+//        // Create all the vertices
+//        for(int x = 0; x < width; x += square_size) {
+//            for(int y = 0; y < height; y += square_size) {
+//                Vertex newPoint = new Vertex(x, y, new Color(0,0,0));
+//                vertices.add(newPoint);
+//                verticesMap.put(counter, newPoint);
+//                counter++;
+//            }
+//        }
+//        return vertices;
+//    }
+
+    private Set<Structs.Vertex> extractLameVertices(Map<Long, Vertex> vertices) {
+        Set<Structs.Vertex> lameSet = new LinkedHashSet<>();
+        for (Vertex vertex : vertices.values()) {
+            lameSet.add(vertex.getVertex());
+        }
+        return lameSet;
+    }
+
+    private Set<Structs.Segment> extractLameSegments(Map<Integer, Segment> segments) {
+        Set<Structs.Segment> lameSet = new LinkedHashSet<>();
+        for (Segment segment : segments.values()) {
+            lameSet.add(segment.getSegment());
+        }
+        return lameSet;
     }
 }
