@@ -32,10 +32,6 @@ public class Mesh {
         Map<Long, List<Long>> coords = new HashMap<>();
         //List<List<Integer>> matrix = initializeMatrix(coords);
         Map<Long, Vertex> vertices = initializeSquareVertices(coords);
-//        for (Long num : vertices.keySet()) {
-//            if (vertices.get(num).getY() == 20.0)
-//            System.out.println(num+" ("+vertices.get(num).getX()+","+vertices.get(num).getY()+")");
-//        }
         Map<Integer, Segment> segments = initializeSquareSegments(vertices);
 
         // Mesh handle both rudimentary conversions
