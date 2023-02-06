@@ -31,6 +31,10 @@ public class DotGen {   //802 8.02
 //        }
         Map<Integer, Segment> segments = initializeSquareSegments(vertices);
 
+        // Mesh handle both rudimentary conversions
+        // Mesh handles whether classes get 802 or 8.02 (precision handling)
+        // Mesh should have functions that define standards maps
+
         Set<Structs.Vertex> rudimentaryVertecies = extractLameVertices(vertices);
         Set<Structs.Segment> rudimentarySegments = extractLameSegments(segments);
         return Mesh.newBuilder().addAllVertices(rudimentaryVertecies).addAllSegments(rudimentarySegments).build();
