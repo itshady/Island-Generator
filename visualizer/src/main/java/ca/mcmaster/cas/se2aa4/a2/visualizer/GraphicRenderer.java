@@ -22,6 +22,8 @@ public class GraphicRenderer {
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
         for (Segment segment : aMesh.getSegmentsList()) {
+            Stroke segmentStroke = new BasicStroke(extractSegmentThickness(segment.getPropertiesList()));
+            canvas.setStroke(segmentStroke);
             System.out.println(segment);
             System.out.println("NEXT");
             Color old = canvas.getColor();
@@ -32,11 +34,12 @@ public class GraphicRenderer {
         }
 
         for (Vertex v: aMesh.getVerticesList()) {
-            double centre_x = v.getX() - (THICKNESS/2.0d);
-            double centre_y = v.getY() - (THICKNESS/2.0d);
+            float vertexThickness = extractVertexThickness(v.getPropertiesList());
+            double centre_x = v.getX() - (vertexThickness/2.0d);
+            double centre_y = v.getY() - (vertexThickness/2.0d);
             Color old = canvas.getColor();
             canvas.setColor(extractColor(v.getPropertiesList()));
-            Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, THICKNESS, THICKNESS);
+            Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, vertexThickness, vertexThickness);
             canvas.fill(point);
             canvas.setColor(old);
         }
@@ -88,7 +91,32 @@ public class GraphicRenderer {
         int red = Integer.parseInt(raw[0]);
         int green = Integer.parseInt(raw[1]);
         int blue = Integer.parseInt(raw[2]);
-        return new Color(red, green, blue);
+        int alpha = Integer.parseInt(raw[3]);
+        return new Color(red, green, blue, alpha);
+    }
+
+    private Float extractSegmentThickness(List<Property> properties) {
+        String val = null;
+        for(Property p: properties) {
+            if (p.getKey().equals("segment_thickness")) {
+                val = p.getValue();
+            }
+        }
+        if (val == null)
+            return 0.5f;
+        return Float.parseFloat(val);
+    }
+
+    private Float extractVertexThickness(List<Property> properties) {
+        String val = null;
+        for(Property p: properties) {
+            if (p.getKey().equals("vertex_thickness")) {
+                val = p.getValue();
+            }
+        }
+        if (val == null)
+            return 3f;
+        return Float.parseFloat(val);
     }
 
 }
