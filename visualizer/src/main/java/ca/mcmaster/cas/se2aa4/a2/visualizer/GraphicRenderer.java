@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GraphicRenderer {
@@ -20,6 +22,18 @@ public class GraphicRenderer {
         canvas.setStroke(stroke);
         List<Vertex> vertexList = aMesh.getVerticesList();
         List<Segment> segmentsList = aMesh.getSegmentsList();
+        List<Structs.Polygon> polygonList = aMesh.getPolygonsList();
+
+        for (Structs.Polygon p: polygonList) {
+            System.out.println("Segments: " + p.getSegmentIdxsList());
+            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV1Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV1Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV1Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV1Idx()).getY()+")");
+            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV1Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV1Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV1Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV1Idx()).getX()+")");
+
+            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV2Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV2Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV2Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV2Idx()).getY()+")");
+            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV2Idx()).getX()+")");
+        }
+
+
 
         // Visualizing Vertices
         for (Vertex v: aMesh.getVerticesList()) {
@@ -56,11 +70,34 @@ public class GraphicRenderer {
             int[] xValues = new int[polygonSegments.size()];
             int[] yValues = new int[polygonSegments.size()];
             for (int i = 0; i < polygonSegments.size(); i++) {
-                Segment segment = segmentsList.get(polygonSegments.get(i));
-                Vertex v = vertexList.get(segment.getV1Idx());
-                xValues[i] = (int) v.getX();
-                yValues[i] = (int) v.getY();
+                if (i > 0) {
+                    Segment curr = segmentsList.get(polygonSegments.get(i));
+                    Segment prev = segmentsList.get(polygonSegments.get(i-1));
+                    if (curr.getV1Idx() != prev.getV1Idx()) {
+                        xValues[i] = (int) vertexList.get(curr.getV2Idx()).getX();
+                        yValues[i] = (int) vertexList.get(curr.getV2Idx()).getY();
+                    } else {
+                        xValues[i] = (int) vertexList.get(curr.getV1Idx()).getX();
+                        yValues[i] = (int) vertexList.get(curr.getV1Idx()).getY();
+                    }
+                } else {
+                    Segment segment = segmentsList.get(polygonSegments.get(i));
+                    xValues[i] = (int) vertexList.get(segment.getV1Idx()).getX();
+                    yValues[i] = (int) vertexList.get(segment.getV1Idx()).getY();
+//                    Segment next = segmentsList.get(polygonSegments.get(i+1));
+//                    if (segment.getV1Idx() == next.getV1Idx()) {
+//                        xValues[i] = (int) vertexList.get(segment.getV1Idx()).getX();
+//                        yValues[i] = (int) vertexList.get(segment.getV1Idx()).getY();
+//                    } else {
+//                        xValues[i] = (int) vertexList.get(segment.getV2Idx()).getX();
+//                        yValues[i] = (int) vertexList.get(segment.getV2Idx()).getY();
+//                    }
+                }
             }
+            System.out.println(Arrays.toString(xValues));
+            System.out.println(Arrays.toString(yValues));
+//            xValues[polygonSegments.size()] = (int) vertexList.get(segmentsList.get(4).getV2Idx()).getX();
+//            yValues[polygonSegments.size()] = (int) vertexList.get(segmentsList.get(4).getV2Idx()).getY();
             Polygon polygon = new Polygon(xValues, yValues, polygonSegments.size());
             canvas.fillPolygon(polygon);
             canvas.setColor(old);
