@@ -32,9 +32,9 @@ public class GraphicRenderer {
 
         Color old2 = canvas.getColor();
         canvas.setColor(Color.BLUE);
-        int[] xPoints = {0, 0, 20, 20, 0};
-        int[] yPoints = {0, 20, 20, 0, 0};
-        int nPoints = 5;
+        int[] xPoints = {0, 0, 20, 20};
+        int[] yPoints = {0, 20, 20, 0};
+        int nPoints = xPoints.length;
         Polygon polygon = new Polygon(xPoints, yPoints, nPoints);
         canvas.fillPolygon(polygon);
         canvas.setColor(old2);

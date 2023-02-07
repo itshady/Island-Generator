@@ -9,44 +9,53 @@ import java.util.Random;
 public class Vertex {
     private Structs.Vertex vertex;
     private Color color;
+    private Integer id;
     private final double precision = 0.01;
 
-    public Vertex(Double x, Double y) {
+    public Vertex(Integer id, Double x, Double y) {
+        this.id = id;
         color = generateColors();
         setVertex(x, y, color);
     }
 
-    public Vertex(Double x, Double y, Float thickness) {
-        color = generateColors();
-        setVertex(x, y, color, thickness);
-    }
-
-    public Vertex(Long x, Long y) {
-        color = generateColors();
-        setVertex(x, y, color);
-    }
-
-    public Vertex(Long x, Long y, Float thickness) {
+    public Vertex(Integer id, Double x, Double y, Float thickness) {
+        this.id = id;
         color = generateColors();
         setVertex(x, y, color, thickness);
     }
 
-    public Vertex(Double x, Double y, Color color) {
+    public Vertex(Integer id, Integer x, Integer y) {
+        this.id = id;
+        color = generateColors();
+        setVertex(x, y, color);
+    }
+
+    public Vertex(Integer id, Integer x, Integer y, Float thickness) {
+        this.id = id;
+        color = generateColors();
+        setVertex(x, y, color, thickness);
+    }
+
+    public Vertex(Integer id, Double x, Double y, Color color) {
+        this.id = id;
         this.color = color;
         setVertex(x, y, color);
     }
 
-    public Vertex(Double x, Double y, Color color, Float thickness) {
+    public Vertex(Integer id, Double x, Double y, Color color, Float thickness) {
+        this.id = id;
         this.color = color;
         setVertex(x, y, color, thickness);
     }
 
-    public Vertex(Long x, Long y, Color color) {
+    public Vertex(Integer id, Integer x, Integer y, Color color) {
+        this.id = id;
         this.color = color;
         setVertex(x, y, color);
     }
 
-    public Vertex(Long x, Long y, Color color, Float thickness) {
+    public Vertex(Integer id, Integer x, Integer y, Color color, Float thickness) {
+        this.id = id;
         this.color = color;
         setVertex(x, y, color, thickness);
     }
@@ -67,6 +76,14 @@ public class Vertex {
         return color;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer newId) {
+        id = newId;
+    }
+
     private void setVertex(Double x, Double y, Color color) {
         vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).build();
     }
@@ -75,11 +92,11 @@ public class Vertex {
         vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
     }
 
-    private void setVertex(Long x, Long y, Color color) {
+    private void setVertex(Integer x, Integer y, Color color) {
         vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).build();
     }
 
-    private void setVertex(Long x, Long y, Color color, Float thickness) {
+    private void setVertex(Integer x, Integer y, Color color, Float thickness) {
         vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
     }
 
