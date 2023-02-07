@@ -7,7 +7,10 @@ import java.util.Random;
 
 public class Segment {
     private Structs.Segment segment;
+    private float thickness = (float) 0.5;
     private Color color;
+    private Vertex v1;
+    private Vertex v2;
     private final double precision = 0.01;
 
     public Segment(Vertex v1, Vertex v2) {
@@ -16,19 +19,20 @@ public class Segment {
     }
 
     public Segment(Vertex v1, Vertex v2, Float thickness) {
+        this.thickness = thickness;
         color = averageColor(v1.getColor(), v2.getColor());
         setSegment(v1, v2, color, thickness);
     }
 
-    public Segment(Long x1, Long y1, Long x2, Long y2) {
-        color = generateColors();
-        setSegment(x1, y1, x2, y2, color);
-    }
-
-    public Segment(Long x1, Long y1, Long x2, Long y2, Float thickness) {
-        color = generateColors();
-        setSegment(x1, y1, x2, y2, color, thickness);
-    }
+//    public Segment(Long x1, Long y1, Long x2, Long y2) {
+//        color = generateColors();
+//        setSegment(x1, y1, x2, y2, color);
+//    }
+//
+//    public Segment(Long x1, Long y1, Long x2, Long y2, Float thickness) {
+//        color = generateColors();
+//        setSegment(x1, y1, x2, y2, color, thickness);
+//    }
 
     public Segment(Vertex v1, Vertex v2, Color color) {
         this.color = color;
@@ -37,17 +41,22 @@ public class Segment {
 
     public Segment(Vertex v1, Vertex v2, Color color, Float thickness) {
         this.color = color;
+        this.thickness = thickness;
         setSegment(v1, v2, color, thickness);
     }
 
-    public Segment(Long x1, Long y1, Long x2, Long y2, Color color) {
-        this.color = color;
-        setSegment(x1, y1, x2, y2, color);
-    }
+//    public Segment(Long x1, Long y1, Long x2, Long y2, Color color) {
+//        this.color = color;
+//        setSegment(x1, y1, x2, y2, color);
+//    }
+//
+//    public Segment(Long x1, Long y1, Long x2, Long y2, Color color, Float thickness) {
+//        this.color = color;
+//        setSegment(x1, y1, x2, y2, color, thickness);
+//    }
 
-    public Segment(Long x1, Long y1, Long x2, Long y2, Color color, Float thickness) {
-        this.color = color;
-        setSegment(x1, y1, x2, y2, color, thickness);
+    public void generateSegment() {
+        segment = Structs.Segment.newBuilder().setV1Idx(v1.getId()).setV2Idx(v2.getId()).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
     }
 
     public Structs.Segment getSegment() {
@@ -55,28 +64,34 @@ public class Segment {
     }
 
     private void setSegment(Vertex vertex1, Vertex vertex2, Color color) {
-        Structs.Property v1 = Structs.Property.newBuilder().setKey("vertex1").setValue((vertex1.getX())+","+(vertex1.getY())).build();
-        Structs.Property v2 = Structs.Property.newBuilder().setKey("vertex2").setValue((vertex2.getX())+","+(vertex2.getY())).build();
-        segment = Structs.Segment.newBuilder().addProperties(v1).addProperties(v2).addProperties(setColorProperty(color)).build();
+//        Structs.Property v1 = Structs.Property.newBuilder().setKey("vertex1").setValue((vertex1.getX())+","+(vertex1.getY())).build();
+//        Structs.Property v2 = Structs.Property.newBuilder().setKey("vertex2").setValue((vertex2.getX())+","+(vertex2.getY())).build();
+//        segment = Structs.Segment.newBuilder().addProperties(v1).addProperties(v2).addProperties(setColorProperty(color)).build();
+//        segment = Structs.Segment.newBuilder().setV1Idx(vertex1.getId()).setV2Idx(vertex2.getId()).addProperties(setColorProperty(color)).build();
+        v1 = vertex1;
+        v2 = vertex2;
     }
 
     private void setSegment(Vertex vertex1, Vertex vertex2, Color color, Float thickness) {
-        Structs.Property v1 = Structs.Property.newBuilder().setKey("vertex1").setValue((vertex1.getX())+","+(vertex1.getY())).build();
-        Structs.Property v2 = Structs.Property.newBuilder().setKey("vertex2").setValue((vertex2.getX())+","+(vertex2.getY())).build();
-        segment = Structs.Segment.newBuilder().addProperties(v1).addProperties(v2).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+//        Structs.Property v1 = Structs.Property.newBuilder().setKey("vertex1").setValue((vertex1.getX())+","+(vertex1.getY())).build();
+//        Structs.Property v2 = Structs.Property.newBuilder().setKey("vertex2").setValue((vertex2.getX())+","+(vertex2.getY())).build();
+//        segment = Structs.Segment.newBuilder().addProperties(v1).addProperties(v2).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+//        segment = Structs.Segment.newBuilder().setV1Idx(vertex1.getId()).setV2Idx(vertex2.getId()).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+        v1 = vertex1;
+        v2 = vertex2;
     }
 
-    private void setSegment(Long x1, Long y1, Long x2, Long y2, Color color) {
-        Structs.Property v1 = Structs.Property.newBuilder().setKey("vertex1").setValue((x1)+","+(y1)).build();
-        Structs.Property v2 = Structs.Property.newBuilder().setKey("vertex2").setValue((x2)+","+(y2)).build();
-        segment = Structs.Segment.newBuilder().addProperties(v1).addProperties(v2).addProperties(setColorProperty(color)).build();
-    }
+//    private void setSegment(Long x1, Long y1, Long x2, Long y2, Color color) {
+//        Structs.Property v1 = Structs.Property.newBuilder().setKey("vertex1").setValue((x1)+","+(y1)).build();
+//        Structs.Property v2 = Structs.Property.newBuilder().setKey("vertex2").setValue((x2)+","+(y2)).build();
+//        segment = Structs.Segment.newBuilder().addProperties(v1).addProperties(v2).addProperties(setColorProperty(color)).build();
+//    }
 
-    private void setSegment(Long x1, Long y1, Long x2, Long y2, Color color, Float thickness) {
-        Structs.Property v1 = Structs.Property.newBuilder().setKey("vertex1").setValue((x1)+","+(y1)).build();
-        Structs.Property v2 = Structs.Property.newBuilder().setKey("vertex2").setValue((x2)+","+(y2)).build();
-        segment = Structs.Segment.newBuilder().addProperties(v1).addProperties(v2).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
-    }
+//    private void setSegment(Long x1, Long y1, Long x2, Long y2, Color color, Float thickness) {
+//        Structs.Property v1 = Structs.Property.newBuilder().setKey("vertex1").setValue((x1)+","+(y1)).build();
+//        Structs.Property v2 = Structs.Property.newBuilder().setKey("vertex2").setValue((x2)+","+(y2)).build();
+//        segment = Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx().addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+//    }
 
     private Structs.Property setColorProperty(Color color) {
         String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
