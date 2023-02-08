@@ -7,8 +7,8 @@ import java.util.*;
 import java.util.List;
 
 public class Mesh {
-    private final int width = 500;
-    private final int height = 500;
+    private final int width = 1000;
+    private final int height = 600;
     private final double precision = 0.01;
     private final int matrixWidth = (int) Math.round(width/precision);
     private final int matrixHeight = (int) Math.round(height/precision);
@@ -30,9 +30,10 @@ public class Mesh {
 
         // list is <x,y>
         Map<Integer, List<Integer>> coords = new HashMap<>();
-        //List<List<Integer>> matrix = initializeMatrix(coords);
+
         Map<Integer, Vertex> vertices = initializeSquareVertices(coords);
         Map<Integer, Segment> segments = initializeSquareSegments(vertices);
+        Map<Integer, Polygon> polygons = initializeSquarePolygons(segments);
 
         // Mesh handle both rudimentary conversions
         // Mesh handles whether classes get 802 or 8.02 (precision handling)
@@ -40,7 +41,29 @@ public class Mesh {
 
         Set<Structs.Vertex> rudimentaryVertices = extractLameVertices(vertices);
         Set<Structs.Segment> rudimentarySegments = extractLameSegments(segments);
-        mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).build();
+        Set<Structs.Polygon> rudimentaryPolygons = extractLamePolygons(polygons);
+        mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
+    }
+
+    private Map<Integer, Polygon> initializeSquarePolygons(Map<Integer, Segment> segments) {
+        Map<Integer, Polygon> polygons = new HashMap<>();
+        Integer counter = 0;
+
+        int width = matrixWidth / square_size;
+        int height = matrixHeight / square_size;
+
+        for (int i = 0; i < (width-1)*(height-1); i++) {
+            List<Segment> segmentList = new ArrayList<>(4);
+            segmentList.add(segments.get(i));
+            segmentList.add(segments.get((i/(width-1)) + (width-1)*height + (i%(width-1))*(height-1)));
+            segmentList.add(segments.get(i + (width-1)));
+            segmentList.add(segments.get((i/(width-1)) + (width-1)*height + (i%(width-1))*(height-1) + (height-1)));
+
+
+            polygons.put(counter, new Polygon(segmentList));
+            counter++;
+        }
+        return polygons;
     }
 
     private Map<Integer, Segment> initializeSquareSegments(Map<Integer, Vertex> vertices) {
@@ -71,6 +94,8 @@ public class Mesh {
                 counter++;
             }
         }
+
+        System.out.println(counter);
 
         return segments;
     }
@@ -111,9 +136,21 @@ public class Mesh {
 
     private Set<Structs.Segment> extractLameSegments(Map<Integer, Segment> segments) {
         Set<Structs.Segment> lameSet = new LinkedHashSet<>();
+        int counter = 0;
         for (Segment segment : segments.values()) {
+            segment.setId(counter);
             segment.generateSegment();
             lameSet.add(segment.getSegment());
+            counter++;
+        }
+        return lameSet;
+    }
+
+    private Set<Structs.Polygon> extractLamePolygons(Map<Integer, Polygon> polygons) {
+        Set<Structs.Polygon> lameSet = new LinkedHashSet<>();
+        for (Polygon polygon: polygons.values()) {
+            polygon.generatePolygon();
+            lameSet.add(polygon.getPolygon());
         }
         return lameSet;
     }

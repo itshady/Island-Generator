@@ -12,6 +12,15 @@ public class Segment {
     private Vertex v1;
     private Vertex v2;
     private final double precision = 0.01;
+    private int id;
+
+    public void setId(int value) {
+        id = value;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 
     public Segment(Vertex v1, Vertex v2) {
         color = averageColor(v1.getColor(), v2.getColor());
