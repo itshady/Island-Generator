@@ -22,11 +22,33 @@ public class GraphicRenderer {
         canvas.setStroke(stroke);
         List<Vertex> vertexList = aMesh.getVerticesList();
         List<Segment> segmentsList = aMesh.getSegmentsList();
+<<<<<<< HEAD
 
         // Visualizing polygons
+=======
+        List<Structs.Polygon> polygonList = aMesh.getPolygonsList();
+
+        for (Structs.Polygon p: polygonList) {
+            System.out.println("Segments: " + p.getSegmentIdxsList());
+            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV1Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV1Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV1Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV1Idx()).getY()+")");
+            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV1Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV1Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV1Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV1Idx()).getX()+")");
+
+            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV2Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV2Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV2Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV2Idx()).getY()+")");
+            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV2Idx()).getX()+")");
+        }
+
+        int counter = 0;
+>>>>>>> 440a2314a05e1ff5b3b9277a143b7c35a45d012b
         for (Structs.Polygon p: aMesh.getPolygonsList()) {
             Color old = canvas.getColor();
-            canvas.setColor(Color.BLUE);
+            if (counter % 2 == 0) {
+                canvas.setColor(Color.BLUE);
+            } else if (counter % 3 == 0) {
+                canvas.setColor(Color.PINK);
+            } else {
+                canvas.setColor(Color.GREEN);
+            }
+            counter++;
             List<Integer> polygonSegments = p.getSegmentIdxsList();
             int[] xValues = new int[polygonSegments.size()];
             int[] yValues = new int[polygonSegments.size()];
