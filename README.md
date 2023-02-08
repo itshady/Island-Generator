@@ -90,7 +90,7 @@ Feature is permanently completed with consideration of edge cases. Code is eithe
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
 | F01 | Square visualization | All | 01/30/23 | 02/03/23 | D |
-| F02 | Add support for representing squares as polygons | All | 02/04/23 | 02/08/23 | D |
+| F02 | Add support for representing squares as polygons | Richard | 02/04/23 | 02/08/23 | D |
 | F03 | Determine the centroid location for each polygon |  | 02/04/23 |  | S |
 | F04 | RGBA support (alpha value for transparency affect) |  | 02/04/23 |  | S |
 | F05 | Manipulate the thickness of vertices, polygons, segments |  | 02/04/23 |  | S |
