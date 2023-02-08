@@ -26,11 +26,11 @@ public class GraphicRenderer {
         // Visualizing polygons
         visualizePolygon(aMesh, canvas, vertexList, segmentsList);
 
-        // Visualizing Vertices
-        visualizeVertices(aMesh, canvas);
-
         // Visualizing Segments
         visualizeSegments(aMesh, canvas, vertexList);
+
+        // Visualizing Vertices
+        visualizeVertices(aMesh, canvas);
 
     }
 
