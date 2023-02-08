@@ -22,6 +22,10 @@ public class Segment {
         return id;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public Segment(Vertex v1, Vertex v2) {
         color = averageColor(v1.getColor(), v2.getColor());
         setSegment(v1, v2, color);
