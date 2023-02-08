@@ -22,18 +22,8 @@ public class GraphicRenderer {
         canvas.setStroke(stroke);
         List<Vertex> vertexList = aMesh.getVerticesList();
         List<Segment> segmentsList = aMesh.getSegmentsList();
-        List<Structs.Polygon> polygonList = aMesh.getPolygonsList();
 
-        for (Structs.Polygon p: polygonList) {
-            System.out.println("Segments: " + p.getSegmentIdxsList());
-            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV1Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV1Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV1Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV1Idx()).getY()+")");
-            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV1Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV1Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV1Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV1Idx()).getX()+")");
-
-            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV2Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV2Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV2Idx()).getY()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV2Idx()).getY()+")");
-            System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV2Idx()).getX()+")");
-        }
-
-
+        // Visualizing polygons
         for (Structs.Polygon p: aMesh.getPolygonsList()) {
             Color old = canvas.getColor();
             canvas.setColor(Color.BLUE);
@@ -63,10 +53,6 @@ public class GraphicRenderer {
                     }
                 }
             }
-            System.out.println(Arrays.toString(xValues));
-            System.out.println(Arrays.toString(yValues));
-//            xValues[polygonSegments.size()] = (int) vertexList.get(segmentsList.get(4).getV2Idx()).getX();
-//            yValues[polygonSegments.size()] = (int) vertexList.get(segmentsList.get(4).getV2Idx()).getY();
             Polygon polygon = new Polygon(xValues, yValues, polygonSegments.size());
             canvas.fillPolygon(polygon);
             canvas.setColor(old);
@@ -84,8 +70,6 @@ public class GraphicRenderer {
             canvas.setColor(old);
         }
 
-
-
         // Visualizing Segments
         for (Segment s: aMesh.getSegmentsList()) {
             Stroke segmentStroke = new BasicStroke(extractSegmentThickness(s.getPropertiesList()));
@@ -100,8 +84,6 @@ public class GraphicRenderer {
             canvas.draw(line);
             canvas.setColor(old);
         }
-
-        // Visualizing Polygons
 
     }
 
