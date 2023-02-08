@@ -33,10 +33,17 @@ public class GraphicRenderer {
             System.out.println("("+vertexList.get(segmentsList.get(p.getSegmentIdxs(0)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(1)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(2)).getV2Idx()).getX()+", "+vertexList.get(segmentsList.get(p.getSegmentIdxs(3)).getV2Idx()).getX()+")");
         }
 
-
+        int counter = 0;
         for (Structs.Polygon p: aMesh.getPolygonsList()) {
             Color old = canvas.getColor();
-            canvas.setColor(Color.BLUE);
+            if (counter % 2 == 0) {
+                canvas.setColor(Color.BLUE);
+            } else if (counter % 3 == 0) {
+                canvas.setColor(Color.PINK);
+            } else {
+                canvas.setColor(Color.GREEN);
+            }
+            counter++;
             List<Integer> polygonSegments = p.getSegmentIdxsList();
             int[] xValues = new int[polygonSegments.size()];
             int[] yValues = new int[polygonSegments.size()];

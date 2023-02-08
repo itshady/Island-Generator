@@ -7,8 +7,8 @@ import java.util.*;
 import java.util.List;
 
 public class Mesh {
-    private final int width = 500;
-    private final int height = 500;
+    private final int width = 1000;
+    private final int height = 600;
     private final double precision = 0.01;
     private final int matrixWidth = (int) Math.round(width/precision);
     private final int matrixHeight = (int) Math.round(height/precision);
