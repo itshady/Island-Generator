@@ -43,9 +43,7 @@ public class Polygon {
         List<Integer> idList = new ArrayList<>();
         for (int i = 0; i < segmentList.size(); i++) {
             idList.add(segmentList.get(i).getId());
-            //System.out.print(segmentList.get(i).getId() + ", ");
         }
-        //System.out.println();
         polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
     }
 

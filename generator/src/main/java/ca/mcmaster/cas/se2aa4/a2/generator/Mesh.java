@@ -33,7 +33,7 @@ public class Mesh {
 
         Map<Integer, Vertex> vertices = initializeSquareVertices(coords);
         Map<Integer, Segment> segments = initializeSquareSegments(vertices);
-        Map<Integer, Polygon> polygons = initializeSquarePolygons(segments);
+        Map<Integer, Polygon> polygons = initializeSquarePolygons(segments, vertices);
 
         // Mesh handle both rudimentary conversions
         // Mesh handles whether classes get 802 or 8.02 (precision handling)
@@ -45,7 +45,28 @@ public class Mesh {
         mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
     }
 
-    private Map<Integer, Polygon> initializeSquarePolygons(Map<Integer, Segment> segments) {
+    private List<List<Double>> getCoordsForCentroid(List<Segment> segments, Map<Integer, Vertex> vertices) {
+        List<List<Double>> coords = new ArrayList<>();
+
+        for (int i = 0; i < segments.size(); i++) {
+            int index;
+            List<Double> xy = new ArrayList<>();
+            segments.get(i).generateSegment();
+
+            // Depending on which point, get either V1 or V2
+            if (i == 1 || i == 2) {
+                index = segments.get(i).getSegment().getV2Idx();
+            } else {
+                index = segments.get(i).getSegment().getV1Idx();
+            }
+            xy.add(vertices.get(index).getX());
+            xy.add(vertices.get(index).getY());
+            coords.add(xy);
+        }
+        return coords;
+    }
+
+    private Map<Integer, Polygon> initializeSquarePolygons(Map<Integer, Segment> segments, Map<Integer, Vertex> vertices) {
         Map<Integer, Polygon> polygons = new HashMap<>();
         Integer counter = 0;
 
@@ -58,6 +79,7 @@ public class Mesh {
             segmentList.add(segments.get((i/(width-1)) + (width-1)*height + (i%(width-1))*(height-1)));
             segmentList.add(segments.get(i + (width-1)));
             segmentList.add(segments.get((i/(width-1)) + (width-1)*height + (i%(width-1))*(height-1) + (height-1)));
+            getCoordsForCentroid(segmentList, vertices);
 
             polygons.put(counter, new Polygon(segmentList, Color.BLACK, 2.2f));
             counter++;
@@ -93,8 +115,6 @@ public class Mesh {
                 counter++;
             }
         }
-
-        //System.out.println(counter);
 
         return segments;
     }
