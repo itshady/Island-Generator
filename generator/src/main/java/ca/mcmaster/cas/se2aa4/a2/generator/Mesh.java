@@ -7,8 +7,8 @@ import java.util.*;
 import java.util.List;
 
 public class Mesh {
-    private final int width = 1000;
-    private final int height = 600;
+    private final int width = 520;
+    private final int height = 520;
     private final double precision = 0.01;
     private final int matrixWidth = (int) Math.round(width/precision);
     private final int matrixHeight = (int) Math.round(height/precision);
@@ -78,7 +78,7 @@ public class Mesh {
                 Vertex currVertex = vertices.get(currPos);
                 Vertex nextVertex = vertices.get(nextPos);
 
-                segments.put(counter, new Segment(currVertex, nextVertex, (float) 3));
+                segments.put(counter, new Segment(currVertex, nextVertex, (float) 0.5));
                 counter++;
             }
         }
@@ -113,11 +113,11 @@ public class Mesh {
                     xy.add(j);
                     xy.add(i);
                     coords.put(pos, xy);
-                    vertices.put(pos, new Vertex(pos, xy.get(0),xy.get(1), new Color(counter%4 == 0 ? 255 : 0,0,0) ,counter%4 == 0 ? 3f : 6f ));
-                    //vertices.put(pos, new Vertex(xy.get(0),xy.get(1), 4f));
+                    //vertices.put(pos, new Vertex(pos, xy.get(0),xy.get(1), new Color(counter%4 == 0 ? 255 : 0,0,0) , 3f));
+                    vertices.put(pos, new Vertex(pos, xy.get(0),xy.get(1), 3f));
                     counter++;
                 }
-                System.out.println("i: "+i+" j: "+j+"("+pos+", "+coords.get(pos)+")");
+                //System.out.println("i: "+i+" j: "+j+"("+pos+", "+coords.get(pos)+")");
             }
         }
         return vertices;

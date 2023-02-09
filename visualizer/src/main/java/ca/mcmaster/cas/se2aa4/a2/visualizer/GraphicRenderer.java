@@ -26,11 +26,11 @@ public class GraphicRenderer {
         // Visualizing polygons
         visualizePolygon(aMesh, canvas, vertexList, segmentsList);
 
-        // Visualizing Vertices
-        visualizeVertices(aMesh, canvas);
-
         // Visualizing Segments
         visualizeSegments(aMesh, canvas, vertexList);
+
+        // Visualizing Vertices
+        visualizeVertices(aMesh, canvas);
 
     }
 
@@ -67,15 +67,18 @@ public class GraphicRenderer {
         int counter = 0;
         for (Structs.Polygon p: aMesh.getPolygonsList()) {
             Color old = canvas.getColor();
+            Stroke polygonStroke = new BasicStroke(2f);
+            canvas.setStroke(polygonStroke);
 
             // Setting the colour based on the location (can be edited)
-            if (counter % 2 == 0) {
+            /*if (counter % 2 == 0) {
                 canvas.setColor(Color.BLUE);
             } else if (counter % 3 == 0) {
                 canvas.setColor(Color.PINK);
             } else {
                 canvas.setColor(Color.GREEN);
-            }
+            } */
+            canvas.setColor(extractColor(p.getPropertiesList()));
             counter++;
 
             List<Integer> polygonSegments = p.getSegmentIdxsList();
@@ -83,7 +86,7 @@ public class GraphicRenderer {
             int[] yValues = new int[polygonSegments.size()];
             updateCoordsForPolygons(vertexList, segmentsList, polygonSegments, xValues, yValues);
             Polygon polygon = new Polygon(xValues, yValues, polygonSegments.size());
-            canvas.fillPolygon(polygon);
+            canvas.drawPolygon(polygon);
             canvas.setColor(old);
         }
     }
