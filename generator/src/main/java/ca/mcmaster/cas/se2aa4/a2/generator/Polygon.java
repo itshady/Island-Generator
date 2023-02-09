@@ -46,8 +46,8 @@ public class Polygon {
         for (int i = 0; i < segmentList.size(); i++) {
             idList.add(segmentList.get(i).getId());
         }
-        List<Double> centroid = calculateCentroid();
-        System.out.println("Segments: " + vertexPointList + " Centroid:" + centroid);
+        List<Double> centroidCoords = calculateCentroid();
+        System.out.println("Segments: " + vertexPointList + " Centroid:" + centroidCoords);
         polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
     }
 

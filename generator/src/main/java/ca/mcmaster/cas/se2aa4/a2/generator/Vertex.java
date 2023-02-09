@@ -12,6 +12,11 @@ public class Vertex {
     private Integer id;
     private final double precision = 0.01;
 
+    // Default constructor
+    public Vertex() {
+
+    }
+
     public Vertex(Integer id, Double x, Double y) {
         this.id = id;
         color = generateColors();

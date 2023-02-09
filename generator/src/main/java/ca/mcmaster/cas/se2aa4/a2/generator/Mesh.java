@@ -82,9 +82,7 @@ public class Mesh {
 
             // Obtain the points needed to calculate the centroid
             List<List<Double>> allCoords = getCoordsForCentroid(segmentList, vertices);
-            Polygon newPolygon = new Polygon(segmentList, Color.BLACK, 2.2f, allCoords);
-            newPolygon.generatePolygon();
-            polygons.put(counter, newPolygon);
+            polygons.put(counter, new Polygon(segmentList, Color.BLACK, 2.2f, allCoords));
             counter++;
         }
         return polygons;
