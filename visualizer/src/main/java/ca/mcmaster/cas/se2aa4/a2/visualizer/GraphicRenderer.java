@@ -67,7 +67,7 @@ public class GraphicRenderer {
         int counter = 0;
         for (Structs.Polygon p: aMesh.getPolygonsList()) {
             Color old = canvas.getColor();
-            Stroke polygonStroke = new BasicStroke(2f);
+            Stroke polygonStroke = new BasicStroke(extractPolygonThickness(p.getPropertiesList()));
             canvas.setStroke(polygonStroke);
 
             // Setting the colour based on the location (can be edited)
@@ -187,6 +187,18 @@ public class GraphicRenderer {
         }
         if (val == null)
             return 3f;
+        return Float.parseFloat(val);
+    }
+
+    private Float extractPolygonThickness(List<Property> properties) {
+        String val = null;
+        for(Property p: properties) {
+            if (p.getKey().equals("polygon_thickness")) {
+                val = p.getValue();
+            }
+        }
+        if (val == null)
+            return 2f;
         return Float.parseFloat(val);
     }
 

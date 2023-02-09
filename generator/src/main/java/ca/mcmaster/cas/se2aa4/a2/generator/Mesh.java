@@ -59,8 +59,7 @@ public class Mesh {
             segmentList.add(segments.get(i + (width-1)));
             segmentList.add(segments.get((i/(width-1)) + (width-1)*height + (i%(width-1))*(height-1) + (height-1)));
 
-
-            polygons.put(counter, new Polygon(segmentList));
+            polygons.put(counter, new Polygon(segmentList, Color.BLACK, 2.2f));
             counter++;
         }
         return polygons;
@@ -95,7 +94,7 @@ public class Mesh {
             }
         }
 
-        System.out.println(counter);
+        //System.out.println(counter);
 
         return segments;
     }
