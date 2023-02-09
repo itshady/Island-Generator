@@ -12,6 +12,7 @@ public class Polygon {
     private List<Segment> segmentList;
     private Integer id;
     private Structs.Polygon polygon;
+    private float thickness = (float) 2;
     private Color color;
 
     public Polygon(List<Segment> segments) {
@@ -25,14 +26,27 @@ public class Polygon {
 
     }
 
+    public Polygon(List<Segment> segments, Float thickness) {
+        this.color = averageColor(segments);
+        this.thickness = thickness;
+        segmentList = segments;
+    }
+
+    public Polygon(List<Segment> segments, Color color, Float thickness) {
+        this.color = color;
+        this.thickness = thickness;
+        segmentList = segments;
+
+    }
+
     public void generatePolygon() {
         List<Integer> idList = new ArrayList<>();
         for (int i = 0; i < segmentList.size(); i++) {
             idList.add(segmentList.get(i).getId());
-            System.out.print(segmentList.get(i).getId() + ", ");
+            //System.out.print(segmentList.get(i).getId() + ", ");
         }
-        System.out.println();
-        polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).addProperties(setColorProperty(color)).build();
+        //System.out.println();
+        polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
     }
 
     public Structs.Polygon getPolygon() {
@@ -44,6 +58,12 @@ public class Polygon {
         String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
         Structs.Property colorProperty = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorStr).build();
         return colorProperty;
+    }
+
+    private Structs.Property setThicknessProperty(Float thickness) {
+        String polygonThickness = Float.toString(thickness);
+        Structs.Property thicknessProperty = Structs.Property.newBuilder().setKey("polygon_thickness").setValue(polygonThickness).build();
+        return thicknessProperty;
     }
 
     private Color averageColor(List<Segment> segments) {
