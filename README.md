@@ -94,7 +94,7 @@ Feature is permanently completed with consideration of edge cases. Code is eithe
 | F03 | Determine the centroid location for each polygon | Richard, Hady, Cyruss | 02/04/23 | 02/10/23 | D |
 | F04 | RGBA support (alpha value for transparency affect) | Cyruss | 02/04/23 | 02/09/23 | D |
 | F05 | Manipulate the thickness of vertices, polygons, segments | Cyruss | 02/04/23 | 02/09/23 | D |
-| F06 | Allow visualizer to take in Command line args, to display colours indicated by the user |  | 02/04/23 |  | S |
-| F07 | Add support for a debug mode |  | 02/04/23 |  | S |
+| F06 | Allow visualizer to take in Command line args, to display colours indicated by the user | Hady | 02/04/23 |  | S |
+| F07 | Add support for a debug mode | Hady & Cyruss | 02/04/23 |  | S |
 
 
