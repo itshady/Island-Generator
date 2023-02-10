@@ -3,9 +3,8 @@ package ca.mcmaster.cas.se2aa4.a2.generator;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class Polygon {
 
@@ -19,22 +18,26 @@ public class Polygon {
     private final int width = 520;
     private final int height = 520;
     private final double precision = 0.01;
+    private Set<Integer> neighbourIdxSet = new HashSet<>();
     private final int matrixWidth = (int) Math.round(width/precision);
     private final int matrixHeight = (int) Math.round(height/precision);
 
-    public Polygon(List<Segment> segments) {
+    public Polygon(Integer id, List<Segment> segments) {
+        this.id = id;
         this.color = averageColor(segments);
         segmentList = segments;
     }
 
-    public Polygon(List<Segment> segments, Color color, List<List<Double>> points) {
+    public Polygon(Integer id, List<Segment> segments, Color color, List<List<Double>> points) {
+        this.id = id;
         this.color = color;
         segmentList = segments;
         vertexPointList = points;
         centroid = generateCentroid();
     }
 
-    public Polygon(List<Segment> segments, Float thickness, List<List<Double>> points) {
+    public Polygon(Integer id, List<Segment> segments, Float thickness, List<List<Double>> points) {
+        this.id = id;
         this.color = averageColor(segments);
         this.thickness = thickness;
         segmentList = segments;
@@ -42,7 +45,8 @@ public class Polygon {
         centroid = generateCentroid();
     }
 
-    public Polygon(List<Segment> segments, Color color, Float thickness, List<List<Double>> points) {
+    public Polygon(Integer id, List<Segment> segments, Color color, Float thickness, List<List<Double>> points) {
+        this.id = id;
         this.color = color;
         this.thickness = thickness;
         segmentList = segments;
@@ -58,7 +62,7 @@ public class Polygon {
         }
 
         //System.out.println("Segments: " + vertexPointList + " Centroid:" + centroid.getVertex());
-        polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).setCentroidIdx(centroid.getId()).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+        polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).setCentroidIdx(centroid.getId()).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).addAllNeighborIdxs(neighbourIdxSet).build();
     }
 
     public Integer getCentroidId() {
@@ -67,6 +71,14 @@ public class Polygon {
 
     public Centroid getCentroid() {
         return centroid;
+    }
+
+    public void setId(int newId) {
+        id = newId;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     private Centroid generateCentroid() {
@@ -119,6 +131,23 @@ public class Polygon {
         return polygon;
     }
 
+    public List<Segment> getSegmentList() {
+        return segmentList;
+    }
+
+    public void addPolygonNeighbourSet (List<Polygon> polygonSet) {
+        for (Polygon p : polygonSet) {
+            this.neighbourIdxSet.add(p.getId());
+        }
+    }
+
+    public void removePolygonNeighbour (Polygon neighbour) {
+        this.neighbourIdxSet.remove(neighbour.getId());
+    }
+
+    public Set<Integer> getPolygonNeighbours () {
+        return this.neighbourIdxSet;
+    }
 
     private Structs.Property setColorProperty(Color color) {
         String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
