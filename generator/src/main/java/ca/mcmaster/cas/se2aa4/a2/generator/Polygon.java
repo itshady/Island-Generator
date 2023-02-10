@@ -73,7 +73,8 @@ public class Polygon {
         List<Double> centroidCoords = calculateCentroid();
         Double x = centroidCoords.get(0);
         Double y = centroidCoords.get(1);
-        Integer id = (int)((y*matrixWidth + x));
+        // When casting the whole line as an int, the value maxes out at Integer.max_value. This way it goes to negative numbers.
+        Integer id = ((int) (Math.round(y)))*matrixWidth + (int) Math.round(x);
         return new Centroid(id, x, y, new Color(255,0,0));
     }
 

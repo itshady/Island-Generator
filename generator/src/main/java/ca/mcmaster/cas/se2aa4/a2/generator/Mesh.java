@@ -91,6 +91,11 @@ public class Mesh {
 
             counter++;
         }
+
+        for (Polygon p: polygons.values()) {
+            System.out.println(p.getCentroidId());
+        }
+
         return polygons;
     }
 
