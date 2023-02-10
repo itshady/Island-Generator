@@ -91,7 +91,7 @@ Feature is permanently completed with consideration of edge cases. Code is eithe
 |:--:|---------------|------|-------|-----|--------|
 | F01 | Square visualization | All | 01/30/23 | 02/03/23 | D |
 | F02 | Add support for representing squares as polygons | Richard | 02/04/23 | 02/08/23 | D |
-| F03 | Determine the centroid location for each polygon |  | 02/04/23 |  | S |
+| F03 | Determine the centroid location for each polygon | Richard, Hady, Cyruss | 02/04/23 | 02/10/23 | D |
 | F04 | RGBA support (alpha value for transparency affect) | Cyruss | 02/04/23 | 02/09/23 | D |
 | F05 | Manipulate the thickness of vertices, polygons, segments | Cyruss | 02/04/23 | 02/09/23 | D |
 | F06 | Allow visualizer to take in Command line args, to display colours indicated by the user |  | 02/04/23 |  | S |
