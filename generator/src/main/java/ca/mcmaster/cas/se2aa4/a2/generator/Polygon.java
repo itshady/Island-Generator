@@ -10,32 +10,44 @@ import java.util.Random;
 public class Polygon {
 
     private List<Segment> segmentList;
+    private List<List<Double>> vertexPointList;
     private Integer id;
     private Structs.Polygon polygon;
     private float thickness = (float) 2;
     private Color color;
+    private Centroid centroid;
+    private final int width = 520;
+    private final int height = 520;
+    private final double precision = 0.01;
+    private final int matrixWidth = (int) Math.round(width/precision);
+    private final int matrixHeight = (int) Math.round(height/precision);
 
     public Polygon(List<Segment> segments) {
         this.color = averageColor(segments);
         segmentList = segments;
     }
 
-    public Polygon(List<Segment> segments, Color color) {
+    public Polygon(List<Segment> segments, Color color, List<List<Double>> points) {
         this.color = color;
         segmentList = segments;
-
+        vertexPointList = points;
+        centroid = generateCentroid();
     }
 
-    public Polygon(List<Segment> segments, Float thickness) {
+    public Polygon(List<Segment> segments, Float thickness, List<List<Double>> points) {
         this.color = averageColor(segments);
         this.thickness = thickness;
         segmentList = segments;
+        vertexPointList = points;
+        centroid = generateCentroid();
     }
 
-    public Polygon(List<Segment> segments, Color color, Float thickness) {
+    public Polygon(List<Segment> segments, Color color, Float thickness, List<List<Double>> points) {
         this.color = color;
         this.thickness = thickness;
         segmentList = segments;
+        vertexPointList = points;
+        centroid = generateCentroid();
 
     }
 
@@ -43,10 +55,64 @@ public class Polygon {
         List<Integer> idList = new ArrayList<>();
         for (int i = 0; i < segmentList.size(); i++) {
             idList.add(segmentList.get(i).getId());
-            //System.out.print(segmentList.get(i).getId() + ", ");
         }
-        //System.out.println();
-        polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+
+        //System.out.println("Segments: " + vertexPointList + " Centroid:" + centroid.getVertex());
+        polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).setCentroidIdx(centroid.getId()).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+    }
+
+    public Integer getCentroidId() {
+        return centroid.getId();
+    }
+
+    public Centroid getCentroid() {
+        return centroid;
+    }
+
+    private Centroid generateCentroid() {
+        List<Double> centroidCoords = calculateCentroid();
+        Double x = centroidCoords.get(0);
+        Double y = centroidCoords.get(1);
+        // When casting the whole line as an int, the value maxes out at Integer.max_value. This way it goes to negative numbers.
+        Integer id = ((int) (Math.round(y)))*matrixWidth + (int) Math.round(x);
+        return new Centroid(id, x, y, new Color(255,0,0));
+    }
+
+    private List<Double> calculateCentroid() {
+        List<Double> centroid = new ArrayList<>();
+        double cx = 0, cy = 0;
+        double area = 0;
+        int numPoints = vertexPointList.size();
+
+        for (int i = 0; i < numPoints - 1; i++) {
+            double x1 = vertexPointList.get(i).get(0); // x value
+            double y1 = vertexPointList.get(i).get(1); // y value
+            double x2 = vertexPointList.get(i+1).get(0);
+            double y2 = vertexPointList.get(i+1).get(1);
+            double aTemp = x1 * y2 - x2 * y1;
+            cx += (x1 + x2) * aTemp;
+            cy += (y1 + y2) * aTemp;
+            area += aTemp;
+        }
+
+        // Complete logic for the last point
+        double x1 = vertexPointList.get(numPoints - 1).get(0);
+        double y1 = vertexPointList.get(numPoints - 1).get(1);
+        double x2 = vertexPointList.get(0).get(0);
+        double y2 = vertexPointList.get(0).get(1);
+        double aTemp = x1 * y2 - x2 * y1;
+        cx += (x1 + x2) * aTemp;
+        cy += (y1 + y2) * aTemp;
+        area += aTemp;
+
+        area /= 2;
+        cx /= (6 * area);
+        cy /= (6 * area);
+
+        centroid.add(cx/precision);
+        centroid.add(cy/precision);
+
+        return centroid;
     }
 
     public Structs.Polygon getPolygon() {

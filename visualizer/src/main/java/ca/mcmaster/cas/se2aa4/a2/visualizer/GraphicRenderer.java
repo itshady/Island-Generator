@@ -117,38 +117,6 @@ public class GraphicRenderer {
         }
     }
 
-    private Point2D extractV1(List<Property> properties) {
-        String val = null;
-        for(Property p: properties) {
-            if (p.getKey().equals("vertex1")) {
-                val = p.getValue();
-            }
-        }
-        if (val == null)
-            return null;
-        String[] raw = val.split(",");  // String: [5,10]
-        // ["5","10"]
-        Double x = Double.parseDouble(raw[0]);
-        Double y = Double.parseDouble(raw[1]);
-        return new Point2D.Double(x,y);
-    }
-
-    private Point2D extractV2(List<Property> properties) {
-        String val = null;
-        for(Property p: properties) {
-            if (p.getKey().equals("vertex2")) {
-                val = p.getValue();
-            }
-        }
-        if (val == null)
-            return null;
-        String[] raw = val.split(",");  // String: [5,10]
-        // ["5","10"]
-        Double x = Double.parseDouble(raw[0]);
-        Double y = Double.parseDouble(raw[1]);
-        return new Point2D.Double(x,y);
-    }
-
     private Color extractColor(List<Property> properties) {
         String val = null;
         for(Property p: properties) {
