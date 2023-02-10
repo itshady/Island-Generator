@@ -57,7 +57,7 @@ public class Polygon {
             idList.add(segmentList.get(i).getId());
         }
 
-//        System.out.println("Segments: " + vertexPointList + " Centroid:" + centroidCoords);
+        //System.out.println("Segments: " + vertexPointList + " Centroid:" + centroid.getVertex());
         polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).setCentroidIdx(centroid.getId()).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
     }
 
