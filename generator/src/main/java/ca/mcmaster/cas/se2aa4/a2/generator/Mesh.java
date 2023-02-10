@@ -36,7 +36,7 @@ public class Mesh {
         Map<Integer, Polygon> polygons = initializeSquarePolygons(segments, vertices);
 
         for (Vertex vertex : vertices.values()) {
-            if (vertex.isCentroid()) System.out.println(vertex.getId() + " x: " + vertex.getX() + "  y: " + vertex.getY());
+            //if (vertex.isCentroid()) System.out.println(vertex.getId() + " x: " + vertex.getX() + "  y: " + vertex.getY());
         }
         // Mesh handle both rudimentary conversions
         // Mesh handles whether classes get 802 or 8.02 (precision handling)
@@ -85,18 +85,40 @@ public class Mesh {
 
             // Obtain the points needed to calculate the centroid
             List<List<Double>> allCoords = getCoordsForCentroid(segmentList, vertices);
-            Polygon newPolygon = new Polygon(segmentList, Color.BLACK, 2.2f, allCoords);
+            Polygon newPolygon = new Polygon(counter, segmentList, Color.BLACK, 0.4f, allCoords);
             polygons.put(counter, newPolygon);
             vertices.put(newPolygon.getCentroidId(),newPolygon.getCentroid());
             counter++;
-        }
 
-        for (Polygon p: polygons.values()) {
-            System.out.println(p.getCentroidId());
+            // Determine Polygon Neighbours
+            Map<Segment, List<Polygon>> polygonNeighbours = setPolygonNeighbours(polygons,segments);
+            for (List<Polygon> list : polygonNeighbours.values()) {
+                //System.out.println(list);
+                for (Polygon p: list) {
+                    p.addPolygonNeighbourSet(list);
+                    p.removePolygonNeighbour(p);
+                }
+            }
         }
-
+//        System.out.println("Polygon " + polygons.get(15).getId() + " - Neighbours: " + polygons.get(15).getPolygonNeighbours());
+//        System.out.println("Polygon " + polygons.get(16).getId() + " - Neighbours: " + polygons.get(16).getPolygonNeighbours());
         return polygons;
     }
+
+    private Map<Segment, List<Polygon>> setPolygonNeighbours(Map<Integer, Polygon> polygons, Map<Integer, Segment> segments) {
+        Map<Segment, List<Polygon>> polygonsAttachedToSegment = new HashMap<>();
+        for (Integer s : segments.keySet()) {
+            List<Polygon> attachedPolygons = new ArrayList<>();
+            for (Integer p : polygons.keySet()) {
+                if (polygons.get(p).getSegmentList().contains(segments.get(s))) {
+                    attachedPolygons.add(polygons.get(p));
+                }
+            }
+            polygonsAttachedToSegment.put(segments.get(s), attachedPolygons);
+        }
+        return polygonsAttachedToSegment;
+    }
+
 
     private Map<Integer, Segment> initializeSquareSegments(Map<Integer, Vertex> vertices) {
         Map<Integer, Segment> segments = new HashMap<>();
@@ -110,7 +132,7 @@ public class Mesh {
                 Vertex currVertex = vertices.get(currPos);
                 Vertex nextVertex = vertices.get(nextPos);
 
-                segments.put(counter, new Segment(currVertex, nextVertex, (float) 0.5));
+                segments.put(counter, new Segment(currVertex, nextVertex, (float) 3));
                 counter++;
             }
         }
@@ -122,7 +144,7 @@ public class Mesh {
                 Vertex currVertex = vertices.get(currPos);
                 Vertex nextVertex = vertices.get(nextPos);
 
-                segments.put(counter, new Segment(currVertex, nextVertex));
+                segments.put(counter, new Segment(currVertex, nextVertex, 3f));
                 counter++;
             }
         }

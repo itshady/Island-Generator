@@ -23,6 +23,8 @@ public class GraphicRenderer {
         List<Vertex> vertexList = aMesh.getVerticesList();
         List<Segment> segmentsList = aMesh.getSegmentsList();
 
+        visualizePolygonNeighbours(aMesh, canvas, vertexList, segmentsList);
+
         // Visualizing polygons
         visualizePolygon(aMesh, canvas, vertexList, segmentsList);
 
@@ -88,6 +90,29 @@ public class GraphicRenderer {
             Polygon polygon = new Polygon(xValues, yValues, polygonSegments.size());
             canvas.drawPolygon(polygon);
             canvas.setColor(old);
+        }
+    }
+
+    private void visualizePolygonNeighbours(Mesh aMesh, Graphics2D canvas, List<Vertex> vertexList, List<Segment> segmentsList) {
+        for (Structs.Polygon p : aMesh.getPolygonsList()) {
+            Color old = canvas.getColor();
+            Stroke polygonStroke = new BasicStroke(0.5f);
+            canvas.setStroke(polygonStroke);
+            Structs.Vertex currentCentroid = vertexList.get(p.getCentroidIdx());
+            List<Integer> polygonNeighbours = p.getNeighborIdxsList();
+            for (int i = 0; i < polygonNeighbours.size(); i++) {
+                canvas.setColor(Color.LIGHT_GRAY);
+                Structs.Polygon currentNeighbour = aMesh.getPolygons(polygonNeighbours.get(i));
+                //System.out.println(currentNeighbour.getCentroidIdx());
+                //System.out.println(nextNeighbour.getCentroidIdx());
+                Structs.Vertex nextCentroid = vertexList.get(currentNeighbour.getCentroidIdx());
+                Point2D point1 = new Point2D.Double(currentCentroid.getX(), currentCentroid.getY());
+                Point2D point2 = new Point2D.Double(nextCentroid.getX(), nextCentroid.getY());
+                Line2D line = new Line2D.Double(point1,point2);
+                canvas.draw(line);
+                canvas.setColor(old);
+                //System.out.println();
+            }
         }
     }
 
