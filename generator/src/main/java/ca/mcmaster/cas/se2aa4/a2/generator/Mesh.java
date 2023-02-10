@@ -35,6 +35,9 @@ public class Mesh {
         Map<Integer, Segment> segments = initializeSquareSegments(vertices);
         Map<Integer, Polygon> polygons = initializeSquarePolygons(segments, vertices);
 
+        for (Vertex vertex : vertices.values()) {
+            if (vertex.isCentroid()) System.out.println(vertex.getId() + " x: " + vertex.getX() + "  y: " + vertex.getY());
+        }
         // Mesh handle both rudimentary conversions
         // Mesh handles whether classes get 802 or 8.02 (precision handling)
         // Mesh should have functions that define standards maps
@@ -82,7 +85,10 @@ public class Mesh {
 
             // Obtain the points needed to calculate the centroid
             List<List<Double>> allCoords = getCoordsForCentroid(segmentList, vertices);
-            polygons.put(counter, new Polygon(segmentList, Color.BLACK, 2.2f, allCoords));
+            Polygon newPolygon = new Polygon(segmentList, Color.BLACK, 2.2f, allCoords);
+            polygons.put(counter, newPolygon);
+            vertices.put(newPolygon.getCentroidId(),newPolygon.getCentroid());
+
             counter++;
         }
         return polygons;

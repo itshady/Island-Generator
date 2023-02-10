@@ -15,6 +15,12 @@ public class Polygon {
     private Structs.Polygon polygon;
     private float thickness = (float) 2;
     private Color color;
+    private Centroid centroid;
+    private final int width = 520;
+    private final int height = 520;
+    private final double precision = 0.01;
+    private final int matrixWidth = (int) Math.round(width/precision);
+    private final int matrixHeight = (int) Math.round(height/precision);
 
     public Polygon(List<Segment> segments) {
         this.color = averageColor(segments);
@@ -25,6 +31,7 @@ public class Polygon {
         this.color = color;
         segmentList = segments;
         vertexPointList = points;
+        centroid = generateCentroid();
     }
 
     public Polygon(List<Segment> segments, Float thickness, List<List<Double>> points) {
@@ -32,6 +39,7 @@ public class Polygon {
         this.thickness = thickness;
         segmentList = segments;
         vertexPointList = points;
+        centroid = generateCentroid();
     }
 
     public Polygon(List<Segment> segments, Color color, Float thickness, List<List<Double>> points) {
@@ -39,6 +47,8 @@ public class Polygon {
         this.thickness = thickness;
         segmentList = segments;
         vertexPointList = points;
+        centroid = generateCentroid();
+
     }
 
     public void generatePolygon() {
@@ -46,9 +56,25 @@ public class Polygon {
         for (int i = 0; i < segmentList.size(); i++) {
             idList.add(segmentList.get(i).getId());
         }
+
+//        System.out.println("Segments: " + vertexPointList + " Centroid:" + centroidCoords);
+        polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).setCentroidIdx(centroid.getId()).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+    }
+
+    public Integer getCentroidId() {
+        return centroid.getId();
+    }
+
+    public Centroid getCentroid() {
+        return centroid;
+    }
+
+    private Centroid generateCentroid() {
         List<Double> centroidCoords = calculateCentroid();
-        System.out.println("Segments: " + vertexPointList + " Centroid:" + centroidCoords);
-        polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+        Double x = centroidCoords.get(0);
+        Double y = centroidCoords.get(1);
+        Integer id = (int)((y*matrixWidth + x));
+        return new Centroid(id, x, y, new Color(255,0,0));
     }
 
     private List<Double> calculateCentroid() {
@@ -82,8 +108,8 @@ public class Polygon {
         cx /= (6 * area);
         cy /= (6 * area);
 
-        centroid.add(cx);
-        centroid.add(cy);
+        centroid.add(cx/precision);
+        centroid.add(cy/precision);
 
         return centroid;
     }
