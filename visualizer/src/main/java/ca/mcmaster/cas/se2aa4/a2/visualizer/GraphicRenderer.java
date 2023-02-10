@@ -15,15 +15,25 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GraphicRenderer {
+    private boolean debug = false;
 
     private static final int THICKNESS = 3;
+
+    public void turnOnDebug() {
+        debug = true;
+    }
+
+    public void turnOffDebug() {
+        debug = false;
+    }
+
     public void render(Mesh aMesh, Graphics2D canvas) {
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
         List<Vertex> vertexList = aMesh.getVerticesList();
         List<Segment> segmentsList = aMesh.getSegmentsList();
 
-        visualizePolygonNeighbours(aMesh, canvas, vertexList, segmentsList);
+        if (debug) visualizePolygonNeighbours(aMesh, canvas, vertexList, segmentsList);
 
         // Visualizing polygons
         visualizePolygon(aMesh, canvas, vertexList, segmentsList);
@@ -101,7 +111,6 @@ public class GraphicRenderer {
             Structs.Vertex currentCentroid = vertexList.get(p.getCentroidIdx());
             List<Integer> polygonNeighbours = p.getNeighborIdxsList();
             for (int i = 0; i < polygonNeighbours.size(); i++) {
-                canvas.setColor(Color.LIGHT_GRAY);
                 Structs.Polygon currentNeighbour = aMesh.getPolygons(polygonNeighbours.get(i));
                 //System.out.println(currentNeighbour.getCentroidIdx());
                 //System.out.println(nextNeighbour.getCentroidIdx());
