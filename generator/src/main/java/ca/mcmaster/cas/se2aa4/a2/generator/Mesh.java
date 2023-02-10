@@ -36,7 +36,7 @@ public class Mesh {
         Map<Integer, Polygon> polygons = initializeSquarePolygons(segments, vertices);
 
         for (Vertex vertex : vertices.values()) {
-            if (vertex.isCentroid()) System.out.println(vertex.getId() + " x: " + vertex.getX() + "  y: " + vertex.getY());
+            //if (vertex.isCentroid()) System.out.println(vertex.getId() + " x: " + vertex.getX() + "  y: " + vertex.getY());
         }
         // Mesh handle both rudimentary conversions
         // Mesh handles whether classes get 802 or 8.02 (precision handling)
@@ -85,7 +85,7 @@ public class Mesh {
 
             // Obtain the points needed to calculate the centroid
             List<List<Double>> allCoords = getCoordsForCentroid(segmentList, vertices);
-            Polygon newPolygon = new Polygon(counter, segmentList, Color.BLACK, 2.2f, allCoords);
+            Polygon newPolygon = new Polygon(counter, segmentList, Color.BLACK, 0.4f, allCoords);
             polygons.put(counter, newPolygon);
             vertices.put(newPolygon.getCentroidId(),newPolygon.getCentroid());
             counter++;
@@ -132,7 +132,7 @@ public class Mesh {
                 Vertex currVertex = vertices.get(currPos);
                 Vertex nextVertex = vertices.get(nextPos);
 
-                segments.put(counter, new Segment(currVertex, nextVertex, (float) 0.5));
+                segments.put(counter, new Segment(currVertex, nextVertex, (float) 3));
                 counter++;
             }
         }
@@ -144,7 +144,7 @@ public class Mesh {
                 Vertex currVertex = vertices.get(currPos);
                 Vertex nextVertex = vertices.get(nextPos);
 
-                segments.put(counter, new Segment(currVertex, nextVertex));
+                segments.put(counter, new Segment(currVertex, nextVertex, 3f));
                 counter++;
             }
         }
