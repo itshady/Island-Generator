@@ -88,7 +88,6 @@ public class Mesh {
             Polygon newPolygon = new Polygon(segmentList, Color.BLACK, 2.2f, allCoords);
             polygons.put(counter, newPolygon);
             vertices.put(newPolygon.getCentroidId(),newPolygon.getCentroid());
-
             counter++;
         }
 
