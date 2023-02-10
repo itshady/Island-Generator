@@ -17,6 +17,10 @@ public class Vertex {
 
     }
 
+    public boolean isCentroid() {
+        return false;
+    }
+
     public Vertex(Integer id, Double x, Double y) {
         this.id = id;
         color = generateColors();
