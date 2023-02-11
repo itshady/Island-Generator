@@ -36,7 +36,7 @@ public class GraphicRenderer {
         if (debug) visualizePolygonNeighbours(aMesh, canvas, vertexList, segmentsList);
 
         // Visualizing polygons
-        visualizePolygon(aMesh, canvas, vertexList, segmentsList);
+        if (debug) visualizePolygon(aMesh, canvas, vertexList, segmentsList);
 
         // Visualizing Segments
         visualizeSegments(aMesh, canvas, vertexList);
@@ -55,7 +55,8 @@ public class GraphicRenderer {
             Point2D point1 = new Point2D.Double(v1.getX(), v1.getY());
             Point2D point2 = new Point2D.Double(v2.getX(), v2.getY());
             Color old = canvas.getColor();
-            canvas.setColor(extractColor(s.getPropertiesList()));
+            if (debug) canvas.setColor(Color.BLACK);
+            else canvas.setColor(extractColor(s.getPropertiesList()));
             Line2D line = new Line2D.Double(point1, point2);
             canvas.draw(line);
             canvas.setColor(old);
@@ -64,11 +65,18 @@ public class GraphicRenderer {
 
     private void visualizeVertices(Mesh aMesh, Graphics2D canvas) {
         for (Vertex v: aMesh.getVerticesList()) {
+            if (!debug && isCentroid(v.getPropertiesList())) continue;
             float vertexThickness = extractVertexThickness(v.getPropertiesList());
             double centre_x = v.getX() - (vertexThickness/2.0d);
             double centre_y = v.getY() - (vertexThickness/2.0d);
             Color old = canvas.getColor();
-            canvas.setColor(extractColor(v.getPropertiesList()));
+            if (debug && isCentroid(v.getPropertiesList())) {
+                canvas.setColor(Color.RED);
+            } else if (debug && !isCentroid(v.getPropertiesList())){
+                canvas.setColor(Color.BLACK);
+            } else {
+                canvas.setColor(extractColor(v.getPropertiesList()));
+            }
             Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, vertexThickness, vertexThickness);
             canvas.fill(point);
             canvas.setColor(old);
@@ -90,7 +98,8 @@ public class GraphicRenderer {
             } else {
                 canvas.setColor(Color.GREEN);
             } */
-            canvas.setColor(extractColor(p.getPropertiesList()));
+            if (debug) canvas.setColor(Color.BLACK);
+            else canvas.setColor(extractColor(p.getPropertiesList()));
             counter++;
 
             List<Integer> polygonSegments = p.getSegmentIdxsList();
@@ -111,9 +120,8 @@ public class GraphicRenderer {
             Structs.Vertex currentCentroid = vertexList.get(p.getCentroidIdx());
             List<Integer> polygonNeighbours = p.getNeighborIdxsList();
             for (int i = 0; i < polygonNeighbours.size(); i++) {
+                canvas.setColor(Color.LIGHT_GRAY);
                 Structs.Polygon currentNeighbour = aMesh.getPolygons(polygonNeighbours.get(i));
-                //System.out.println(currentNeighbour.getCentroidIdx());
-                //System.out.println(nextNeighbour.getCentroidIdx());
                 Structs.Vertex nextCentroid = vertexList.get(currentNeighbour.getCentroidIdx());
                 Point2D point1 = new Point2D.Double(currentCentroid.getX(), currentCentroid.getY());
                 Point2D point2 = new Point2D.Double(nextCentroid.getX(), nextCentroid.getY());
@@ -178,6 +186,16 @@ public class GraphicRenderer {
         if (val == null)
             return 0.5f;
         return Float.parseFloat(val);
+    }
+
+    private boolean isCentroid(List<Property> properties) {
+        String val = "false";
+        for(Property p: properties) {
+            if (p.getKey().equals("is_centroid")) {
+                val = p.getValue();
+            }
+        }
+        return !val.equals("false");
     }
 
     private Float extractVertexThickness(List<Property> properties) {

@@ -94,25 +94,31 @@ public class Vertex {
     }
 
     private void setVertex(Double x, Double y, Color color) {
-        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).build();
+        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setCentroidProperty()).build();
     }
 
     private void setVertex(Double x, Double y, Color color, Float thickness) {
-        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).addProperties(setCentroidProperty()).build();
     }
 
     private void setVertex(Integer x, Integer y, Color color) {
-        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).build();
+        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setCentroidProperty()).build();
     }
 
     private void setVertex(Integer x, Integer y, Color color, Float thickness) {
-        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).addProperties(setCentroidProperty()).build();
     }
 
     private Structs.Property setColorProperty(Color color) {
         String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
         Structs.Property colorProperty = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorStr).build();
         return colorProperty;
+    }
+
+    private Structs.Property setCentroidProperty() {
+        String isCentroid = ""+isCentroid();
+        Structs.Property centroidProperty = Structs.Property.newBuilder().setKey("is_centroid").setValue(isCentroid).build();
+        return centroidProperty;
     }
 
     private Structs.Property setThicknessProperty(Float thickness) {

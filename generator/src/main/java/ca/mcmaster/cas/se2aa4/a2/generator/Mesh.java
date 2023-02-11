@@ -42,9 +42,9 @@ public class Mesh {
         // Mesh handles whether classes get 802 or 8.02 (precision handling)
         // Mesh should have functions that define standards maps
 
-        Set<Structs.Vertex> rudimentaryVertices = extractLameVertices(vertices);
-        Set<Structs.Segment> rudimentarySegments = extractLameSegments(segments);
-        Set<Structs.Polygon> rudimentaryPolygons = extractLamePolygons(polygons);
+        Set<Structs.Vertex> rudimentaryVertices = extractVertices(vertices);
+        Set<Structs.Segment> rudimentarySegments = extractSegments(segments);
+        Set<Structs.Polygon> rudimentaryPolygons = extractPolygons(polygons);
         mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
     }
 
@@ -85,7 +85,7 @@ public class Mesh {
 
             // Obtain the points needed to calculate the centroid
             List<List<Double>> allCoords = getCoordsForCentroid(segmentList, vertices);
-            Polygon newPolygon = new Polygon(counter, segmentList, Color.BLACK, 0.4f, allCoords);
+            Polygon newPolygon = new Polygon(counter, segmentList, Color.BLACK, 1f, allCoords);
             polygons.put(counter, newPolygon);
             vertices.put(newPolygon.getCentroidId(),newPolygon.getCentroid());
             counter++;
@@ -132,7 +132,7 @@ public class Mesh {
                 Vertex currVertex = vertices.get(currPos);
                 Vertex nextVertex = vertices.get(nextPos);
 
-                segments.put(counter, new Segment(currVertex, nextVertex, (float) 3));
+                segments.put(counter, new Segment(currVertex, nextVertex, 0.5f));
                 counter++;
             }
         }
@@ -144,7 +144,7 @@ public class Mesh {
                 Vertex currVertex = vertices.get(currPos);
                 Vertex nextVertex = vertices.get(nextPos);
 
-                segments.put(counter, new Segment(currVertex, nextVertex, 3f));
+                segments.put(counter, new Segment(currVertex, nextVertex, 0.5f));
                 counter++;
             }
         }
@@ -175,36 +175,36 @@ public class Mesh {
         return vertices;
     }
 
-    private Set<Structs.Vertex> extractLameVertices(Map<Integer, Vertex> vertices) {
-        Set<Structs.Vertex> lameSet = new LinkedHashSet<>();
+    private Set<Structs.Vertex> extractVertices(Map<Integer, Vertex> vertices) {
+        Set<Structs.Vertex> vertexSet = new LinkedHashSet<>();
         int counter = 0;
         for (Vertex vertex : vertices.values()) {
             vertex.setId(counter);
-            lameSet.add(vertex.getVertex());
+            vertexSet.add(vertex.getVertex());
             counter++;
         }
-        return lameSet;
+        return vertexSet;
     }
 
-    private Set<Structs.Segment> extractLameSegments(Map<Integer, Segment> segments) {
-        Set<Structs.Segment> lameSet = new LinkedHashSet<>();
+    private Set<Structs.Segment> extractSegments(Map<Integer, Segment> segments) {
+        Set<Structs.Segment> segmentSet = new LinkedHashSet<>();
         int counter = 0;
         for (Segment segment : segments.values()) {
             segment.setId(counter);
             segment.generateSegment();
-            lameSet.add(segment.getSegment());
+            segmentSet.add(segment.getSegment());
             counter++;
         }
-        return lameSet;
+        return segmentSet;
     }
 
-    private Set<Structs.Polygon> extractLamePolygons(Map<Integer, Polygon> polygons) {
-        Set<Structs.Polygon> lameSet = new LinkedHashSet<>();
+    private Set<Structs.Polygon> extractPolygons(Map<Integer, Polygon> polygons) {
+        Set<Structs.Polygon> polygonSet = new LinkedHashSet<>();
         for (Polygon polygon: polygons.values()) {
             polygon.generatePolygon();
-            lameSet.add(polygon.getPolygon());
+            polygonSet.add(polygon.getPolygon());
         }
-        return lameSet;
+        return polygonSet;
     }
 
 }
