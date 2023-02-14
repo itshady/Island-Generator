@@ -1,6 +1,11 @@
 package ca.mcmaster.cas.se2aa4.a2.generator;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
 import java.awt.*;
 import java.util.*;
@@ -31,21 +36,68 @@ public class Mesh {
         // list is <x,y>
         Map<Integer, List<Integer>> coords = new HashMap<>();
 
-        Map<Integer, Vertex> vertices = initializeSquareVertices(coords);
-        Map<Integer, Segment> segments = initializeSquareSegments(vertices);
-        Map<Integer, Polygon> polygons = initializeSquarePolygons(segments, vertices);
+        //Map<Integer, Vertex> vertices = initializeSquareVertices(coords);
+        //Map<Integer, Segment> segments = initializeSquareSegments(vertices);
+        //Map<Integer, Polygon> polygons = initializeSquarePolygons(segments, vertices);
 
-        for (Vertex vertex : vertices.values()) {
-            //if (vertex.isCentroid()) System.out.println(vertex.getId() + " x: " + vertex.getX() + "  y: " + vertex.getY());
-        }
+//        for (Vertex vertex : vertices.values()) {
+//            //if (vertex.isCentroid()) System.out.println(vertex.getId() + " x: " + vertex.getX() + "  y: " + vertex.getY());
+//        }
         // Mesh handle both rudimentary conversions
         // Mesh handles whether classes get 802 or 8.02 (precision handling)
         // Mesh should have functions that define standards maps
 
+        //Set<Structs.Vertex> rudimentaryVertices = extractVertices(vertices);
+//        Set<Structs.Segment> rudimentarySegments = extractSegments(segments);
+//        Set<Structs.Polygon> rudimentaryPolygons = extractPolygons(polygons);
+
+
+        // TESTING FOR VORONOI DIAGRAM
+        // Initialize a list of "randomly" generated coordinates
+        List<Coordinate> coordList = new ArrayList<>();
+        Coordinate coord = new Coordinate(20000, 20000);
+        coordList.add(coord);
+        Vertex poly1 = new Vertex(4, 20000,20000);
+        Vertex poly2 = new Vertex(5, 30000,30000);
+        Coordinate coord2 = new Coordinate(30000, 30000);
+        coordList.add(coord2);
+        // Create GeometryFactory to get voronoi diagram later
+        GeometryFactory geometryFactory = new GeometryFactory();
+        // Helps library create polygon by using MultiPoints
+        MultiPoint points = geometryFactory.createMultiPointFromCoords(coordList.toArray(new Coordinate[coordList.size()]));
+
+        // Initialize voronoi diagram builder
+        VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
+        voronoi.setSites(points); // Sets the vertices that will be diagrammed
+        // creates the polygon vertices around generated sites
+        Geometry diagram = voronoi.getDiagram(geometryFactory);
+        Geometry polygon1 = diagram.getGeometryN(0);  // chooses first polygon
+        System.out.println(Arrays.toString(polygon1.getCoordinates()));
+
+        // Make vertices from coordinates of polygon
+        Vertex a1 = new Vertex(0, (polygon1.getCoordinates()[0]).getX(), (polygon1.getCoordinates()[0]).getY());
+        Vertex a2 = new Vertex(1, (polygon1.getCoordinates()[1]).getX(), (polygon1.getCoordinates()[1]).getY());
+        Vertex x = new Vertex(1, 0,0);
+        Vertex x2 = new Vertex(1, 50000,50000);
+
+        Map<Integer, Vertex> vertices = new HashMap<>();
+        vertices.put(0, a1);
+        vertices.put(1, a2);
+        vertices.put(2,x);
+        vertices.put(3,x2);
+        vertices.put(4,poly1);
+        vertices.put(5,poly2);
+
+        // make segment out of vertices
+        Segment a = new Segment(a1, a2);
+        Map<Integer, Segment> segments = new HashMap<>();
+        segments.put(0, a);
+
         Set<Structs.Vertex> rudimentaryVertices = extractVertices(vertices);
         Set<Structs.Segment> rudimentarySegments = extractSegments(segments);
-        Set<Structs.Polygon> rudimentaryPolygons = extractPolygons(polygons);
-        mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
+
+//      mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
+        mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).build();
     }
 
     private List<List<Double>> getCoordsForCentroid(List<Segment> segments, Map<Integer, Vertex> vertices) {
