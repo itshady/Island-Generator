@@ -13,6 +13,13 @@ public class Segment {
     private Vertex v2;
     private final double precision = 0.01;
     private int id;
+    public Vertex getV1() {
+        return v1;
+    }
+
+    public Vertex getV2() {
+        return v2;
+    }
 
     public void setId(int value) {
         id = value;
