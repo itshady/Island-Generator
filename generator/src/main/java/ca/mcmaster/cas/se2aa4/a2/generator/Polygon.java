@@ -15,12 +15,10 @@ public class Polygon {
     private float thickness = (float) 2;
     private Color color;
     private Centroid centroid;
-    private final int width = 520;
-    private final int height = 520;
-    private final double precision = 0.01;
+    private final int width = 500;
+    private final double precision = 1;
     private Set<Integer> neighbourIdxSet = new HashSet<>();
     private final int matrixWidth = (int) Math.round(width/precision);
-    private final int matrixHeight = (int) Math.round(height/precision);
 
     public Polygon(Integer id, List<Segment> segments) {
         this.id = id;

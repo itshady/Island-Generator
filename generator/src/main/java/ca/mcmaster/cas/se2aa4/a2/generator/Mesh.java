@@ -10,9 +10,9 @@ import java.util.*;
 import java.util.List;
 
 public class Mesh {
-    private final int width = 520;
-    private final int height = 520;
-    private final double precision = 0.01;
+    private final int width = 500;
+    private final int height = 500;
+    private final double precision = 1;
     private final int matrixWidth = (int) Math.round(width/precision);
     private final int matrixHeight = (int) Math.round(height/precision);
     private final int square_size = (int) (20/precision);
@@ -41,7 +41,7 @@ public class Mesh {
         MultiPoint points = geometryFactory.createMultiPointFromCoords(coordsList.toArray(new Coordinate[coordsList.size()]));
 
         // Create a boundary envelope
-        Envelope envelope = new Envelope(0, 500, 0, 500);
+        Envelope envelope = new Envelope(0, width, 0, height);
 
         // Initialize voronoi diagram builder
         Geometry clippedDiagram = createVoronoiDiagram(geometryFactory, points, envelope);
@@ -63,7 +63,7 @@ public class Mesh {
             // adds vertices of the polygon to the vertex list
             int startCounter = counter;
             for (Coordinate coord : coords) {
-                vertices.put(counter, new Vertex(counter, coord.getX()*100, coord.getY()*100));
+                vertices.put(counter, new Vertex(counter, coord.getX(), coord.getY()));
                 counter++;
             }
             // create and add segments to polygon
@@ -79,7 +79,7 @@ public class Mesh {
             // get centroid
             org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);
             Polygon newPolygon = new Polygon(counter, polySegments, Color.BLACK, 1f);
-            Centroid newCentroid = new Centroid(counter, centroidJTS.getCentroid().getX()*100, centroidJTS.getCentroid().getY()*100);
+            Centroid newCentroid = new Centroid(counter, centroidJTS.getCentroid().getX(), centroidJTS.getCentroid().getY());
             vertices.put(counter, newCentroid);
             counter++;
             newPolygon.setCentroid(newCentroid);
@@ -97,6 +97,7 @@ public class Mesh {
 
     private Geometry createVoronoiDiagram(GeometryFactory geometryFactory, MultiPoint points, Envelope envelope) {
         VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
+        voronoi.setTolerance(1);
         voronoi.setSites(points); // Sets the vertices that will be diagrammed
         // creates the polygon vertices around generated sites
         Geometry diagram = voronoi.getDiagram(geometryFactory);
@@ -110,10 +111,9 @@ public class Mesh {
         List<Coordinate> coordList = new ArrayList<>();
         Random bag = new Random();
         int rangeMin = 0;
-        int rangeMax = 500;
         for (int i=0; i<bag.nextInt(100,150); i++) {
-            double rand1 = ((int)((rangeMin + (rangeMax - rangeMin) * bag.nextDouble())*100))/100.0;
-            double rand2 = ((int)((rangeMin + (rangeMax - rangeMin) * bag.nextDouble())*100))/100.0;
+            double rand1 = ((int)((rangeMin + (width - rangeMin) * bag.nextDouble())*100))/100.0;
+            double rand2 = ((int)((rangeMin + (height - rangeMin) * bag.nextDouble())*100))/100.0;
             coordList.add(new Coordinate(rand1,rand2));
         }
         return coordList;

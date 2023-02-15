@@ -11,7 +11,6 @@ public class Segment {
     private Color color;
     private Vertex v1;
     private Vertex v2;
-    private final double precision = 0.01;
     private int id;
     public Vertex getV1() {
         return v1;
