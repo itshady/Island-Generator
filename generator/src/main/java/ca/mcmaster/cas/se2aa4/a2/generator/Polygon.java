@@ -90,6 +90,10 @@ public class Polygon {
         return id;
     }
 
+    public void setCentroid(Centroid centroid) {
+        this.centroid = centroid;
+    }
+
     private Centroid generateCentroid() {
         List<Double> centroidCoords = calculateCentroid();
         Double x = centroidCoords.get(0);

@@ -3,6 +3,7 @@ package ca.mcmaster.cas.se2aa4.a2.generator;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
+import org.locationtech.jts.algorithm.*;
 
 import java.awt.*;
 import java.util.*;
@@ -92,11 +93,13 @@ public class Mesh {
         int polyCounter = 0;
         for (Geometry polygon : polygonsJTS) {
             Coordinate[] coords = polygon.getCoordinates();
+            // adds vertices of the polygon to the vertex list
             int startCounter = counter;
             for (Coordinate coord : coords) {
-                vertices.put(counter,new Vertex(counter, coord.getX()*100, coord.getY()*100));
+                vertices.put(counter, new Vertex(counter, coord.getX()*100, coord.getY()*100));
                 counter++;
             }
+            // create and add segments to polygon
             List<Segment> polySegments = new ArrayList<>();
             for (int i=startCounter; i<counter; i++) {
                 int nextIndex = ((i+1)-startCounter)%(counter-startCounter) + startCounter;
@@ -106,14 +109,21 @@ public class Mesh {
                 segCounter++;
             }
 
-            polygons.put(polyCounter, new Polygon(counter, polySegments, Color.BLACK, 1f));
+            // get centroid
+            org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);
+            Polygon newPolygon = new Polygon(counter, polySegments, Color.BLACK, 1f);
+            Centroid newCentroid = new Centroid(counter, centroidJTS.getCentroid().getX()*100, centroidJTS.getCentroid().getY()*100);
+            vertices.put(counter, newCentroid);
+            counter++;
+            newPolygon.setCentroid(newCentroid);
+            polygons.put(polyCounter, newPolygon);
             polyCounter++;
         }
 
-        for (Coordinate centroids : coordList) {
-            vertices.put(counter, new Centroid(counter, centroids.getX()*100, centroids.getY()*100));
-            counter++;
-        }
+//        for (Coordinate centroids : coordList) {
+//            vertices.put(counter, new Centroid(counter, centroids.getX()*100, centroids.getY()*100));
+//            counter++;
+//        }
 
         Set<Structs.Vertex> rudimentaryVertices = extractVertices(vertices);
         Set<Structs.Segment> rudimentarySegments = extractSegments(segments);
