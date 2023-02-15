@@ -31,53 +31,20 @@ public class Mesh {
         // map out points and store id in segment
         // depth first search
 
-        // list is <x,y>
-//        Map<Integer, List<Integer>> coords = new HashMap<>();
-
-        //Map<Integer, Vertex> vertices = initializeSquareVertices(coords);
-        //Map<Integer, Segment> segments = initializeSquareSegments(vertices);
-        //Map<Integer, Polygon> polygons = initializeSquarePolygons(segments, vertices);
-
-//        for (Vertex vertex : vertices.values()) {
-//            //if (vertex.isCentroid()) System.out.println(vertex.getId() + " x: " + vertex.getX() + "  y: " + vertex.getY());
-//        }
-        // Mesh handle both rudimentary conversions
-        // Mesh handles whether classes get 802 or 8.02 (precision handling)
-        // Mesh should have functions that define standards maps
-
-        //Set<Structs.Vertex> rudimentaryVertices = extractVertices(vertices);
-//        Set<Structs.Segment> rudimentarySegments = extractSegments(segments);
-//        Set<Structs.Polygon> rudimentaryPolygons = extractPolygons(polygons);
-
-
         // TESTING FOR VORONOI DIAGRAM
         // Initialize a list of "randomly" generated coordinates
-        List<Coordinate> coordList = new ArrayList<>();
-        Random bag = new Random();
-        int rangeMin = 0;
-        int rangeMax = 500;
-        for (int i=0; i<bag.nextInt(100,150); i++) {
-            double rand1 = ((int)((rangeMin + (rangeMax - rangeMin) * bag.nextDouble())*100))/100.0;
-            double rand2 = ((int)((rangeMin + (rangeMax - rangeMin) * bag.nextDouble())*100))/100.0;
-            coordList.add(new Coordinate(rand1,rand2));
-        }
+        List<Coordinate> coordsList = generateRandomPoints();
 
         // Create GeometryFactory to get voronoi diagram later
         GeometryFactory geometryFactory = new GeometryFactory();
         // Helps library create polygon by using MultiPoints
-        MultiPoint points = geometryFactory.createMultiPointFromCoords(coordList.toArray(new Coordinate[coordList.size()]));
+        MultiPoint points = geometryFactory.createMultiPointFromCoords(coordsList.toArray(new Coordinate[coordsList.size()]));
 
         // Create a boundary envelope
         Envelope envelope = new Envelope(0, 500, 0, 500);
 
         // Initialize voronoi diagram builder
-        VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
-        voronoi.setSites(points); // Sets the vertices that will be diagrammed
-        // creates the polygon vertices around generated sites
-        Geometry diagram = voronoi.getDiagram(geometryFactory);
-
-        // Clipped diagram to remove vertices outside height x width
-        Geometry clippedDiagram = diagram.intersection(geometryFactory.toGeometry(envelope));
+        Geometry clippedDiagram = createVoronoiDiagram(geometryFactory, points, envelope);
 
         List<Geometry> polygonsJTS = new ArrayList<>();
         for (int i=0; i<clippedDiagram.getNumGeometries(); i++) {
@@ -120,17 +87,36 @@ public class Mesh {
             polyCounter++;
         }
 
-//        for (Coordinate centroids : coordList) {
-//            vertices.put(counter, new Centroid(counter, centroids.getX()*100, centroids.getY()*100));
-//            counter++;
-//        }
-
         Set<Structs.Vertex> rudimentaryVertices = extractVertices(vertices);
         Set<Structs.Segment> rudimentarySegments = extractSegments(segments);
         Set<Structs.Polygon> rudimentaryPolygons = extractPolygons(polygons);
 
       mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
 //        mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).build();
+    }
+
+    private Geometry createVoronoiDiagram(GeometryFactory geometryFactory, MultiPoint points, Envelope envelope) {
+        VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
+        voronoi.setSites(points); // Sets the vertices that will be diagrammed
+        // creates the polygon vertices around generated sites
+        Geometry diagram = voronoi.getDiagram(geometryFactory);
+
+        // Clipped diagram to remove vertices outside height x width
+        Geometry clippedDiagram = diagram.intersection(geometryFactory.toGeometry(envelope));
+        return clippedDiagram;
+    }
+
+    private List<Coordinate> generateRandomPoints() {
+        List<Coordinate> coordList = new ArrayList<>();
+        Random bag = new Random();
+        int rangeMin = 0;
+        int rangeMax = 500;
+        for (int i=0; i<bag.nextInt(100,150); i++) {
+            double rand1 = ((int)((rangeMin + (rangeMax - rangeMin) * bag.nextDouble())*100))/100.0;
+            double rand2 = ((int)((rangeMin + (rangeMax - rangeMin) * bag.nextDouble())*100))/100.0;
+            coordList.add(new Coordinate(rand1,rand2));
+        }
+        return coordList;
     }
 
     private List<List<Double>> getCoordsForCentroid(List<Segment> segments, Map<Integer, Vertex> vertices) {
