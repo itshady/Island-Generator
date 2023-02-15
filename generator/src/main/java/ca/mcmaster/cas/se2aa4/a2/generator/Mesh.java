@@ -11,7 +11,7 @@ import java.util.List;
 public class Mesh {
     private final int width = 520;
     private final int height = 520;
-    private final double precision = 1;
+    private final double precision = 0.01;
     private final int matrixWidth = (int) Math.round(width/precision);
     private final int matrixHeight = (int) Math.round(height/precision);
     private final int square_size = (int) (20/precision);
@@ -66,14 +66,21 @@ public class Mesh {
         // Helps library create polygon by using MultiPoints
         MultiPoint points = geometryFactory.createMultiPointFromCoords(coordList.toArray(new Coordinate[coordList.size()]));
 
+        // Create a boundary envelope
+        Envelope envelope = new Envelope(0, 500, 0, 500);
+
         // Initialize voronoi diagram builder
         VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
         voronoi.setSites(points); // Sets the vertices that will be diagrammed
         // creates the polygon vertices around generated sites
         Geometry diagram = voronoi.getDiagram(geometryFactory);
+
+        // Clipped diagram to remove vertices outside height x width
+        Geometry clippedDiagram = diagram.intersection(geometryFactory.toGeometry(envelope));
+
         List<Geometry> polygonsJTS = new ArrayList<>();
-        for (int i=0; i<diagram.getNumGeometries(); i++) {
-            polygonsJTS.add(diagram.getGeometryN(i));
+        for (int i=0; i<clippedDiagram.getNumGeometries(); i++) {
+            polygonsJTS.add(clippedDiagram.getGeometryN(i));
         }
 
         Map<Integer, Vertex> vertices = new HashMap<>();
