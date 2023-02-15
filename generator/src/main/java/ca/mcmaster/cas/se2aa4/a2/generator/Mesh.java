@@ -55,18 +55,12 @@ public class Mesh {
         Random bag = new Random();
         int rangeMin = 0;
         int rangeMax = 500;
-        for (int i=0; i<bag.nextInt(30,50); i++) {
+        for (int i=0; i<bag.nextInt(100,150); i++) {
             double rand1 = ((int)((rangeMin + (rangeMax - rangeMin) * bag.nextDouble())*100))/100.0;
             double rand2 = ((int)((rangeMin + (rangeMax - rangeMin) * bag.nextDouble())*100))/100.0;
             coordList.add(new Coordinate(rand1,rand2));
         }
 
-//        Coordinate coord = new Coordinate(20000, 20000);
-//        coordList.add(coord);
-//        Vertex poly1 = new Vertex(4, 20000,20000);
-//        Vertex poly2 = new Vertex(5, 30000,30000);
-//        Coordinate coord2 = new Coordinate(30000, 30000);
-//        coordList.add(coord2);
         // Create GeometryFactory to get voronoi diagram later
         GeometryFactory geometryFactory = new GeometryFactory();
         // Helps library create polygon by using MultiPoints
@@ -77,20 +71,36 @@ public class Mesh {
         voronoi.setSites(points); // Sets the vertices that will be diagrammed
         // creates the polygon vertices around generated sites
         Geometry diagram = voronoi.getDiagram(geometryFactory);
-        List<Geometry> polygons = new ArrayList<>();
+        List<Geometry> polygonsJTS = new ArrayList<>();
         for (int i=0; i<diagram.getNumGeometries(); i++) {
-            polygons.add(diagram.getGeometryN(i));
+            polygonsJTS.add(diagram.getGeometryN(i));
         }
 
         Map<Integer, Vertex> vertices = new HashMap<>();
         Map<Integer, Segment> segments = new HashMap<>();
+        Map<Integer, Polygon> polygons = new HashMap<>();
+
         int counter = 0;
-        for (Geometry polygon : polygons) {
+        int segCounter = 0;
+        int polyCounter = 0;
+        for (Geometry polygon : polygonsJTS) {
             Coordinate[] coords = polygon.getCoordinates();
+            int startCounter = counter;
             for (Coordinate coord : coords) {
                 vertices.put(counter,new Vertex(counter, coord.getX()*100, coord.getY()*100));
                 counter++;
             }
+            List<Segment> polySegments = new ArrayList<>();
+            for (int i=startCounter; i<counter; i++) {
+                int nextIndex = ((i+1)-startCounter)%(counter-startCounter) + startCounter;
+                Segment newSeg = new Segment(segCounter, vertices.get(i), vertices.get(nextIndex));
+                segments.put(segCounter, newSeg);
+                polySegments.add(newSeg);
+                segCounter++;
+            }
+
+            polygons.put(polyCounter, new Polygon(counter, polySegments, Color.BLACK, 1f));
+            polyCounter++;
         }
 
         for (Coordinate centroids : coordList) {
@@ -98,53 +108,12 @@ public class Mesh {
             counter++;
         }
 
-
-
-//        Geometry polygon1 = diagram.getGeometryN(0);  // chooses first polygon
-//        System.out.println(Arrays.toString(polygon1.getCoordinates()));
-        System.out.println(polygons);
-        // Make vertices from coordinates of polygon
-//        for ()
-//        Vertex a1 = new Vertex(0, (polygon1.getCoordinates()[0]).getX(), (polygon1.getCoordinates()[0]).getY());
-//        Vertex a2 = new Vertex(1, (polygon1.getCoordinates()[1]).getX(), (polygon1.getCoordinates()[1]).getY());
-//        Vertex a3 = new Vertex(2, (polygon1.getCoordinates()[2]).getX(), (polygon1.getCoordinates()[2]).getY());
-//        Vertex a4 = new Vertex(3, (polygon1.getCoordinates()[3]).getX(), (polygon1.getCoordinates()[3]).getY());
-//        Vertex x = new Vertex(1, 0,0);
-//        Vertex x2 = new Vertex(1, 50000,50000);
-//
-//        Map<Integer, Vertex> vertices = new HashMap<>();
-//        vertices.put(0, a1);
-//        vertices.put(1, a2);
-//        vertices.put(2, a3);
-//        vertices.put(3, a4);
-////        vertices.put(2,x);
-////        vertices.put(3,x2);
-////        vertices.put(4,poly1);
-////        vertices.put(5,poly2);
-//
-//        // make segment out of vertices
-//        Segment b1 = new Segment(a1, a2);
-//        Segment b2 = new Segment(a2, a3);
-//        Segment b3 = new Segment(a3, a4);
-//        Segment b4 = new Segment(a4, a1);
-//        Map<Integer, Segment> segments = new HashMap<>();
-//        segments.put(0, b1);
-//        segments.put(1, b2);
-//        segments.put(2, b3);
-//        segments.put(3, b4);
-//        for (Vertex v : vertices.values()) {
-//            System.out.println(v.getId()+ ": " +v.getX()+ ", "+v.getY());
-//        }
-//
-//        for (Segment s : segments.values()) {
-//            System.out.println(s.getV1().getId()+ ", "+s.getV2().getId());
-//        }
-//        System.out.println(segments);
         Set<Structs.Vertex> rudimentaryVertices = extractVertices(vertices);
-//        Set<Structs.Segment> rudimentarySegments = extractSegments(segments);
+        Set<Structs.Segment> rudimentarySegments = extractSegments(segments);
+        Set<Structs.Polygon> rudimentaryPolygons = extractPolygons(polygons);
 
-//      mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
-        mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).build();
+      mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
+//        mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).build();
     }
 
     private List<List<Double>> getCoordsForCentroid(List<Segment> segments, Map<Integer, Vertex> vertices) {

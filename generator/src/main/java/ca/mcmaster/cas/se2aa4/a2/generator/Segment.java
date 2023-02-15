@@ -38,6 +38,12 @@ public class Segment {
         setSegment(v1, v2, color);
     }
 
+    public Segment(Integer id, Vertex v1, Vertex v2) {
+        setId(id);
+        color = averageColor(v1.getColor(), v2.getColor());
+        setSegment(v1, v2, color);
+    }
+
     public Segment(Vertex v1, Vertex v2, Float thickness) {
         this.thickness = thickness;
         color = averageColor(v1.getColor(), v2.getColor());

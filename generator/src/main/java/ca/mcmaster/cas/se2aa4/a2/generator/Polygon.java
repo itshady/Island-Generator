@@ -28,6 +28,7 @@ public class Polygon {
         segmentList = segments;
     }
 
+
     public Polygon(Integer id, List<Segment> segments, Color color, List<List<Double>> points) {
         this.id = id;
         this.color = color;
@@ -43,6 +44,14 @@ public class Polygon {
         segmentList = segments;
         vertexPointList = points;
         centroid = generateCentroid();
+    }
+
+    public Polygon(Integer id, List<Segment> segments, Color color, Float thickness) {
+        this.id = id;
+        this.color = color;
+        this.thickness = thickness;
+        segmentList = segments;
+        centroid = new Centroid(0,0.0,0.0);
     }
 
     public Polygon(Integer id, List<Segment> segments, Color color, Float thickness, List<List<Double>> points) {
