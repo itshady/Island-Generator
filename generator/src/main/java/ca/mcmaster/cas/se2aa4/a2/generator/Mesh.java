@@ -51,9 +51,9 @@ public class Mesh {
             polygonsJTS.add(clippedDiagram.getGeometryN(i));
         }
 
-        Map<Integer, Vertex> vertices = new HashMap<>();
-        Map<Integer, Segment> segments = new HashMap<>();
-        Map<Integer, Polygon> polygons = new HashMap<>();
+        Map<Integer, Vertex> vertices = new LinkedHashMap<>();
+        Map<Integer, Segment> segments = new LinkedHashMap<>();
+        Map<Integer, Polygon> polygons = new LinkedHashMap<>();
 
         int counter = 0;
         int segCounter = 0;
@@ -92,7 +92,6 @@ public class Mesh {
         Set<Structs.Polygon> rudimentaryPolygons = extractPolygons(polygons);
 
       mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
-//        mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).build();
     }
 
     private Geometry createVoronoiDiagram(GeometryFactory geometryFactory, MultiPoint points, Envelope envelope) {
@@ -119,131 +118,14 @@ public class Mesh {
         return coordList;
     }
 
-    private List<List<Double>> getCoordsForCentroid(List<Segment> segments, Map<Integer, Vertex> vertices) {
-        List<List<Double>> coords = new ArrayList<>();
-
-        for (int i = 0; i < segments.size(); i++) {
-            int index;
-            List<Double> xy = new ArrayList<>();
-            segments.get(i).generateSegment();
-
-            // Depending on which point, get either V1 or V2
-            if (i == 1 || i == 2) {
-                index = segments.get(i).getSegment().getV2Idx();
-            } else {
-                index = segments.get(i).getSegment().getV1Idx();
-            }
-            xy.add(vertices.get(index).getX());
-            xy.add(vertices.get(index).getY());
-            coords.add(xy);
-        }
-        return coords;
-    }
-
-    private Map<Integer, Polygon> initializeSquarePolygons(Map<Integer, Segment> segments, Map<Integer, Vertex> vertices) {
-        Map<Integer, Polygon> polygons = new HashMap<>();
-        Integer counter = 0;
-
-        int width = matrixWidth / square_size;
-        int height = matrixHeight / square_size;
-
-        for (int i = 0; i < (width-1)*(height-1); i++) {
-            List<Segment> segmentList = new ArrayList<>(4);
-            segmentList.add(segments.get(i));
-            segmentList.add(segments.get((i/(width-1)) + (width-1)*height + (i%(width-1))*(height-1)));
-            segmentList.add(segments.get(i + (width-1)));
-            segmentList.add(segments.get((i/(width-1)) + (width-1)*height + (i%(width-1))*(height-1) + (height-1)));
-
-            // Obtain the points needed to calculate the centroid
-            List<List<Double>> allCoords = getCoordsForCentroid(segmentList, vertices);
-            Polygon newPolygon = new Polygon(counter, segmentList, Color.BLACK, 1f, allCoords);
-            polygons.put(counter, newPolygon);
-            vertices.put(newPolygon.getCentroidId(),newPolygon.getCentroid());
-            counter++;
-
-            // Determine Polygon Neighbours
-            Map<Segment, List<Polygon>> polygonNeighbours = setPolygonNeighbours(polygons,segments);
-            for (List<Polygon> list : polygonNeighbours.values()) {
-                //System.out.println(list);
-                for (Polygon p: list) {
-                    p.addPolygonNeighbourSet(list);
-                    p.removePolygonNeighbour(p);
-                }
+    private List<Coordinate> generateSquareCentroids() {
+        List<Coordinate> coordList = new ArrayList<>();
+        for (int i=0; i<matrixHeight; i+=matrixWidth/square_size) {
+            for (int j=0; j<matrixWidth; j+=matrixWidth/square_size) {
+                coordList.add(new Coordinate((j+square_size/2),(i+square_size/2)));
             }
         }
-//        System.out.println("Polygon " + polygons.get(15).getId() + " - Neighbours: " + polygons.get(15).getPolygonNeighbours());
-//        System.out.println("Polygon " + polygons.get(16).getId() + " - Neighbours: " + polygons.get(16).getPolygonNeighbours());
-        return polygons;
-    }
-
-    private Map<Segment, List<Polygon>> setPolygonNeighbours(Map<Integer, Polygon> polygons, Map<Integer, Segment> segments) {
-        Map<Segment, List<Polygon>> polygonsAttachedToSegment = new HashMap<>();
-        for (Integer s : segments.keySet()) {
-            List<Polygon> attachedPolygons = new ArrayList<>();
-            for (Integer p : polygons.keySet()) {
-                if (polygons.get(p).getSegmentList().contains(segments.get(s))) {
-                    attachedPolygons.add(polygons.get(p));
-                }
-            }
-            polygonsAttachedToSegment.put(segments.get(s), attachedPolygons);
-        }
-        return polygonsAttachedToSegment;
-    }
-
-
-    private Map<Integer, Segment> initializeSquareSegments(Map<Integer, Vertex> vertices) {
-        Map<Integer, Segment> segments = new HashMap<>();
-        Integer counter = 0;
-
-        // horizontal segments
-        for (int i=0; i<matrixHeight; i+=square_size) {
-            for (int j=0; j<matrixWidth-square_size; j+=square_size) {
-                Integer currPos = i*(matrixWidth)+j;
-                Integer nextPos = i*(matrixWidth)+j+square_size;
-                Vertex currVertex = vertices.get(currPos);
-                Vertex nextVertex = vertices.get(nextPos);
-
-                segments.put(counter, new Segment(currVertex, nextVertex, 0.5f));
-                counter++;
-            }
-        }
-        // vertical segments
-        for (int i=0; i<matrixWidth; i+=square_size) {
-            for (int j=0; j<matrixHeight-square_size; j+=square_size) {
-                Integer currPos = j*(matrixWidth)+i;
-                Integer nextPos = (j+square_size)*(matrixWidth)+i;
-                Vertex currVertex = vertices.get(currPos);
-                Vertex nextVertex = vertices.get(nextPos);
-
-                segments.put(counter, new Segment(currVertex, nextVertex, 0.5f));
-                counter++;
-            }
-        }
-
-        return segments;
-    }
-
-    private Map<Integer, Vertex> initializeSquareVertices(Map<Integer, List<Integer>> coords) {
-        Map<Integer, Vertex> vertices = new HashMap<>();
-
-        int counter = 0;
-        for (int i=0; i<matrixHeight; i+=square_size) {
-            for (int j=0; j<matrixWidth; j+=square_size) {
-                Integer pos = i*(matrixWidth)+j;
-
-                if (!coords.containsKey(pos)) {
-                    List<Integer> xy = new ArrayList<>();
-                    xy.add(j);
-                    xy.add(i);
-                    coords.put(pos, xy);
-                    //vertices.put(pos, new Vertex(pos, xy.get(0),xy.get(1), new Color(counter%4 == 0 ? 255 : 0,0,0) , 3f));
-                    vertices.put(pos, new Vertex(pos, xy.get(0),xy.get(1), 3f));
-                    counter++;
-                }
-                //System.out.println("i: "+i+" j: "+j+"("+pos+", "+coords.get(pos)+")");
-            }
-        }
-        return vertices;
+        return coordList;
     }
 
     private Set<Structs.Vertex> extractVertices(Map<Integer, Vertex> vertices) {
