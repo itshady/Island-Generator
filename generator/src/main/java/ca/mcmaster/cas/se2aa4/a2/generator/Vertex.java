@@ -10,7 +10,7 @@ public class Vertex {
     private Structs.Vertex vertex;
     private Color color;
     private Integer id;
-    private final double precision = 0.01;
+    private final double precision = 1;
 
     // Default constructor
     public Vertex() {

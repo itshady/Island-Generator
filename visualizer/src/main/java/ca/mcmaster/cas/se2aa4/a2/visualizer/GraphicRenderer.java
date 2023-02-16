@@ -91,23 +91,29 @@ public class GraphicRenderer {
             canvas.setStroke(polygonStroke);
 
             // Setting the colour based on the location (can be edited)
-            /*if (counter % 2 == 0) {
+            if (counter == 0) {
+                System.out.println("BLUE: "+ counter);
                 canvas.setColor(Color.BLUE);
-            } else if (counter % 3 == 0) {
+                counter++;
+            } else if (counter == 1) {
+                System.out.println("PINK: "+ counter);
                 canvas.setColor(Color.PINK);
+                counter++;
             } else {
+                System.out.println("GREEN: "+ counter);
+                counter = 0;
                 canvas.setColor(Color.GREEN);
-            } */
-            if (debug) canvas.setColor(Color.BLACK);
-            else canvas.setColor(extractColor(p.getPropertiesList()));
-            counter++;
+            }
+//            if (debug) canvas.setColor(Color.BLACK);
+//            else canvas.setColor(extractColor(p.getPropertiesList()));
+
 
             List<Integer> polygonSegments = p.getSegmentIdxsList();
             int[] xValues = new int[polygonSegments.size()];
             int[] yValues = new int[polygonSegments.size()];
             updateCoordsForPolygons(vertexList, segmentsList, polygonSegments, xValues, yValues);
             Polygon polygon = new Polygon(xValues, yValues, polygonSegments.size());
-            canvas.drawPolygon(polygon);
+            canvas.fillPolygon(polygon);
             canvas.setColor(old);
         }
     }

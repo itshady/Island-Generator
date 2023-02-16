@@ -1,15 +1,18 @@
 package ca.mcmaster.cas.se2aa4.a2.generator;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+import org.locationtech.jts.geom.*;
+import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
+import org.locationtech.jts.algorithm.*;
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
 public class Mesh {
-    private final int width = 520;
-    private final int height = 520;
-    private final double precision = 0.01;
+    private final int width = 500;
+    private final int height = 500;
+    private final double precision = 1;
     private final int matrixWidth = (int) Math.round(width/precision);
     private final int matrixHeight = (int) Math.round(height/precision);
     private final int square_size = (int) (20/precision);
@@ -28,151 +31,101 @@ public class Mesh {
         // map out points and store id in segment
         // depth first search
 
-        // list is <x,y>
-        Map<Integer, List<Integer>> coords = new HashMap<>();
+        // TESTING FOR VORONOI DIAGRAM
+        // Initialize a list of "randomly" generated coordinates
+        List<Coordinate> coordsList = generateRandomPoints();
 
-        Map<Integer, Vertex> vertices = initializeSquareVertices(coords);
-        Map<Integer, Segment> segments = initializeSquareSegments(vertices);
-        Map<Integer, Polygon> polygons = initializeSquarePolygons(segments, vertices);
+        // Create GeometryFactory to get voronoi diagram later
+        GeometryFactory geometryFactory = new GeometryFactory();
+        // Helps library create polygon by using MultiPoints
+        MultiPoint points = geometryFactory.createMultiPointFromCoords(coordsList.toArray(new Coordinate[coordsList.size()]));
 
-        for (Vertex vertex : vertices.values()) {
-            //if (vertex.isCentroid()) System.out.println(vertex.getId() + " x: " + vertex.getX() + "  y: " + vertex.getY());
+        // Create a boundary envelope
+        Envelope envelope = new Envelope(0, width, 0, height);
+
+        // Initialize voronoi diagram builder
+        Geometry clippedDiagram = createVoronoiDiagram(geometryFactory, points, envelope);
+
+        List<Geometry> polygonsJTS = new ArrayList<>();
+        for (int i=0; i<clippedDiagram.getNumGeometries(); i++) {
+            polygonsJTS.add(clippedDiagram.getGeometryN(i));
         }
-        // Mesh handle both rudimentary conversions
-        // Mesh handles whether classes get 802 or 8.02 (precision handling)
-        // Mesh should have functions that define standards maps
+
+        Map<Integer, Vertex> vertices = new LinkedHashMap<>();
+        Map<Integer, Segment> segments = new LinkedHashMap<>();
+        Map<Integer, Polygon> polygons = new LinkedHashMap<>();
+
+        int counter = 0;
+        int segCounter = 0;
+        int polyCounter = 0;
+        for (Geometry polygon : polygonsJTS) {
+            Coordinate[] coords = polygon.getCoordinates();
+            // adds vertices of the polygon to the vertex list
+            int startCounter = counter;
+            for (Coordinate coord : coords) {
+                vertices.put(counter, new Vertex(counter, coord.getX(), coord.getY()));
+                counter++;
+            }
+            // create and add segments to polygon
+            List<Segment> polySegments = new ArrayList<>();
+            for (int i=startCounter; i<counter; i++) {
+                int nextIndex = ((i+1)-startCounter)%(counter-startCounter) + startCounter;
+                Segment newSeg = new Segment(segCounter, vertices.get(i), vertices.get(nextIndex));
+                segments.put(segCounter, newSeg);
+                polySegments.add(newSeg);
+                segCounter++;
+            }
+
+            // get centroid
+            org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);
+            Polygon newPolygon = new Polygon(counter, polySegments, Color.BLACK, 1f);
+            Centroid newCentroid = new Centroid(counter, centroidJTS.getCentroid().getX(), centroidJTS.getCentroid().getY());
+            vertices.put(counter, newCentroid);
+            counter++;
+            newPolygon.setCentroid(newCentroid);
+            polygons.put(polyCounter, newPolygon);
+            polyCounter++;
+        }
 
         Set<Structs.Vertex> rudimentaryVertices = extractVertices(vertices);
         Set<Structs.Segment> rudimentarySegments = extractSegments(segments);
         Set<Structs.Polygon> rudimentaryPolygons = extractPolygons(polygons);
-        mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
+
+      mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
     }
 
-    private List<List<Double>> getCoordsForCentroid(List<Segment> segments, Map<Integer, Vertex> vertices) {
-        List<List<Double>> coords = new ArrayList<>();
+    private Geometry createVoronoiDiagram(GeometryFactory geometryFactory, MultiPoint points, Envelope envelope) {
+        VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
+        voronoi.setTolerance(1);
+        voronoi.setSites(points); // Sets the vertices that will be diagrammed
+        // creates the polygon vertices around generated sites
+        Geometry diagram = voronoi.getDiagram(geometryFactory);
 
-        for (int i = 0; i < segments.size(); i++) {
-            int index;
-            List<Double> xy = new ArrayList<>();
-            segments.get(i).generateSegment();
-
-            // Depending on which point, get either V1 or V2
-            if (i == 1 || i == 2) {
-                index = segments.get(i).getSegment().getV2Idx();
-            } else {
-                index = segments.get(i).getSegment().getV1Idx();
-            }
-            xy.add(vertices.get(index).getX());
-            xy.add(vertices.get(index).getY());
-            coords.add(xy);
-        }
-        return coords;
+        // Clipped diagram to remove vertices outside height x width
+        Geometry clippedDiagram = diagram.intersection(geometryFactory.toGeometry(envelope));
+        return clippedDiagram;
     }
 
-    private Map<Integer, Polygon> initializeSquarePolygons(Map<Integer, Segment> segments, Map<Integer, Vertex> vertices) {
-        Map<Integer, Polygon> polygons = new HashMap<>();
-        Integer counter = 0;
-
-        int width = matrixWidth / square_size;
-        int height = matrixHeight / square_size;
-
-        for (int i = 0; i < (width-1)*(height-1); i++) {
-            List<Segment> segmentList = new ArrayList<>(4);
-            segmentList.add(segments.get(i));
-            segmentList.add(segments.get((i/(width-1)) + (width-1)*height + (i%(width-1))*(height-1)));
-            segmentList.add(segments.get(i + (width-1)));
-            segmentList.add(segments.get((i/(width-1)) + (width-1)*height + (i%(width-1))*(height-1) + (height-1)));
-
-            // Obtain the points needed to calculate the centroid
-            List<List<Double>> allCoords = getCoordsForCentroid(segmentList, vertices);
-            Polygon newPolygon = new Polygon(counter, segmentList, Color.BLACK, 1f, allCoords);
-            polygons.put(counter, newPolygon);
-            vertices.put(newPolygon.getCentroidId(),newPolygon.getCentroid());
-            counter++;
-
-            // Determine Polygon Neighbours
-            Map<Segment, List<Polygon>> polygonNeighbours = setPolygonNeighbours(polygons,segments);
-            for (List<Polygon> list : polygonNeighbours.values()) {
-                //System.out.println(list);
-                for (Polygon p: list) {
-                    p.addPolygonNeighbourSet(list);
-                    p.removePolygonNeighbour(p);
-                }
-            }
+    private List<Coordinate> generateRandomPoints() {
+        List<Coordinate> coordList = new ArrayList<>();
+        Random bag = new Random();
+        int rangeMin = 0;
+        for (int i=0; i<bag.nextInt(100,150); i++) {
+            double rand1 = ((int)((rangeMin + (width - rangeMin) * bag.nextDouble())*100))/100.0;
+            double rand2 = ((int)((rangeMin + (height - rangeMin) * bag.nextDouble())*100))/100.0;
+            coordList.add(new Coordinate(rand1,rand2));
         }
-//        System.out.println("Polygon " + polygons.get(15).getId() + " - Neighbours: " + polygons.get(15).getPolygonNeighbours());
-//        System.out.println("Polygon " + polygons.get(16).getId() + " - Neighbours: " + polygons.get(16).getPolygonNeighbours());
-        return polygons;
+        return coordList;
     }
 
-    private Map<Segment, List<Polygon>> setPolygonNeighbours(Map<Integer, Polygon> polygons, Map<Integer, Segment> segments) {
-        Map<Segment, List<Polygon>> polygonsAttachedToSegment = new HashMap<>();
-        for (Integer s : segments.keySet()) {
-            List<Polygon> attachedPolygons = new ArrayList<>();
-            for (Integer p : polygons.keySet()) {
-                if (polygons.get(p).getSegmentList().contains(segments.get(s))) {
-                    attachedPolygons.add(polygons.get(p));
-                }
-            }
-            polygonsAttachedToSegment.put(segments.get(s), attachedPolygons);
-        }
-        return polygonsAttachedToSegment;
-    }
-
-
-    private Map<Integer, Segment> initializeSquareSegments(Map<Integer, Vertex> vertices) {
-        Map<Integer, Segment> segments = new HashMap<>();
-        Integer counter = 0;
-
-        // horizontal segments
-        for (int i=0; i<matrixHeight; i+=square_size) {
-            for (int j=0; j<matrixWidth-square_size; j+=square_size) {
-                Integer currPos = i*(matrixWidth)+j;
-                Integer nextPos = i*(matrixWidth)+j+square_size;
-                Vertex currVertex = vertices.get(currPos);
-                Vertex nextVertex = vertices.get(nextPos);
-
-                segments.put(counter, new Segment(currVertex, nextVertex, 0.5f));
-                counter++;
+    private List<Coordinate> generateSquareCentroids() {
+        List<Coordinate> coordList = new ArrayList<>();
+        for (int i=0; i<matrixHeight; i+=matrixWidth/square_size) {
+            for (int j=0; j<matrixWidth; j+=matrixWidth/square_size) {
+                coordList.add(new Coordinate((j+square_size/2),(i+square_size/2)));
             }
         }
-        // vertical segments
-        for (int i=0; i<matrixWidth; i+=square_size) {
-            for (int j=0; j<matrixHeight-square_size; j+=square_size) {
-                Integer currPos = j*(matrixWidth)+i;
-                Integer nextPos = (j+square_size)*(matrixWidth)+i;
-                Vertex currVertex = vertices.get(currPos);
-                Vertex nextVertex = vertices.get(nextPos);
-
-                segments.put(counter, new Segment(currVertex, nextVertex, 0.5f));
-                counter++;
-            }
-        }
-
-        return segments;
-    }
-
-    private Map<Integer, Vertex> initializeSquareVertices(Map<Integer, List<Integer>> coords) {
-        Map<Integer, Vertex> vertices = new HashMap<>();
-
-        int counter = 0;
-        for (int i=0; i<matrixHeight; i+=square_size) {
-            for (int j=0; j<matrixWidth; j+=square_size) {
-                Integer pos = i*(matrixWidth)+j;
-
-                if (!coords.containsKey(pos)) {
-                    List<Integer> xy = new ArrayList<>();
-                    xy.add(j);
-                    xy.add(i);
-                    coords.put(pos, xy);
-                    //vertices.put(pos, new Vertex(pos, xy.get(0),xy.get(1), new Color(counter%4 == 0 ? 255 : 0,0,0) , 3f));
-                    vertices.put(pos, new Vertex(pos, xy.get(0),xy.get(1), 3f));
-                    counter++;
-                }
-                //System.out.println("i: "+i+" j: "+j+"("+pos+", "+coords.get(pos)+")");
-            }
-        }
-        return vertices;
+        return coordList;
     }
 
     private Set<Structs.Vertex> extractVertices(Map<Integer, Vertex> vertices) {

@@ -8,6 +8,9 @@ public class Centroid extends Vertex{
     public Centroid(Integer id, Double x, Double y, Color color) {
         super(id, x, y, color);
     }
+    public Centroid(Integer id, Double x, Double y) {
+        super(id, x, y);
+    }
     @Override
     public boolean isCentroid() {
         return true;

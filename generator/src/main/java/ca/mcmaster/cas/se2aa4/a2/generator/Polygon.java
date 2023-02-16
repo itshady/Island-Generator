@@ -15,18 +15,17 @@ public class Polygon {
     private float thickness = (float) 2;
     private Color color;
     private Centroid centroid;
-    private final int width = 520;
-    private final int height = 520;
-    private final double precision = 0.01;
+    private final int width = 500;
+    private final double precision = 1;
     private Set<Integer> neighbourIdxSet = new HashSet<>();
     private final int matrixWidth = (int) Math.round(width/precision);
-    private final int matrixHeight = (int) Math.round(height/precision);
 
     public Polygon(Integer id, List<Segment> segments) {
         this.id = id;
         this.color = averageColor(segments);
         segmentList = segments;
     }
+
 
     public Polygon(Integer id, List<Segment> segments, Color color, List<List<Double>> points) {
         this.id = id;
@@ -43,6 +42,14 @@ public class Polygon {
         segmentList = segments;
         vertexPointList = points;
         centroid = generateCentroid();
+    }
+
+    public Polygon(Integer id, List<Segment> segments, Color color, Float thickness) {
+        this.id = id;
+        this.color = color;
+        this.thickness = thickness;
+        segmentList = segments;
+        centroid = new Centroid(0,0.0,0.0);
     }
 
     public Polygon(Integer id, List<Segment> segments, Color color, Float thickness, List<List<Double>> points) {
@@ -79,6 +86,10 @@ public class Polygon {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setCentroid(Centroid centroid) {
+        this.centroid = centroid;
     }
 
     private Centroid generateCentroid() {
