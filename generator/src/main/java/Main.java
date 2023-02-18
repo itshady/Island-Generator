@@ -16,6 +16,7 @@ public class Main {
     public static void main(String[] args) {
         Options options = setupCLI();
         MeshFactory factory = new MeshFactory();
+        DotGen generator = new DotGen();
 
         try {
             Map<String, String> parsedArgs = parseArgs(args, options);
@@ -23,8 +24,8 @@ public class Main {
             // Extracting command line parameters
             System.out.println(parsedArgs);
             String output = parsedArgs.get("output");
-            String meshType = parsedArgs.get("mesh");
-            DotGen generator = new DotGen();
+            String meshType = parsedArgs.getOrDefault("mesh", "irregular");
+
             Mesh myMesh = generator.generate(meshType);
 
             factory.write(myMesh, output);
