@@ -1,5 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.generator;
 
+import org.locationtech.jts.algorithm.ConvexHull;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
@@ -34,7 +35,10 @@ public class VoronoiDiagram {
         // Get all generated Polygons from the voronoi diagram builder
         List<Geometry> polygonsJTS = new ArrayList<>();
         for (int i=0; i<clippedDiagram.getNumGeometries(); i++) {
-            polygonsJTS.add(clippedDiagram.getGeometryN(i));
+            System.out.println("Old Geometry: " + clippedDiagram.getGeometryN(i));
+            ConvexHull convex = new ConvexHull(clippedDiagram.getGeometryN(i));
+            System.out.println("Convex Hull: " + convex.getConvexHull());
+            polygonsJTS.add(convex.getConvexHull());
         }
         return polygonsJTS;
     }
