@@ -14,13 +14,11 @@ This visualizer takes a .mesh file created via the io Structs
 * int getV2Idx(): method that returns the index of the segments second vertex
 * List<Structs.Property> getPropertiesList(): method that returns a list of properties where the key and value are both strings in a dictionary. Ex. { key="myKey", value="myValue" }
 
-
 ### Polygons
 * List<Integer> getSegmentIdxsList: method that returns a list of all indices of its segments _in order_
 * Integer getCentroidIdx: method that returns the index of its centroid
 * List<Integer> getNeighborIdxsList: method that returns a list of all the indices of its neighbour polygons
 * List<Structs.Property> getPropertiesList(): method that returns a list of properties where the key and value are both strings in a dictionary. Ex. { key="myKey", value="myValue" }
-
 
 ### Properties
 | Vertex? | Segment? | Polygon? | Property Key | Property Value | Desc | Required? |

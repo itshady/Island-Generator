@@ -9,6 +9,7 @@ import java.util.List;
 public class VoronoiDiagram {
     private Integer width;
     private Integer height;
+    private final double precision = 0.01;
 
     public VoronoiDiagram(Integer width, Integer height) {
         this.width = width;
@@ -40,7 +41,7 @@ public class VoronoiDiagram {
 
     private Geometry createVoronoiDiagram(GeometryFactory geometryFactory, MultiPoint points, Envelope envelope) {
         VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
-        voronoi.setTolerance(1);
+        voronoi.setTolerance(precision);
         voronoi.setSites(points); // Sets the vertices that will be diagrammed
         // creates the polygon vertices around generated sites
         Geometry diagram = voronoi.getDiagram(geometryFactory);

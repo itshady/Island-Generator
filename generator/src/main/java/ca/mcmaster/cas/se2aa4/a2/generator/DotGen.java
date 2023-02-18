@@ -5,6 +5,6 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 public class DotGen {
 
     public Structs.Mesh generate() {
-        return new MeshFactory().generate("irregular");
+        return new MeshFactory().generate("square_regular");
     }
 }

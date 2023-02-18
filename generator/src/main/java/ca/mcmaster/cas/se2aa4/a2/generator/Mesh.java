@@ -9,27 +9,25 @@ import java.util.List;
 public abstract class Mesh {
     protected final int width = 500;
     protected final int height = 500;
-    protected final double precision = 1;
-    protected final int matrixWidth = (int) Math.round(width/precision);
-    protected final int matrixHeight = (int) Math.round(height/precision);
-    protected final int square_size = (int) (20/precision);
+    protected final int square_size = 20;
 
     Structs.Mesh mesh;
+    List<Centroid> centroids;
 
     public Structs.Mesh generate() {
-        generateDiagram();
+        generateDiagram(generatePoints());
         return mesh;
     }
-    public void generateDiagram() {
-        // Initialize a list of coordinates to create the voronoi diagram around
-        List<Coordinate> coordsList = generatePoints();
+
+    // coordsList is a list of vertices to build the voronoi diagram around
+    protected void generateDiagram(List<Coordinate> coordsList) {
         List<Geometry> polygonsJTS = new VoronoiDiagram(width, height).getVoronoiDiagram(coordsList);
 
         // Initialize maps to store all the data
         Map<Integer, Vertex> vertices = new LinkedHashMap<>();
         Map<Integer, Segment> segments = new LinkedHashMap<>();
         Map<Integer, Polygon> polygons = new LinkedHashMap<>();
-        List<Centroid> centroids = new ArrayList<>();
+        centroids = new ArrayList<>();
 
         // convert the JTS Geometries from voronoi diagram generator to our Geometries
         new JTSToGeneratorConverter().convertAllData(polygonsJTS, vertices, segments, polygons, centroids);
@@ -45,6 +43,10 @@ public abstract class Mesh {
         Set<Structs.Polygon> rudimentaryPolygons = converter.convertPolygons(polygons);
 
       mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
+    }
+
+    public List<Centroid> getCentroids() {
+        return centroids;
     }
 
     protected abstract List<Coordinate> generatePoints();
