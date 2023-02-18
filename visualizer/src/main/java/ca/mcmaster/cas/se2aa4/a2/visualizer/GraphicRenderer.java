@@ -10,8 +10,7 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 public class GraphicRenderer {
@@ -48,7 +47,7 @@ public class GraphicRenderer {
 
     private void visualizeSegments(Mesh aMesh, Graphics2D canvas, List<Vertex> vertexList) {
         for (Segment s: aMesh.getSegmentsList()) {
-            Stroke segmentStroke = new BasicStroke(extractSegmentThickness(s.getPropertiesList()));
+            Stroke segmentStroke = new BasicStroke(extractThickness(s.getPropertiesList()));
             canvas.setStroke(segmentStroke);
             Vertex v1 = vertexList.get(s.getV1Idx());
             Vertex v2 = vertexList.get(s.getV2Idx());
@@ -66,7 +65,7 @@ public class GraphicRenderer {
     private void visualizeVertices(Mesh aMesh, Graphics2D canvas) {
         for (Vertex v: aMesh.getVerticesList()) {
             if (!debug && isCentroid(v.getPropertiesList())) continue;
-            float vertexThickness = extractVertexThickness(v.getPropertiesList());
+            float vertexThickness = extractThickness(v.getPropertiesList());
             double centre_x = v.getX() - (vertexThickness/2.0d);
             double centre_y = v.getY() - (vertexThickness/2.0d);
             Color old = canvas.getColor();
@@ -87,7 +86,7 @@ public class GraphicRenderer {
         int counter = 0;
         for (Structs.Polygon p: aMesh.getPolygonsList()) {
             Color old = canvas.getColor();
-            Stroke polygonStroke = new BasicStroke(extractPolygonThickness(p.getPropertiesList()));
+            Stroke polygonStroke = new BasicStroke(extractThickness(p.getPropertiesList()));
             canvas.setStroke(polygonStroke);
 
             // Setting the colour based on the location (can be edited)
@@ -193,18 +192,6 @@ public class GraphicRenderer {
         return new Color(red, green, blue, alpha);
     }
 
-    private Float extractSegmentThickness(List<Property> properties) {
-        String val = null;
-        for(Property p: properties) {
-            if (p.getKey().equals("segment_thickness")) {
-                val = p.getValue();
-            }
-        }
-        if (val == null)
-            return 0.5f;
-        return Float.parseFloat(val);
-    }
-
     private boolean isCentroid(List<Property> properties) {
         String val = "false";
         for(Property p: properties) {
@@ -215,22 +202,10 @@ public class GraphicRenderer {
         return !val.equals("false");
     }
 
-    private Float extractVertexThickness(List<Property> properties) {
+    private Float extractThickness(List<Property> properties) {
         String val = null;
         for(Property p: properties) {
-            if (p.getKey().equals("vertex_thickness")) {
-                val = p.getValue();
-            }
-        }
-        if (val == null)
-            return 3f;
-        return Float.parseFloat(val);
-    }
-
-    private Float extractPolygonThickness(List<Property> properties) {
-        String val = null;
-        for(Property p: properties) {
-            if (p.getKey().equals("polygon_thickness")) {
+            if (p.getKey().equals("thickness")) {
                 val = p.getValue();
             }
         }

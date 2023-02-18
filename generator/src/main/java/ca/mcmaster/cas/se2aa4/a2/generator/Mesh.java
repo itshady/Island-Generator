@@ -2,11 +2,7 @@ package ca.mcmaster.cas.se2aa4.a2.generator;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.triangulate.DelaunayTriangulationBuilder;
-import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -21,10 +17,10 @@ public abstract class Mesh {
     Structs.Mesh mesh;
 
     public Structs.Mesh generate() {
-        generateInternal();
+        generateDiagram();
         return mesh;
     }
-    public void generateInternal() {
+    public void generateDiagram() {
         // Initialize a list of coordinates to create the voronoi diagram around
         List<Coordinate> coordsList = generatePoints();
         List<Geometry> polygonsJTS = new VoronoiDiagram(width, height).getVoronoiDiagram(coordsList);

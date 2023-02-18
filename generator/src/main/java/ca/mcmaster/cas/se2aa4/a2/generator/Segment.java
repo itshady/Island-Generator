@@ -132,7 +132,7 @@ public class Segment {
 
     private Structs.Property setThicknessProperty(Float thickness) {
         String segmentThickness = Float.toString(thickness);
-        Structs.Property thicknessProperty = Structs.Property.newBuilder().setKey("segment_thickness").setValue(segmentThickness).build();
+        Structs.Property thicknessProperty = Structs.Property.newBuilder().setKey("thickness").setValue(segmentThickness).build();
         return thicknessProperty;
     }
 

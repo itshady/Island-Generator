@@ -39,7 +39,7 @@ public class JTSToGeneratorConverter {
 
             // get centroid
             org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);
-            Polygon newPolygon = new Polygon(polyCounter, polySegments, Color.BLACK, 1f);
+            Polygon newPolygon = new Polygon(polyCounter, polySegments, Color.BLACK, 3f);
             Centroid newCentroid = new Centroid(vertexCounter, centroidJTS.getCentroid().getX(), centroidJTS.getCentroid().getY());
             centroids.add(newCentroid);
             vertices.put(vertexCounter, newCentroid);
