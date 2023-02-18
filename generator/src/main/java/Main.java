@@ -11,17 +11,21 @@ import java.util.Map;
 
 public class Main {
 
+
+
     public static void main(String[] args) {
         Options options = setupCLI();
-        DotGen generator = new DotGen();
-        Mesh myMesh = generator.generate();
         MeshFactory factory = new MeshFactory();
 
         try {
             Map<String, String> parsedArgs = parseArgs(args, options);
 
             // Extracting command line parameters
+            System.out.println(parsedArgs);
             String output = parsedArgs.get("output");
+            String meshType = parsedArgs.get("mesh");
+            DotGen generator = new DotGen();
+            Mesh myMesh = generator.generate(meshType);
 
             factory.write(myMesh, output);
 
@@ -39,7 +43,10 @@ public class Main {
 
         // add option to specify mesh file
         options.addOption("o","output", true, "Specify output file.");
-//
+
+        // add option to select the type of mesh
+        options.addOption("m", "mesh", true, "Selects the type of mesh to output: hex_regular, square_regular, or irregular" );
+
 //        // add option to add n players (each strategy = +1 player)
 //        Option option = new Option("p", "players", true, "Add players with respective strategies to game.");
 //        option.setArgs(Option.UNLIMITED_VALUES);
@@ -73,6 +80,9 @@ public class Main {
         if(cmd.hasOption("o")) {
             // if debug option passed
             argsMap.put("output",cmd.getOptionValues("o")[0]);
+        }
+        if(cmd.hasOption("m")) {
+            argsMap.put("mesh", cmd.getOptionValues("m")[0]);
         }
         return argsMap;
     }
