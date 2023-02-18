@@ -178,7 +178,7 @@ public class GraphicRenderer {
     private Color extractColor(List<Property> properties) {
         String val = null;
         for(Property p: properties) {
-            if (p.getKey().equals("rgb_color")) {
+            if (p.getKey().equals("rgba_color")) {
                 val = p.getValue();
             }
         }
@@ -199,7 +199,7 @@ public class GraphicRenderer {
                 val = p.getValue();
             }
         }
-        return !val.equals("false");
+        return val.equals("true");
     }
 
     private Float extractThickness(List<Property> properties) {

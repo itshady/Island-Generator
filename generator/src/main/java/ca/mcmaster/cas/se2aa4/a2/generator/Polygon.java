@@ -95,7 +95,7 @@ public class Polygon {
 
     private Structs.Property setColorProperty(Color color) {
         String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
-        Structs.Property colorProperty = Structs.Property.newBuilder().setKey("rgb_color").setValue(colorStr).build();
+        Structs.Property colorProperty = Structs.Property.newBuilder().setKey("rgba_color").setValue(colorStr).build();
         return colorProperty;
     }
 
