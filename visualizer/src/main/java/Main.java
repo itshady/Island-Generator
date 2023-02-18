@@ -15,11 +15,10 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         Options options = setupCLI();
-        Map<String, String> parsedArgs = new HashMap<>();
         GraphicRenderer renderer = new GraphicRenderer();
 
         try {
-            parseArgs(args, options, parsedArgs);
+            Map<String, String> parsedArgs = parseArgs(args, options);
             if (parsedArgs.get("debug") == "true") renderer.turnOnDebug();
 
             // Extracting command line parameters
@@ -60,7 +59,7 @@ public class Main {
 
         // add option to specify mesh file
         options.addOption("o","output", true, "Specify output file.");
-//
+
 //        // add option to add n players (each strategy = +1 player)
 //        Option option = new Option("p", "players", true, "Add players with respective strategies to game.");
 //        option.setArgs(Option.UNLIMITED_VALUES);
@@ -72,7 +71,8 @@ public class Main {
         return options;
     }
 
-    private static void parseArgs(String[] args, Options options, Map<String, String> argsMap) throws ParseException {
+    private static Map<String, String> parseArgs(String[] args, Options options) throws ParseException {
+        Map<String, String> argsMap = new HashMap<>();
         //Create a parser
         CommandLineParser parser = new DefaultParser();
 
@@ -98,5 +98,6 @@ public class Main {
             // if debug option passed
             argsMap.put("output",cmd.getOptionValues("o")[0]);
         }
+        return argsMap;
     }
 }
