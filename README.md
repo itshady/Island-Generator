@@ -97,9 +97,9 @@ Feature is permanently completed with consideration of edge cases. Code is eithe
 | F06 | Allow visualizer to take in Command line args, to display colours indicated by the user | Hady | 02/04/23 | 02/11/2023 | D |
 | F07 | Add support for a debug mode | Hady & Cyruss | 02/04/23 | 02/11/2023 | D |
 | F08 | Generate irregular voronoi tiles for random points | Hady, Cyruss, Richard | 02/14/23 | 02/16/23 | D |
-| F09 | Incorporate Lloyd relaxation for the voronoi tiles | Hady | 02/14/23 | | S |
-| F10 | Display neighborhood relationships (Delaunay's Triangulation) | Cyruss | 02/14/23 | | S |
-| F11 | Reorder segments (Convex Hull) |  | 02/14/23 | | S |
+| F09 | Incorporate Lloyd relaxation for the voronoi tiles | Hady | 02/14/23 | 02/18/23 | D |
+| F10 | Display neighborhood relationships (Delaunay's Triangulation) | Cyruss | 02/14/23 | 02/18/23 | D |
+| F11 | Reorder segments (Convex Hull) - might not need |  | 02/14/23 | | S |
 | F12 | Add Hexagonal Tessellation | Hady |  02/18/23 | 02/18/23 | D |
 
 
