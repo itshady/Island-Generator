@@ -94,18 +94,19 @@ public class GraphicRenderer {
             if (counter == 0) {
                 System.out.println("BLUE: "+ counter);
                 canvas.setColor(Color.BLUE);
-                counter++;
+
             } else if (counter == 1) {
                 System.out.println("PINK: "+ counter);
                 canvas.setColor(Color.PINK);
-                counter++;
+
             } else {
                 System.out.println("GREEN: "+ counter);
-                counter = 0;
+                //counter = 0;
                 canvas.setColor(Color.GREEN);
             }
-//            if (debug) canvas.setColor(Color.BLACK);
-//            else canvas.setColor(extractColor(p.getPropertiesList()));
+            counter++;
+            if (debug) canvas.setColor(Color.BLACK);
+            else canvas.setColor(extractColor(p.getPropertiesList()));
 
 
             List<Integer> polygonSegments = p.getSegmentIdxsList();
@@ -113,7 +114,7 @@ public class GraphicRenderer {
             int[] yValues = new int[polygonSegments.size()];
             updateCoordsForPolygons(vertexList, segmentsList, polygonSegments, xValues, yValues);
             Polygon polygon = new Polygon(xValues, yValues, polygonSegments.size());
-            canvas.fillPolygon(polygon);
+            canvas.drawPolygon(polygon);
             canvas.setColor(old);
         }
     }
@@ -125,17 +126,27 @@ public class GraphicRenderer {
             canvas.setStroke(polygonStroke);
             Structs.Vertex currentCentroid = vertexList.get(p.getCentroidIdx());
             List<Integer> polygonNeighbours = p.getNeighborIdxsList();
-            for (int i = 0; i < polygonNeighbours.size(); i++) {
+            for (Integer id : polygonNeighbours) {
                 canvas.setColor(Color.LIGHT_GRAY);
-                Structs.Polygon currentNeighbour = aMesh.getPolygons(polygonNeighbours.get(i));
-                Structs.Vertex nextCentroid = vertexList.get(currentNeighbour.getCentroidIdx());
+                Structs.Polygon neighbour = aMesh.getPolygons(id);
+                Structs.Vertex nextCentroid = vertexList.get(neighbour.getCentroidIdx());
                 Point2D point1 = new Point2D.Double(currentCentroid.getX(), currentCentroid.getY());
                 Point2D point2 = new Point2D.Double(nextCentroid.getX(), nextCentroid.getY());
                 Line2D line = new Line2D.Double(point1,point2);
                 canvas.draw(line);
                 canvas.setColor(old);
-                //System.out.println();
             }
+//            for (int i = 0; i < polygonNeighbours.size(); i++) {
+//                canvas.setColor(Color.LIGHT_GRAY);
+//                Structs.Polygon currentNeighbour = aMesh.getPolygons(i);
+//                Structs.Vertex nextCentroid = vertexList.get(currentNeighbour.getCentroidIdx());
+//                Point2D point1 = new Point2D.Double(currentCentroid.getX(), currentCentroid.getY());
+//                Point2D point2 = new Point2D.Double(nextCentroid.getX(), nextCentroid.getY());
+//                Line2D line = new Line2D.Double(point1,point2);
+//                canvas.draw(line);
+//                canvas.setColor(old);
+//                //System.out.println();
+//            }
         }
     }
 

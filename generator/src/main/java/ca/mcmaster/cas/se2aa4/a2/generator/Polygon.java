@@ -146,7 +146,7 @@ public class Polygon {
         return segmentList;
     }
 
-    public void addPolygonNeighbourSet (List<Polygon> polygonSet) {
+    public void addPolygonNeighbourSet (Set<Polygon> polygonSet) {
         for (Polygon p : polygonSet) {
             this.neighbourIdxSet.add(p.getId());
         }
