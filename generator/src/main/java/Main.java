@@ -24,14 +24,11 @@ public class Main {
             // Extracting command line parameters
             System.out.println(parsedArgs);
             String output = parsedArgs.get("output");
-            String meshType = parsedArgs.getOrDefault("mesh", "irregular");
-
-            Mesh myMesh = generator.generate(meshType);
-
+            Mesh myMesh = generator.generate(parsedArgs);
             factory.write(myMesh, output);
 
         } catch (Exception e) {
-            System.out.println(e);
+             System.out.println(e);
         }
     }
 
@@ -48,10 +45,11 @@ public class Main {
         // add option to select the type of mesh
         options.addOption("m", "mesh", true, "Selects the type of mesh to output: hex_regular, square_regular, or irregular" );
 
-//        // add option to add n players (each strategy = +1 player)
-//        Option option = new Option("p", "players", true, "Add players with respective strategies to game.");
-//        option.setArgs(Option.UNLIMITED_VALUES);
-//        options.addOption(option);
+        // add option to select the number of polygons
+        options.addOption("p", "polygons", true, "Enter the number of polygons.");
+
+        // add option to select the relaxation level
+        options.addOption("r", "relaxation", true, "Enter the relaxation level for lloyd's relaxation");
 
         // add option for logging
         options.addOption("h","help", false, "Ask for usage help.");
@@ -84,6 +82,24 @@ public class Main {
         }
         if(cmd.hasOption("m")) {
             argsMap.put("mesh", cmd.getOptionValues("m")[0]);
+        }
+        if(cmd.hasOption("p")) {
+            if(cmd.hasOption("m")) {
+                if (cmd.getOptionValues("m")[0].equals("irregular")) {
+                    argsMap.put("polygons", cmd.getOptionValues("p")[0]);
+                } else {
+                    throw new ParseException("You can't pick the number of polygons for a regular mesh");
+                }
+            }
+        }
+        if (cmd.hasOption("r")) {
+            if (cmd.hasOption("m")) {
+                if (cmd.getOptionValues("m")[0].equals("irregular")) {
+                    argsMap.put("relaxation", cmd.getOptionValues("r")[0]);
+                } else {
+                    throw new ParseException("You can't set a relaxation value for a regular mesh");
+                }
+            }
         }
         return argsMap;
     }

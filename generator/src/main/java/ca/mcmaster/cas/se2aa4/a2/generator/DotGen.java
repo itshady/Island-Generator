@@ -2,17 +2,17 @@ package ca.mcmaster.cas.se2aa4.a2.generator;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
-public class DotGen {
+import java.util.Map;
 
-    private String meshType;
+public class DotGen {
 
     // Set this one as the default
     public Structs.Mesh generate() {
-        return new MeshFactory().generate("irregular");
+        return new MeshFactory().generate("regular");
     }
 
-    // Overloading the generate method
-    public Structs.Mesh generate(String meshType) {
-        return new MeshFactory().generate(meshType);
+    // Overloading the generate method with number of polygons
+    public Structs.Mesh generate(Map<String, String> argOptions) {
+        return new MeshFactory().generate(argOptions);
     }
 }
