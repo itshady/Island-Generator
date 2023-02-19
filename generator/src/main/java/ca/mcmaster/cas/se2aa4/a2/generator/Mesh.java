@@ -50,4 +50,5 @@ public abstract class Mesh {
     }
 
     protected abstract List<Coordinate> generatePoints();
+    protected abstract List<Coordinate> generatePoints(Integer numOfPolygons);
 }
