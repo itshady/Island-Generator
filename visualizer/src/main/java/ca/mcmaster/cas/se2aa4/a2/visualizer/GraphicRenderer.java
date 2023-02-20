@@ -91,15 +91,12 @@ public class GraphicRenderer {
 
             // Setting the colour based on the location (can be edited)
             if (counter == 0) {
-                System.out.println("BLUE: "+ counter);
                 canvas.setColor(Color.BLUE);
 
             } else if (counter == 1) {
-                System.out.println("PINK: "+ counter);
                 canvas.setColor(Color.PINK);
 
             } else {
-                System.out.println("GREEN: "+ counter);
                 //counter = 0;
                 canvas.setColor(Color.GREEN);
             }
