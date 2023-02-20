@@ -28,9 +28,4 @@ public class HexRegularMesh extends RegularMesh {
         }
         return coordList;
     }
-
-    @Override
-    protected List<Coordinate> generatePoints(Integer numOfPolygons) {
-        return null;
-    }
 }

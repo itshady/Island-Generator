@@ -12,7 +12,7 @@ public abstract class Mesh {
     protected final int square_size = 20;
 
     Structs.Mesh mesh;
-    List<Centroid> centroids;
+    private List<Centroid> centroids;
 
     public Structs.Mesh generate() {
         generateDiagram(generatePoints());
@@ -50,5 +50,4 @@ public abstract class Mesh {
     }
 
     protected abstract List<Coordinate> generatePoints();
-    protected abstract List<Coordinate> generatePoints(Integer numOfPolygons);
 }

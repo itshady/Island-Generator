@@ -1,4 +1,6 @@
+import ca.mcmaster.cas.se2aa4.a2.generator.CommandLineOptions;
 import ca.mcmaster.cas.se2aa4.a2.generator.DotGen;
+import ca.mcmaster.cas.se2aa4.a2.generator.TypeOfMesh;
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
@@ -9,23 +11,24 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ca.mcmaster.cas.se2aa4.a2.generator.CommandLineOptions.*;
+import static ca.mcmaster.cas.se2aa4.a2.generator.TypeOfMesh.IRREGULAR;
+import static ca.mcmaster.cas.se2aa4.a2.generator.TypeOfMesh.SQUARE;
+
 public class Main {
 
 
 
     public static void main(String[] args) {
         Options options = setupCLI();
-        MeshFactory factory = new MeshFactory();
-        DotGen generator = new DotGen();
 
         try {
-            Map<String, String> parsedArgs = parseArgs(args, options);
-
             // Extracting command line parameters
-            System.out.println(parsedArgs);
-            String output = parsedArgs.get("output");
-            Mesh myMesh = generator.generate(parsedArgs);
-            factory.write(myMesh, output);
+            Map<CommandLineOptions, String> parsedArgs = parseArgs(args, options);
+
+            String output = parsedArgs.get(OUTPUTFILE);
+            Mesh myMesh = new DotGen().generate(parsedArgs);
+            new MeshFactory().write(myMesh, output);
 
         } catch (Exception e) {
              System.out.println(e);
@@ -34,10 +37,6 @@ public class Main {
 
     private static Options setupCLI() {
         Options options = new Options();
-
-
-        // add option for debugging
-        options.addOption("X","debug", false, "Turns debug mode on.");
 
         // add option to specify mesh file
         options.addOption("o","output", true, "Specify output file.");
@@ -57,11 +56,11 @@ public class Main {
         return options;
     }
 
-    private static Map<String, String> parseArgs(String[] args, Options options) throws ParseException {
-        Map<String, String> argsMap = new HashMap<>();
+    private static Map<CommandLineOptions, String> parseArgs(String[] args, Options options) throws ParseException {
+        Map<CommandLineOptions, String> argsMap = new HashMap<>();
         //Create a parser
         CommandLineParser parser = new DefaultParser();
-
+        TypeOfMesh typeOfMesh = SQUARE;
         //parse the options passed as command line arguments
         CommandLine cmd = parser.parse(options, args);
         if(cmd.hasOption("h")) {
@@ -71,37 +70,49 @@ public class Main {
 
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp(usage, header, options, footer, false);
-        }
-        if(cmd.hasOption("X")) {
-            // if debug option passed
-            argsMap.put("debug","true");
-        }
-        if(cmd.hasOption("o")) {
-            // if debug option passed
-            argsMap.put("output",cmd.getOptionValues("o")[0]);
-        }
-        if(cmd.hasOption("m")) {
-            argsMap.put("mesh", cmd.getOptionValues("m")[0]);
-        }
-        if(cmd.hasOption("p")) {
-            if(cmd.hasOption("m")) {
-                if (cmd.getOptionValues("m")[0].equals("irregular")) {
-                    argsMap.put("polygons", cmd.getOptionValues("p")[0]);
-                } else {
-                    throw new ParseException("You can't pick the number of polygons for a regular mesh");
-                }
+        } else {
+            if (cmd.hasOption("o")) {
+                argsMap.put(OUTPUTFILE, cmd.getOptionValues("o")[0]);
             }
-        }
-        if (cmd.hasOption("r")) {
-            if (cmd.hasOption("m")) {
-                if (cmd.getOptionValues("m")[0].equals("irregular")) {
-                    argsMap.put("relaxation", cmd.getOptionValues("r")[0]);
-                } else {
-                    throw new ParseException("You can't set a relaxation value for a regular mesh");
-                }
+            if (cmd.hasOption("m") && validArg(TYPEOFMESH, cmd.getOptionValues("m")[0])) {
+                typeOfMesh = TypeOfMesh.valueOf(cmd.getOptionValues("m")[0].toUpperCase());
             }
+            if (cmd.hasOption("p") && validArg(NUMOFPOLYGONS, cmd.getOptionValues("p")[0])) {
+                if (typeOfMesh == IRREGULAR) argsMap.put(NUMOFPOLYGONS, cmd.getOptionValues("p")[0]);
+                else System.out.println("You can't pick the number of polygons for a regular mesh. Continuing ignoring this param...");
+            }
+            if (cmd.hasOption("r")) {
+                if (typeOfMesh == IRREGULAR) argsMap.put(RELAXATION, cmd.getOptionValues("r")[0]);
+                else System.out.println("You can't set a relaxation value for a regular mesh. Continuing ignoring this param...");
+            }
+            argsMap.put(TYPEOFMESH, typeOfMesh.toString());
         }
         return argsMap;
     }
 
+    private static Boolean validArg(CommandLineOptions argType, String argument) {
+        try {
+            switch (argType) {
+                case NUMOFPOLYGONS:
+                case RELAXATION:
+                    int numOfPolygons = Integer.parseInt(argument);
+                    if (numOfPolygons <= 0) throw new IllegalArgumentException("Can't have a negative number of polygons or relaxation.");
+                    break;
+                case TYPEOFMESH:
+                    // will throw exception if its not in the list of enums
+                    try {
+                        TypeOfMesh.valueOf(argument.toUpperCase());
+                    } catch (Exception e) {
+                        throw new IllegalArgumentException("Incorrect pattern name. That pattern doesn't exist.");
+                    }
+                    break;
+                case OUTPUTFILE:
+                    if (!argument.endsWith(".mesh")) throw new IllegalArgumentException("Must provide a .mesh file as output");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
 }
