@@ -35,9 +35,7 @@ public class VoronoiDiagram {
         // Get all generated Polygons from the voronoi diagram builder
         List<Geometry> polygonsJTS = new ArrayList<>();
         for (int i=0; i<clippedDiagram.getNumGeometries(); i++) {
-            System.out.println("Old Geometry: " + clippedDiagram.getGeometryN(i));
             ConvexHull convex = new ConvexHull(clippedDiagram.getGeometryN(i));
-            System.out.println("Convex Hull: " + convex.getConvexHull());
             polygonsJTS.add(convex.getConvexHull());
         }
         return polygonsJTS;
