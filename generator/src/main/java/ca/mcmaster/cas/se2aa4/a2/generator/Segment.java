@@ -58,6 +58,7 @@ public class Segment {
     }
 
     public void generateSegment() {
+        color = averageColor(v1.getColor(), v2.getColor());
         segment = Structs.Segment.newBuilder().setV1Idx(v1.getId()).setV2Idx(v2.getId()).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
     }
 

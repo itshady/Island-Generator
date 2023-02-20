@@ -79,14 +79,12 @@ public class Vertex {
 
     private Structs.Property setCentroidProperty() {
         String isCentroid = ""+isCentroid();
-        Structs.Property centroidProperty = Structs.Property.newBuilder().setKey("is_centroid").setValue(isCentroid).build();
-        return centroidProperty;
+        return Structs.Property.newBuilder().setKey("is_centroid").setValue(isCentroid).build();
     }
 
     private Structs.Property setThicknessProperty(Float thickness) {
         String vertexThickness = Float.toString(thickness);
-        Structs.Property thicknessProperty = Structs.Property.newBuilder().setKey("thickness").setValue(vertexThickness).build();
-        return thicknessProperty;
+        return Structs.Property.newBuilder().setKey("thickness").setValue(vertexThickness).build();
     }
 
     private Color generateColors() {

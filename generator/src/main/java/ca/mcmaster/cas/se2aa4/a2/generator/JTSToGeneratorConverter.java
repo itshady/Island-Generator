@@ -23,7 +23,7 @@ public class JTSToGeneratorConverter {
             Coordinate[] coords = polygon.getCoordinates();
             int startCounter = vertexCounter;
             for (Coordinate coord : coords) {
-                vertices.put(vertexCounter, new Vertex(vertexCounter, coord.getX(), coord.getY()));
+                vertices.put(vertexCounter, new Vertex(vertexCounter, coord.getX(), coord.getY(), vertexCounter%2 ==0 ? new Color(255,0,0) : new Color(0,0,0)));
                 vertexCounter++;
             }
 

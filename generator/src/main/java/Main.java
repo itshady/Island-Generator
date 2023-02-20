@@ -26,6 +26,7 @@ public class Main {
             // Extracting command line parameters
             Map<CommandLineOptions, String> parsedArgs = parseArgs(args, options);
 
+            if (parsedArgs.containsKey(HELP)) return;
             String output = parsedArgs.get(OUTPUTFILE);
             Mesh myMesh = new DotGen().generate(parsedArgs);
             new MeshFactory().write(myMesh, output);
@@ -70,6 +71,7 @@ public class Main {
 
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp(usage, header, options, footer, false);
+            argsMap.put(HELP, "true");
         } else {
             if (cmd.hasOption("o")) {
                 argsMap.put(OUTPUTFILE, cmd.getOptionValues("o")[0]);
