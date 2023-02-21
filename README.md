@@ -17,7 +17,6 @@ make run
 ```
 
 
-
 ```
 mosser@azrael A2 % mvn install
 ```
@@ -32,48 +31,67 @@ To run the product, simply run:
 mosser@azrael A2 % make run
 ```
 
-### Generator
+## Part 2 Running Instructions
 
-To run the generator, go to the `generator` directory, and use `java -jar` to run the product. The product takes one single argument (so far), the name of the file where the generated mesh will be stored as binary.
+To generate the square mesh, enter this into the command line arguments. 
 
-**Ours**
 ```
 cd generator
 java -jar generator.jar sample.mesh
 ```
 
-```
-mosser@azrael A2 % cd generator 
-mosser@azrael generator % java -jar generator.jar sample.mesh
-mosser@azrael generator % ls -lh sample.mesh
--rw-r--r--  1 mosser  staff    29K 29 Jan 10:52 sample.mesh
-mosser@azrael generator % 
-```
-
-### Visualizer
-
-To visualize an existing mesh, go the the `visualizer` directory, and use `java -jar` to run the product. The product take two arguments (so far): the file containing the mesh, and the name of the file to store the visualization (as an SVG image).
-
-**Ours**
+Then go to the visualizer directory.
 ```
 cd visualizer
 java -jar visualizer.jar ../generator/sample.mesh sample.svg
 ```
-
+To activate debug mode, add `-X` to the end of the command line during the visualizer execution.
 ```
-mosser@azrael A2 % cd visualizer 
-mosser@azrael visualizer % java -jar visualizer.jar ../generator/sample.mesh sample.svg
-
-... (lots of debug information printed to stdout) ...
-
-mosser@azrael visualizer % ls -lh sample.svg
--rw-r--r--  1 mosser  staff    56K 29 Jan 10:53 sample.svg
-mosser@azrael visualizer %
+cd visualizer
+java -jar visualizer.jar ../generator/sample.mesh sample.svg -X
 ```
+
 To viualize the SVG file:
 
   - Open it with a web browser
   - Convert it into something else with tool slike `rsvg-convert`
+
+## Part 3 Running Instructions
+
+A makefile has been provided to easily create meshes according to their default types (however, this can be adjusted accordingly). 
+
+* To create a regular square mesh: 
+  * `make run`
+
+* For debug mode with a regular square mesh: 
+  `make run-square-debug`
+
+The following commands can add -debug to the end of the command-name to activate debug mode (i.e `make run-hex-debug` in the case of a hex mesh).
+
+* To create an irregular unrelaxed mesh: 
+  * `make run-irregular`
+
+* To create an irregular relaxed mesh: 
+  * `make run-irregular-relaxed`
+
+* To create a regular hexagon mesh: 
+  * `make run-hex-relaxed`
+
+* To create a regular hexagon mesh: 
+  * `make run-diamond-relaxed`
+  
+### Generator Customization
+
+If you wish to customize the generation of a mesh, such as the relaxation level and number of polygons, simply add an argument to the generator portion of execution.
+
+```
+cd generator
+java -jar generator.jar -m *TYPE_OF_MESH* -r *RELAXATION_LEVEL* -p *NUM_OF_POLYGONS* -o *OUTPUT_NAME*.mesh
+```
+
+These can be written in any order and if you choose to omit any arguments, default values will be provided. Please note for regular meshes, relaxation level and number of polygons will be ignored.
+
+Need help? Simply use `-h` or `--help` within the generator execution or run `make help`.
 
 ## How to contribute to the project
 
