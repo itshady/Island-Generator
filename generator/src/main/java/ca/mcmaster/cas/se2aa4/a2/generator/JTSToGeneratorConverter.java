@@ -45,24 +45,11 @@ public class JTSToGeneratorConverter {
                 }
 
                 Segment newSeg = new Segment(set.getVertex(id1), set.getVertex(id2));
-//                System.out.println("V1: " + set.getVertex(id1).getColor() + "- SegV1" + newSeg.getV1().getColor());
-//                System.out.println("V2: " + set.getVertex(id2).getColor() + "- SegV2" + newSeg.getV2().getColor());
-//                int avgRed = (set.getVertex(id1).getColor().getRed() + set.getVertex(id2).getColor().getRed())/2;
-//                int avgGreen = (set.getVertex(id1).getColor().getGreen() + set.getVertex(id2).getColor().getGreen())/2;
-//                int avgBlue = (set.getVertex(id1).getColor().getBlue() + set.getVertex(id2).getColor().getBlue())/2;
-//                Color VertexAVG = new Color(avgRed, avgGreen, avgBlue);
-//                System.out.println("Average Color:" + VertexAVG + " - Segment Color: " + newSeg.getColor());
-//                int avgColorRed = (set.getVertex(id1).getColor().getRed()+set.getVertex(id2).getColor().getRed())/2;
-//                System.out.println(avgColorRed + "  " + newSeg.getColor().getRed());
-//                if (avgColorRed != newSeg.getColor().getRed())
-//                    System.out.println(set.getVertex(id1).getColor() + "  " + set.getVertex(id2).getColor() + "  " + newSeg.getColor());
-
                 segments.put(segCounter, newSeg);
                 polySegments.add(newSeg);
                 segCounter++;
             }
 
-//            System.out.println("HEREEEE");
 
             // get centroid
             org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);

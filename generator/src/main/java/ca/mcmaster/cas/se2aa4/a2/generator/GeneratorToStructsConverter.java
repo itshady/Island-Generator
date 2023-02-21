@@ -39,11 +39,6 @@ public class GeneratorToStructsConverter {
             segment.generateSegment();
             segmentSet.add(segment.getSegment());
             counter++;
-//            int avgColorRed = (segment.getV1().getColor().getRed()+segment.getV2().getColor().getRed())/2;
-//            System.out.println(avgColorRed + "  " + segment.getColor().getRed());
-//            if (avgColorRed != segment.getColor().getRed())
-//                System.out.println(segment.getV1().getColor() + "  " + segment.getV2().getColor() + "  " + segment.getColor());
-
         }
         return segmentSet;
     }
