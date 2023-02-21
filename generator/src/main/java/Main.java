@@ -2,11 +2,9 @@ import ca.mcmaster.cas.se2aa4.a2.generator.CommandLineOptions;
 import ca.mcmaster.cas.se2aa4.a2.generator.DotGen;
 import ca.mcmaster.cas.se2aa4.a2.generator.TypeOfMesh;
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
-import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import org.apache.commons.cli.*;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,11 +24,12 @@ public class Main {
             // Extracting command line parameters
             Map<CommandLineOptions, String> parsedArgs = parseArgs(args, options);
 
+            if (parsedArgs.containsKey(HELP)) return;
             String output = parsedArgs.get(OUTPUTFILE);
             Mesh myMesh = new DotGen().generate(parsedArgs);
             new MeshFactory().write(myMesh, output);
 
-        } catch (Exception e) {
+        } catch (ParseException | IOException e) {
              System.out.println(e);
         }
     }
@@ -64,12 +63,13 @@ public class Main {
         //parse the options passed as command line arguments
         CommandLine cmd = parser.parse(options, args);
         if(cmd.hasOption("h")) {
-            String usage = "mvn exec:java -Dexec.args=\"[-d] [-n] <NUM> [-p] <STRATEGY>\"";
+            String usage = "mvn exec:java -Dexec.args=\"[OPTIONS]\"";
             String header = "Options:\n";
             String footer = "";
 
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp(usage, header, options, footer, false);
+            argsMap.put(HELP, "true");
         } else {
             if (cmd.hasOption("o")) {
                 argsMap.put(OUTPUTFILE, cmd.getOptionValues("o")[0]);

@@ -8,10 +8,10 @@ import java.util.Random;
 public class Segment {
     private Structs.Segment segment;
     private float thickness = (float) 0.5;
-    private Color color;
+    private final Color color;
     private Vertex v1;
     private Vertex v2;
-    private int id;
+    private Integer id;
     public Vertex getV1() {
         return v1;
     }
@@ -32,26 +32,23 @@ public class Segment {
         return color;
     }
 
-    public Segment(Integer id, Vertex v1, Vertex v2) {
-        setId(id);
+    public Segment(Vertex v1, Vertex v2) {
         color = averageColor(v1.getColor(), v2.getColor());
         setSegment(v1, v2);
     }
 
-    public Segment(Integer id, Vertex v1, Vertex v2, Color color) {
-        setId(id);
+    public Segment(Vertex v1, Vertex v2, Color color) {
         this.color = color;
         setSegment(v1, v2);
     }
 
-    public Segment(Integer id, Vertex v1, Vertex v2, Float thickness) {
-        setId(id);
+    public Segment(Vertex v1, Vertex v2, Float thickness) {
         this.thickness = thickness;
         this.color = averageColor(v1.getColor(), v2.getColor());;
         setSegment(v1, v2);
     }
 
-    public Segment(Integer id, Vertex v1, Vertex v2, Color color, Float thickness) {
+    public Segment(Vertex v1, Vertex v2, Color color, Float thickness) {
         this.color = color;
         this.thickness = thickness;
         setSegment(v1, v2);
@@ -72,14 +69,12 @@ public class Segment {
 
     private Structs.Property setColorProperty(Color color) {
         String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
-        Structs.Property colorProperty = Structs.Property.newBuilder().setKey("rgba_color").setValue(colorStr).build();
-        return colorProperty;
+        return Structs.Property.newBuilder().setKey("rgba_color").setValue(colorStr).build();
     }
 
     private Structs.Property setThicknessProperty(Float thickness) {
         String segmentThickness = Float.toString(thickness);
-        Structs.Property thicknessProperty = Structs.Property.newBuilder().setKey("thickness").setValue(segmentThickness).build();
-        return thicknessProperty;
+        return Structs.Property.newBuilder().setKey("thickness").setValue(segmentThickness).build();
     }
 
     private Color averageColor(Color color1, Color color2) {
@@ -87,6 +82,6 @@ public class Segment {
         int blue = (color1.getBlue()+color2.getBlue())/2;
         int green = (color1.getGreen()+color2.getGreen())/2;
         int alpha = (color1.getAlpha()+color2.getAlpha())/2;
-        return new Color(red, blue, green, alpha);
+        return new Color(red, green, blue, alpha);
     }
 }
