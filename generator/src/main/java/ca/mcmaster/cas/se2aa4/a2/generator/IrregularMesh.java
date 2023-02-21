@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class IrregularMesh extends Mesh {
-    private Integer lloydRelaxationNumber = 50;
+    private Integer lloydRelaxationNumber = 0;
     private Integer numOfPolygons = new Random().nextInt(100,150);
 
     @Override
