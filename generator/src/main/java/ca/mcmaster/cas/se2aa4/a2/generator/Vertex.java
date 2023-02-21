@@ -3,13 +3,14 @@ package ca.mcmaster.cas.se2aa4.a2.generator;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 import java.awt.*;
+import java.util.Objects;
 import java.util.Random;
 
 public class Vertex {
     private Structs.Vertex vertex;
     private final Color color;
     private Integer id;
-    private final double precision = 1;
+    private final Coordinate coordinate;
 
     public boolean isCentroid() {
         return false;
@@ -18,24 +19,28 @@ public class Vertex {
     public Vertex(Integer id, Double x, Double y) {
         this.id = id;
         color = generateColors();
+        coordinate = new Coordinate(x,y);
         setVertex(x, y, color);
     }
 
     public Vertex(Integer id, Double x, Double y, Float thickness) {
         this.id = id;
         color = generateColors();
+        coordinate = new Coordinate(x,y);
         setVertex(x, y, color, thickness);
     }
 
     public Vertex(Integer id, Double x, Double y, Color color) {
         this.id = id;
         this.color = color;
+        coordinate = new Coordinate(x,y);
         setVertex(x, y, color);
     }
 
     public Vertex(Integer id, Double x, Double y, Color color, Float thickness) {
         this.id = id;
         this.color = color;
+        coordinate = new Coordinate(x,y);
         setVertex(x, y, color, thickness);
     }
 
@@ -64,11 +69,11 @@ public class Vertex {
     }
 
     private void setVertex(Double x, Double y, Color color) {
-        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setCentroidProperty()).build();
+        vertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(setColorProperty(color)).addProperties(setCentroidProperty()).build();
     }
 
     private void setVertex(Double x, Double y, Color color, Float thickness) {
-        vertex = Structs.Vertex.newBuilder().setX(x*precision).setY(y*precision).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).addProperties(setCentroidProperty()).build();
+        vertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).addProperties(setCentroidProperty()).build();
     }
 
     private Structs.Property setColorProperty(Color color) {
@@ -94,5 +99,18 @@ public class Vertex {
         int blue = bag.nextInt(255);
         int alpha = bag.nextInt(1,255);
         return new Color(red, green, blue, alpha);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vertex vertex = (Vertex) o;
+        return Objects.equals(coordinate, vertex.coordinate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(coordinate);
     }
 }

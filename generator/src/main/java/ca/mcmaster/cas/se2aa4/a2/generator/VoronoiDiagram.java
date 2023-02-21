@@ -6,15 +6,17 @@ import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.locationtech.jts.geom.Coordinate;
 
 public class VoronoiDiagram {
-    private Integer width;
-    private Integer height;
-    private final double precision = 0.01;
+    private final Integer width;
+    private final Integer height;
+    private final double precision;
 
-    public VoronoiDiagram(Integer width, Integer height) {
+    public VoronoiDiagram(Integer width, Integer height, Double precision) {
         this.width = width;
         this.height = height;
+        this.precision = precision;
     }
 
     public List<Geometry> getVoronoiDiagram(List<Coordinate> coordsList) {

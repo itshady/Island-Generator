@@ -8,7 +8,8 @@ import java.util.Set;
 
 public class GeneratorToStructsConverter {
     public Set<Structs.Vertex> convertVertices(Map<Integer, Vertex> vertices) {
-        return extractVertices(vertices);
+//        System.out.println("vertices: " + vertices.size());
+        return extractVertices(mapToSet(vertices));
     }
 
     public Set<Structs.Segment> convertSegments(Map<Integer, Segment> segments) {
@@ -19,10 +20,29 @@ public class GeneratorToStructsConverter {
         return extractPolygons(polygons);
     }
 
-    private Set<Structs.Vertex> extractVertices(Map<Integer, Vertex> vertices) {
+    private Set<Vertex> mapToSet(Map<Integer, Vertex> vertices) {
+        Set<Vertex> set = new LinkedHashSet<>();
+        int counter = 0;
+        int counter2 = 0;
+        for (Vertex vertex : vertices.values()) {
+            if (set.contains(vertex)) {
+                counter++;
+
+//                System.out.println("HEREEE" + vertex);
+            }
+            else {
+                counter2++;
+                set.add(vertex);
+            }
+        }
+        System.out.println("counter: " + counter + "    counter2: "+counter2);
+        return set;
+    }
+
+    private Set<Structs.Vertex> extractVertices(Set<Vertex> vertices) {
         Set<Structs.Vertex> vertexSet = new LinkedHashSet<>();
         int counter = 0;
-        for (Vertex vertex : vertices.values()) {
+        for (Vertex vertex : vertices) {
             vertex.setId(counter);
             vertexSet.add(vertex.getVertex());
             counter++;

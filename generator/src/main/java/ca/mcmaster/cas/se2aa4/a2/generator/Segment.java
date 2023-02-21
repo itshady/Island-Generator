@@ -11,7 +11,7 @@ public class Segment {
     private Color color;
     private Vertex v1;
     private Vertex v2;
-    private int id;
+    private Integer id;
     public Vertex getV1() {
         return v1;
     }
@@ -32,26 +32,23 @@ public class Segment {
         return color;
     }
 
-    public Segment(Integer id, Vertex v1, Vertex v2) {
-        setId(id);
+    public Segment(Vertex v1, Vertex v2) {
         color = averageColor(v1.getColor(), v2.getColor());
         setSegment(v1, v2);
     }
 
-    public Segment(Integer id, Vertex v1, Vertex v2, Color color) {
-        setId(id);
+    public Segment(Vertex v1, Vertex v2, Color color) {
         this.color = color;
         setSegment(v1, v2);
     }
 
-    public Segment(Integer id, Vertex v1, Vertex v2, Float thickness) {
-        setId(id);
+    public Segment(Vertex v1, Vertex v2, Float thickness) {
         this.thickness = thickness;
         this.color = averageColor(v1.getColor(), v2.getColor());;
         setSegment(v1, v2);
     }
 
-    public Segment(Integer id, Vertex v1, Vertex v2, Color color, Float thickness) {
+    public Segment(Vertex v1, Vertex v2, Color color, Float thickness) {
         this.color = color;
         this.thickness = thickness;
         setSegment(v1, v2);

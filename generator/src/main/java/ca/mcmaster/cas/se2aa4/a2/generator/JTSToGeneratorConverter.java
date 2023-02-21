@@ -5,6 +5,7 @@ import org.locationtech.jts.geom.Geometry;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,20 +19,32 @@ public class JTSToGeneratorConverter {
         int vertexCounter = 0;
         int segCounter = 0;
         int polyCounter = 0;
+
+        Map<List<Integer>, Vertex> coordinates = new HashMap<>();
+        VertexSet set = new VertexSet(0.01);
         for (Geometry polygon : polygonsJTS) {
             // adds vertices of the polygon to the vertex list
             Coordinate[] coords = polygon.getCoordinates();
             int startCounter = vertexCounter;
             for (Coordinate coord : coords) {
-                vertices.put(vertexCounter, new Vertex(vertexCounter, coord.getX(), coord.getY(), vertexCounter%2 ==0 ? new Color(255,0,0) : new Color(0,0,0)));
+                Vertex vertex = new Vertex(vertexCounter, coord.getX(), coord.getY(), vertexCounter%2 ==0 ? new Color(255,0,0) : new Color(0,0,0));
+                Integer id = set.add(vertex);
+                vertex.setId(id);
+                vertices.put(vertexCounter, vertex);
                 vertexCounter++;
+//                System.out.print("("+coord.getX()+","+coord.getY()+") ");
             }
 
-            // create and add segments to polygon
             List<Segment> polySegments = new ArrayList<>();
-            for (int i=startCounter; i<vertexCounter; i++) {
-                int nextIndex = ((i+1)-startCounter)%(vertexCounter-startCounter) + startCounter;
-                Segment newSeg = new Segment(segCounter, vertices.get(i), vertices.get(nextIndex));
+            for (int i=0; i<coords.length-1; i++) {
+                Vertex v1 = new Vertex(100, coords[i].getX(), coords[i].getY());
+                Vertex v2 = new Vertex(100, coords[i+1].getX(), coords[i+1].getY());
+                set.add(v1);
+                set.add(v2);
+                Vertex v3 = set.getVertex(new ca.mcmaster.cas.se2aa4.a2.generator.Coordinate(coords[i].getX(),coords[i].getY()));
+                Vertex v4 = set.getVertex(new ca.mcmaster.cas.se2aa4.a2.generator.Coordinate(coords[i+1].getX(),coords[i+1].getY()));
+                System.out.println(v3 + " " + v4);
+                Segment newSeg = new Segment(v3, v4);
                 segments.put(segCounter, newSeg);
                 polySegments.add(newSeg);
                 segCounter++;

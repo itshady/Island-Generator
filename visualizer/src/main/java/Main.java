@@ -42,7 +42,7 @@ public class Main {
             // Dump the mesh to stdout
             MeshDump dumper = new MeshDump();
             dumper.dump(aMesh);
-        } catch (Exception e) {
+        } catch (ParseException e) {
             System.out.println(e);
         }
     }
