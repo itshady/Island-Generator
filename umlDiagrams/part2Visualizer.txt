@@ -37,17 +37,17 @@ class SVGCanvas {
 }
 
 Main ..> GraphicRenderer
-Main ..> Mesh
+Main ..> Structs.Mesh
 Main ..> MeshDump
 Main ..> SVGCanvas
-GraphicRenderer ..> Mesh
+GraphicRenderer ..> Structs.Mesh
 GraphicRenderer ..> Graphics2D
-GraphicRenderer ..> Vertex
-GraphicRenderer ..> Segment
-GraphicRenderer ..> Polygon
-GraphicRenderer ..> Property
+GraphicRenderer ..> Structs.Vertex
+GraphicRenderer ..> Structs.Segment
+GraphicRenderer ..> Structs.Polygon
+GraphicRenderer ..> Structs.Property
 SVGCanvas ..> Graphics2D
-MeshDump ..> Mesh
+MeshDump ..> Structs.Mesh
 
 
 @enduml

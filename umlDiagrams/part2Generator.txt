@@ -112,11 +112,11 @@ class Centroid extends Vertex {
   +isCentroid(): boolean
 }
 
-Main *-- DotGen
-DotGen <.. Mesh
-Mesh <.. Polygon
-Mesh <.. Segment
-Mesh <.. Vertex
+Main ..> DotGen
+DotGen ..> Mesh
+Mesh o-- Polygon
+Mesh o-- Segment
+Mesh o-- Vertex
 Polygon *-- Centroid
 Polygon o-- Segment
 Segment o-- Vertex
