@@ -13,6 +13,7 @@ public class VertexSet {
         Coordinate.precision = precision;
     }
 
+    // returns the id of the vertex passed in (either existing vertex or newly created)
     public Integer add(Vertex vertex) {
         Coordinate coord = new Coordinate(vertex.getX(), vertex.getY());
         if (contains(vertex)) return ids.get(coord);

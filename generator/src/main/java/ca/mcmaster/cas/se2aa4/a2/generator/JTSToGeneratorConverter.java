@@ -14,7 +14,6 @@ public class JTSToGeneratorConverter {
     }
 
     private void JTSDataConversion(List<Geometry> polygonsJTS, Map<Integer, Vertex> vertices, Map<Integer, Segment> segments, Map<Integer, Polygon> polygons, List<Centroid> centroids) {
-        int vertexCounter = 0;
         int segCounter = 0;
         int polyCounter = 0;
 
@@ -22,7 +21,7 @@ public class JTSToGeneratorConverter {
         for (Geometry polygon : polygonsJTS) {
             // adds vertices and segments of the polygon to the vertex and segment list
             Coordinate[] coords = polygon.getCoordinates();
-
+            // coord 1 , coord2 ... coords 1
             List<Segment> polySegments = new ArrayList<>();
             for (int i=0; i<coords.length-1; i++) {
                 Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY());
@@ -35,13 +34,11 @@ public class JTSToGeneratorConverter {
                 if (!containedV1) {
                     v1.setId(id1);
                     vertices.put(id1, v1);
-                    vertexCounter++;
                 }
 
                 if (!containedV2) {
                     v2.setId(id2);
                     vertices.put(id2, v2);
-                    vertexCounter++;
                 }
 
                 Segment newSeg = new Segment(set.getVertex(id1), set.getVertex(id2));
@@ -54,11 +51,10 @@ public class JTSToGeneratorConverter {
             // get centroid
             org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);
             Polygon newPolygon = new Polygon(polyCounter, polySegments, Color.BLACK, 2f);
-            Centroid newCentroid = new Centroid(vertexCounter, centroidJTS.getCentroid().getX(), centroidJTS.getCentroid().getY());
+            Centroid newCentroid = new Centroid(centroidJTS.getCentroid().getX(), centroidJTS.getCentroid().getY());
             centroids.add(newCentroid);
             Integer id = set.add(newCentroid);
             vertices.put(id, newCentroid);
-            vertexCounter++;
             newPolygon.setCentroid(newCentroid);
             polygons.put(polyCounter, newPolygon);
             polyCounter++;

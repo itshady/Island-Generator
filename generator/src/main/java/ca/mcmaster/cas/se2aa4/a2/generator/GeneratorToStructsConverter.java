@@ -8,7 +8,6 @@ import java.util.Set;
 
 public class GeneratorToStructsConverter {
     public Set<Structs.Vertex> convertVertices(Map<Integer, Vertex> vertices) {
-//        System.out.println("vertices: " + vertices.size());
         return extractVertices(vertices);
     }
 
