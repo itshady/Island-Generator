@@ -33,7 +33,7 @@ mosser@azrael A2 % make run
 
 ## Part 2 Running Instructions
 
-To generate the square mesh, enter this into the command line arguments. 
+To generate the square mesh, enter this into the terminal. 
 
 ```
 cd generator
