@@ -1,0 +1,53 @@
+@startuml
+
+skin rose
+
+title Visualizer - Class Diagram
+
+
+class Main {
+  +void main()
+  -parseArgs(String[], Options, Map<String, String>): void
+}
+
+class GraphicRenderer {
+  -debug: boolean
+  -THICKNESS: int
+  +turnOnDebug(): void
+  +turnOffDebug(): void
+  +render(Mesh, Graphics2D): void
+  -visualizeSegments(Mesh, Graphics2D, List<Vertex>): void
+  -visualizeVertices(Mesh, Graphics2D): void
+  -visualizePolygon(Mesh, Graphics2D, List<Vertex>, List<Segment>): void
+  -visualizePolygonNeighbours(Mesh, Graphics2D, List<Vertex>, List<Segment>): void
+  -updateCoordsForPolygons(List<Vertex>, List<Segment> List<Integer>, int[], int[]): void
+  -extractColor(List<Property>): Color
+  -extractSegmentThickness(List<Property>): Float
+  -isCentroid(List<Property>): boolean
+  -extractVertexThickness(List<Property>): Float
+  -extractPolygonThickness(List<Property>): Float
+}
+class MeshDump {
+  +dump(String): void
+  +dump(Mesh): void
+}
+class SVGCanvas {
+  +build(int, int): Graphics2D
+  +write(Graphics2D, String): void
+}
+
+Main ..> GraphicRenderer
+Main ..> Mesh
+Main ..> MeshDump
+Main ..> SVGCanvas
+GraphicRenderer ..> Mesh
+GraphicRenderer ..> Graphics2D
+GraphicRenderer ..> Vertex
+GraphicRenderer ..> Segment
+GraphicRenderer ..> Polygon
+GraphicRenderer ..> Property
+SVGCanvas ..> Graphics2D
+MeshDump ..> Mesh
+
+
+@enduml
