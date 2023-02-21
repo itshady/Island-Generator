@@ -9,7 +9,7 @@ import java.util.Set;
 public class GeneratorToStructsConverter {
     public Set<Structs.Vertex> convertVertices(Map<Integer, Vertex> vertices) {
 //        System.out.println("vertices: " + vertices.size());
-        return extractVertices(mapToSet(vertices));
+        return extractVertices(vertices);
     }
 
     public Set<Structs.Segment> convertSegments(Map<Integer, Segment> segments) {
@@ -20,29 +20,10 @@ public class GeneratorToStructsConverter {
         return extractPolygons(polygons);
     }
 
-    private Set<Vertex> mapToSet(Map<Integer, Vertex> vertices) {
-        Set<Vertex> set = new LinkedHashSet<>();
-        int counter = 0;
-        int counter2 = 0;
-        for (Vertex vertex : vertices.values()) {
-            if (set.contains(vertex)) {
-                counter++;
-
-//                System.out.println("HEREEE" + vertex);
-            }
-            else {
-                counter2++;
-                set.add(vertex);
-            }
-        }
-        System.out.println("counter: " + counter + "    counter2: "+counter2);
-        return set;
-    }
-
-    private Set<Structs.Vertex> extractVertices(Set<Vertex> vertices) {
+    private Set<Structs.Vertex> extractVertices(Map<Integer, Vertex> vertices) {
         Set<Structs.Vertex> vertexSet = new LinkedHashSet<>();
         int counter = 0;
-        for (Vertex vertex : vertices) {
+        for (Vertex vertex : vertices.values()) {
             vertex.setId(counter);
             vertexSet.add(vertex.getVertex());
             counter++;
@@ -56,6 +37,7 @@ public class GeneratorToStructsConverter {
         for (Segment segment : segments.values()) {
             segment.setId(counter);
             segment.generateSegment();
+            System.out.println(segment.getV1().getColor() + "  " + segment.getV2().getColor());
             segmentSet.add(segment.getSegment());
             counter++;
         }

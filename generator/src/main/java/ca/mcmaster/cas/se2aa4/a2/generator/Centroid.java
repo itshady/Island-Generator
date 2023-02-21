@@ -4,16 +4,16 @@ import java.awt.*;
 
 public class Centroid extends Vertex {
     public Centroid(Integer id, Double x, Double y) {
-        super(id, x, y);
+        super(x, y);
     }
     public Centroid(Integer id, Double x, Double y, Color color) {
-        super(id, x, y, color);
+        super(x, y, color);
     }
     public Centroid(Integer id, Double x, Double y, Float thickness) {
-        super(id, x, y, thickness);
+        super(x, y, thickness);
     }
     public Centroid(Integer id, Double x, Double y, Color color, Float thickness) {
-        super(id, x, y, color, thickness);
+        super(x, y, color, thickness);
     }
     @Override
     public boolean isCentroid() {

@@ -4,10 +4,8 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class JTSToGeneratorConverter {
     // Takes in empty lists of vertices, segments, polygons, and centroids. Also takes a list of JTS polygon data (generated via voronoi diagram) and populates the empty geometry lists with the JTS data.
@@ -20,42 +18,48 @@ public class JTSToGeneratorConverter {
         int segCounter = 0;
         int polyCounter = 0;
 
-        Map<List<Integer>, Vertex> coordinates = new HashMap<>();
         VertexSet set = new VertexSet(0.01);
         for (Geometry polygon : polygonsJTS) {
-            // adds vertices of the polygon to the vertex list
+            // adds vertices and segments of the polygon to the vertex and segment list
             Coordinate[] coords = polygon.getCoordinates();
-            int startCounter = vertexCounter;
-            for (Coordinate coord : coords) {
-                Vertex vertex = new Vertex(vertexCounter, coord.getX(), coord.getY(), vertexCounter%2 ==0 ? new Color(255,0,0) : new Color(0,0,0));
-                Integer id = set.add(vertex);
-                vertex.setId(id);
-                vertices.put(vertexCounter, vertex);
-                vertexCounter++;
-//                System.out.print("("+coord.getX()+","+coord.getY()+") ");
-            }
 
             List<Segment> polySegments = new ArrayList<>();
             for (int i=0; i<coords.length-1; i++) {
-                Vertex v1 = new Vertex(100, coords[i].getX(), coords[i].getY());
-                Vertex v2 = new Vertex(100, coords[i+1].getX(), coords[i+1].getY());
-                set.add(v1);
-                set.add(v2);
-                Vertex v3 = set.getVertex(new ca.mcmaster.cas.se2aa4.a2.generator.Coordinate(coords[i].getX(),coords[i].getY()));
-                Vertex v4 = set.getVertex(new ca.mcmaster.cas.se2aa4.a2.generator.Coordinate(coords[i+1].getX(),coords[i+1].getY()));
-                System.out.println(v3 + " " + v4);
-                Segment newSeg = new Segment(v3, v4);
+                Random bag = new Random();
+                Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY(), bag.nextBoolean() ? new Color(252, 255, 77) : new Color( 250, 156, 255));
+                Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY(), bag.nextBoolean() ? new Color(252, 255, 77) : new Color( 250, 156, 255));
+//                Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY());
+//                Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY());
+                boolean containedV1 = set.contains(v1);
+                boolean containedV2 = set.contains(v2);
+                Integer id1 = set.add(v1);
+                Integer id2 = set.add(v2);
+
+                if (!containedV1) {
+                    v1.setId(id1);
+                    vertices.put(id1, v1);
+                }
+                if (!containedV2) {
+                    v2.setId(id2);
+                    vertices.put(id2, v2);
+                }
+                Segment newSeg = new Segment(set.getVertex(id1), set.getVertex(id2));
+                System.out.println(set.getVertex(id1).getColor() + "  " + set.getVertex(id2).getColor() + "  " + newSeg.getColor());
+
                 segments.put(segCounter, newSeg);
                 polySegments.add(newSeg);
                 segCounter++;
             }
+
+            System.out.println("HEREEEE");
 
             // get centroid
             org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);
             Polygon newPolygon = new Polygon(polyCounter, polySegments, Color.BLACK, 2f);
             Centroid newCentroid = new Centroid(vertexCounter, centroidJTS.getCentroid().getX(), centroidJTS.getCentroid().getY());
             centroids.add(newCentroid);
-            vertices.put(vertexCounter, newCentroid);
+            Integer id = set.add(newCentroid);
+            vertices.put(id, newCentroid);
             vertexCounter++;
             newPolygon.setCentroid(newCentroid);
             polygons.put(polyCounter, newPolygon);

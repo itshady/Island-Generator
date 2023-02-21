@@ -16,28 +16,27 @@ public class Vertex {
         return false;
     }
 
-    public Vertex(Integer id, Double x, Double y) {
-        this.id = id;
+    public Vertex(Double x, Double y) {
         color = generateColors();
         coordinate = new Coordinate(x,y);
         setVertex(x, y, color);
     }
 
-    public Vertex(Integer id, Double x, Double y, Float thickness) {
+    public Vertex(Double x, Double y, Float thickness) {
         this.id = id;
         color = generateColors();
         coordinate = new Coordinate(x,y);
         setVertex(x, y, color, thickness);
     }
 
-    public Vertex(Integer id, Double x, Double y, Color color) {
+    public Vertex(Double x, Double y, Color color) {
         this.id = id;
         this.color = color;
         coordinate = new Coordinate(x,y);
         setVertex(x, y, color);
     }
 
-    public Vertex(Integer id, Double x, Double y, Color color, Float thickness) {
+    public Vertex(Double x, Double y, Color color, Float thickness) {
         this.id = id;
         this.color = color;
         coordinate = new Coordinate(x,y);
