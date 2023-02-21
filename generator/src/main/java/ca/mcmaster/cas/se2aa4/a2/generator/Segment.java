@@ -8,7 +8,7 @@ import java.util.Random;
 public class Segment {
     private Structs.Segment segment;
     private float thickness = (float) 0.5;
-    private Color color;
+    private final Color color;
     private Vertex v1;
     private Vertex v2;
     private Integer id;
@@ -69,14 +69,12 @@ public class Segment {
 
     private Structs.Property setColorProperty(Color color) {
         String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
-        Structs.Property colorProperty = Structs.Property.newBuilder().setKey("rgba_color").setValue(colorStr).build();
-        return colorProperty;
+        return Structs.Property.newBuilder().setKey("rgba_color").setValue(colorStr).build();
     }
 
     private Structs.Property setThicknessProperty(Float thickness) {
         String segmentThickness = Float.toString(thickness);
-        Structs.Property thicknessProperty = Structs.Property.newBuilder().setKey("thickness").setValue(segmentThickness).build();
-        return thicknessProperty;
+        return Structs.Property.newBuilder().setKey("thickness").setValue(segmentThickness).build();
     }
 
     private Color averageColor(Color color1, Color color2) {

@@ -44,14 +44,17 @@ public class JTSToGeneratorConverter {
                     vertices.put(id2, v2);
                 }
                 Segment newSeg = new Segment(set.getVertex(id1), set.getVertex(id2));
-                System.out.println(set.getVertex(id1).getColor() + "  " + set.getVertex(id2).getColor() + "  " + newSeg.getColor());
+//                int avgColorRed = (set.getVertex(id1).getColor().getRed()+set.getVertex(id2).getColor().getRed())/2;
+//                System.out.println(avgColorRed + "  " + newSeg.getColor().getRed());
+//                if (avgColorRed != newSeg.getColor().getRed())
+//                    System.out.println(set.getVertex(id1).getColor() + "  " + set.getVertex(id2).getColor() + "  " + newSeg.getColor());
 
                 segments.put(segCounter, newSeg);
                 polySegments.add(newSeg);
                 segCounter++;
             }
 
-            System.out.println("HEREEEE");
+//            System.out.println("HEREEEE");
 
             // get centroid
             org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);

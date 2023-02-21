@@ -35,6 +35,11 @@ public class NormalMode extends VisualMode{
             Line2D line = new Line2D.Double(point1, point2);
             canvas.draw(line);
             canvas.setColor(old);
+            int avgColorRed = (extractColor(v1.getPropertiesList()).getRed()+extractColor(v2.getPropertiesList()).getRed())/2;
+            System.out.println(avgColorRed + "  " + extractColor(s.getPropertiesList()).getRed());
+            if (avgColorRed != extractColor(s.getPropertiesList()).getRed())
+                System.out.println("HEREEEEE");
+                System.out.println(extractColor(v1.getPropertiesList()).getRed()+ "   " + extractColor(v2.getPropertiesList()).getRed() + "   " + extractColor(s.getPropertiesList()).getRed());
         }
     }
 
