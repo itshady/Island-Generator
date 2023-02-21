@@ -75,10 +75,10 @@ The following commands can add -debug to the end of the command-name to activate
   * `make run-irregular-relaxed`
 
 * To create a regular hexagon mesh: 
-  * `make run-hex-relaxed`
+  * `make run-hex`
 
 * To create a regular diamond mesh: 
-  * `make run-diamond-relaxed`
+  * `make run-diamond`
   
 ### Generator Customization
 
