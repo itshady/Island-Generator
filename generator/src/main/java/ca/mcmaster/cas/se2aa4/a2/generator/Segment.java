@@ -82,6 +82,6 @@ public class Segment {
         int blue = (color1.getBlue()+color2.getBlue())/2;
         int green = (color1.getGreen()+color2.getGreen())/2;
         int alpha = (color1.getAlpha()+color2.getAlpha())/2;
-        return new Color(red, blue, green, alpha);
+        return new Color(red, green, blue, alpha);
     }
 }

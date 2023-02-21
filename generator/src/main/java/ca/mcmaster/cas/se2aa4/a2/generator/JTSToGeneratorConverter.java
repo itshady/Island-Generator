@@ -25,11 +25,8 @@ public class JTSToGeneratorConverter {
 
             List<Segment> polySegments = new ArrayList<>();
             for (int i=0; i<coords.length-1; i++) {
-                Random bag = new Random();
-                Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY(), bag.nextBoolean() ? new Color(252, 255, 77) : new Color( 250, 156, 255));
-                Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY(), bag.nextBoolean() ? new Color(252, 255, 77) : new Color( 250, 156, 255));
-//                Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY());
-//                Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY());
+                Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY());
+                Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY());
                 boolean containedV1 = set.contains(v1);
                 boolean containedV2 = set.contains(v2);
                 Integer id1 = set.add(v1);
@@ -38,23 +35,21 @@ public class JTSToGeneratorConverter {
                 if (!containedV1) {
                     v1.setId(id1);
                     vertices.put(id1, v1);
+                    vertexCounter++;
                 }
+
                 if (!containedV2) {
                     v2.setId(id2);
                     vertices.put(id2, v2);
+                    vertexCounter++;
                 }
-                Segment newSeg = new Segment(set.getVertex(id1), set.getVertex(id2));
-//                int avgColorRed = (set.getVertex(id1).getColor().getRed()+set.getVertex(id2).getColor().getRed())/2;
-//                System.out.println(avgColorRed + "  " + newSeg.getColor().getRed());
-//                if (avgColorRed != newSeg.getColor().getRed())
-//                    System.out.println(set.getVertex(id1).getColor() + "  " + set.getVertex(id2).getColor() + "  " + newSeg.getColor());
 
+                Segment newSeg = new Segment(set.getVertex(id1), set.getVertex(id2));
                 segments.put(segCounter, newSeg);
                 polySegments.add(newSeg);
                 segCounter++;
             }
 
-//            System.out.println("HEREEEE");
 
             // get centroid
             org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);

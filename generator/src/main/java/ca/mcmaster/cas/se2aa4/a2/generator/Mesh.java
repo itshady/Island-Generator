@@ -36,22 +36,14 @@ public abstract class Mesh {
         // Add Neighbours
         new NeighbourCalculator().addNeighbours(polygonsJTS, polygons, centroids);
 
-        for (Segment segment : segments.values()) {
-//            int avgColorRed = (segment.getV1().getColor().getRed()+segment.getV2().getColor().getRed())/2;
-//            System.out.println(avgColorRed + "  " + segment.getColor().getRed());
-//            if (avgColorRed != segment.getColor().getRed())
-//                System.out.println(segment.getV1().getColor() + "  " + segment.getV2().getColor() + "  " + segment.getColor());
-
-        }
-
         // Convert all our geometries into the io ones
         GeneratorToStructsConverter converter = new GeneratorToStructsConverter();
 
         Set<Structs.Vertex> rudimentaryVertices = converter.convertVertices(vertices);
         Set<Structs.Segment> rudimentarySegments = converter.convertSegments(segments);
         Set<Structs.Polygon> rudimentaryPolygons = converter.convertPolygons(polygons);
-        System.out.println(rudimentaryVertices.size() + "  " + vertices.size());
-      mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
+
+        mesh = Structs.Mesh.newBuilder().addAllVertices(rudimentaryVertices).addAllSegments(rudimentarySegments).addAllPolygons(rudimentaryPolygons).build();
     }
 
     public List<Centroid> getCentroids() {
