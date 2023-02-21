@@ -101,6 +101,9 @@ Feature is permanently completed with consideration of edge cases. Code is eithe
 | F10 | Display neighborhood relationships (Delaunay's Triangulation) | Cyruss | 02/14/23 | 02/18/23 | D |
 | F11 | Reorder segments (Convex Hull) | Cyruss | 02/14/23 | 02/18/23 | D |
 | F12 | Add Hexagonal Tessellation | Hady |  02/18/23 | 02/18/23 | D |
+| F13 | Add Diamond Tessellation | Cyruss |  02/20/23 | 02/21/23 | D |
+| F14 | Minimize Mesh (unique vertices) | Hady |  02/19/23 | 02/21/23 | D |
+| F15 | Minimize Mesh (unique segments) |  |  02/19/23 | | P |
 
 
 
