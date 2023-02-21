@@ -64,7 +64,7 @@ A makefile has been provided to easily create meshes according to their default 
   * `make run`
 
 * For debug mode with a regular square mesh: 
-  `make run-square-debug`
+  * `make run-square-debug`
 
 The following commands can add -debug to the end of the command-name to activate debug mode (i.e `make run-hex-debug` in the case of a hex mesh).
 
@@ -77,7 +77,7 @@ The following commands can add -debug to the end of the command-name to activate
 * To create a regular hexagon mesh: 
   * `make run-hex-relaxed`
 
-* To create a regular hexagon mesh: 
+* To create a regular diamond mesh: 
   * `make run-diamond-relaxed`
   
 ### Generator Customization
