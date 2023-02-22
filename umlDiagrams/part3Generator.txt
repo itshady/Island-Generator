@@ -32,11 +32,12 @@ namespace box.main {
   box.main.DotGen ..> box.main.MeshFactory: "uses"
 }
 
-namespace box.mesh.JTS {
-  box.mesh.JTSToGeneratorConverter ..> box.mesh.JTS.Vertex: "uses"
-  box.mesh.JTSToGeneratorConverter ..> box.mesh.JTS.Segment: "uses"
-  box.mesh.JTSToGeneratorConverter ..> box.mesh.JTS.Polygon: "uses"
-  box.mesh.JTSToGeneratorConverter ..> box.mesh.JTS.Centroid: "uses"
+namespace box.mesh.Generator {
+  box.mesh.JTSToGeneratorConverter ..> box.mesh.Generator.Vertex: "uses"
+  box.mesh.JTSToGeneratorConverter ..> box.mesh.Generator.Segment: "uses"
+  box.mesh.JTSToGeneratorConverter ..> box.mesh.Generator.Polygon: "uses"
+  box.mesh.JTSToGeneratorConverter ..> box.mesh.Generator.Centroid: "uses"
+  box.mesh.Generator.Vertex <|-- box.mesh.Generator.Centroid: "is_a"
 }
 
 namespace box.mf {
@@ -84,16 +85,16 @@ namespace box.mesh {
   box.mesh.RegularMesh <|-- box.mesh.HexRegularMesh: "is_a"
   box.mesh.RegularMesh <|-- box.mesh.DiamondRegularMesh: "is_a"
   box.mf.Mesh *-- box.mesh.Structs.Mesh: "has_a"
-  box.mf.Mesh o-- box.mesh.JTS.Centroid: "has_a"
-  box.mf.Mesh ..> box.mesh.JTSToGeneratorConverter: "uses"
+  box.mf.Mesh o-- box.mesh.Generator.Centroid: "has_a"
+  box.mf.Mesh ..> box.mesh.GeneratorToGeneratorConverter: "uses"
   box.mf.Mesh ..> box.mesh.NeighbourCalculator: "uses"
   box.mf.Mesh ..> box.mesh.GeneratorToStructsConverter: "uses"
   box.mf.Mesh ..> box.mesh.Structs.Vertex: "uses"
   box.mf.Mesh ..> box.mesh.Structs.Segment: "uses"
   box.mf.Mesh ..> box.mesh.Structs.Polygon: "uses"
-  box.mf.Mesh ..> box.mesh.JTS.Vertex: "uses"
-  box.mf.Mesh ..> box.mesh.JTS.Segment: "uses"
-  box.mf.Mesh ..> box.mesh.JTS.Polygon: "uses"
+  box.mf.Mesh ..> box.mesh.Generator.Vertex: "uses"
+  box.mf.Mesh ..> box.mesh.Generator.Segment: "uses"
+  box.mf.Mesh ..> box.mesh.Generator.Polygon: "uses"
   box.mf.Mesh ..> box.mesh.VoronoiDiagram: "uses"
 }
 
