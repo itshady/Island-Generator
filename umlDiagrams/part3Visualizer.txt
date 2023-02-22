@@ -1,0 +1,77 @@
+@startuml
+
+skin rose
+
+title Visualizer - Class Diagram
+
+class Main {
+  +{static}main(String[]): void
+  -{static}setupCLI(): Options
+  -{static}parseArgs(String[], Options): Map<String, String>
+}
+class GraphicRenderer {
+  -debug: boolean
+  +turnOnDebug(): void
+  +turnOffDebug(): void
+  +render(Structs.Mesh, Graphics2D): void
+}
+abstract class VisualMode {
+  #{abstract}render(Structs.Mesh, Graphics2D): void
+  #{abstract}visualizeVertices(Structs.Mesh, Graphics2D): void
+  #{abstract}visualizeSegments(Structs.Mesh, Graphics2D): void
+  #extractColor(List<Structs.Property>): Color
+  #isCentroid(List<Structs.Property>): boolean
+  #extractThickness(List<Structs.Property>): Float
+}
+
+class DebugMode {
+  #render(Structs.Mesh, Graphics2D): void
+  #visualizeVertices(Structs.Mesh, Graphics2D): void
+  #visualizeSegments(Structs.Mesh, Graphics2D): void
+  -visualizePolygon(Structs.Mesh, Graphics2D, List<Structs.Vertex>, List<Structs.Segment>): void
+  #visualizePolygonNeighbours(Structs.Mesh, Graphics2D, List<Structs.Vertex>): void
+  #updateCoordsForPolygons(List<Structs.Vertex>, List<Structs.Segment>, List<Integer>, int[], int[]): void
+}
+
+class NormalMode {
+  #render(Structs.Mesh, Graphics2D): void
+  #visualizeVertices(Structs.Mesh, Graphics2D): void
+  #visualizeSegments(Structs.Mesh, Graphics2D): void
+}
+
+class SVGCanvas {
+  +{static}build(int, int): Graphics2D
+  +{static}write(Graphics2D, String): void
+}
+
+class MeshDump {
+  +dump(Mesh): void
+}
+
+Main ..> GraphicRenderer: "uses"
+Main ..> Structs.MeshFactory: "uses"
+Main ..> SVGCanvas: "uses"
+Main ..> MeshDump: "uses"
+
+GraphicRenderer ..> Structs.Mesh: "uses"
+GraphicRenderer ..> Graphics2D: "uses"
+GraphicRenderer ..> VisualMode: "uses"
+
+VisualMode <|-- DebugMode: "inherits"
+VisualMode <|-- NormalMode: "inherits"
+
+DebugMode ..> Structs.Mesh: "uses"
+DebugMode ..> Graphics2D: "uses"
+DebugMode ..> Structs.Vertex: "uses"
+DebugMode ..> Structs.Segment: "uses"
+DebugMode ..> Structs.Polygon: "uses"
+
+NormalMode ..> Structs.Mesh: "uses"
+NormalMode ..> Graphics2D: "uses"
+NormalMode ..> Structs.Vertex: "uses"
+NormalMode ..> Structs.Segment: "uses"
+
+SVGCanvas ..> Graphics2D: "uses"
+MeshDump ..> Structs.Mesh: "uses"
+
+@enduml
