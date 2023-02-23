@@ -87,6 +87,9 @@ When you develop features and enrich the product, remember that you have first t
 
 ## Backlog
 
+### Status:
+* Pending (P), Started (S), Blocked (B), Done (D)
+
 ### Definition of Done
 
 * Feature is permanently completed with consideration of edge cases. 
