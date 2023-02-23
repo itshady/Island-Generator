@@ -17,7 +17,7 @@ mvn clean install
 
 After installation, you'll find an application named `generator.jar` in the `generator` directory, and a file named `visualizer.jar` in the `visualizer` one. 
 
-## Part 2 Running The Product
+## Running The Product
 
 ### Without Make
 
