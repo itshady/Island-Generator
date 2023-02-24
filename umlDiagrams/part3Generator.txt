@@ -96,7 +96,17 @@ namespace box.mesh {
   box.mf.Mesh ..> box.mesh.Structs.Segment: "uses"
   box.mf.Mesh ..> box.mesh.Structs.Polygon: "uses"
   box.mf.Mesh ..> box.mesh.VoronoiDiagram: "uses"
+
 }
+
+box.mesh.Generator.Vertex "1" *-- "1" box.mesh.Structs.Vertex: "has_a"
+box.mesh.Generator.Segment "1" *-- "1" box.mesh.Structs.Segment: "has_a"
+
+/' Vertices can exists without Segments, and multiple segments can share a vertex '/
+box.mesh.Generator.Segment "0..*" o-- "2" box.mesh.Generator.Vertex: "has_a"
+box.mesh.Generator.Polygon "1" *-- "1" box.mesh.Structs.Polygon: "has_a"
+box.mesh.Generator.Polygon "0..*" o-- "*" box.mesh.Generator.Segment: "has_a"
+box.mesh.Generator.Polygon "1" *-- "1" box.mesh.Generator.Centroid: "has_a"
 
 
 @enduml
