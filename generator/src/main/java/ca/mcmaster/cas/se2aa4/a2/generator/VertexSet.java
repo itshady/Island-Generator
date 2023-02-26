@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class VertexSet implements Iterable {
+public class VertexSet implements GeometrySet<Vertex> {
     private final Map<Coordinate, Vertex> coords = new HashMap<>();
     private final Map<Coordinate, Integer> ids = new HashMap<>();
     private final Map<Integer, Vertex> idToVertex = new HashMap<>();
@@ -24,11 +24,11 @@ public class VertexSet implements Iterable {
         return idCounter++;
     }
 
-    public Vertex getVertex(Coordinate coord) {
+    public Vertex get(Coordinate coord) {
         return coords.get(new Coordinate(coord.getX(), coord.getY()));
     }
 
-    public Vertex getVertex(Integer id) {
+    public Vertex get(Integer id) {
         return idToVertex.get(id);
     }
 

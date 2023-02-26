@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class SegmentSet implements Iterable {
+public class SegmentSet implements GeometrySet<Segment> {
     private final Map<Integer, Segment> segments = new HashMap<>();
     private final Map<Segment, Integer> segmentsInverse = new HashMap<>();
     Integer id = 0;
@@ -22,7 +22,7 @@ public class SegmentSet implements Iterable {
         return segments.containsValue(segment);
     }
 
-    public Segment getSegment(Integer id) {
+    public Segment get(Integer id) {
         return segments.get(id);
     }
 

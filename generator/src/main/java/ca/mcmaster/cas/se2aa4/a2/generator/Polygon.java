@@ -15,10 +15,11 @@ public class Polygon {
     private final Color color;
     private Centroid centroid;
     private final Set<Integer> neighbourIdxSet = new HashSet<>();
+    private final PropertyHandler propertyHandler = new PropertyHandler();
 
     public Polygon(Integer id, List<Segment> segments) {
         this.id = id;
-        this.color = averageColor(segments);
+        this.color = propertyHandler.averageColor(segments);
         segmentList = segments;
     }
 
@@ -31,7 +32,7 @@ public class Polygon {
 
     public Polygon(Integer id, List<Segment> segments, Float thickness) {
         this.id = id;
-        this.color = averageColor(segments);
+        this.color = propertyHandler.averageColor(segments);
         this.thickness = thickness;
         segmentList = segments;
         centroid = new Centroid(0.0,0.0);
@@ -47,12 +48,16 @@ public class Polygon {
 
     public void generatePolygon() {
         List<Integer> idList = new ArrayList<>();
-        for (int i = 0; i < segmentList.size(); i++) {
-            idList.add(segmentList.get(i).getId());
+        for (Segment segment : segmentList) {
+            idList.add(segment.getId());
         }
 
         //System.out.println("Segments: " + vertexPointList + " Centroid:" + centroid.getVertex());
-        polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList).setCentroidIdx(centroid.getId()).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).addAllNeighborIdxs(neighbourIdxSet).build();
+        polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList)
+                .setCentroidIdx(centroid.getId())
+                .addProperties(propertyHandler.setColorProperty(color))
+                .addProperties(propertyHandler.setThicknessProperty(thickness))
+                .addAllNeighborIdxs(neighbourIdxSet).build();
     }
 
     public Integer getCentroidId() {
@@ -79,8 +84,8 @@ public class Polygon {
         return segmentList;
     }
 
-    public void addPolygonNeighbourSet (Set<Polygon> polygonSet) {
-        for (Polygon p : polygonSet) {
+    public void addPolygonNeighbourSet (Set<Polygon> neighbourSet) {
+        for (Polygon p : neighbourSet) {
             this.neighbourIdxSet.add(p.getId());
         }
     }
@@ -91,45 +96,6 @@ public class Polygon {
 
     public Set<Integer> getPolygonNeighbours () {
         return this.neighbourIdxSet;
-    }
-
-    private Structs.Property setColorProperty(Color color) {
-        String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
-        Structs.Property colorProperty = Structs.Property.newBuilder().setKey("rgba_color").setValue(colorStr).build();
-        return colorProperty;
-    }
-
-    private Structs.Property setThicknessProperty(Float thickness) {
-        String polygonThickness = Float.toString(thickness);
-        Structs.Property thicknessProperty = Structs.Property.newBuilder().setKey("thickness").setValue(polygonThickness).build();
-        return thicknessProperty;
-    }
-
-    private Color averageColor(List<Segment> segments) {
-        int totalColors = segments.size();
-        int red = 0;
-        int blue = 0;
-        int green = 0;
-        int alpha = 0;
-        List<Color> segmentColors = new ArrayList<>();
-
-        for (Segment s : segments) {
-            segmentColors.add(s.getColor());
-        }
-
-        for (Color color : segmentColors) {
-
-            red += color.getRed();
-            blue += color.getBlue();
-            green += color.getGreen();
-            alpha += color.getAlpha();
-        }
-
-        red = red/totalColors;
-        blue = blue/totalColors;
-        green = green/totalColors;
-        alpha = alpha/totalColors;
-        return new Color(red, blue, green, alpha);
     }
 
 }

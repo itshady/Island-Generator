@@ -4,26 +4,26 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 import java.awt.*;
 import java.util.Objects;
-import java.util.Random;
 
 public class Vertex {
     private Structs.Vertex vertex;
     private final Color color;
     private Integer id;
     private final Coordinate coordinate;
+    private final PropertyHandler propertyHandler = new PropertyHandler();
 
     public boolean isCentroid() {
         return false;
     }
 
     public Vertex(Double x, Double y) {
-        color = generateColors();
+        color = propertyHandler.generateColors();
         coordinate = new Coordinate(x,y);
         setVertex(x, y, color);
     }
 
     public Vertex(Double x, Double y, Float thickness) {
-        color = generateColors();
+        color = propertyHandler.generateColors();
         coordinate = new Coordinate(x,y);
         setVertex(x, y, color, thickness);
     }
@@ -65,36 +65,18 @@ public class Vertex {
     }
 
     private void setVertex(Double x, Double y, Color color) {
-        vertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(setColorProperty(color)).addProperties(setCentroidProperty()).build();
+        vertex = Structs.Vertex.newBuilder().setX(x).setY(y)
+                .addProperties(propertyHandler.setColorProperty(color))
+                .addProperties(propertyHandler.setCentroidProperty(isCentroid()))
+                .build();
     }
 
     private void setVertex(Double x, Double y, Color color, Float thickness) {
-        vertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).addProperties(setCentroidProperty()).build();
-    }
-
-    private Structs.Property setColorProperty(Color color) {
-        String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
-        Structs.Property colorProperty = Structs.Property.newBuilder().setKey("rgba_color").setValue(colorStr).build();
-        return colorProperty;
-    }
-
-    private Structs.Property setCentroidProperty() {
-        String isCentroid = ""+isCentroid();
-        return Structs.Property.newBuilder().setKey("is_centroid").setValue(isCentroid).build();
-    }
-
-    private Structs.Property setThicknessProperty(Float thickness) {
-        String vertexThickness = Float.toString(thickness);
-        return Structs.Property.newBuilder().setKey("thickness").setValue(vertexThickness).build();
-    }
-
-    private Color generateColors() {
-        Random bag = new Random();
-        int red = bag.nextInt(255);
-        int green = bag.nextInt(255);
-        int blue = bag.nextInt(255);
-        int alpha = bag.nextInt(1,255);
-        return new Color(red, green, blue, alpha);
+        vertex = Structs.Vertex.newBuilder().setX(x).setY(y)
+                .addProperties(propertyHandler.setColorProperty(color))
+                .addProperties(propertyHandler.setThicknessProperty(thickness))
+                .addProperties(propertyHandler.setCentroidProperty(isCentroid()))
+                .build();
     }
 
     @Override

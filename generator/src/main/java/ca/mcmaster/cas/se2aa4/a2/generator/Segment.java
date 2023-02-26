@@ -4,7 +4,6 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 import java.awt.*;
 import java.util.Objects;
-import java.util.Random;
 
 public class Segment {
     private Structs.Segment segment;
@@ -13,6 +12,8 @@ public class Segment {
     private Vertex v1;
     private Vertex v2;
     private Integer id;
+    private final PropertyHandler propertyHandler = new PropertyHandler();
+
     public Vertex getV1() {
         return v1;
     }
@@ -34,7 +35,7 @@ public class Segment {
     }
 
     public Segment(Vertex v1, Vertex v2) {
-        color = averageColor(v1.getColor(), v2.getColor());
+        color = propertyHandler.averageColor(v1.getColor(), v2.getColor());
         setSegment(v1, v2);
     }
 
@@ -45,7 +46,7 @@ public class Segment {
 
     public Segment(Vertex v1, Vertex v2, Float thickness) {
         this.thickness = thickness;
-        this.color = averageColor(v1.getColor(), v2.getColor());;
+        this.color = propertyHandler.averageColor(v1.getColor(), v2.getColor());;
         setSegment(v1, v2);
     }
 
@@ -56,7 +57,10 @@ public class Segment {
     }
 
     public void generateSegment() {
-        segment = Structs.Segment.newBuilder().setV1Idx(v1.getId()).setV2Idx(v2.getId()).addProperties(setColorProperty(color)).addProperties(setThicknessProperty(thickness)).build();
+        segment = Structs.Segment.newBuilder().setV1Idx(v1.getId()).setV2Idx(v2.getId())
+                .addProperties(propertyHandler.setColorProperty(color))
+                .addProperties(propertyHandler.setThicknessProperty(thickness))
+                .build();
     }
 
     public Structs.Segment getSegment() {
@@ -66,24 +70,6 @@ public class Segment {
     private void setSegment(Vertex vertex1, Vertex vertex2) {
         v1 = vertex1;
         v2 = vertex2;
-    }
-
-    private Structs.Property setColorProperty(Color color) {
-        String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
-        return Structs.Property.newBuilder().setKey("rgba_color").setValue(colorStr).build();
-    }
-
-    private Structs.Property setThicknessProperty(Float thickness) {
-        String segmentThickness = Float.toString(thickness);
-        return Structs.Property.newBuilder().setKey("thickness").setValue(segmentThickness).build();
-    }
-
-    private Color averageColor(Color color1, Color color2) {
-        int red = (color1.getRed()+color2.getRed())/2;
-        int blue = (color1.getBlue()+color2.getBlue())/2;
-        int green = (color1.getGreen()+color2.getGreen())/2;
-        int alpha = (color1.getAlpha()+color2.getAlpha())/2;
-        return new Color(red, green, blue, alpha);
     }
 
     // to be equivalent means to have the same 2 vertices, in any order

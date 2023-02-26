@@ -42,11 +42,11 @@ public class JTSToGeneratorConverter {
                     vertices.put(id2, v2);
                 }
 
-                Segment newSeg = new Segment(vertexSet.getVertex(id1), vertexSet.getVertex(id2));
+                Segment newSeg = new Segment(vertexSet.get(id1), vertexSet.get(id2));
                 Integer segId = segmentSet.add(newSeg);
 //                segments.put(segCounter, newSeg);
-                segments.put(segId, segmentSet.getSegment(segId));
-                polySegments.add(segmentSet.getSegment(segId));
+                segments.put(segId, segmentSet.get(segId));
+                polySegments.add(segmentSet.get(segId));
                 segCounter++;
             }
 
