@@ -1,5 +1,11 @@
-package ca.mcmaster.cas.se2aa4.a2.generator;
+package ca.mcmaster.cas.se2aa4.a2.generator.Helpers;
 
+import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.SegmentSet;
+import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.VertexSet;
+import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Centroid;
+import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon;
+import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Segment;
+import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Vertex;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 
@@ -9,11 +15,11 @@ import java.util.List;
 
 public class JTSToGeneratorConverter {
     // Takes in empty lists of vertices, segments, polygons, and centroids. Also takes a list of JTS polygon data (generated via voronoi diagram) and populates the empty geometry lists with the JTS data.
-    public void convertAllData(List<Geometry> polygonsJTS, Map<Integer, Vertex> vertices, Map<Integer, Segment> segments, Map<Integer, Polygon> polygons, List<Centroid> centroids) {
+    public void convertAllData(List<Geometry> polygonsJTS, Map<Integer, Vertex> vertices, Map<Integer, Segment> segments, Map<Integer, ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon> polygons, List<Centroid> centroids) {
         JTSDataConversion(polygonsJTS, vertices, segments, polygons, centroids);
     }
 
-    private void JTSDataConversion(List<Geometry> polygonsJTS, Map<Integer, Vertex> vertices, Map<Integer, Segment> segments, Map<Integer, Polygon> polygons, List<Centroid> centroids) {
+    private void JTSDataConversion(List<Geometry> polygonsJTS, Map<Integer, Vertex> vertices, Map<Integer, Segment> segments, Map<Integer, ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon> polygons, List<Centroid> centroids) {
         int segCounter = 0;
         int polyCounter = 0;
 
@@ -52,7 +58,7 @@ public class JTSToGeneratorConverter {
 
             // get centroid
             org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);
-            Polygon newPolygon = new Polygon(polyCounter, polySegments, Color.BLACK, 2f);
+            ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon newPolygon = new Polygon(polyCounter, polySegments, Color.BLACK, 2f);
             Centroid newCentroid = new Centroid(centroidJTS.getCentroid().getX(), centroidJTS.getCentroid().getY());
             centroids.add(newCentroid);
             Integer id = vertexSet.add(newCentroid);

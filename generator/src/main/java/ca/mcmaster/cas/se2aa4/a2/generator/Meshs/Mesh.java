@@ -1,7 +1,14 @@
-package ca.mcmaster.cas.se2aa4.a2.generator;
+package ca.mcmaster.cas.se2aa4.a2.generator.Meshs;
 
+import ca.mcmaster.cas.se2aa4.a2.generator.Helpers.GeneratorToStructsConverter;
+import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Centroid;
+import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon;
+import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Segment;
+import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Vertex;
+import ca.mcmaster.cas.se2aa4.a2.generator.Helpers.JTSToGeneratorConverter;
+import ca.mcmaster.cas.se2aa4.a2.generator.Helpers.NeighbourCalculator;
+import ca.mcmaster.cas.se2aa4.a2.generator.Helpers.VoronoiDiagram;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Coordinate;
 

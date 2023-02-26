@@ -1,4 +1,7 @@
-package ca.mcmaster.cas.se2aa4.a2.generator;
+package ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets;
+
+import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Coordinate;
+import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Vertex;
 
 import java.util.HashMap;
 import java.util.Iterator;

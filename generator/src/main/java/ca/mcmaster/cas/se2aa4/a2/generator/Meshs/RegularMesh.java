@@ -1,8 +1,7 @@
-package ca.mcmaster.cas.se2aa4.a2.generator;
+package ca.mcmaster.cas.se2aa4.a2.generator.Meshs;
 
 import org.locationtech.jts.geom.Coordinate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class RegularMesh extends Mesh {

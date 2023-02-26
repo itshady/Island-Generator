@@ -1,6 +1,6 @@
-import ca.mcmaster.cas.se2aa4.a2.generator.CommandLineOptions;
+import ca.mcmaster.cas.se2aa4.a2.generator.Enums.CommandLineOptions;
 import ca.mcmaster.cas.se2aa4.a2.generator.DotGen;
-import ca.mcmaster.cas.se2aa4.a2.generator.TypeOfMesh;
+import ca.mcmaster.cas.se2aa4.a2.generator.Enums.TypeOfMesh;
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import org.apache.commons.cli.*;
@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ca.mcmaster.cas.se2aa4.a2.generator.CommandLineOptions.*;
-import static ca.mcmaster.cas.se2aa4.a2.generator.TypeOfMesh.IRREGULAR;
-import static ca.mcmaster.cas.se2aa4.a2.generator.TypeOfMesh.SQUARE;
+import static ca.mcmaster.cas.se2aa4.a2.generator.Enums.CommandLineOptions.*;
+import static ca.mcmaster.cas.se2aa4.a2.generator.Enums.TypeOfMesh.IRREGULAR;
+import static ca.mcmaster.cas.se2aa4.a2.generator.Enums.TypeOfMesh.SQUARE;
 
 public class Main {
 

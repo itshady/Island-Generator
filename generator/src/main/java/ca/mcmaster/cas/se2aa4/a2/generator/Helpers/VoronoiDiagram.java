@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.generator;
+package ca.mcmaster.cas.se2aa4.a2.generator.Helpers;
 
 import org.locationtech.jts.algorithm.ConvexHull;
 import org.locationtech.jts.geom.*;
