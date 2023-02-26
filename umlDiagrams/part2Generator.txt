@@ -1,0 +1,124 @@
+@startuml
+
+skin rose
+
+title Generator - Class Diagram
+
+
+class Main {
+  +void main()
+}
+
+class DotGen {
+  +Structs.Mesh generate()
+}
+class Mesh {
+  -width: Integer
+  -height: Integer
+  -precision: Double
+  -matrixWidth: Integer
+  -matrixHeight: Integer
+  -square_size: Integer
+  -mesh: Structs.Mesh
+  +void generate()
+  -getCoordsForCentroid(List<Segment>, Map<Integer, Vertex>): List<List<Double>>
+  -initializeSquarePolygons(Map<Integer, Segment>, Map<Integer, Vertex>): Map<Integer, Polygon>
+  -setPolygonNeighbours(Map<Integer, Polygon>, Map<Integer, Segment>): Map<Segment, List<Polygon>>
+  -initializeSquareSegments(Map<Integer, Vertex>): Map<Integer, Segment>
+  -initalizeSquareVertices(Map<Integer, List<Integer>>): Map<Integer, Vertex>
+  -extractVertices(Map<Integer, Vertex>): Set<Structs.Vertex>
+  -extractSegments(Map<Integer, Segment>): Set<Structs.Segment>
+  -extractPolygons(Map<Integer, Polygon>): Set<Structs.Polygon>
+}
+class Polygon {
+  +Polygon(Integer, List<Segment>)
+  +Polygon(Integer, List<Segment>, Color, Float, List<Double>)
+  +Polygon(Integer, List<Segment>, Color, List<List<Double>>)
+  +Polygon(Integer, List<Segment>, Float, List<List<Double>>)
+  -segmentList: List<Segment>
+  -vertexPointsList: List<List<Double>>
+  -id: Integer
+  -polygon: Structs.Polygon
+  -thickness: Float
+  -color: Color
+  -centroid: Centroid
+  -width: Integer
+  -height: Integer
+  -precision: Double
+  -neighbourIdxSet: Set<Integer>
+  -matrixWidth: Integer
+  -matrixHeight: Integer
+  +generatePolygon(): void
+  +getCentroidId(): Integer
+  +getCentroid(): Centroid
+  +getId(): Integer
+  -generateCentroid(): Centroid
+  -calculateCentroid(): List<Double>
+  +getPolygon(): Structs.Polygon
+  +getSegmentList(): List<Segment>
+  +addPolygonNeighbourSet(): void
+  +removePolygonNeighbour(Polygon): void
+  -setColorProperty(Color): Structs.Property
+  -setThicknessProperty(Float): Structs.Property
+  -averageColor(List<Segment>): Color
+
+}
+class Segment {
+  -segment: Structs.Segment
+  -thickness: float
+  -color: Color
+  -v1: Vertex
+  -v2: Vertex
+  -id: int
+  +Segment(Vertex, Vertex)
+  +Segment(Vertex, Vertex, Color)
+  +Segment(Vertex, Vertex, Color, Float)
+  +generateSegment(): void
+  +getSegment(): Structs.Segment
+  -setSegment(Vertex, Vertex): void
+  -setColorProperty(Color): Structs.Property
+  -setThicknessProperty(Float): Structs.Property
+  -averageColor(Color, Color): Color
+}
+class Vertex {
+  -vertex: Structs.Vertex
+  -color: Color
+  -id: Integer
+  -precision: double
+  +Vertex()
+  +isCentroid(): boolean
+  +Vertex(Integer, Double, Double)
+  +Vertex(Integer, Double, Double, Float)
+  +Vertex(Integer, Integer, Integer)
+  +Vertex(Integer, Integer, Integer, Float)
+  +Vertex(Integer, Double, Double, Color)
+  +Vertex(Integer, Double, Double, Color, Float)
+  +getVertex(): Structs.Vertex
+  +getX(): Double
+  +getY(): Double
+  +getColor(): Color
+  +getId(): Integer
+  +setID(Integer): void
+  -setVertex(Double, Double, Color): void
+  -setVertex(Double, Double, Color, Float): void
+  -setVertex(Integer, Integer, Color, Float): void
+  -setColorProperty(Color): Structs.Property
+  -setCentroidProperty(): Structs.Property
+  -setThicknessProperty(Float): Structs.Property
+  -generateColors(): Color
+}
+class Centroid extends Vertex {
+  +Centroid(Integer, Double, Double, Color)
+  +isCentroid(): boolean
+}
+
+Main .left.> DotGen
+DotGen ..> Mesh
+Mesh "1" o-left- "*" Polygon
+Mesh "1" o-down- "*" Segment
+Mesh "1" o-- "*" Vertex
+Polygon "1" *-- "1" Centroid
+Polygon "1" o-right- "4" Segment
+Segment "1" o-left- "2" Vertex
+
+@enduml

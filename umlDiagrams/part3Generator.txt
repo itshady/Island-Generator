@@ -1,0 +1,112 @@
+@startuml
+
+skin rose
+
+title Generator - Class Diagram
+
+page 5x5
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+
+
+namespace box.main {
+   class .main {
+     +main(): void
+    -{static} setupCLI(): Options
+    -{static} parseArgs(String[], Options): Map<CommandLineOptions, String>
+    -{static} validArg(CommandLineOptions, String): Boolean
+   }
+   enum box.main.CommandLineOptions {
+    HELP
+    OUTPUTFILE
+    TYPEOFMESH
+    RELAXATION
+    NUMOFPOLYGONS
+   }
+  .main ..> box.main.DotGen
+  .main ..> box.main.MeshFactory
+  .main ..> box.main.CommandLineOptions
+
+  box.main.DotGen ..> box.main.CommandLineOptions: "uses"
+  box.main.DotGen ..> box.main.MeshFactory: "uses"
+}
+
+namespace box.mesh.Generator {
+  box.mesh.JTSToGeneratorConverter ..> box.mesh.Generator.Vertex: "uses"
+  box.mesh.JTSToGeneratorConverter ..> box.mesh.Generator.Segment: "uses"
+  box.mesh.JTSToGeneratorConverter ..> box.mesh.Generator.Polygon: "uses"
+  box.mesh.JTSToGeneratorConverter ..> box.mesh.Generator.Centroid: "uses"
+  box.mesh.Generator.Vertex <|-- box.mesh.Generator.Centroid: "is_a"
+}
+
+namespace box.mf {
+  enum box.mf.TypeOfMesh {
+    HEX
+    SQUARE
+    DIAMOND
+    REGULAR
+    IRREGULAR
+  }
+  abstract class box.mf.Mesh {
+    #width: int
+    #height: int
+    #square_size: int
+    -precision: double
+    mesh: Structs.Mesh
+    -centroids: List<Centroid>
+    +generate(): Structs.Mesh
+    #generateDiagram(List<Coordinate>): void
+    +getCentroids(): List<Centroid>
+    #{abstract} generatePoints(): List<Coordinate>
+  }
+  box.main.MeshFactory ..> box.mf.Mesh
+  box.main.MeshFactory ..> box.mf.TypeOfMesh
+}
+
+namespace box.mesh {
+  class box.mesh.IrregularMesh {
+    -lloydRelaxationNumber: Integer
+    -numOfPolygons: Integer
+    +^generate(): Structs.Mesh
+    +setRelaxation(Integer): IrregularMesh
+    +setNumOfPolygons(Integer): IrregularMesh
+    -centroidToCoordinate(List<Centroid>): List<Coordinate>
+    #generatePoints(): List<Coordinate>
+  }
+  abstract class box.mesh.RegularMesh
+  class box.mesh.SquareRegularMesh
+  class box.mesh.HexRegularMesh
+  class box.mesh.DiamondRegularMesh
+
+  box.mf.Mesh <|-- box.mesh.IrregularMesh: "is_a"
+  box.mf.Mesh <|-- box.mesh.RegularMesh: "is_a"
+  box.mesh.RegularMesh <|-- box.mesh.SquareRegularMesh: "is_a"
+  box.mesh.RegularMesh <|-- box.mesh.HexRegularMesh: "is_a"
+  box.mesh.RegularMesh <|-- box.mesh.DiamondRegularMesh: "is_a"
+  box.mf.Mesh *-- box.mesh.Structs.Mesh: "has_a"
+  box.mf.Mesh "1" o-- "*" box.mesh.Generator.Centroid: "has_a"
+  box.mf.Mesh ..> box.mesh.GeneratorToGeneratorConverter: "uses"
+  box.mf.Mesh ..> box.mesh.NeighbourCalculator: "uses"
+  box.mf.Mesh ..> box.mesh.GeneratorToStructsConverter: "uses"
+  box.mf.Mesh "1" o-- "*" box.mesh.Generator.Vertex: "has_a"
+  box.mf.Mesh "1" o-- "*" box.mesh.Generator.Segment: "has_a"
+  box.mf.Mesh "1" o-- "*" box.mesh.Generator.Polygon: "has_a"
+  box.mf.Mesh ..> box.mesh.Structs.Vertex: "uses"
+  box.mf.Mesh ..> box.mesh.Structs.Segment: "uses"
+  box.mf.Mesh ..> box.mesh.Structs.Polygon: "uses"
+  box.mf.Mesh ..> box.mesh.VoronoiDiagram: "uses"
+
+}
+
+box.mesh.Generator.Vertex "1" *-- "1" box.mesh.Structs.Vertex: "has_a"
+box.mesh.Generator.Segment "1" *-- "1" box.mesh.Structs.Segment: "has_a"
+
+/' Vertices can exists without Segments, and multiple segments can share a vertex '/
+box.mesh.Generator.Segment "0..*" o-- "2" box.mesh.Generator.Vertex: "has_a"
+box.mesh.Generator.Polygon "1" *-- "1" box.mesh.Structs.Polygon: "has_a"
+box.mesh.Generator.Polygon "0..*" o-- "*" box.mesh.Generator.Segment: "has_a"
+box.mesh.Generator.Polygon "1" *-- "1" box.mesh.Generator.Centroid: "has_a"
+
+
+@enduml

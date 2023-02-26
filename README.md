@@ -13,50 +13,38 @@ This product is handled by Maven, as a multi-module project. We assume here that
 To install the different tooling on your computer, simply run (while in A2):
 ```
 mvn clean install
-make run
-```
-
-
-```
-mosser@azrael A2 % mvn install
 ```
 
 After installation, you'll find an application named `generator.jar` in the `generator` directory, and a file named `visualizer.jar` in the `visualizer` one. 
 
-### Running the product
+## Running The Product
 
-To run the product, simply run:
-
-```
-mosser@azrael A2 % make run
-```
-
-## Part 2 Running Instructions
+### Without Make
 
 To generate the square mesh, enter this into the terminal. 
 
 ```
 cd generator
-java -jar generator.jar sample.mesh
+java -jar generator.jar -m square -o sample.mesh
 ```
 
 Then go to the visualizer directory.
 ```
 cd visualizer
-java -jar visualizer.jar ../generator/sample.mesh sample.svg
+java -jar visualizer.jar -m ../generator/sample.mesh -o sample.svg
 ```
 To activate debug mode, add `-X` to the end of the command line during the visualizer execution.
 ```
 cd visualizer
-java -jar visualizer.jar ../generator/sample.mesh sample.svg -X
+java -jar visualizer.jar -m ../generator/sample.mesh -o sample.svg -X
 ```
 
-To viualize the SVG file:
+To vizualize the SVG file:
 
   - Open it with a web browser
-  - Convert it into something else with tool slike `rsvg-convert`
+  - If need be: Convert it into something else with tool slike `rsvg-convert`
 
-## Part 3 Running Instructions
+### With Make (Has scenarios)
 
 A makefile has been provided to easily create meshes according to their default types (however, this can be adjusted accordingly). 
 
@@ -91,7 +79,7 @@ java -jar generator.jar -m *TYPE_OF_MESH* -r *RELAXATION_LEVEL* -p *NUM_OF_POLYG
 
 These can be written in any order and if you choose to omit any arguments, default values will be provided. Please note for regular meshes, relaxation level and number of polygons will be ignored.
 
-Need help? Simply use `-h` or `--help` within the generator execution or run `make help`.
+Need help? Simply use `-h` or `-help` within the generator execution or run `make help`.
 
 ## How to contribute to the project
 
@@ -99,9 +87,14 @@ When you develop features and enrich the product, remember that you have first t
 
 ## Backlog
 
+### Status:
+* Pending (P), Started (S), Blocked (B), Done (D)
+
 ### Definition of Done
 
-Feature is permanently completed with consideration of edge cases. Code is either readable, commented, or documented. Code passes all tests.
+* Feature is permanently completed with consideration of edge cases. 
+* Code is either readable, commented, or documented. 
+* Code passes all tests.
 
 ### Product Backlog
 
@@ -121,7 +114,8 @@ Feature is permanently completed with consideration of edge cases. Code is eithe
 | F12 | Add Hexagonal Tessellation | Hady |  02/18/23 | 02/18/23 | D |
 | F13 | Add Diamond Tessellation | Cyruss |  02/20/23 | 02/21/23 | D |
 | F14 | Minimize Mesh (unique vertices) | Hady |  02/19/23 | 02/21/23 | D |
-| F15 | Minimize Mesh (unique segments) |  |  02/19/23 | | P |
+| F15 | Allow generator to take in command line args to select the type of mesh, relaxation, and num of polygons | Hady, Richard | 02/18/23 | 02/21/23 | D |
+| F16 | Minimize Mesh (unique segments) |  |  02/19/23 | | P |
 
 
 
