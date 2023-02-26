@@ -1,9 +1,11 @@
 package ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets;
 
+import java.util.Set;
+
 /**
  * Specifies a Set for a Geometry E
  */
-public interface GeometrySet<E> extends Iterable {
+public interface GeometrySet<E> extends Iterable<E> {
     /**
      * Must maintain Set property (any equal segments can't be in set together)
      * @param e: the given Geometry to add

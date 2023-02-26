@@ -5,7 +5,12 @@ import org.locationtech.jts.geom.Coordinate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class SquareRegularMesh extends RegularMesh {
+    private final int square_size = 20;
+
     protected List<Coordinate> generatePoints() {
         List<Coordinate> coordList = new ArrayList<>();
         for (int i=0; i<height; i+=square_size) {

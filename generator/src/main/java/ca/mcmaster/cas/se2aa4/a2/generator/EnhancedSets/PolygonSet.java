@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class PolygonSet implements GeometrySet<Polygon> {
+public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {
     private final Map<Integer, Polygon> polygons = new HashMap<>();
     private final Map<Polygon, Integer> polygonsInverse = new HashMap<>();
     Integer id = 0;
@@ -54,7 +54,11 @@ public class PolygonSet implements GeometrySet<Polygon> {
      * @return an Iterator.
      */
     @Override
-    public Iterator iterator() {
-        return polygons.entrySet().iterator();
+    public Iterator<Polygon> iterator() {
+        return polygons.values().iterator();
+    }
+
+    public Map<Integer, Polygon> getPolygons() {
+        return polygons;
     }
 }

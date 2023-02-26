@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class SegmentSet implements GeometrySet<Segment> {
+public class SegmentSet implements GeometrySet<Segment>, Iterable<Segment> {
     private final Map<Integer, Segment> segments = new HashMap<>();
     private final Map<Segment, Integer> segmentsInverse = new HashMap<>();
     Integer id = 0;
@@ -55,7 +55,7 @@ public class SegmentSet implements GeometrySet<Segment> {
      * @return an Iterator where the key is the segment id and the values are the Segments.
      */
     @Override
-    public Iterator iterator() {
-        return segments.entrySet().iterator();
+    public Iterator<Segment> iterator() {
+        return segments.values().iterator();
     }
 }
