@@ -35,7 +35,7 @@ public class NormalMode extends VisualMode{
             Line2D line = new Line2D.Double(point1, point2);
             canvas.draw(line);
             canvas.setColor(old);
-       }
+        }
     }
 
     protected void visualizeVertices(Structs.Mesh aMesh, Graphics2D canvas) {

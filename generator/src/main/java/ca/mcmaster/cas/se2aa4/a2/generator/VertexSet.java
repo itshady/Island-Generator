@@ -1,9 +1,10 @@
 package ca.mcmaster.cas.se2aa4.a2.generator;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-public class VertexSet {
+public class VertexSet implements Iterable {
     private final Map<Coordinate, Vertex> coords = new HashMap<>();
     private final Map<Coordinate, Integer> ids = new HashMap<>();
     private final Map<Integer, Vertex> idToVertex = new HashMap<>();
@@ -38,5 +39,15 @@ public class VertexSet {
     public boolean contains(Integer x, Integer y) {
         Coordinate coordinate = new Coordinate(x, y);
         return coords.containsKey(coordinate);
+    }
+
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator where the key is the vertex id and the values are the Vertices.
+     */
+    @Override
+    public Iterator iterator() {
+        return idToVertex.entrySet().iterator();
     }
 }

@@ -3,6 +3,7 @@ package ca.mcmaster.cas.se2aa4.a2.generator;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 import java.awt.*;
+import java.util.Objects;
 import java.util.Random;
 
 public class Segment {
@@ -83,5 +84,25 @@ public class Segment {
         int green = (color1.getGreen()+color2.getGreen())/2;
         int alpha = (color1.getAlpha()+color2.getAlpha())/2;
         return new Color(red, green, blue, alpha);
+    }
+
+    // to be equivalent means to have the same 2 vertices, in any order
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Segment segment = (Segment) o;
+        return (Objects.equals(v1, segment.v1) && Objects.equals(v2, segment.v2)) ||
+                (Objects.equals(v1, segment.v2) && Objects.equals(v2, segment.v1));
+    }
+
+    // vertices should never be the same, so this is a good way to keep the order, so "equivalent" segments hash to the same hash
+    @Override
+    public int hashCode() {
+        if (v1.getX() < v2.getX()) return Objects.hash(v1,v2);
+        if (v1.getX() > v2.getX()) return Objects.hash(v2,v1);
+        if (v1.getY() < v2.getY()) return Objects.hash(v1,v2);
+        if (v1.getY() > v2.getY()) return Objects.hash(v2,v1);
+        return Objects.hash(v1,v2);
     }
 }

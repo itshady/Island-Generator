@@ -17,7 +17,8 @@ public class JTSToGeneratorConverter {
         int segCounter = 0;
         int polyCounter = 0;
 
-        VertexSet set = new VertexSet(0.01);
+        VertexSet vertexSet = new VertexSet(0.01);
+        SegmentSet segmentSet = new SegmentSet();
         for (Geometry polygon : polygonsJTS) {
             // adds vertices and segments of the polygon to the vertex and segment list
             Coordinate[] coords = polygon.getCoordinates();
@@ -26,10 +27,10 @@ public class JTSToGeneratorConverter {
             for (int i=0; i<coords.length-1; i++) {
                 Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY());
                 Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY());
-                boolean containedV1 = set.contains(v1);
-                boolean containedV2 = set.contains(v2);
-                Integer id1 = set.add(v1);
-                Integer id2 = set.add(v2);
+                boolean containedV1 = vertexSet.contains(v1);
+                boolean containedV2 = vertexSet.contains(v2);
+                Integer id1 = vertexSet.add(v1);
+                Integer id2 = vertexSet.add(v2);
 
                 if (!containedV1) {
                     v1.setId(id1);
@@ -41,19 +42,20 @@ public class JTSToGeneratorConverter {
                     vertices.put(id2, v2);
                 }
 
-                Segment newSeg = new Segment(set.getVertex(id1), set.getVertex(id2));
-                segments.put(segCounter, newSeg);
-                polySegments.add(newSeg);
+                Segment newSeg = new Segment(vertexSet.getVertex(id1), vertexSet.getVertex(id2));
+                Integer segId = segmentSet.add(newSeg);
+//                segments.put(segCounter, newSeg);
+                segments.put(segId, segmentSet.getSegment(segId));
+                polySegments.add(segmentSet.getSegment(segId));
                 segCounter++;
             }
-
 
             // get centroid
             org.locationtech.jts.algorithm.Centroid centroidJTS = new org.locationtech.jts.algorithm.Centroid(polygon);
             Polygon newPolygon = new Polygon(polyCounter, polySegments, Color.BLACK, 2f);
             Centroid newCentroid = new Centroid(centroidJTS.getCentroid().getX(), centroidJTS.getCentroid().getY());
             centroids.add(newCentroid);
-            Integer id = set.add(newCentroid);
+            Integer id = vertexSet.add(newCentroid);
             vertices.put(id, newCentroid);
             newPolygon.setCentroid(newCentroid);
             polygons.put(polyCounter, newPolygon);
