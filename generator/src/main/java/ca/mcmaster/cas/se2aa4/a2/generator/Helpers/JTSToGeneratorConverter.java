@@ -1,5 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.generator.Helpers;
 
+import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.PolygonSet;
 import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.SegmentSet;
 import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.VertexSet;
 import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Centroid;
@@ -24,6 +25,7 @@ public class JTSToGeneratorConverter {
 
         VertexSet vertexSet = new VertexSet();
         SegmentSet segmentSet = new SegmentSet();
+        PolygonSet polygonSet = new PolygonSet();
         for (Geometry polygon : polygonsJTS) {
             // adds vertices and segments of the polygon to the vertex and segment list
             Coordinate[] coords = polygon.getCoordinates();
@@ -31,12 +33,14 @@ public class JTSToGeneratorConverter {
             addVerticesAndSegments(vertices, segments, vertexSet, segmentSet, coords, polySegments);
 
             // get centroid
-            polyCounter = addPolygon(vertices, polygons, centroids, polyCounter, vertexSet, polygon, polySegments);
+            polyCounter = addPolygon(vertices, polygons, centroids, polyCounter, vertexSet, polygon, polySegments, polygonSet);
         }
     }
 
-    private int addPolygon(Map<Integer, Vertex> vertices, Map<Integer, Polygon> polygons, List<Centroid> centroids, int polyCounter, VertexSet vertexSet, Geometry polygon, List<Segment> polySegments) {
+    private int addPolygon(Map<Integer, Vertex> vertices, Map<Integer, Polygon> polygons, List<Centroid> centroids, int polyCounter, VertexSet vertexSet, Geometry polygon, List<Segment> polySegments, PolygonSet polygonSet) {
         Polygon newPolygon = new Polygon(polySegments, Color.BLACK, 2f);
+        Integer polyId = polygonSet.add(newPolygon);
+        polygons.put(polyId, polygonSet.get(polyId));
         newPolygon.setId(polyCounter);
         addCentroid(vertices, centroids, vertexSet, polygon, newPolygon);
         polygons.put(polyCounter, newPolygon);

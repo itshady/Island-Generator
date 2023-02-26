@@ -20,8 +20,8 @@ public interface GeometrySet<E> extends Iterable {
 
     /**
      * Gets the Geometry E from the Set given its id
-     * @param i: the id of the Geometry
+     * @param id: the id of the Geometry
      * @return Geometry: Returns the geometry if it exists, else null.
      */
-    public E get(Integer i);
+    public E get(Integer id);
 }
