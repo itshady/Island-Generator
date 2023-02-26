@@ -13,9 +13,7 @@ public class VertexSet implements GeometrySet<Vertex> {
     private final Map<Integer, Vertex> idToVertex = new HashMap<>();
     int idCounter = 0;
 
-    public VertexSet(double precision) {
-        Coordinate.precision = precision;
-    }
+    public VertexSet() {}
 
     // returns the id of the vertex passed in (either existing vertex or newly created)
     public Integer add(Vertex vertex) {

@@ -9,7 +9,7 @@ import java.util.List;
 public class Polygon {
 
     private final List<Segment> segmentList;
-    private final Integer id;
+    private Integer id;
     private Structs.Polygon polygon;
     private float thickness = (float) 2;
     private final Color color;
@@ -17,33 +17,33 @@ public class Polygon {
     private final Set<Integer> neighbourIdxSet = new HashSet<>();
     private final PropertyHandler propertyHandler = new PropertyHandler();
 
-    public Polygon(Integer id, List<Segment> segments) {
-        this.id = id;
+    public Polygon(List<Segment> segments) {
         this.color = propertyHandler.averageColor(segments);
         segmentList = segments;
     }
 
-    public Polygon(Integer id, List<Segment> segments, Color color) {
-        this.id = id;
+    public Polygon(List<Segment> segments, Color color) {
         this.color = color;
         segmentList = segments;
         centroid = new Centroid(0.0,0.0);
     }
 
-    public Polygon(Integer id, List<Segment> segments, Float thickness) {
-        this.id = id;
+    public Polygon(List<Segment> segments, Float thickness) {
         this.color = propertyHandler.averageColor(segments);
         this.thickness = thickness;
         segmentList = segments;
         centroid = new Centroid(0.0,0.0);
     }
 
-    public Polygon(Integer id, List<Segment> segments, Color color, Float thickness) {
-        this.id = id;
+    public Polygon(List<Segment> segments, Color color, Float thickness) {
         this.color = color;
         this.thickness = thickness;
         segmentList = segments;
         centroid = new Centroid(0.0,0.0);
+    }
+
+    public void setId(Integer newId) {
+        id = newId;
     }
 
     public void generatePolygon() {
@@ -98,4 +98,16 @@ public class Polygon {
         return this.neighbourIdxSet;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Polygon polygon = (Polygon) o;
+        return new HashSet<>(segmentList).equals(new HashSet<>(polygon.segmentList));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(new HashSet<>(segmentList));
+    }
 }

@@ -23,6 +23,7 @@ public class NormalMode extends VisualMode{
     }
 
     protected void visualizeSegments (Structs.Mesh aMesh, Graphics2D canvas, List<Structs.Vertex> vertexList) {
+        int counter = 0;
         for (Structs.Segment s: aMesh.getSegmentsList()) {
             Stroke segmentStroke = new BasicStroke(extractThickness(s.getPropertiesList()));
             canvas.setStroke(segmentStroke);
@@ -35,7 +36,9 @@ public class NormalMode extends VisualMode{
             Line2D line = new Line2D.Double(point1, point2);
             canvas.draw(line);
             canvas.setColor(old);
+            counter++;
         }
+        System.out.println(counter);
     }
 
     protected void visualizeVertices(Structs.Mesh aMesh, Graphics2D canvas) {

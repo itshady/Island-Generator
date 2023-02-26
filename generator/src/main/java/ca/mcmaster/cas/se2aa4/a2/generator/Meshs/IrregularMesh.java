@@ -41,6 +41,9 @@ public class IrregularMesh extends Mesh {
         return coords;
     }
 
+    /**
+     * Randomly generated Centroids for Voronoi Diagram.
+     */
     protected List<Coordinate> generatePoints() {
         List<Coordinate> coordList = new ArrayList<>();
         Random bag = new Random();
