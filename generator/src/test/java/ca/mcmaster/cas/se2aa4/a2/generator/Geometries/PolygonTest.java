@@ -23,6 +23,7 @@ class PolygonTest {
 
     @Test
     void moreThanTwoSegments() {
+        // assert no polygon has more than 2 segments
         Vertex v1 = new Vertex(1.0,7.0);
         Vertex v2 = new Vertex(3.0,6.0);
         List<Segment> segments = new ArrayList<>();
@@ -34,6 +35,7 @@ class PolygonTest {
 
     @Test
     void setCentroid() {
+        // assert centroid can be set
         Vertex v1 = new Vertex(1.0,7.0);
         Vertex v2 = new Vertex(3.0,6.0);
         Vertex v3 = new Vertex(2.0,3.0);

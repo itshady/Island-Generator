@@ -19,6 +19,7 @@ class SegmentTest {
 
     @Test
     void getColor() {
+        // assert color is generated correctly (avg of its vertices)
         Vertex v1 = new Vertex(1.0, 1.0, new Color(0,0,100));
         Vertex v2 = new Vertex(2.0, 2.0, new Color(200,200,200));
         Segment segment = new Segment(v1,v2);
@@ -39,6 +40,7 @@ class SegmentTest {
 
     @Test
     void testEquals() {
+        // assert two segments are equals regardless of vertex order
         Vertex v1 = new Vertex(1.0, 1.0);
         Vertex v2 = new Vertex(2.0, 2.0);
 
