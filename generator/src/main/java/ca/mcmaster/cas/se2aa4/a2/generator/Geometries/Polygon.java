@@ -5,6 +5,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Polygon {
 
@@ -18,7 +19,8 @@ public class Polygon {
     private final PropertyHandler propertyHandler = new PropertyHandler();
 
     public Polygon(List<Segment> segments) {
-        this.color = propertyHandler.averageColor(segments);
+        List<Color> colorList = segments.stream().map(Segment::getColor).toList();
+        this.color = propertyHandler.averageColor(colorList);
         segmentList = segments;
         validateSegments();
     }
@@ -31,7 +33,8 @@ public class Polygon {
     }
 
     public Polygon(List<Segment> segments, Float thickness) {
-        this.color = propertyHandler.averageColor(segments);
+        List<Color> colorList = segments.stream().map(Segment::getColor).toList();
+        this.color = propertyHandler.averageColor(colorList);
         this.thickness = thickness;
         segmentList = segments;
         centroid = new Centroid(0.0,0.0);

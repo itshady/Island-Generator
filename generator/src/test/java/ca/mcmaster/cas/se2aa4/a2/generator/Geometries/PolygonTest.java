@@ -23,7 +23,6 @@ class PolygonTest {
 
     @Test
     void moreThanTwoSegments() {
-        System.out.println("moreThanTwoSegments Starting.");
         Vertex v1 = new Vertex(1.0,7.0);
         Vertex v2 = new Vertex(3.0,6.0);
         List<Segment> segments = new ArrayList<>();
@@ -31,12 +30,10 @@ class PolygonTest {
         segments.add(new Segment(v2,v1));
         Throwable exception = assertThrows(IllegalCallerException.class, () -> new Polygon(segments));
         assertEquals("Must have more than 2 segments. Given " + segments.size(), exception.getMessage());
-        System.out.println("moreThanTwoSegments Ending.");
     }
 
     @Test
     void setCentroid() {
-        System.out.println("setCentroid Starting.");
         Vertex v1 = new Vertex(1.0,7.0);
         Vertex v2 = new Vertex(3.0,6.0);
         Vertex v3 = new Vertex(2.0,3.0);
@@ -49,12 +46,10 @@ class PolygonTest {
         assertNull(polygon.getCentroid());
         polygon.setCentroid(centroid);
         assertNotNull(polygon.getCentroid());
-        System.out.println("setCentroid Ending.");
     }
 
     @Test
     void generatePolygon() {
-        System.out.println("generatePolygon Starting.");
         Vertex v1 = new Vertex(1.0,7.0);
         Vertex v2 = new Vertex(3.0,6.0);
         Vertex v3 = new Vertex(2.0,3.0);
@@ -74,7 +69,6 @@ class PolygonTest {
         polygon.setCentroid(centroid);
         polygon.generatePolygon();
         assertNotNull(polygon.getPolygon());
-        System.out.println("generatePolygon Ending.");
     }
 
 }

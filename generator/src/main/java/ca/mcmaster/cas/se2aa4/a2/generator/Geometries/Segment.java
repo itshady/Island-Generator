@@ -3,6 +3,7 @@ package ca.mcmaster.cas.se2aa4.a2.generator.Geometries;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Segment {
@@ -35,7 +36,7 @@ public class Segment {
     }
 
     public Segment(Vertex v1, Vertex v2) {
-        color = propertyHandler.averageColor(v1.getColor(), v2.getColor());
+        this.color = propertyHandler.averageColor(Arrays.asList(v1.getColor(), v2.getColor()));
         setSegment(v1, v2);
     }
 
@@ -46,7 +47,7 @@ public class Segment {
 
     public Segment(Vertex v1, Vertex v2, Float thickness) {
         this.thickness = thickness;
-        this.color = propertyHandler.averageColor(v1.getColor(), v2.getColor());;
+        this.color = propertyHandler.averageColor(Arrays.asList(v1.getColor(), v2.getColor()));
         setSegment(v1, v2);
     }
 
