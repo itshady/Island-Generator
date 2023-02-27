@@ -29,14 +29,23 @@ public class NeighbourCalculator {
         addNeighboursToPolygons(neighbours);
     }
 
+    /**
+     * Iterates throughout each polygon and keeps track of its current centroid coordinate.
+     * Finds all triangles with that centroid as a vertex and checks if those corresponding polygons share an edge.
+     * If they share an edge, add that polygon to the neighbours list.
+     */
+
     private Map<Polygon, Set<Polygon>> calculateNeighbours(List<Geometry> polygonsJTS, GeometrySet<Polygon> polygons, List<Centroid> centroids) {
         Map<Polygon, Set<Polygon>> neighbours = new LinkedHashMap<>();
         List<Coordinate> c_coordList = new ArrayList<>();
+
+        // add each centroid's coordinates to a new list
         for (Centroid c : centroids) {
             Coordinate c_coord = new Coordinate(c.getX(), c.getY());
             c_coordList.add(c_coord);
         }
 
+        // create new geometry factory for centroids and create delaunay's triangulation diagram
         GeometryFactory centroidFactory = new GeometryFactory();
         MultiPoint cPoints = centroidFactory.createMultiPointFromCoords(c_coordList.toArray(new Coordinate[polygonsJTS.size()]));
         DelaunayTriangulationBuilder delaunayTriangulation = new DelaunayTriangulationBuilder();
@@ -44,15 +53,19 @@ public class NeighbourCalculator {
         Geometry triangulation = delaunayTriangulation.getEdges(centroidFactory);
 
         for (int i = 0; i < polygonsJTS.size(); i++) {
+            // iterate throughout each polygon and get its centroid coordinate
             Geometry polygon = polygonsJTS.get(i);
             Coordinate centroid = polygon.getCentroid().getCoordinate();
             Set<Polygon> currentNeighbour = new HashSet<>();
             for (int j = 0; j < triangulation.getNumGeometries(); j++) {
+                // iterate throughout each triangle in Delaunay's Triangulation Diagram
                 List<Coordinate> currentTriangleCoords = Arrays.stream(triangulation.getGeometryN(j).getCoordinates()).toList();
                 if (currentTriangleCoords.contains(centroid)) {
+                    // if a triangle contains the current centroid as a vertex, determine if they share an edge and add to neighbours
                     for (Coordinate neighbourCentroid : currentTriangleCoords) {
                         Geometry p2 = polygonsJTS.get(polygonIndexFromCentroidCoord(neighbourCentroid, polygons));
                         Polygon ourP2 = polygons.get(polygonIndexFromCentroidCoord(neighbourCentroid, polygons));
+                        // if the intersection of the two polygons is a line, they share an edge
                         if (!centroid.equals(neighbourCentroid) && (polygon.intersection(p2) instanceof LineString)) {
                             currentNeighbour.add(ourP2);
                         }
@@ -71,6 +84,11 @@ public class NeighbourCalculator {
         }
     }
 
+    /**
+     * @param centroidCoord: A coordinate for a centroid from a polygon.
+     * @param polygons: The set of polygons within the diagram.
+     * @return the id of the corresponding polygon if found. If not, returns -1.
+     */
     private Integer polygonIndexFromCentroidCoord(Coordinate centroidCoord, GeometrySet<Polygon> polygons) {
         PolygonSet polygonSet = (PolygonSet) polygons;
         for (Integer id : polygonSet.getPolygons().keySet()) {
