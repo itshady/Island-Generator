@@ -32,21 +32,35 @@ class SegmentSetTest {
         SegmentSet segmentSet = new SegmentSet();
         Segment s1 = new Segment(new Vertex(1.0,1.0), new Vertex(2.0,2.0));
         Segment s2 = new Segment(new Vertex(2.0,2.0), new Vertex(3.0,3.0));
-
-        // action
         segmentSet.add(s1);
         segmentSet.add(s2);
 
+        // action
+        boolean containsS1 = segmentSet.contains(new Segment(new Vertex(1.0,1.0), new Vertex(2.0,2.0)));
+        boolean containsS2 = segmentSet.contains(new Segment(new Vertex(3.0,3.0), new Vertex(2.0,2.0)));
+        boolean containsS3 = segmentSet.contains(new Segment(new Vertex(0.0,0.0), new Vertex(0.0,0.0)));
+
         // assertion
-        assertTrue(segmentSet.contains(new Segment(new Vertex(1.0,1.0), new Vertex(2.0,2.0))));
-        assertTrue(segmentSet.contains(new Segment(new Vertex(2.0,2.0), new Vertex(3.0,3.0))));
+        assertTrue(containsS1);
+        assertTrue(containsS2);
+        assertFalse(containsS3);
     }
 
     @Test
     void get() {
-    }
+        // context
+        SegmentSet segmentSet = new SegmentSet();
+        Segment s1 = new Segment(new Vertex(1.0,1.0), new Vertex(2.0,2.0));
+        Segment s2 = new Segment(new Vertex(2.0,2.0), new Vertex(3.0,3.0));
+        segmentSet.add(s1);
+        segmentSet.add(s2);
 
-    @Test
-    void iterator() {
+        // action
+        Segment getS1 = segmentSet.get(0);
+        Segment getS2 = segmentSet.get(1);
+
+        // assertion
+        assertEquals(s1, getS1);
+        assertEquals(s2, getS2);
     }
 }

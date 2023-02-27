@@ -23,7 +23,6 @@ public class DotGen {
     // Overloaded for user args
     public Structs.Mesh generate(Map<CommandLineOptions, String> args) {
         TypeOfMesh pattern = TypeOfMesh.valueOf(args.get(TYPEOFMESH).toUpperCase());
-        System.out.println(pattern);
         Mesh mesh = new MeshFactory().create(pattern);
         if (pattern == IRREGULAR) {
             if (args.containsKey(NUMOFPOLYGONS)) ((IrregularMesh) mesh).setNumOfPolygons(Integer.parseInt(args.get(NUMOFPOLYGONS)));

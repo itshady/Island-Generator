@@ -1,8 +1,8 @@
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.GraphicRenderer;
-import ca.mcmaster.cas.se2aa4.a2.visualizer.MeshDump;
-import ca.mcmaster.cas.se2aa4.a2.visualizer.SVGCanvas;
+import ca.mcmaster.cas.se2aa4.a2.visualizer.utils.MeshDump;
+import ca.mcmaster.cas.se2aa4.a2.visualizer.utils.SVGCanvas;
 
 import java.awt.*;
 import java.io.IOException;
@@ -79,7 +79,8 @@ public class Main {
         //parse the options passed as command line arguments
         CommandLine cmd = parser.parse(options, args);
         if(cmd.hasOption("h")) {
-            String usage = "mvn exec:java -Dexec.args=\"[-d] [-n] <NUM> [-p] <STRATEGY>\"";
+            String usage = "mvn exec:java -Dexec.args=\"[OPTIONS]\"";
+            usage += "\nOR  java -jar visualizer.jar [OPTIONS]";
             String header = "Options:\n";
             String footer = "";
 

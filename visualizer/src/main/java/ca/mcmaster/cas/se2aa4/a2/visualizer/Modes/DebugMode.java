@@ -1,9 +1,8 @@
-package ca.mcmaster.cas.se2aa4.a2.visualizer;
+package ca.mcmaster.cas.se2aa4.a2.visualizer.Modes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.List;
@@ -13,15 +12,14 @@ import java.util.List;
  */
 public class DebugMode extends VisualMode {
 
-    protected void render(Structs.Mesh aMesh, Graphics2D canvas) {
+    public void render(Structs.Mesh aMesh, Graphics2D canvas) {
         // Visualize Neighbours
         List<Structs.Vertex> vertexList = aMesh.getVerticesList();
-        List<Structs.Segment> segmentsList = aMesh.getSegmentsList();
-        visualizePolygonNeighbours(aMesh, canvas, vertexList, segmentsList);
+        visualizePolygonNeighbours(aMesh, canvas, vertexList);
         super.render(aMesh, canvas);
     }
 
-    protected void visualizePolygonNeighbours(Structs.Mesh aMesh, Graphics2D canvas, List<Structs.Vertex> vertexList, List<Structs.Segment> segmentsList) {
+    protected void visualizePolygonNeighbours(Structs.Mesh aMesh, Graphics2D canvas, List<Structs.Vertex> vertexList) {
         for (Structs.Polygon p : aMesh.getPolygonsList()) {
             Color old = canvas.getColor();
             Stroke polygonStroke = new BasicStroke(0.5f);

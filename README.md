@@ -115,7 +115,8 @@ When you develop features and enrich the product, remember that you have first t
 | F13 | Add Diamond Tessellation | Cyruss |  02/20/23 | 02/21/23 | D |
 | F14 | Minimize Mesh (unique vertices) | Hady |  02/19/23 | 02/21/23 | D |
 | F15 | Allow generator to take in command line args to select the type of mesh, relaxation, and num of polygons | Hady, Richard | 02/18/23 | 02/21/23 | D |
-| F16 | Minimize Mesh (unique segments) |  |  02/19/23 | | P |
+| F16 | Minimize Mesh (unique segments) | Hady |  02/19/23 | 02/26/23 | D |
+| F17 | Minimize Mesh (unique polygons) | Hady |  02/19/23 | 02/26/23 | D |
 
 
 

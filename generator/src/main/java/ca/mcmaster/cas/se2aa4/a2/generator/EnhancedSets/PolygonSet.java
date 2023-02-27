@@ -3,9 +3,7 @@ package ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets;
 import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Segment;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {
     private final Map<Integer, Polygon> polygons = new HashMap<>();
@@ -59,6 +57,6 @@ public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {
     }
 
     public Map<Integer, Polygon> getPolygons() {
-        return polygons;
+        return Collections.unmodifiableMap(polygons);
     }
 }

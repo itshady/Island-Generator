@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.visualizer;
+package ca.mcmaster.cas.se2aa4.a2.visualizer.utils;
 
 import java.awt.*;
 import java.io.IOException;
