@@ -36,7 +36,8 @@ public abstract class VisualMode {
                 if (!isDebug()) continue;
                 canvas.setColor(Color.RED);
             } else {
-                canvas.setColor(Color.BLACK);
+                if (isDebug()) canvas.setColor(Color.BLACK);
+                else canvas.setColor(extractColor(v.getPropertiesList()));
             }
             Ellipse2D point = new Ellipse2D.Double(centre_x, centre_y, vertexThickness, vertexThickness);
             canvas.fill(point);
@@ -107,7 +108,7 @@ public abstract class VisualMode {
         }
     }
 
-    protected Color extractColor(java.util.List<Structs.Property> properties) {
+    protected Color extractColor(List<Structs.Property> properties) {
         String val = null;
         for(Structs.Property p: properties) {
             if (p.getKey().equals("rgba_color")) {
@@ -124,7 +125,7 @@ public abstract class VisualMode {
         return new Color(red, green, blue, alpha);
     }
 
-    protected boolean isCentroid(java.util.List<Structs.Property> properties) {
+    protected boolean isCentroid(List<Structs.Property> properties) {
         String val = "false";
         for(Structs.Property p: properties) {
             if (p.getKey().equals("is_centroid")) {

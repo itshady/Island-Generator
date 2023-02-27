@@ -15,12 +15,11 @@ public class DebugMode extends VisualMode {
     public void render(Structs.Mesh aMesh, Graphics2D canvas) {
         // Visualize Neighbours
         List<Structs.Vertex> vertexList = aMesh.getVerticesList();
-        List<Structs.Segment> segmentsList = aMesh.getSegmentsList();
-        visualizePolygonNeighbours(aMesh, canvas, vertexList, segmentsList);
+        visualizePolygonNeighbours(aMesh, canvas, vertexList);
         super.render(aMesh, canvas);
     }
 
-    protected void visualizePolygonNeighbours(Structs.Mesh aMesh, Graphics2D canvas, List<Structs.Vertex> vertexList, List<Structs.Segment> segmentsList) {
+    protected void visualizePolygonNeighbours(Structs.Mesh aMesh, Graphics2D canvas, List<Structs.Vertex> vertexList) {
         for (Structs.Polygon p : aMesh.getPolygonsList()) {
             Color old = canvas.getColor();
             Stroke polygonStroke = new BasicStroke(0.5f);
