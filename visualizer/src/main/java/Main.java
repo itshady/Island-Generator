@@ -79,7 +79,8 @@ public class Main {
         //parse the options passed as command line arguments
         CommandLine cmd = parser.parse(options, args);
         if(cmd.hasOption("h")) {
-            String usage = "mvn exec:java -Dexec.args=\"[-d] [-n] <NUM> [-p] <STRATEGY>\"";
+            String usage = "mvn exec:java -Dexec.args=\"[OPTIONS]\"";
+            usage += "\nOR  java -jar visualizer.jar [OPTIONS]";
             String header = "Options:\n";
             String footer = "";
 

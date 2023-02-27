@@ -61,6 +61,7 @@ public class Main {
         CommandLine cmd = parser.parse(options, args);
         if(cmd.hasOption("h")) {
             String usage = "mvn exec:java -Dexec.args=\"[OPTIONS]\"";
+            usage += "\nOR  java -jar generator.jar [OPTIONS]";
             String header = "Options:\n";
             String footer = "";
 
