@@ -27,6 +27,8 @@ public class DotGen {
         if (pattern == IRREGULAR) {
             if (args.containsKey(NUMOFPOLYGONS)) ((IrregularMesh) mesh).setNumOfPolygons(Integer.parseInt(args.get(NUMOFPOLYGONS)));
             if (args.containsKey(RELAXATION)) ((IrregularMesh) mesh).setRelaxation(Integer.parseInt(args.get(RELAXATION)));
+            if (args.containsKey(HEIGHT)) ((IrregularMesh) mesh).setHeight(Integer.parseInt(args.get(HEIGHT)));
+            if (args.containsKey(WIDTH)) ((IrregularMesh) mesh).setWidth(Integer.parseInt(args.get(WIDTH)));
         }
         return mesh.generate();
     }

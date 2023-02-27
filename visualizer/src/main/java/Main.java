@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.cli.*;
 
@@ -20,7 +21,7 @@ public class Main {
         try {
             Map<String, String> parsedArgs = parseArgs(args, options);
             if (!parsedArgs.containsKey("help")) {
-                if (parsedArgs.get("debug") == "true") renderer.turnOnDebug();
+                if (Objects.equals(parsedArgs.get("debug"), "true")) renderer.turnOnDebug();
 
                 // Extracting command line parameters
                 String input = parsedArgs.get("mesh");
@@ -45,7 +46,7 @@ public class Main {
                 dumper.dump(aMesh);
             }
         } catch (ParseException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 

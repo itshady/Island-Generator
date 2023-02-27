@@ -16,8 +16,8 @@ import java.util.*;
 import java.util.List;
 
 public abstract class Mesh implements GeometryDiagram {
-    protected final int width = 500;
-    protected final int height = 500;
+    protected int width = 500;
+    protected int height = 500;
     private final double precision = 0.01;
 
     Structs.Mesh mesh;

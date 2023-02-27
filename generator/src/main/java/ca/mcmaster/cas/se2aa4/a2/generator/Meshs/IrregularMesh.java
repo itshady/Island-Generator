@@ -26,14 +26,22 @@ public class IrregularMesh extends Mesh {
     }
 
     public IrregularMesh setRelaxation(Integer newValue) {
-        System.out.println("relax: " + newValue);
         if (newValue != null && newValue > 0) lloydRelaxationNumber = newValue;
         return this;
     }
 
     public IrregularMesh setNumOfPolygons(Integer newValue) {
-        System.out.println("poly: " + newValue);
         if (newValue != null && newValue > 0) numOfPolygons = newValue;
+        return this;
+    }
+
+    public IrregularMesh setHeight(Integer newValue) {
+        if (newValue != null && newValue > 0) height = newValue;
+        return this;
+    }
+
+    public IrregularMesh setWidth(Integer newValue) {
+        if (newValue != null && newValue > 0) width = newValue;
         return this;
     }
 
