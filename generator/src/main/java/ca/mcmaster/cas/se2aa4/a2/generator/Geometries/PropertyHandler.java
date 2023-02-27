@@ -53,7 +53,6 @@ public class PropertyHandler {
         }
 
         for (Color color : segmentColors) {
-
             red += color.getRed();
             blue += color.getBlue();
             green += color.getGreen();
@@ -64,6 +63,6 @@ public class PropertyHandler {
         blue = blue/totalColors;
         green = green/totalColors;
         alpha = alpha/totalColors;
-        return new Color(red, blue, green, alpha);
+        return new Color(red, green, blue, alpha);
     }
 }

@@ -62,7 +62,6 @@ public abstract class Mesh implements GeometryDiagram {
                 .addAllSegments(rudimentarySegments)
                 .addAllPolygons(rudimentaryPolygons)
                 .build();
-        System.out.println(rudimentaryVertices.size() + "  " + rudimentarySegments.size() + "  " + rudimentaryPolygons.size());
     }
 
     /**

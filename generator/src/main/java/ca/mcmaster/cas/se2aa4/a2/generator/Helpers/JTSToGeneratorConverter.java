@@ -55,7 +55,7 @@ public class JTSToGeneratorConverter {
     }
 
     private void addPolygon(Geometry polygon, List<Segment> polySegments) {
-        Polygon newPolygon = new Polygon(polySegments, Color.BLACK, 2f);
+        Polygon newPolygon = new Polygon(polySegments, 2f);
         Integer polyId = polygonSet.add(newPolygon);
         newPolygon.setId(polyId);
         addCentroid(polygon, newPolygon);
@@ -70,9 +70,12 @@ public class JTSToGeneratorConverter {
     }
 
     private void addVerticesAndSegments(Coordinate[] coords, List<Segment> polySegments) {
+        Random bag = new Random();
         for (int i = 0; i< coords.length-1; i++) {
-            Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY());
-            Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY());
+            boolean bool = bag.nextBoolean();
+            Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY(), bool ? new Color(0,0,0) : new Color(200, 255, 164));
+            bool = bag.nextBoolean();
+            Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY(), bool ? new Color(0,0,0) : new Color(200, 255, 164));
             Integer id1 = vertexSet.add(v1);
             Integer id2 = vertexSet.add(v2);
             v1.setId(id1);
