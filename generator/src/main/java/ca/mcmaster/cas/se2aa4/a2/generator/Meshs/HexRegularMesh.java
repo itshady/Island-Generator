@@ -14,12 +14,11 @@ public class HexRegularMesh extends RegularMesh {
         List<Coordinate> coordList = new ArrayList<>();
         int hexWall = 15;
         int apothem = (int) (hexWall * Math.sqrt(3) / 2);
-        int hexHeight = apothem;
         int hexWidth = 2*apothem + hexWall;
         int spacing = apothem + hexWall/2;
 
         int rowCounter = 0;
-        for (int i=apothem; i<height; i+=hexHeight) {
+        for (int i=apothem; i<height; i+=apothem) {
             for (int j=apothem; j<width; j+=hexWidth) {
                 if (rowCounter%2 == 0) {
                     coordList.add(new Coordinate((j),(i)));

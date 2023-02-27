@@ -2,6 +2,10 @@ package ca.mcmaster.cas.se2aa4.a2.generator.Geometries;
 
 import java.util.Objects;
 
+/**
+ * Mutable Coordinate that holds and x and y value on a grid.
+ * x and y are integers which represent (the double value) divided by the precision.
+ */
 public class Coordinate {
     Integer x;
     Integer y;

@@ -15,7 +15,11 @@ public class VertexSet implements GeometrySet<Vertex>, Iterable<Vertex> {
 
     public VertexSet() {}
 
-    // returns the id of the vertex passed in (either existing vertex or newly created)
+    /**
+     * Must maintain Set property (any equal vertices can't be in set together)
+     * @param vertex: the given Geometry to add
+     * @return Integer: id of vertex
+     */
     public Integer add(Vertex vertex) {
         Coordinate coord = new Coordinate(vertex.getX(), vertex.getY());
         if (contains(vertex)) return ids.get(coord);
@@ -25,14 +29,29 @@ public class VertexSet implements GeometrySet<Vertex>, Iterable<Vertex> {
         return idCounter++;
     }
 
+    /**
+     * Gets the Geometry E from the Set given its Coordinates
+     * @param coord: the Coordinate of the Geometry
+     * @return Geometry: Returns the geometry if it exists, else null.
+     */
     public Vertex get(Coordinate coord) {
         return coords.get(new Coordinate(coord.getX(), coord.getY()));
     }
 
+    /**
+     * Gets the Geometry E from the Set given its id
+     * @param id: the id of the Geometry
+     * @return Geometry: Returns the geometry if it exists, else null.
+     */
     public Vertex get(Integer id) {
         return idToVertex.get(id);
     }
 
+    /**
+     * Checks if the Set contains the given Geometry
+     * @param vertex: the given Geometry to check
+     * @return Boolean: true if it does, false if not
+     */
     public boolean contains(Vertex vertex) {
         return coords.containsValue(vertex);
     }

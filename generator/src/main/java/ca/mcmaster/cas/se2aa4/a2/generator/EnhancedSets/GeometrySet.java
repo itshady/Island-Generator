@@ -7,7 +7,7 @@ import java.util.Set;
  */
 public interface GeometrySet<E> extends Iterable<E> {
     /**
-     * Must maintain Set property (any equal segments can't be in set together)
+     * Must maintain Set property (any equal Geometries can't be in set together)
      * @param e: the given Geometry to add
      * @return Integer: id of segment
      */

@@ -11,7 +11,7 @@ public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {
     Integer id = 0;
 
     /**
-     * Must maintain Set property (any equal segments can't be in set together)
+     * Must maintain Set property (any equal polygons can't be in set together)
      *
      * @param polygon : the given Geometry to add
      * @return Integer: id of segment
