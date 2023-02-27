@@ -73,9 +73,9 @@ public class JTSToGeneratorConverter {
         Random bag = new Random();
         for (int i = 0; i< coords.length-1; i++) {
             boolean bool = bag.nextBoolean();
-            Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY(), bool ? new Color(0,0,0) : new Color(200, 255, 164));
+            Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY(), bool ? new Color(255, 179, 186) : new Color(200, 255, 164));
             bool = bag.nextBoolean();
-            Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY(), bool ? new Color(0,0,0) : new Color(200, 255, 164));
+            Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY(), bool ? new Color(255, 179, 186) : new Color(200, 255, 164));
             Integer id1 = vertexSet.add(v1);
             Integer id2 = vertexSet.add(v2);
             v1.setId(id1);
