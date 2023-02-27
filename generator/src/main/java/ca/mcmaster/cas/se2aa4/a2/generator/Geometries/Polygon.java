@@ -20,12 +20,14 @@ public class Polygon {
     public Polygon(List<Segment> segments) {
         this.color = propertyHandler.averageColor(segments);
         segmentList = segments;
+        validateSegments();
     }
 
     public Polygon(List<Segment> segments, Color color) {
         this.color = color;
         segmentList = segments;
         centroid = new Centroid(0.0,0.0);
+        validateSegments();
     }
 
     public Polygon(List<Segment> segments, Float thickness) {
@@ -33,6 +35,7 @@ public class Polygon {
         this.thickness = thickness;
         segmentList = segments;
         centroid = new Centroid(0.0,0.0);
+        validateSegments();
     }
 
     public Polygon(List<Segment> segments, Color color, Float thickness) {
@@ -40,6 +43,14 @@ public class Polygon {
         this.thickness = thickness;
         segmentList = segments;
         centroid = new Centroid(0.0,0.0);
+        validateSegments();
+    }
+
+    /**
+     * A polygon must be comprised of 3 or more segments
+     */
+    private void validateSegments() {
+        if (segmentList.size() <= 2) throw new IllegalCallerException("Must have more than 2 segments. Given " + segmentList.size());
     }
 
     public void setId(Integer newId) {
@@ -52,7 +63,6 @@ public class Polygon {
             idList.add(segment.getId());
         }
 
-        //System.out.println("Segments: " + vertexPointList + " Centroid:" + centroid.getVertex());
         polygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(idList)
                 .setCentroidIdx(centroid.getId())
                 .addProperties(propertyHandler.setColorProperty(color))

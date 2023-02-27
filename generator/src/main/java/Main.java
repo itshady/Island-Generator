@@ -14,9 +14,6 @@ import static ca.mcmaster.cas.se2aa4.a2.generator.Enums.TypeOfMesh.IRREGULAR;
 import static ca.mcmaster.cas.se2aa4.a2.generator.Enums.TypeOfMesh.SQUARE;
 
 public class Main {
-
-
-
     public static void main(String[] args) {
         Options options = setupCLI();
 
