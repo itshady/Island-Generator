@@ -1,9 +1,8 @@
-package ca.mcmaster.cas.se2aa4.a2.visualizer;
+package ca.mcmaster.cas.se2aa4.a2.visualizer.Modes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
  */
 public class DebugMode extends VisualMode {
 
-    protected void render(Structs.Mesh aMesh, Graphics2D canvas) {
+    public void render(Structs.Mesh aMesh, Graphics2D canvas) {
         // Visualize Neighbours
         List<Structs.Vertex> vertexList = aMesh.getVerticesList();
         List<Structs.Segment> segmentsList = aMesh.getSegmentsList();

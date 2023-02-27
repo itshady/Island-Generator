@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.visualizer;
+package ca.mcmaster.cas.se2aa4.a2.visualizer.Modes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class VisualMode {
 
-    protected void render(Structs.Mesh aMesh, Graphics2D canvas) {
+    public void render(Structs.Mesh aMesh, Graphics2D canvas) {
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
         List<Structs.Vertex> vertexList = aMesh.getVerticesList();

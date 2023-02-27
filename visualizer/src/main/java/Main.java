@@ -1,8 +1,8 @@
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.GraphicRenderer;
-import ca.mcmaster.cas.se2aa4.a2.visualizer.MeshDump;
-import ca.mcmaster.cas.se2aa4.a2.visualizer.SVGCanvas;
+import ca.mcmaster.cas.se2aa4.a2.visualizer.utils.MeshDump;
+import ca.mcmaster.cas.se2aa4.a2.visualizer.utils.SVGCanvas;
 
 import java.awt.*;
 import java.io.IOException;
