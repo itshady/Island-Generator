@@ -27,6 +27,11 @@ public class VoronoiDiagram {
         return generateVoronoiDiagram(coordsList);
     }
 
+    /**
+     * @param coordsList: a list of coordinates that will determine how the geometries are structured.
+     * @return a list of geometries within the voronoi diagram.
+     */
+
     private List<Geometry> generateVoronoiDiagram(List<Coordinate> coordsList) {
         // Create GeometryFactory to get voronoi diagram later
         GeometryFactory geometryFactory = new GeometryFactory();
@@ -47,6 +52,9 @@ public class VoronoiDiagram {
         return polygonsJTS;
     }
 
+    /**
+     * Clips the voronoi diagram to the specified width and height.
+     */
     private Geometry createVoronoiDiagram(GeometryFactory geometryFactory, MultiPoint points, Envelope envelope) {
         VoronoiDiagramBuilder voronoi = new VoronoiDiagramBuilder();
         voronoi.setTolerance(precision);
