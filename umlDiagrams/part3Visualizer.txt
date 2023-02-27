@@ -5,73 +5,66 @@ skin rose
 title Visualizer - Class Diagram
 
 class Main {
-  +{static}main(String[]): void
-  -{static}setupCLI(): Options
-  -{static}parseArgs(String[], Options): Map<String, String>
+  +{static} main(String[]): void
+  -{static} setupCLI(): Options
+  -parseArgs(String[], Options): Map<String, String>
 }
+
+abstract class VisualMode {
+  #render(Structs.Mesh, Graphics2D): void
+  #visualizeVertices(Structs.Mesh, Graphics2D):void
+  #{abstract}isDebug(): void
+  #visualizeSegment(Structs.Mesh, Graphics2D, List<Structs.Vertex>): void
+  #visualizePolygons(Structs.Mesh, Graphics2D, List<Structs.Vertex>, List<Structs.Segment>): void
+  #updateCoordsForPolygons(Lis<Structs.Vertex>, List<Structs.Segment>, List<Integer> , int[], int[]): void
+  #extractColor(List<Structs.Property>): Color
+  #isCentroid(List<Structs.Property>): boolean
+  #extractThickness(List<Structs.Property>): Float
+}
+
+class SVGCanvas {
+  +{static} build(int, int): Graphics2D
+  +{static} write(Graphics2D, String): void
+}
+
+class NormalMode {
+  #render(Structs.Mesh, Graphics2D): void
+  #isDebug(): boolean
+}
+
+class MeshDump {
+  +dump(Structs.Mesh): void
+}
+
 class GraphicRenderer {
   -debug: boolean
   +turnOnDebug(): void
   +turnOffDebug(): void
   +render(Structs.Mesh, Graphics2D): void
 }
-abstract class VisualMode {
-  #{abstract}render(Structs.Mesh, Graphics2D): void
-  #{abstract}visualizeVertices(Structs.Mesh, Graphics2D): void
-  #{abstract}visualizeSegments(Structs.Mesh, Graphics2D): void
-  #extractColor(List<Structs.Property>): Color
-  #isCentroid(List<Structs.Property>): boolean
-  #extractThickness(List<Structs.Property>): Float
-}
 
 class DebugMode {
-  #render(Structs.Mesh, Graphics2D): void
-  #visualizeVertices(Structs.Mesh, Graphics2D): void
-  #visualizeSegments(Structs.Mesh, Graphics2D): void
-  -visualizePolygon(Structs.Mesh, Graphics2D, List<Structs.Vertex>, List<Structs.Segment>): void
-  #visualizePolygonNeighbours(Structs.Mesh, Graphics2D, List<Structs.Vertex>): void
-  #updateCoordsForPolygons(List<Structs.Vertex>, List<Structs.Segment>, List<Integer>, int[], int[]): void
+  #render(Structs.Mesh, Graphics2D)
+  #visualizePolygonNeighbours(Structs.Mesh, Graphics2D, List<Structs.Vertex>)
+  #isDebug(): boolean
 }
 
-class NormalMode {
-  #render(Structs.Mesh, Graphics2D): void
-  #visualizeVertices(Structs.Mesh, Graphics2D): void
-  #visualizeSegments(Structs.Mesh, Graphics2D): void
-}
-
-class SVGCanvas {
-  +{static}build(int, int): Graphics2D
-  +{static}write(Graphics2D, String): void
-}
-
-class MeshDump {
-  +dump(Mesh): void
-}
-
+VisualMode <|-- NormalMode: "is_a"
+VisualMode <|-- DebugMode: "is_a"
+VisualMode ..> Structs.Property: "uses"
+VisualMode ..> Structs.Vertex: "uses"
+VisualMode ..> Structs.Mesh: "uses"
+VisualMode ..> Structs.Segment: "uses"
+VisualMode ..> Structs.Polygon: "uses"
+NormalMode ..> Structs.Mesh: "uses"
+DebugMode ..> Structs.Mesh: "uses"
+DebugMode ..> Structs.Vertex: "uses"
+GraphicRenderer ..> Structs.Mesh: "uses"
+GraphicRenderer ..> VisualMode: "uses"
+MeshDump ..> Structs.Mesh: "uses"
 Main ..> GraphicRenderer: "uses"
-Main ..> Structs.MeshFactory: "uses"
+Main ..> Structs.Mesh: "uses"
 Main ..> SVGCanvas: "uses"
 Main ..> MeshDump: "uses"
-
-GraphicRenderer ..> Structs.Mesh: "uses"
-GraphicRenderer ..> Graphics2D: "uses"
-GraphicRenderer ..> VisualMode: "uses"
-
-VisualMode <|-- DebugMode: "inherits"
-VisualMode <|-- NormalMode: "inherits"
-
-DebugMode ..> Structs.Mesh: "uses"
-DebugMode ..> Graphics2D: "uses"
-DebugMode ..> Structs.Vertex: "uses"
-DebugMode ..> Structs.Segment: "uses"
-DebugMode ..> Structs.Polygon: "uses"
-
-NormalMode ..> Structs.Mesh: "uses"
-NormalMode ..> Graphics2D: "uses"
-NormalMode ..> Structs.Vertex: "uses"
-NormalMode ..> Structs.Segment: "uses"
-
-SVGCanvas ..> Graphics2D: "uses"
-MeshDump ..> Structs.Mesh: "uses"
 
 @enduml
