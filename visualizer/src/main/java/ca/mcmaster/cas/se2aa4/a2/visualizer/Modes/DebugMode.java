@@ -19,14 +19,20 @@ public class DebugMode extends VisualMode {
         super.render(aMesh, canvas);
     }
 
+    /**
+     * Iterates through each polygon and draws a line throughout each of its polygon neighbours.
+     * Light gray lines are shown through each neighbour's centroid.
+     */
     protected void visualizePolygonNeighbours(Structs.Mesh aMesh, Graphics2D canvas, List<Structs.Vertex> vertexList) {
         for (Structs.Polygon p : aMesh.getPolygonsList()) {
+            // Gather polygons property
             Color old = canvas.getColor();
             Stroke polygonStroke = new BasicStroke(0.5f);
             canvas.setStroke(polygonStroke);
             Structs.Vertex currentCentroid = vertexList.get(p.getCentroidIdx());
             List<Integer> polygonNeighbours = p.getNeighborIdxsList();
             for (Integer id : polygonNeighbours) {
+                // Iterates throughout each neighbour and draws a line from the current centroid.
                 canvas.setColor(Color.LIGHT_GRAY);
                 Structs.Polygon neighbour = aMesh.getPolygons(id);
                 Structs.Vertex nextCentroid = vertexList.get(neighbour.getCentroidIdx());
