@@ -1,10 +1,12 @@
 package ca.mcmaster.cas.se2aa4.a2.visualizer.Modes;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+import org.apache.batik.ext.awt.geom.Polygon2D;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.List;
 
@@ -72,37 +74,43 @@ public abstract class VisualMode {
             canvas.setStroke(polygonStroke);
             Color color = isDebug() ? Color.BLACK : extractColor(p.getPropertiesList());
             canvas.setColor(color);
-            int[] xValues = new int[polygonSegments.size()];
-            int[] yValues = new int[polygonSegments.size()];
+            double[] xValues = new double[polygonSegments.size()];
+            double[] yValues = new double[polygonSegments.size()];
             updateCoordsForPolygons(vertexList, segmentsList, polygonSegments, xValues, yValues);
-            Polygon polygon = new Polygon(xValues, yValues, polygonSegments.size());
-            if (isDebug()) canvas.drawPolygon(polygon);
-            else canvas.fillPolygon(polygon);
+            Path2D.Double polygon = new Path2D.Double();
+
+            polygon.moveTo(xValues[0], yValues[0]);
+            for(int i = 1; i < xValues.length; ++i) {
+                polygon.lineTo(xValues[i], yValues[i]);
+            }
+            polygon.closePath();
+            if (isDebug()) canvas.draw(polygon);
+            else canvas.fill(polygon);
             canvas.setColor(old);
         }
     }
 
-    protected void updateCoordsForPolygons(List<Structs.Vertex> vertexList, List<Structs.Segment> segmentsList, List<Integer> polygonSegments, int[] xValues, int[] yValues) {
+    protected void updateCoordsForPolygons(List<Structs.Vertex> vertexList, List<Structs.Segment> segmentsList, List<Integer> polygonSegments, double[] xValues, double[] yValues) {
         for (int i = 0; i < polygonSegments.size(); i++) {
             if (i > 0) {
                 Structs.Segment curr = segmentsList.get(polygonSegments.get(i));
                 Structs.Segment prev = segmentsList.get(polygonSegments.get(i-1));
                 if (curr.getV1Idx() == prev.getV1Idx() || curr.getV1Idx() == prev.getV2Idx()) {
-                    xValues[i] = (int) vertexList.get(curr.getV1Idx()).getX();
-                    yValues[i] = (int) vertexList.get(curr.getV1Idx()).getY();
+                    xValues[i] = vertexList.get(curr.getV1Idx()).getX();
+                    yValues[i] = vertexList.get(curr.getV1Idx()).getY();
                 } else {
-                    xValues[i] = (int) vertexList.get(curr.getV2Idx()).getX();
-                    yValues[i] = (int) vertexList.get(curr.getV2Idx()).getY();
+                    xValues[i] = vertexList.get(curr.getV2Idx()).getX();
+                    yValues[i] = vertexList.get(curr.getV2Idx()).getY();
                 }
             } else {
                 Structs.Segment segment = segmentsList.get(polygonSegments.get(i));
                 Structs.Segment next = segmentsList.get(polygonSegments.get(i+1));
                 if (segment.getV1Idx() != next.getV1Idx() && segment.getV1Idx() != next.getV2Idx()) {
-                    xValues[i] = (int) vertexList.get(segment.getV1Idx()).getX();
-                    yValues[i] = (int) vertexList.get(segment.getV1Idx()).getY();
+                    xValues[i] = vertexList.get(segment.getV1Idx()).getX();
+                    yValues[i] = vertexList.get(segment.getV1Idx()).getY();
                 } else {
-                    xValues[i] = (int) vertexList.get(segment.getV2Idx()).getX();
-                    yValues[i] = (int) vertexList.get(segment.getV2Idx()).getY();
+                    xValues[i] = vertexList.get(segment.getV2Idx()).getX();
+                    yValues[i] = vertexList.get(segment.getV2Idx()).getY();
                 }
             }
         }
