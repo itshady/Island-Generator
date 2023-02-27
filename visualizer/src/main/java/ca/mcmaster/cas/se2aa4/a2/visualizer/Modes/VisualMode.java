@@ -10,8 +10,16 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.List;
 
+/**
+ * Has implementations for methods that the types of visual modes will each possess
+ */
 public abstract class VisualMode {
 
+    /**
+     * Processes the data stored in the Mesh, and visualizes as an SVG
+     * @param aMesh is of type Structs.Mesh
+     * @param canvas is of type Graphics2D
+     */
     public void render(Structs.Mesh aMesh, Graphics2D canvas) {
         Stroke stroke = new BasicStroke(0.5f);
         canvas.setStroke(stroke);
@@ -28,6 +36,11 @@ public abstract class VisualMode {
         visualizeVertices(aMesh, canvas);
     }
 
+    /**
+     * Responsible to extracting Vertices from the Mesh (Structs) and visualizes as an SVG
+     * @param aMesh
+     * @param canvas
+     */
     protected void visualizeVertices(Structs.Mesh aMesh, Graphics2D canvas) {
         for (Structs.Vertex v : aMesh.getVerticesList()) {
             float vertexThickness = extractThickness(v.getPropertiesList());
@@ -49,6 +62,12 @@ public abstract class VisualMode {
 
     protected abstract boolean isDebug();
 
+    /**
+     * Responsible for extracting segments and draws lines between every pair of segments
+     * @param aMesh
+     * @param canvas
+     * @param vertexList
+     */
     protected void visualizeSegments (Structs.Mesh aMesh, Graphics2D canvas, List<Structs.Vertex> vertexList) {
         for (Structs.Segment s: aMesh.getSegmentsList()) {
             Stroke segmentStroke = new BasicStroke(extractThickness(s.getPropertiesList()));
@@ -66,6 +85,13 @@ public abstract class VisualMode {
         }
     }
 
+    /**
+     * Responsible for extracting polygons from a Mesh (Structs) and draws polygons for each collection of segments
+     * @param aMesh
+     * @param canvas
+     * @param vertexList
+     * @param segmentsList
+     */
     protected void visualizePolygon(Structs.Mesh aMesh, Graphics2D canvas, List<Structs.Vertex> vertexList, List<Structs.Segment> segmentsList) {
         for (Structs.Polygon p: aMesh.getPolygonsList()) {
             List<Integer> polygonSegments = p.getSegmentIdxsList();
@@ -90,6 +116,14 @@ public abstract class VisualMode {
         }
     }
 
+    /**
+     * Responsible for setting the order of creating polygons through updating the coordinates
+     * @param vertexList
+     * @param segmentsList
+     * @param polygonSegments
+     * @param xValues
+     * @param yValues
+     */
     protected void updateCoordsForPolygons(List<Structs.Vertex> vertexList, List<Structs.Segment> segmentsList, List<Integer> polygonSegments, double[] xValues, double[] yValues) {
         for (int i = 0; i < polygonSegments.size(); i++) {
             if (i > 0) {
@@ -116,6 +150,11 @@ public abstract class VisualMode {
         }
     }
 
+    /**
+     * Obtains the colour property for any element that needs to be visualized
+     * @param properties
+     * @return of Type Color
+     */
     protected Color extractColor(List<Structs.Property> properties) {
         String val = null;
         for(Structs.Property p: properties) {
@@ -133,6 +172,11 @@ public abstract class VisualMode {
         return new Color(red, green, blue, alpha);
     }
 
+    /**
+     * Checks if a given vertex is a centroid
+     * @param properties
+     * @return
+     */
     protected boolean isCentroid(List<Structs.Property> properties) {
         String val = "false";
         for(Structs.Property p: properties) {
@@ -143,6 +187,11 @@ public abstract class VisualMode {
         return val.equals("true");
     }
 
+    /**
+     * Obtain the thickness property for any element that needs to be visualized
+     * @param properties
+     * @return
+     */
     protected Float extractThickness(List<Structs.Property> properties) {
         String val = null;
         for(Structs.Property p: properties) {
