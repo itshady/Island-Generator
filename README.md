@@ -68,6 +68,9 @@ The following commands can add -debug to the end of the command-name to activate
 * To create a regular diamond mesh: 
   * `make run-diamond`
   
+For the square and irregular mesh in normal mode, width and height can be adjusted to 100x100 by adding -size to the end of the command-name (i.e `make run-square-size` or `make-run-irregular-size`).
+
+
 ### Generator Customization
 
 If you wish to customize the generation of a mesh, such as the relaxation level and number of polygons, simply add an argument to the generator portion of execution.
