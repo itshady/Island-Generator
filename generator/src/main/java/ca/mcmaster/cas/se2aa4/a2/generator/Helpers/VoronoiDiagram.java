@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 
+/**
+ * A Helper to generate the Voronoi Diagram using JTS Library.
+ */
 public class VoronoiDiagram {
     private final Integer width;
     private final Integer height;

@@ -5,6 +5,9 @@ import org.locationtech.jts.geom.Coordinate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mutable Mesh that generates diamond tessellation.
+ */
 public class DiamondRegularMesh extends RegularMesh {
     protected List<Coordinate> generatePoints() {
         List<Coordinate> coordList = new ArrayList<>();

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface GeometryDiagram {
     /**
-     * Generates a diagram using io.Structs API.
+     * Generates a diagram using io.Structs Library.
      * @return Structs.Mesh
      */
     public Structs.Mesh generate();
