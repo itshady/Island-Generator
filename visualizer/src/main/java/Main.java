@@ -19,29 +19,31 @@ public class Main {
 
         try {
             Map<String, String> parsedArgs = parseArgs(args, options);
-            if (parsedArgs.get("debug") == "true") renderer.turnOnDebug();
+            if (!parsedArgs.containsKey("help")) {
+                if (parsedArgs.get("debug") == "true") renderer.turnOnDebug();
 
-            // Extracting command line parameters
-            String input = parsedArgs.get("mesh");
-            String output = parsedArgs.get("output");
+                // Extracting command line parameters
+                String input = parsedArgs.get("mesh");
+                String output = parsedArgs.get("output");
 
-            // Getting width and height for the canvas
-            Structs.Mesh aMesh = new MeshFactory().read(input);
-            double max_x = Double.MIN_VALUE;
-            double max_y = Double.MIN_VALUE;
-            for (Structs.Vertex v: aMesh.getVerticesList()) {
-                max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
-                max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
+                // Getting width and height for the canvas
+                Structs.Mesh aMesh = new MeshFactory().read(input);
+                double max_x = Double.MIN_VALUE;
+                double max_y = Double.MIN_VALUE;
+                for (Structs.Vertex v : aMesh.getVerticesList()) {
+                    max_x = (Double.compare(max_x, v.getX()) < 0 ? v.getX() : max_x);
+                    max_y = (Double.compare(max_y, v.getY()) < 0 ? v.getY() : max_y);
+                }
+                // Creating the Canvas to draw the mesh
+                Graphics2D canvas = SVGCanvas.build((int) Math.ceil(max_x), (int) Math.ceil(max_y));
+                // Painting the mesh on the canvas
+                renderer.render(aMesh, canvas);
+                // Storing the result in an SVG file
+                SVGCanvas.write(canvas, output);
+                // Dump the mesh to stdout
+                MeshDump dumper = new MeshDump();
+                dumper.dump(aMesh);
             }
-            // Creating the Canvas to draw the mesh
-            Graphics2D canvas = SVGCanvas.build((int) Math.ceil(max_x), (int) Math.ceil(max_y));
-            // Painting the mesh on the canvas
-            renderer.render(aMesh, canvas);
-            // Storing the result in an SVG file
-            SVGCanvas.write(canvas, output);
-            // Dump the mesh to stdout
-            MeshDump dumper = new MeshDump();
-            dumper.dump(aMesh);
         } catch (ParseException e) {
             System.out.println(e);
         }
@@ -57,15 +59,10 @@ public class Main {
         // add option to specify mesh file
         options.addOption("m","mesh", true, "Specify the mesh file.");
 
-        // add option to specify mesh file
-        options.addOption("o","output", true, "Specify output file.");
+        // add option to specify output svg file
+        options.addOption("o","output", true, "Specify output svg file.");
 
-//        // add option to add n players (each strategy = +1 player)
-//        Option option = new Option("p", "players", true, "Add players with respective strategies to game.");
-//        option.setArgs(Option.UNLIMITED_VALUES);
-//        options.addOption(option);
-
-        // add option for logging
+        // add option for help
         options.addOption("h","help", false, "Ask for usage help.");
 
         return options;
@@ -86,6 +83,7 @@ public class Main {
 
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp(usage, header, options, footer, false);
+            argsMap.put("help", "true");
         }
         if(cmd.hasOption("X")) {
             // if debug option passed

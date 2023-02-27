@@ -19,7 +19,7 @@ public class JTSToGeneratorConverter {
     private final VertexSet vertexSet = new VertexSet();
     private final SegmentSet segmentSet = new SegmentSet();
     private final PolygonSet polygonSet = new PolygonSet();
-    private List<Centroid> centroids = new ArrayList<>();
+    private final List<Centroid> centroids = new ArrayList<>();
 
     public GeometrySet<Vertex> getVertices() {
         return vertexSet;

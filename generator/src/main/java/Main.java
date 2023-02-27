@@ -46,7 +46,7 @@ public class Main {
         // add option to select the relaxation level
         options.addOption("r", "relaxation", true, "Enter the relaxation level for lloyd's relaxation");
 
-        // add option for logging
+        // add option for help
         options.addOption("h","help", false, "Ask for usage help.");
 
         return options;
