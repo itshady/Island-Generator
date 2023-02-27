@@ -37,11 +37,6 @@ public class VertexSet implements GeometrySet<Vertex>, Iterable<Vertex> {
         return coords.containsValue(vertex);
     }
 
-    public boolean contains(Integer x, Integer y) {
-        Coordinate coordinate = new Coordinate(x, y);
-        return coords.containsKey(coordinate);
-    }
-
     /**
      * Returns an iterator over elements of type {@code T}.
      *
