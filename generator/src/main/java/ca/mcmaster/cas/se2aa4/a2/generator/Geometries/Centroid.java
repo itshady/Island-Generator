@@ -2,6 +2,9 @@ package ca.mcmaster.cas.se2aa4.a2.generator.Geometries;
 
 import java.awt.*;
 
+/**
+ * Mutable Centroid: Has same properties as Vertex, but now also holds a Centroid attribute.
+ */
 public class Centroid extends Vertex {
     public Centroid(Double x, Double y) {
         super(x, y);
