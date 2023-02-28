@@ -27,10 +27,10 @@ public abstract class VisualMode {
         List<Structs.Segment> segmentsList = aMesh.getSegmentsList();
 
         // Visualizing polygons
-        visualizePolygon(aMesh, canvas, vertexList, segmentsList);
+        visualizePolygon(aMesh, canvas);
 
         // Visualizing Segments
-        visualizeSegments(aMesh, canvas, vertexList);
+        visualizeSegments(aMesh, canvas);
 
         // Visualizing Vertices and Centroids
         visualizeVertices(aMesh, canvas);
@@ -38,8 +38,8 @@ public abstract class VisualMode {
 
     /**
      * Responsible to extracting Vertices from the Mesh (Structs) and visualizes as an SVG
-     * @param aMesh
-     * @param canvas
+     * @param aMesh: Mesh with a list of vertices
+     * @param canvas: Graphics2D Canvas to draw on
      */
     protected void visualizeVertices(Structs.Mesh aMesh, Graphics2D canvas) {
         for (Structs.Vertex v : aMesh.getVerticesList()) {
@@ -64,11 +64,11 @@ public abstract class VisualMode {
 
     /**
      * Responsible for extracting segments and draws lines between every pair of segments
-     * @param aMesh
-     * @param canvas
-     * @param vertexList
+     * @param aMesh: Mesh with a list of segments
+     * @param canvas: Graphics2D Canvas to draw on
      */
-    protected void visualizeSegments (Structs.Mesh aMesh, Graphics2D canvas, List<Structs.Vertex> vertexList) {
+    protected void visualizeSegments (Structs.Mesh aMesh, Graphics2D canvas) {
+        List<Structs.Vertex> vertexList = aMesh.getVerticesList();
         for (Structs.Segment s: aMesh.getSegmentsList()) {
             Stroke segmentStroke = new BasicStroke(extractThickness(s.getPropertiesList()));
             canvas.setStroke(segmentStroke);
@@ -87,12 +87,12 @@ public abstract class VisualMode {
 
     /**
      * Responsible for extracting polygons from a Mesh (Structs) and draws polygons for each collection of segments
-     * @param aMesh
-     * @param canvas
-     * @param vertexList
-     * @param segmentsList
+     * @param aMesh: Mesh with a list of Polygons
+     * @param canvas: Graphics2D Canvas to draw on
      */
-    protected void visualizePolygon(Structs.Mesh aMesh, Graphics2D canvas, List<Structs.Vertex> vertexList, List<Structs.Segment> segmentsList) {
+    protected void visualizePolygon(Structs.Mesh aMesh, Graphics2D canvas) {
+        List<Structs.Vertex> vertexList = aMesh.getVerticesList();
+        List<Structs.Segment> segmentsList = aMesh.getSegmentsList();
         for (Structs.Polygon p: aMesh.getPolygonsList()) {
             List<Integer> polygonSegments = p.getSegmentIdxsList();
             Color old = canvas.getColor();
@@ -118,15 +118,17 @@ public abstract class VisualMode {
 
     /**
      * Responsible for setting the order of creating polygons through updating the coordinates
-     * @param vertexList
-     * @param segmentsList
-     * @param polygonSegments
-     * @param xValues
-     * @param yValues
+     * @param vertexList: List of vertices
+     * @param segmentsList: List of all segments
+     * @param polygonSegments: List of segment ids from a polygon
+     * @param xValues: List to put the polygon x coords in
+     * @param yValues: List to put the polygon y coords in
      */
     protected void updateCoordsForPolygons(List<Structs.Vertex> vertexList, List<Structs.Segment> segmentsList, List<Integer> polygonSegments, double[] xValues, double[] yValues) {
+        // makes sure that the points for the polygon are in order
         for (int i = 0; i < polygonSegments.size(); i++) {
             if (i > 0) {
+                // for all the segments that aren't the first, makes sure to get the point that intersects with the previous segment.
                 Structs.Segment curr = segmentsList.get(polygonSegments.get(i));
                 Structs.Segment prev = segmentsList.get(polygonSegments.get(i-1));
                 if (curr.getV1Idx() == prev.getV1Idx() || curr.getV1Idx() == prev.getV2Idx()) {
@@ -137,6 +139,7 @@ public abstract class VisualMode {
                     yValues[i] = vertexList.get(curr.getV2Idx()).getY();
                 }
             } else {
+                // for the first segment, makes sure it gets the vertex that isn't intersects with the second segment
                 Structs.Segment segment = segmentsList.get(polygonSegments.get(i));
                 Structs.Segment next = segmentsList.get(polygonSegments.get(i+1));
                 if (segment.getV1Idx() != next.getV1Idx() && segment.getV1Idx() != next.getV2Idx()) {
@@ -152,7 +155,7 @@ public abstract class VisualMode {
 
     /**
      * Obtains the colour property for any element that needs to be visualized
-     * @param properties
+     * @param properties: List of properties
      * @return of Type Color
      */
     protected Color extractColor(List<Structs.Property> properties) {
@@ -174,8 +177,8 @@ public abstract class VisualMode {
 
     /**
      * Checks if a given vertex is a centroid
-     * @param properties
-     * @return
+     * @param properties: List of properties
+     * @return boolean
      */
     protected boolean isCentroid(List<Structs.Property> properties) {
         String val = "false";
@@ -189,8 +192,8 @@ public abstract class VisualMode {
 
     /**
      * Obtain the thickness property for any element that needs to be visualized
-     * @param properties
-     * @return
+     * @param properties: : List of properties
+     * @return Float
      */
     protected Float extractThickness(List<Structs.Property> properties) {
         String val = null;
