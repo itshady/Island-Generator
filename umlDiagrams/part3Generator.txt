@@ -205,6 +205,10 @@ namespace Meshs {
     #generatePoints(): List<Coordinate>
   }
 
+  class HoneyCombRegularMesh {
+    #generatePoints(): List<Coordinate>
+  }
+
   class MeshFactory {
     +create(TypeOfMesh): Mesh
   }
@@ -215,6 +219,7 @@ namespace Meshs {
   RegularMesh <|-- SquareRegularMesh: "is_a"
   RegularMesh <|-- HexRegularMesh: "is_a"
   RegularMesh <|-- DiamondRegularMesh: "is_a"
+  RegularMesh <|-- HoneyCombRegularMesh: "is_a"
 }
 
 DotGen ..> Enums.CommandLineOptions: "uses"
