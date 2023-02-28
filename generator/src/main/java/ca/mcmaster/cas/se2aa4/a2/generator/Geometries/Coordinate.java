@@ -11,11 +11,21 @@ public class Coordinate {
     Integer y;
     public static double precision;
 
+    /**
+     * Creator: Takes in Double values as input
+     * @param x
+     * @param y
+     */
     public Coordinate(Double x, Double y) {
         this.x = (int)(x/precision);
         this.y = (int)(y/precision);
     }
 
+    /**
+     * Creator: Takes in Integer values as input
+     * @param x Integer
+     * @param y Integer
+     */
     public Coordinate(Integer x, Integer y) {
         this.x = (int)(x/precision);
         this.y = (int)(y/precision);
@@ -29,6 +39,11 @@ public class Coordinate {
         return y*precision;
     }
 
+    /**
+     * Overridden the Equals method to allow for proper comparison of Coordinates
+     * @param o Object
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,6 +52,10 @@ public class Coordinate {
         return Objects.equals(x, that.x) && Objects.equals(y, that.y);
     }
 
+    /**
+     * Overridden the HashCode method to prevent collisions (maintain unique Coordinates)
+     * @return int
+     */
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
