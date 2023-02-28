@@ -91,7 +91,7 @@ Need help? Simply use `-h` or `--help` within the generator execution or run `ma
 
 If running the project in normal mode, vertices will be randomly choose between two colours. The segment colours will be the average colour between its two vertices and the polygon colour will be filled in as the average colour of all its vertices.
 
-_For TA: Go to JTSToGeneratorConverter lines 97-105 to be able to test with colours_ 
+_For TA: Go to JTSToGeneratorConverter [lines 97-105](https://github.com/2AA4-W23/a2---mesh-generator-team-1/blob/4009122343966ac63634c0c6535294f71b35b18b/generator/src/main/java/ca/mcmaster/cas/se2aa4/a2/generator/Helpers/JTSToGeneratorConverter.java#L97) to be able to test with colours_ 
 
 ## How to contribute to the project
 
