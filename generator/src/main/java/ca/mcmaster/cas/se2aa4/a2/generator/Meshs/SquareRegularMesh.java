@@ -11,6 +11,10 @@ import java.util.List;
 public class SquareRegularMesh extends RegularMesh {
     private final int square_size = 20;
 
+    /**
+     * Implementing the generatePoints method from the RegularMesh Abstract Class
+     * @return List of type Coordinate (JTS Library)
+     */
     protected List<Coordinate> generatePoints() {
         List<Coordinate> coordList = new ArrayList<>();
         for (int i=0; i<height; i+=square_size) {
