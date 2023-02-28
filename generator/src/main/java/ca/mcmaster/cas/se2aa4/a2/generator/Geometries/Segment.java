@@ -6,6 +6,9 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Mutable Segment class which is composed of two unique vertices
+ */
 public class Segment {
     private Structs.Segment segment;
     private float thickness = (float) 0.5;
@@ -73,7 +76,11 @@ public class Segment {
         v2 = vertex2;
     }
 
-    // to be equivalent means to have the same 2 vertices, in any order
+    /**
+     * Segments are equivalent if their two vertices are equal, in any order.
+     * @param o: Object o to compare to
+     * @return Boolean: True if they are equal, false if not
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,7 +90,11 @@ public class Segment {
                 (Objects.equals(v1, segment.v2) && Objects.equals(v2, segment.v1));
     }
 
-    // vertices should never be the same, so this is a good way to keep the order, so "equivalent" segments hash to the same hash
+    /**
+     * Hashes the segments based on their vertices.
+     * Vertices should never be the same, so this is a good way to keep the order, so "equivalent" segments hash to the same hash
+     * @return hashed integer
+     */
     @Override
     public int hashCode() {
         if (v1.getX() < v2.getX()) return Objects.hash(v1,v2);

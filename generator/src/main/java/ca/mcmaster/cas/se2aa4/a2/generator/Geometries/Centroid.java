@@ -21,7 +21,7 @@ public class Centroid extends Vertex {
 
     /**
      * Overriding the isCentroid method from the Vertex class
-     * @return
+     * @return boolean
      */
     @Override
     public boolean isCentroid() {

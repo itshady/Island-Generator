@@ -5,6 +5,9 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * Mutable Vertex which contains a Coordinate(x,y)
+ */
 public class Vertex {
     private Structs.Vertex vertex;
     private final Color color;
@@ -17,12 +20,14 @@ public class Vertex {
     }
 
     public Vertex(Double x, Double y) {
+        // randomly generates colour
         color = propertyHandler.generateColors();
         coordinate = new Coordinate(x,y);
         setVertex(x, y, color);
     }
 
     public Vertex(Double x, Double y, Float thickness) {
+        // randomly generates colour
         color = propertyHandler.generateColors();
         coordinate = new Coordinate(x,y);
         setVertex(x, y, color, thickness);
@@ -79,6 +84,11 @@ public class Vertex {
                 .build();
     }
 
+    /**
+     * A vertex is equal if its coordinates are equal
+     * @param o: Takes in any object o
+     * @return boolean: True if they are equal, false if not
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

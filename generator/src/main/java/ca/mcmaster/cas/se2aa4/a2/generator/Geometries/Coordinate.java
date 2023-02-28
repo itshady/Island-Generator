@@ -12,9 +12,9 @@ public class Coordinate {
     public static double precision;
 
     /**
-     * Creator: Takes in Double values as input
-     * @param x
-     * @param y
+     * Creator: Takes in Double values as the coordinates, and converts it to its integer form
+     * @param x: Double
+     * @param y: Double
      */
     public Coordinate(Double x, Double y) {
         this.x = (int)(x/precision);
@@ -22,9 +22,9 @@ public class Coordinate {
     }
 
     /**
-     * Creator: Takes in Integer values as input
-     * @param x Integer
-     * @param y Integer
+     * Creator: Takes in Integer values as the coordinates and converts it to its new precision
+     * @param x: Integer
+     * @param y: Integer
      */
     public Coordinate(Integer x, Integer y) {
         this.x = (int)(x/precision);
@@ -40,9 +40,9 @@ public class Coordinate {
     }
 
     /**
-     * Overridden the Equals method to allow for proper comparison of Coordinates
-     * @param o Object
-     * @return boolean
+     * Coordinates are equal if their x and y values are equal to a certain precision
+     * @param o: Any object o to compare to
+     * @return boolean: True if they are equal, false if they are not
      */
     @Override
     public boolean equals(Object o) {

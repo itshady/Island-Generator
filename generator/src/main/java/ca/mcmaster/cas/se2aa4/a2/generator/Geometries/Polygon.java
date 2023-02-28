@@ -24,7 +24,7 @@ public class Polygon {
     /**
      * Creators: Overloaded constructors to support different input values
      * Effects: Makes a new Polygon, generates a color, and the segments that makes up the polygon
-     * @param segments
+     * @param segments: A list of segments that makes the polygon
      */
     public Polygon(List<Segment> segments) {
         List<Color> colorList = segments.stream().map(Segment::getColor).toList();
@@ -90,7 +90,7 @@ public class Polygon {
 
     /**
      * Effects: Gets the centroid coordinates
-     * @return
+     * @return Centroid
      */
     public Centroid getCentroid() {
         return centroid;
