@@ -18,6 +18,11 @@ public class Centroid extends Vertex {
     public Centroid(Double x, Double y, Color color, Float thickness) {
         super(x, y, color, thickness);
     }
+
+    /**
+     * Overriding the isCentroid method from the Vertex class
+     * @return
+     */
     @Override
     public boolean isCentroid() {
         return true;
