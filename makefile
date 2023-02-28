@@ -50,4 +50,12 @@ run-square-size:
 	cd generator && java -jar generator.jar -m square -r 100 -p 100 -ht 100 -wt 100 -o sample.mesh
 	cd visualizer && java -jar visualizer.jar -mesh ../generator/sample.mesh -output sample.svg
 
+run-honeycomb:
+	cd generator && java -jar generator.jar -m honeycomb -r 100 -p 100 -ht 100 -wt 100 -o sample.mesh
+	cd visualizer && java -jar visualizer.jar -mesh ../generator/sample.mesh -output sample.svg
+
+run-honeycomb-debug:
+	cd generator && java -jar generator.jar -m honeycomb -r 100 -p 100 -ht 100 -wt 100 -o sample.mesh
+	cd visualizer && java -jar visualizer.jar -mesh ../generator/sample.mesh -output sample.svg -X
+
 .PHONY: run

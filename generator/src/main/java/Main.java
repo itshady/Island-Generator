@@ -37,8 +37,15 @@ public class Main {
         // add option to specify mesh file
         options.addOption("o","output", true, "Specify output file.");
 
+        // get all mesh types into a string for arg description
+        StringBuilder meshTypes = new StringBuilder();
+        for (TypeOfMesh type : TypeOfMesh.values()) {
+            meshTypes.append(type.toString().toLowerCase());
+            meshTypes.append(", ");
+        }
+
         // add option to select the type of mesh
-        options.addOption("m", "mesh", true, "Selects the type of mesh to output: hex_regular, square_regular, or irregular" );
+        options.addOption("m", "mesh", true, "Selects the type of mesh to output: " + meshTypes);
 
         // add option to select the number of polygons
         options.addOption("p", "polygons", true, "Enter the number of polygons for irregular mesh.");

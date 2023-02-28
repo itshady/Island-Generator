@@ -10,6 +10,7 @@ public class MeshFactory {
             case HEX -> new HexRegularMesh();
             case DIAMOND -> new DiamondRegularMesh();
             case IRREGULAR -> new IrregularMesh();
+            case HONEYCOMB -> new HoneyCombRegularMesh();
         };
     }
 }
