@@ -94,10 +94,15 @@ public class JTSToGeneratorConverter {
     private void addVerticesAndSegments(Coordinate[] coords, List<Segment> polySegments) {
         Random bag = new Random();
         for (int i = 0; i< coords.length-1; i++) {
+            // For TA Testing purposes
+            // Uncomment lines 99-102 and comment lines 104-105, for 2 colours randomly assigned to vertices
             boolean bool = bag.nextBoolean();
-            Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY(), bool ? new Color(255, 179, 186) : new Color(200, 255, 164));
+            Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY(), bool ? new Color(30, 107, 252) : new Color(255, 58, 58));
             bool = bag.nextBoolean();
-            Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY(), bool ? new Color(255, 179, 186) : new Color(200, 255, 164));
+            Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY(), bool ? new Color(30, 107, 252) : new Color(255, 58, 58));
+            // Uncomment lines 104-105 and comment lines 99-102, for randomly generated rgba values
+            // Vertex v1 = new Vertex(coords[i].getX(), coords[i].getY());
+            // Vertex v2 = new Vertex(coords[i+1].getX(), coords[i+1].getY());
             Integer id1 = vertexSet.add(v1);
             Integer id2 = vertexSet.add(v2);
             v1.setId(id1);
