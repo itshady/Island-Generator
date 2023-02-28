@@ -133,6 +133,6 @@ Check [Generator.md](./generator/generator.md) and [Visualizer.md](./visualizer/
 | F15 | Allow generator to take in command line args to select the type of mesh, relaxation, and num of polygons | Hady, Richard | 02/18/23 | 02/21/23 | D |
 | F16 | Minimize Mesh (unique segments) | Hady |  02/19/23 | 02/26/23 | D |
 | F17 | Minimize Mesh (unique polygons) | Hady |  02/19/23 | 02/26/23 | D |
-
+| F18 | Add Honeycomb Tessellation | Hady |  02/26/23 | 02/27/23 | D |
 
 
