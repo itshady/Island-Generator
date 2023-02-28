@@ -7,6 +7,9 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Mutable Polygon that stores a collection of enclosed Segments
+ */
 public class Polygon {
 
     private final List<Segment> segmentList;
@@ -18,6 +21,11 @@ public class Polygon {
     private final Set<Integer> neighbourIdxSet = new HashSet<>();
     private final PropertyHandler propertyHandler = new PropertyHandler();
 
+    /**
+     * Creators: Overloaded constructors to support different input values
+     * Effects: Makes a new Polygon, generates a color, and the segments that makes up the polygon
+     * @param segments
+     */
     public Polygon(List<Segment> segments) {
         List<Color> colorList = segments.stream().map(Segment::getColor).toList();
         this.color = propertyHandler.averageColor(colorList);
@@ -60,6 +68,9 @@ public class Polygon {
         id = newId;
     }
 
+    /**
+     * Effects: Initializes a new Polygon using Structs.Polygon mechanisms
+     */
     public void generatePolygon() {
         List<Integer> idList = new ArrayList<>();
         for (Segment segment : segmentList) {
@@ -77,6 +88,10 @@ public class Polygon {
         return centroid.getId();
     }
 
+    /**
+     * Effects: Gets the centroid coordinates
+     * @return
+     */
     public Centroid getCentroid() {
         return centroid;
     }
@@ -111,6 +126,12 @@ public class Polygon {
         return this.neighbourIdxSet;
     }
 
+    /**
+     * Overridden the Equals method
+     * Polygon is equal to another Polygon only if their Hashsets are identical
+     * @param o Object
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
