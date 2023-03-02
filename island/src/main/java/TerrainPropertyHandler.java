@@ -5,11 +5,20 @@ import java.awt.*;
 import java.util.List;
 
 public class TerrainPropertyHandler extends PropertyHandler{
+
+    /**
+     * @param tileType : Polygon's desired tile type.
+     * @return : The tile property based on its parameter.
+     */
     Structs.Property setTileProperty(TileType tileType) {
         String tileProperty = tileType.toString();
         return Structs.Property.newBuilder().setKey("tile_property").setValue(tileProperty).build();
     }
 
+    /**
+     * @param tileType : Polygon's current tile type.
+     * @return : The colour property based on its type.
+     */
     Structs.Property setColorProperty(TileType tileType) {
         String landColor = 255+","+255+","+255+","+255;
         String beachColor = 242+","+243+","+200+","+255;
@@ -25,6 +34,9 @@ public class TerrainPropertyHandler extends PropertyHandler{
         return Structs.Property.newBuilder().setKey("rgba_color").setValue(color).build();
     }
 
+    /**
+     * Extracts the tile type from the polygon's properties.
+     */
     TileType extractTileProperty(List<Structs.Property> properties) {
         TileType val = null;
         for(Structs.Property p: properties) {
@@ -39,6 +51,10 @@ public class TerrainPropertyHandler extends PropertyHandler{
         return val;
     }
 
+
+    /**
+     * Extracts if the vertex is a centroid from the vertex's properties.
+     */
     boolean isCentroid(List<Structs.Property> properties) {
         String val = "false";
         for (Structs.Property p : properties) {

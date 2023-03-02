@@ -5,8 +5,19 @@ import org.locationtech.jts.geom.GeometryFactory;
 
 import java.util.*;
 
+/**
+ * Converts a Structs Geometry to a JTS Geometry
+ */
+
 public class StructsToJTS {
 
+    /**
+     * Converts a Structs Polygon to a JTS Polygon
+     * @param p: A Structs Polygon
+     * @param vertices: List of Vertices in the Mesh
+     * @param segments: List of Segments in the Mesh
+     * @return : A JTS Polygon
+     */
     public org.locationtech.jts.geom.Polygon polygonToJTS(Structs.Polygon p, List<Structs.Vertex> vertices, List<Structs.Segment> segments) {
         GeometryFactory geometryFactory = new GeometryFactory();
         CoordinateList polygonCoordinates = new CoordinateList();

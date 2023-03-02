@@ -28,7 +28,7 @@ public class PropertyHandler {
      * @param color: a color to turn into a property
      * @return Structs.Property
      */
-    Structs.Property setColorProperty(Color color) {
+    public Structs.Property setColorProperty(Color color) {
         String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
         return Structs.Property.newBuilder().setKey("rgba_color").setValue(colorStr).build();
     }
@@ -38,7 +38,7 @@ public class PropertyHandler {
      * @param thickness: Float
      * @return Structs.Property
      */
-    Structs.Property setThicknessProperty(Float thickness) {
+    public Structs.Property setThicknessProperty(Float thickness) {
         String segmentThickness = Float.toString(thickness);
         return Structs.Property.newBuilder().setKey("thickness").setValue(segmentThickness).build();
     }
@@ -48,7 +48,7 @@ public class PropertyHandler {
      * @param isCentroid: Boolean
      * @return Structs.Property
      */
-    Structs.Property setCentroidProperty(Boolean isCentroid) {
+    public Structs.Property setCentroidProperty(Boolean isCentroid) {
         String stringCentroid = ""+isCentroid;
         return Structs.Property.newBuilder().setKey("is_centroid").setValue(stringCentroid).build();
     }

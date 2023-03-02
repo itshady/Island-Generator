@@ -7,6 +7,10 @@ import java.util.List;
 
 public class Lagoon {
 
+    /**
+     * Lagoon sandbox (part 1) generation.
+     */
+
     List<Structs.Vertex> vertices = new ArrayList<>();
     List<Structs.Segment> segments = new ArrayList<>();
     List<Structs.Polygon> polygons = new ArrayList<>();
@@ -16,20 +20,43 @@ public class Lagoon {
     TerrainPropertyHandler terrainPropertyHandler = new TerrainPropertyHandler();
     GeometricShapeFactory gsf = new GeometricShapeFactory();
 
+    Structs.Mesh aMesh;
+
+    /**
+     * Generates a lagoon mesh from the input mesh.
+     * @param aMesh : Input mesh
+     * @return : Output mesh (lagoon)
+     */
     public Structs.Mesh generateLagoon(Structs.Mesh aMesh) {
+        this.aMesh = aMesh;
+        determineMeshCentre();
         initializeLagoonRadius();
         initializeLandRadius();
-        changeAllVertices(aMesh);
-        changeAllSegments(aMesh);
-        setPolygons(aMesh);
+        changeAllVertices();
+        changeAllSegments();
+        setPolygons();
         determineBeachTiles();
         return Structs.Mesh.newBuilder().addAllVertices(vertices).addAllSegments(segments).addAllPolygons(polygons).build();
     }
 
     /**
+     * Determines the centre point of the mesh.
+     */
+    private void determineMeshCentre() {
+        double max_x = Double.MIN_VALUE;
+        double max_y = Double.MIN_VALUE;
+        for (Structs.Vertex v: aMesh.getVerticesList()) {
+            max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
+            max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
+        }
+        Coordinate centre = new Coordinate(max_x/2, max_y/2);
+        gsf.setCentre(centre);
+    }
+
+    /**
      * Strips all colours away from the vertices of the input mesh.
      */
-    private void changeAllVertices(Structs.Mesh aMesh) {
+    private void changeAllVertices() {
         for (Structs.Vertex v : aMesh.getVerticesList()) {
             double x = v.getX();
             double y = v.getY();
@@ -43,7 +70,7 @@ public class Lagoon {
     /**
      * Strips all colours away from the segments of the input mesh.
      */
-    private void changeAllSegments(Structs.Mesh aMesh) {
+    private void changeAllSegments() {
         for (Structs.Segment s : aMesh.getSegmentsList()) {
             int v1 = s.getV1Idx();
             int v2 = s.getV2Idx();
@@ -58,7 +85,6 @@ public class Lagoon {
     private void initializeLagoonRadius() {
         gsf.setSize(200);
         gsf.setNumPoints(200);
-        gsf.setCentre(new Coordinate(250, 250));
         lagoonRadius = gsf.createCircle();
     }
 
@@ -67,17 +93,20 @@ public class Lagoon {
      */
     private void initializeLandRadius() {
         gsf.setSize(350);
-        gsf.setNumPoints(300);
-        gsf.setCentre(new Coordinate(250, 250));
+        gsf.setNumPoints(350);
         landRadius = gsf.createCircle();
     }
 
-    private void setPolygons(Structs.Mesh aMesh) {
+    /**
+     * Sets each polygon within the mesh to its determined tile type.
+     * Tile type for the polygon is determined by its location from the lagoon and land radii.
+     */
+    private void setPolygons() {
         Structs.Property tileProperty;
         Structs.Property colorProperty;
         for (Structs.Polygon p : aMesh.getPolygonsList()) {
             org.locationtech.jts.geom.Polygon poly = new StructsToJTS().polygonToJTS(p, vertices, segments);
-            Structs.Polygon blankPolygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(p.getSegmentIdxsList()).addAllNeighborIdxs(p.getNeighborIdxsList()).build();
+            Structs.Polygon blankPolygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(p.getSegmentIdxsList()).addAllNeighborIdxs(p.getNeighborIdxsList()).setCentroidIdx(p.getCentroidIdx()).build();
             if (poly.intersects(lagoonRadius)) {
                 tileProperty = terrainPropertyHandler.setTileProperty(TileType.LAGOON);
                 colorProperty = terrainPropertyHandler.setColorProperty(TileType.LAGOON);
@@ -93,6 +122,10 @@ public class Lagoon {
         }
     }
 
+    /**
+     * Determines which land tiles in the mesh touch a water source based on its neighbours.
+     * Tiles that touch a water source turn into beach tiles.
+     */
     private void determineBeachTiles() {
         int counter = 0;
         for (Structs.Polygon p : polygons) {

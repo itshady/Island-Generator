@@ -6,19 +6,11 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        String input = args[0];
-        String output = args[1];
-        if (args[1] == null) {
-            output = "lagoon.mesh";
-        }
-//        System.out.println("input: " + input);
-//        System.out.println("output: " + output);
-
-
-        Structs.Mesh aMesh = new MeshFactory().read(input);
-
-        Structs.Mesh terrain = (new Lagoon()).generateLagoon(aMesh);
-        MeshFactory factory = new MeshFactory();
-        factory.write(terrain, output);
+        String input = "../generator/sample.mesh";
+        String output = "lagoon.mesh";
+        MeshFactory terrainFactory = new MeshFactory();
+        Structs.Mesh aMesh = terrainFactory.read(input);
+        Structs.Mesh terrain = new Generator().generate(aMesh);
+        terrainFactory.write(terrain, args[1]);
     }
 }
