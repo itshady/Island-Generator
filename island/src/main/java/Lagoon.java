@@ -2,7 +2,6 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -12,17 +11,38 @@ public class Lagoon {
     List<Structs.Segment> segments = new ArrayList<>();
     List<Structs.Polygon> polygons = new ArrayList<>();
 
+    Geometry lagoonRadius;
+    Geometry landRadius;
+    TerrainPropertyHandler terrainPropertyHandler = new TerrainPropertyHandler();
+    GeometricShapeFactory gsf = new GeometricShapeFactory();
+
+    public Structs.Mesh generateLagoon(Structs.Mesh aMesh) {
+        initializeLagoonRadius();
+        initializeLandRadius();
+        changeAllVertices(aMesh);
+        changeAllSegments(aMesh);
+        setPolygons(aMesh);
+        determineBeachTiles();
+        return Structs.Mesh.newBuilder().addAllVertices(vertices).addAllSegments(segments).addAllPolygons(polygons).build();
+    }
+
+    /**
+     * Strips all colours away from the vertices of the input mesh.
+     */
     private void changeAllVertices(Structs.Mesh aMesh) {
         for (Structs.Vertex v : aMesh.getVerticesList()) {
             double x = v.getX();
             double y = v.getY();
-            boolean isCentroid = isCentroid(v.getPropertiesList());
+            boolean isCentroid = terrainPropertyHandler.isCentroid(v.getPropertiesList());
             Structs.Property centroid = Structs.Property.newBuilder().setKey("is_centroid").setValue(Boolean.toString(isCentroid)).build();
             Structs.Vertex blankVertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(centroid).build();
             vertices.add(blankVertex);
         }
     }
 
+    /**
+     * Strips all colours away from the segments of the input mesh.
+     */
     private void changeAllSegments(Structs.Mesh aMesh) {
         for (Structs.Segment s : aMesh.getSegmentsList()) {
             int v1 = s.getV1Idx();
@@ -32,69 +52,60 @@ public class Lagoon {
         }
     }
 
-    private boolean isCentroid(List<Structs.Property> properties) {
-        String val = "false";
-        for (Structs.Property p : properties) {
-            if (p.getKey().equals("is_centroid")) {
-                val = p.getValue();
-            }
-        }
-        return val.equals("true");
-    }
-
-    private void setPolygons(Structs.Mesh aMesh) {
-        GeometricShapeFactory gsf = new GeometricShapeFactory();
-        GeometryFactory geometryFactory = new GeometryFactory();
+    /**
+     * Creates the radius for the lagoon tiles.
+     */
+    private void initializeLagoonRadius() {
         gsf.setSize(200);
         gsf.setNumPoints(200);
         gsf.setCentre(new Coordinate(250, 250));
-        Geometry lagoon = gsf.createCircle();
-        Color lagoonColor = new Color(103, 168, 209);
-        Color landColor = new Color(255, 255, 255);
-        Color oceanColor = new Color(0, 87, 143);
-        Color beachColor = new Color(242, 243, 200);
+        lagoonRadius = gsf.createCircle();
+    }
+
+    /**
+     * Creates the radius for the land tiles.
+     */
+    private void initializeLandRadius() {
         gsf.setSize(350);
         gsf.setNumPoints(300);
         gsf.setCentre(new Coordinate(250, 250));
-        Geometry land = gsf.createCircle();
+        landRadius = gsf.createCircle();
+    }
+
+    private void setPolygons(Structs.Mesh aMesh) {
+        Structs.Property tileProperty;
+        Structs.Property colorProperty;
         for (Structs.Polygon p : aMesh.getPolygonsList()) {
-            CoordinateList polygonCoordinates = new CoordinateList();
-            structsToJTS(p, polygonCoordinates);
-            org.locationtech.jts.geom.Polygon poly = geometryFactory.createPolygon(polygonCoordinates.toCoordinateArray());
-            Structs.Property tileProperty;
-            Structs.Property colorProperty;
+            org.locationtech.jts.geom.Polygon poly = new StructsToJTS().polygonToJTS(p, vertices, segments);
             Structs.Polygon blankPolygon = Structs.Polygon.newBuilder().addAllSegmentIdxs(p.getSegmentIdxsList()).addAllNeighborIdxs(p.getNeighborIdxsList()).build();
-            if (poly.intersects(lagoon)) {
-                tileProperty = setTileProperty(TileType.LAGOON);
-                colorProperty = setColorProperty(lagoonColor);
-            } else if (poly.intersects(land) && !poly.intersects(lagoon)) {
-                tileProperty = setTileProperty(TileType.LAND);
-                colorProperty = setColorProperty(landColor);
+            if (poly.intersects(lagoonRadius)) {
+                tileProperty = terrainPropertyHandler.setTileProperty(TileType.LAGOON);
+                colorProperty = terrainPropertyHandler.setColorProperty(TileType.LAGOON);
+            } else if (poly.intersects(landRadius) && !poly.intersects(lagoonRadius)) {
+                tileProperty = terrainPropertyHandler.setTileProperty(TileType.LAND);
+                colorProperty = terrainPropertyHandler.setColorProperty(TileType.LAND);
             } else {
-                tileProperty = setTileProperty(TileType.OCEAN);
-                colorProperty = setColorProperty(oceanColor);
+                tileProperty = terrainPropertyHandler.setTileProperty(TileType.OCEAN);
+                colorProperty = terrainPropertyHandler.setColorProperty(TileType.OCEAN);
             }
             Structs.Polygon polygon = Structs.Polygon.newBuilder(blankPolygon).addProperties(colorProperty).addProperties(tileProperty).build();
             polygons.add(polygon);
         }
     }
 
-    private void beachTransformation() {
-        Color beachColor = new Color (242,243,200);
-        Integer counter = 0;
+    private void determineBeachTiles() {
+        int counter = 0;
         for (Structs.Polygon p : polygons) {
-            //System.out.println(p.getTileType());
-            String currentPolygonTile = extractTileProperty(p.getPropertiesList());
-            if (currentPolygonTile.equals("LAND")) {
+            TileType currentPolygonTile = terrainPropertyHandler.extractTileProperty(p.getPropertiesList());
+            if (currentPolygonTile == TileType.LAND) {
                 for (Integer neighbourIdx : p.getNeighborIdxsList()) {
                     Structs.Polygon currentNeighbour = polygons.get(neighbourIdx);
-                    String neighbourTileType = extractTileProperty(currentNeighbour.getPropertiesList());
-                    if (neighbourTileType.equals("LAGOON") || neighbourTileType.equals("OCEAN")) {
-//                        System.out.println(neighbourTileType);
-                        Structs.Property tileProperty = setTileProperty(TileType.BEACH);
-                        Structs.Property colorProperty = setColorProperty(beachColor);
-                        Structs.Polygon newPolygon = Structs.Polygon.newBuilder(p).addProperties(colorProperty).addProperties(tileProperty).build();
-                        polygons.set(counter, newPolygon);
+                    TileType neighbourTileType = terrainPropertyHandler.extractTileProperty(currentNeighbour.getPropertiesList());
+                    if (neighbourTileType == TileType.LAGOON || neighbourTileType == TileType.OCEAN) {
+                        Structs.Property tileProperty = terrainPropertyHandler.setTileProperty(TileType.BEACH);
+                        Structs.Property colorProperty = terrainPropertyHandler.setColorProperty(TileType.BEACH);
+                        Structs.Polygon beachPolygon = Structs.Polygon.newBuilder(p).addProperties(colorProperty).addProperties(tileProperty).build();
+                        polygons.set(counter, beachPolygon);
                         break;
                     }
                 }
@@ -102,50 +113,4 @@ public class Lagoon {
             counter++;
         }
     }
-
-
-    private void structsToJTS(Structs.Polygon p, CoordinateList polygonCoordinates) {
-        for (Integer segmentId : p.getSegmentIdxsList()) {
-            Structs.Segment currentSegment = segments.get(segmentId);
-            Structs.Vertex v1 = vertices.get(currentSegment.getV1Idx());
-            Structs.Vertex v2 = vertices.get(currentSegment.getV2Idx());
-            Coordinate v1Coordinate = new Coordinate(v1.getX(), v1.getY());
-            Coordinate v2Coordinate = new Coordinate(v2.getX(), v2.getY());
-            polygonCoordinates.add(v1Coordinate, false);
-            polygonCoordinates.add(v2Coordinate, false);
-        }
-        polygonCoordinates.add(polygonCoordinates.get(0), true);
-    }
-
-    public Structs.Mesh generateMesh(Structs.Mesh aMesh) {
-        changeAllVertices(aMesh);
-        changeAllSegments(aMesh);
-        setPolygons(aMesh);
-        beachTransformation();
-
-        return Structs.Mesh.newBuilder().addAllVertices(vertices).addAllSegments(segments).addAllPolygons(polygons).build();
-    }
-
-    private Structs.Property setTileProperty(TileType tileType) {
-        String tileProperty = tileType.toString();
-        return Structs.Property.newBuilder().setKey("tile_property").setValue(tileProperty).build();
-    }
-
-    private Structs.Property setColorProperty(Color color) {
-        String colorStr = ""+color.getRed()+","+color.getGreen()+","+color.getBlue()+","+color.getAlpha();
-        return Structs.Property.newBuilder().setKey("rgba_color").setValue(colorStr).build();
-    }
-
-    private String extractTileProperty(List<Structs.Property> properties) {
-        String val = null;
-        for(Structs.Property p: properties) {
-            if (p.getKey().equals("tile_property")) {
-                val = p.getValue();
-            }
-        }
-        if (val == null)
-            return "OCEAN";
-        return val;
-    }
-
 }
