@@ -1,9 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets;
 
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Coordinate;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.PropertyHandler;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Vertex;
-import org.junit.jupiter.api.BeforeAll;
+import Geometries.Coordinate;
+import Geometries.Vertex;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

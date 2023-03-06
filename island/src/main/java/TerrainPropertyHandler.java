@@ -1,7 +1,6 @@
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.*;
+import Geometries.PropertyHandler;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
-import java.awt.*;
 import java.util.List;
 
 public class TerrainPropertyHandler extends PropertyHandler {

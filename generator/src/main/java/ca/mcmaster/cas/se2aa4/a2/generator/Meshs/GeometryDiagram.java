@@ -1,6 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.generator.Meshs;
 
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Centroid;
+import Geometries.Centroid;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets;
 
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Segment;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Vertex;
+import Geometries.Polygon;
+import Geometries.Segment;
+import Geometries.Vertex;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
