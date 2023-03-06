@@ -4,7 +4,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import java.awt.*;
 import java.util.List;
 
-public class TerrainPropertyHandler extends PropertyHandler{
+public class TerrainPropertyHandler extends PropertyHandler {
 
     /**
      * @param tileType : Polygon's desired tile type.

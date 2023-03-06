@@ -8,9 +8,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         String input = "../generator/sample.mesh";
         String output = "lagoon.mesh";
-        MeshFactory terrainFactory = new MeshFactory();
-        Structs.Mesh aMesh = terrainFactory.read(input);
+        Structs.Mesh aMesh = new MeshFactory().read(args[0]);
         Structs.Mesh terrain = new Generator().generate(aMesh);
+        MeshFactory terrainFactory = new MeshFactory();
         terrainFactory.write(terrain, args[1]);
     }
 }

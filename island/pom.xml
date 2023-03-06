@@ -26,7 +26,6 @@
             <groupId>io.github.ace-design</groupId>
             <artifactId>2aa4.mesh.generator</artifactId>
             <version>1.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -37,7 +36,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>Main</mainClass>
+                    <mainClass>IslandMain</mainClass>
                 </configuration>
             </plugin>
             <plugin>

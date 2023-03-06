@@ -61,8 +61,9 @@ public class Lagoon {
             double x = v.getX();
             double y = v.getY();
             boolean isCentroid = terrainPropertyHandler.isCentroid(v.getPropertiesList());
+            Structs.Property thickness = terrainPropertyHandler.setThicknessProperty(0f);
             Structs.Property centroid = Structs.Property.newBuilder().setKey("is_centroid").setValue(Boolean.toString(isCentroid)).build();
-            Structs.Vertex blankVertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(centroid).build();
+            Structs.Vertex blankVertex = Structs.Vertex.newBuilder().setX(x).setY(y).addProperties(centroid).addProperties(thickness).build();
             vertices.add(blankVertex);
         }
     }
@@ -74,7 +75,8 @@ public class Lagoon {
         for (Structs.Segment s : aMesh.getSegmentsList()) {
             int v1 = s.getV1Idx();
             int v2 = s.getV2Idx();
-            Structs.Segment blankSegment = Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx(v2).build();
+            Structs.Property thickness = terrainPropertyHandler.setThicknessProperty(0f);
+            Structs.Segment blankSegment = Structs.Segment.newBuilder().setV1Idx(v1).setV2Idx(v2).addProperties(thickness).build();
             segments.add(blankSegment);
         }
     }

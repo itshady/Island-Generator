@@ -16,7 +16,6 @@ import static ca.mcmaster.cas.se2aa4.a2.generator.Enums.TypeOfMesh.SQUARE;
 public class Main {
     public static void main(String[] args) {
         Options options = setupCLI();
-
         try {
             // Extracting command line parameters
             Map<CommandLineOptions, String> parsedArgs = parseArgs(args, options);
@@ -24,12 +23,13 @@ public class Main {
             if (parsedArgs.containsKey(HELP)) return;
             String output = parsedArgs.get(OUTPUTFILE);
             Mesh myMesh = new DotGen().generate(parsedArgs);
+            System.out.println(output);
             new MeshFactory().write(myMesh, output);
-
         } catch (ParseException | IOException e) {
-             System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
+
 
     private static Options setupCLI() {
         Options options = new Options();
