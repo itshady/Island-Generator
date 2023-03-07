@@ -1,13 +1,10 @@
 package ca.mcmaster.cas.se2aa4.a2.generator.Meshs;
 
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Centroid;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Segment;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.generator.Helpers.GeneratorToStructsConverter;
-import ca.mcmaster.cas.se2aa4.a2.generator.Helpers.JTSToGeneratorConverter;
-import ca.mcmaster.cas.se2aa4.a2.generator.Helpers.NeighbourCalculator;
-import ca.mcmaster.cas.se2aa4.a2.generator.Helpers.VoronoiDiagram;
+import Geometries.Centroid;
+import Helpers.GeneratorToStructsConverter;
+import Helpers.JTSToGeneratorConverter;
+import Helpers.NeighbourCalculator;
+import Helpers.VoronoiDiagram;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Coordinate;
@@ -37,7 +34,7 @@ public abstract class Mesh implements GeometryDiagram {
      * @param coordsList: List of coordinates to build the voronoi diagram around
      */
     protected void generateDiagram(List<Coordinate> coordsList) {
-        ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Coordinate.precision = precision;
+        Geometries.Coordinate.precision = precision;
         List<Geometry> polygonsJTS = new VoronoiDiagram(width, height, precision).getVoronoiDiagram(coordsList);
 
         centroids = new ArrayList<>();

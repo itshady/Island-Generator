@@ -2,6 +2,11 @@ run:
 	cd generator && java -jar generator.jar -m square -r 50 -p 100 -o sample.mesh
 	cd visualizer && java -jar visualizer.jar -mesh ../generator/sample.mesh -output sample.svg
 
+island:
+	cd generator && java -jar generator.jar -m irregular -r 100 -p 100 -o sample.mesh
+	cd island && java -jar island.jar ../generator/sample.mesh lagoon.mesh
+	cd visualizer && java -jar visualizer.jar -mesh ../island/lagoon.mesh -output sample.svg
+
 help:
 	cd generator && java -jar generator.jar -h
 	cd visualizer && java -jar visualizer.jar -h
@@ -58,4 +63,4 @@ run-honeycomb-debug:
 	cd generator && java -jar generator.jar -m honeycomb -r 100 -p 100 -ht 100 -wt 100 -o sample.mesh
 	cd visualizer && java -jar visualizer.jar -mesh ../generator/sample.mesh -output sample.svg -X
 
-.PHONY: run
+.PHONY: run island

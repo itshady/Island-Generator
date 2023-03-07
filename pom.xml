@@ -16,7 +16,9 @@
         <module>generator</module>
         <module>io</module>
         <module>visualizer</module>
-    </modules>
+        <module>island</module>
+		<module>meshadt</module>
+	</modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
