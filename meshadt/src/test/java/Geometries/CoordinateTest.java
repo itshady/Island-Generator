@@ -1,10 +1,11 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.Geometries;
+package Geometries;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CoordinateTest {
+
 
     @Test
     void testEquals() {

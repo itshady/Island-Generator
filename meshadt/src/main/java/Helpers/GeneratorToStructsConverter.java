@@ -1,14 +1,12 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.Helpers;
+package Helpers;
 
-import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.GeometrySet;
-import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.PolygonSet;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Segment;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Vertex;
+import Geometries.Polygon;
+import Geometries.Segment;
+import Geometries.Vertex;
+import EnhancedSets.GeometrySet;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**

@@ -1,8 +1,6 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets;
+package EnhancedSets;
 
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Segment;
-
+import Geometries.Polygon;
 import java.util.*;
 
 public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {

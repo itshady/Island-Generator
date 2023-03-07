@@ -1,6 +1,6 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets;
+package EnhancedSets;
 
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Segment;
+import Geometries.Segment;
 
 import java.util.HashMap;
 import java.util.Iterator;

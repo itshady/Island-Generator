@@ -1,7 +1,6 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.Geometries;
+package Geometries;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

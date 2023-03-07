@@ -1,13 +1,13 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.Helpers;
+package Helpers;
 
-import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.GeometrySet;
-import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.PolygonSet;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Centroid;
-import ca.mcmaster.cas.se2aa4.a2.generator.Geometries.Polygon;
+
+import Geometries.Centroid;
+import EnhancedSets.GeometrySet;
+import EnhancedSets.PolygonSet;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.triangulate.DelaunayTriangulationBuilder;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
+import Geometries.Polygon;
 
 import java.util.*;
 
