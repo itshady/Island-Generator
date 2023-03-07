@@ -1,13 +1,13 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.Helpers;
+package Helpers;
 
 import Geometries.Centroid;
 import Geometries.Segment;
 import Geometries.Vertex;
 import Geometries.Polygon;
-import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.GeometrySet;
-import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.PolygonSet;
-import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.SegmentSet;
-import ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets.VertexSet;
+import EnhancedSets.GeometrySet;
+import EnhancedSets.PolygonSet;
+import EnhancedSets.SegmentSet;
+import EnhancedSets.VertexSet;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 

@@ -1,12 +1,14 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets;
+package EnhancedSets;
 
 import Geometries.Coordinate;
 import Geometries.Vertex;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class VertexSetTest {
+
     @Test
     void add() {
         VertexSet vertexSet = new VertexSet();

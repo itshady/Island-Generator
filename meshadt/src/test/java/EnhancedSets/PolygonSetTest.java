@@ -1,8 +1,10 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets;
+package EnhancedSets;
 
+import EnhancedSets.PolygonSet;
 import Geometries.Polygon;
 import Geometries.Segment;
 import Geometries.Vertex;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Coordinate {
     Integer x;
     Integer y;
-    public static double precision;
+    public static double precision = 0.01; // default precision
 
     /**
      * Creator: Takes in Double values as the coordinates, and converts it to its integer form

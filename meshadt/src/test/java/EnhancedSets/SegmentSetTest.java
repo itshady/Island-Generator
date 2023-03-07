@@ -1,7 +1,9 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.EnhancedSets;
+package EnhancedSets;
 
+import EnhancedSets.SegmentSet;
 import Geometries.Segment;
 import Geometries.Vertex;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

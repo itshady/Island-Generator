@@ -9,7 +9,6 @@ class CoordinateTest {
 
     @Test
     void testEquals() {
-        Geometries.Coordinate.precision = 0.01;
         // precision is to 0.01, so this shouldn't be equals
         Coordinate coordinate = new Coordinate(1.0,1.0);
         Coordinate coordinate_dup = new Coordinate(1.001,1.001);
