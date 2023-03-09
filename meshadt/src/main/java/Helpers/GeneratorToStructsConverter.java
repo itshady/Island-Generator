@@ -12,7 +12,6 @@ import java.util.Set;
 /**
  * GeneratorToStructsConverter converts our Generator data structures (Polygon, Segment, Vertex)
  * Into data structures that the IO Library supports
- *
  */
 public class GeneratorToStructsConverter {
 

@@ -50,17 +50,4 @@ public class TerrainPropertyHandler extends PropertyHandler {
         return val;
     }
 
-
-    /**
-     * Extracts if the vertex is a centroid from the vertex's properties.
-     */
-    boolean isCentroid(List<Structs.Property> properties) {
-        String val = "false";
-        for (Structs.Property p : properties) {
-            if (p.getKey().equals("is_centroid")) {
-                val = p.getValue();
-            }
-        }
-        return val.equals("true");
-    }
 }

@@ -78,4 +78,56 @@ public class PropertyHandler {
         alpha = alpha/totalColors;
         return new Color(red, green, blue, alpha);
     }
+
+
+    /**
+     * Determines the color of a data structure
+     */
+    public Color extractColorProperty(List<Structs.Property> properties) {
+        String val = null;
+        for(Structs.Property p: properties) {
+            if (p.getKey().equals("rgba_color")) {
+                val = p.getValue();
+            }
+        }
+        if (val == null)
+            return Color.BLACK;
+        String[] raw = val.split(",");
+        int red = Integer.parseInt(raw[0]);
+        int green = Integer.parseInt(raw[1]);
+        int blue = Integer.parseInt(raw[2]);
+        int alpha = Integer.parseInt(raw[3]);
+        return new Color(red, green, blue, alpha);
+    }
+
+    /**
+     * Determines the thickness of a data structure
+     */
+    public Float extractThicknessProperty(List<Structs.Property> properties) {
+        String val = null;
+        for(Structs.Property p: properties) {
+            if (p.getKey().equals("thickness")) {
+                val = p.getValue();
+            }
+        }
+        if (val == null)
+            return 2f;
+        return Float.parseFloat(val);
+    }
+
+    /**
+     * Determines if a vertex is a centroid from the vertex's properties.
+     */
+
+    public boolean isCentroid(List<Structs.Property> properties) {
+        String val = "false";
+        for (Structs.Property p : properties) {
+            if (p.getKey().equals("is_centroid")) {
+                val = p.getValue();
+            }
+        }
+        return val.equals("true");
+    }
+
+
 }
