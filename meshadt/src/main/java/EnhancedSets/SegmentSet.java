@@ -22,6 +22,7 @@ public class SegmentSet implements GeometrySet<Segment>, Iterable<Segment> {
     @Override
     public Integer add(Segment segment) {
         if (contains(segment)) return segmentsInverse.get(segment);
+        segment.setId(id);
         segments.put(id, segment);
         segmentsInverse.put(segment, id);
         return id++;

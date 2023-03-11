@@ -1,8 +1,9 @@
-package Helpers;
+package ca.mcmaster.cas.se2aa4.a2.island;
 
 import EnhancedSets.*;
 import Geometries.*;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+import ca.mcmaster.cas.se2aa4.a2.island.Containers.ADTContainer;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -16,40 +17,42 @@ import java.util.Set;
  * Into our Generator data structures (Polygon, Segment, Vertex)
  */
 
-public class StructsToGeneratorConverter {
+public class StructsToADTConverter {
 
     PropertyHandler propertyHandler = new PropertyHandler();
+    Structs.Mesh mesh;
+    VertexSet vertices = new VertexSet();
+    SegmentSet segments = new SegmentSet();
+    PolygonSet polygons = new PolygonSet();
 
-    /**
-     * Calls the method extractVertices and returns a Set compatible with the Generator
-     * @param vertices is a List of type Vertex (Structs Package)
-     * @return GeometrySet that contains the type Geometries.Vertex
-     */
-    public GeometrySet<Vertex> convertVertices(List<Structs.Vertex> vertices) {
-        return extractVertices(vertices);
+    public StructsToADTConverter(Structs.Mesh mesh) {
+        this.mesh = mesh;
+    }
+    public ADTContainer process() {
+        ADTContainer container = new ADTContainer();
+
+        extractGeometries(mesh);
+
+        container.register(vertices);
+        container.register(segments);
+        container.register(polygons);
+
+        return container;
     }
 
-    /**
-     * Calls the method extractSegments and returns a Set compatible with the Generator
-     * @param segments is a List of type Segment (Structs Package)
-     * @param generatorVertices is a GeometrySet of type Vertex (Geometry Package)
-     * @return GeometrySet that contains the type Geometries.Segment
-     */
-    public GeometrySet<Segment> convertSegments(List<Structs.Segment> segments, GeometrySet<Vertex> generatorVertices) {
-        return extractSegments(segments, generatorVertices);
-    }
+    private void extractGeometries(Structs.Mesh mesh) {
+        vertices = extractVertices(mesh.getVerticesList());
+        segments = extractSegments(mesh.getSegmentsList(), vertices);
+        polygons = extractPolygons(mesh.getPolygonsList(), segments, vertices);
+//        for (Polygon polygon : polygons) {
+//            System.out.println(polygon);
+//        }
+        // adds neighbours to our polygons
 
-    /**
-     * Calls the method extractPolygons and returns a Set compatible with the Generator.
-     * @param polygons is a List of type Polygon (Structs Package)
-     * @param generatorSegments is a GeometrySet of type Segment (Geometry Package)
-     * @param generatorVertices is a GeometrySet of type Vertex (Geometry Package)
-     * @return GeometrySet that contains the type Geometries.Polygon
-     */
-    public GeometrySet<Polygon> convertPolygons(List<Structs.Polygon> polygons, GeometrySet<Segment> generatorSegments, GeometrySet<Vertex> generatorVertices) {
-        PolygonSet convertedPolygons = extractPolygons(polygons, generatorSegments, generatorVertices);
-        extractNeighbours(polygons, convertedPolygons);
-        return convertedPolygons;
+        extractNeighbours(mesh.getPolygonsList());
+        for (Polygon polygon : polygons) {
+            System.out.println(polygon.getPolygonNeighbours());
+        }
     }
 
     /**
@@ -126,17 +129,18 @@ public class StructsToGeneratorConverter {
      * Iterates through the Structs.Polygon List and its neighbours
      * Finds the associated Geometry.Polygon neighbours and adds the list of neighbours to its Geometry.Polygon.
      * @param structsPolygons is a List of type Polygon (Structs Package)
-     * @param generatorPolygons is a GeometrySet of type Polygon
      */
-    private void extractNeighbours(List<Structs.Polygon> structsPolygons, GeometrySet<Polygon> generatorPolygons) {
+    private void extractNeighbours(List<Structs.Polygon> structsPolygons) {
         int counter = 0;
         for (Structs.Polygon structsPolygon : structsPolygons) {
-            Polygon currentPolygon = generatorPolygons.get(counter);
+            Polygon currentPolygon = polygons.get(counter);
             Set<Polygon> neighbours = new HashSet<>(structsPolygon.getNeighborIdxsCount());
+
             for (Integer neighbourIdx : structsPolygon.getNeighborIdxsList()) {
-                Polygon neighbourPolygon = generatorPolygons.get(neighbourIdx);
+                Polygon neighbourPolygon = polygons.get(neighbourIdx);
                 neighbours.add(neighbourPolygon);
             }
+
             currentPolygon.addPolygonNeighbourSet(neighbours);
             counter++;
         }

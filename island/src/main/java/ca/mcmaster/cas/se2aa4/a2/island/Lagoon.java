@@ -1,3 +1,5 @@
+package ca.mcmaster.cas.se2aa4.a2.island;
+
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.util.GeometricShapeFactory;
@@ -8,7 +10,7 @@ import java.util.List;
 public class Lagoon {
 
     /**
-     * Lagoon sandbox (part 1) generation.
+     * ca.mcmaster.cas.se2aa4.a2.island.Lagoon sandbox (part 1) generation.
      */
 
     List<Structs.Vertex> vertices = new ArrayList<>();

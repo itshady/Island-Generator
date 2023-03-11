@@ -4,9 +4,14 @@ import Geometries.Polygon;
 import java.util.*;
 
 public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {
-    private final Map<Integer, Polygon> polygons = new HashMap<>();
-    private final Map<Polygon, Integer> polygonsInverse = new HashMap<>();
+    private Map<Integer, Polygon> polygons = new HashMap<>();
+    private Map<Polygon, Integer> polygonsInverse = new HashMap<>();
     Integer id = 0;
+
+    public void addNeighbours(Integer id, Set<Polygon> neighbours) {
+        Polygon poly = polygons.get(id);
+        poly.addPolygonNeighbourSet(neighbours);
+    }
 
     /**
      * Must maintain Set property (any equal polygons can't be in set together)
@@ -17,6 +22,7 @@ public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {
     @Override
     public Integer add(Polygon polygon) {
         if (contains(polygon)) return polygonsInverse.get(polygon);
+        polygon.setId(id);
         polygons.put(id, polygon);
         polygonsInverse.put(polygon, id);
         return id++;

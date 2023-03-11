@@ -3,7 +3,6 @@ run:
 	cd visualizer && java -jar visualizer.jar -mesh ../generator/sample.mesh -output sample.svg
 
 island:
-	cd generator && java -jar generator.jar -m irregular -r 100 -p 100 -o sample.mesh
 	cd island && java -jar island.jar ../generator/sample.mesh lagoon.mesh
 	cd visualizer && java -jar visualizer.jar -mesh ../island/lagoon.mesh -output sample.svg
 

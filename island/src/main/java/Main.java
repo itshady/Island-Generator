@@ -1,6 +1,6 @@
-import Helpers.StructsToGeneratorConverter;
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
+import ca.mcmaster.cas.se2aa4.a2.island.Generator;
 
 import java.io.IOException;
 

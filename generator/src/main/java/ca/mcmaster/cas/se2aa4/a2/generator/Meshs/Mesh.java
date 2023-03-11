@@ -1,7 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.generator.Meshs;
 
 import Geometries.Centroid;
-import Helpers.GeneratorToStructsConverter;
+import Helpers.ADTToStructsConverter;
 import Helpers.JTSToGeneratorConverter;
 import Helpers.NeighbourCalculator;
 import Helpers.VoronoiDiagram;
@@ -48,7 +48,7 @@ public abstract class Mesh implements GeometryDiagram {
         new NeighbourCalculator().addNeighbours(polygonsJTS, JTSconverter.getPolygons(), centroids);
 
         // Convert all our geometries into the io ones
-        GeneratorToStructsConverter converter = new GeneratorToStructsConverter();
+        ADTToStructsConverter converter = new ADTToStructsConverter();
 
         Set<Structs.Vertex> rudimentaryVertices = converter.convertVertices(JTSconverter.getVertices());
         Set<Structs.Segment> rudimentarySegments = converter.convertSegments(JTSconverter.getSegments());

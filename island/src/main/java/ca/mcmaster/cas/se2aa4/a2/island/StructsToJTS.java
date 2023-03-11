@@ -1,3 +1,5 @@
+package ca.mcmaster.cas.se2aa4.a2.island;
+
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateList;
