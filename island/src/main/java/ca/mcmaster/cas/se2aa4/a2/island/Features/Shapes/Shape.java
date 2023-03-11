@@ -6,5 +6,4 @@ public interface Shape {
     // manipulate the polygons in order to make the island a shape
     void process(ADTContainer container);
 
-    void initializeLand();
 }
