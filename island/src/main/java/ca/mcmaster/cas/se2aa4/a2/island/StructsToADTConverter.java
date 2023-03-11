@@ -34,6 +34,9 @@ public class StructsToADTConverter {
         extractGeometries(mesh);
 
         container.register(vertices);
+//        for (Vertex v : container.getVertices()) {
+//            System.out.println(v);
+//        }
         container.register(segments);
         container.register(polygons);
 
@@ -50,9 +53,9 @@ public class StructsToADTConverter {
         // adds neighbours to our polygons
 
         extractNeighbours(mesh.getPolygonsList());
-        for (Polygon polygon : polygons) {
-            System.out.println(polygon.getPolygonNeighbours());
-        }
+//        for (Polygon polygon : polygons) {
+//            System.out.println(polygon.getPolygonNeighbours());
+//        }
     }
 
     /**

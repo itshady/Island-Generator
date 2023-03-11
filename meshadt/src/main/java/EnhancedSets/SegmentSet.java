@@ -1,6 +1,8 @@
 package EnhancedSets;
 
+import Geometries.Coordinate;
 import Geometries.Segment;
+import Geometries.Vertex;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,6 +29,17 @@ public class SegmentSet implements GeometrySet<Segment>, Iterable<Segment> {
         segmentsInverse.put(segment, id);
         return id++;
     }
+
+    public void update(Segment oldSegment, Segment newSegment) {
+        if (!contains(oldSegment)) return;
+        int oldId = oldSegment.getId();
+        newSegment.setId(oldId);
+        segments.replace(oldId, newSegment);
+        segmentsInverse.remove(oldSegment);
+        segmentsInverse.put(newSegment,oldId);
+
+    }
+
 
     /**
      * Checks if the Set contains the given Geometry

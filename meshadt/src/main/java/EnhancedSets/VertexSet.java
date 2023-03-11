@@ -29,6 +29,14 @@ public class VertexSet implements GeometrySet<Vertex>, Iterable<Vertex> {
         return id++;
     }
 
+    public void update(Vertex oldVertex, Vertex newVertex) {
+        if (!contains(oldVertex)) return;
+        Coordinate coord = new Coordinate(oldVertex.getX(), oldVertex.getY());
+        int oldID = oldVertex.getId();
+        coords.replace(coord, newVertex);
+        idToVertex.replace(oldID, newVertex);
+    }
+
     /**
      * Gets the Geometry E from the Set given its Coordinates
      * @param coord: the Coordinate of the Geometry

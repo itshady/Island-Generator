@@ -16,7 +16,7 @@ public class Polygon {
     private Integer id;
     private Structs.Polygon polygon;
     private float thickness = (float) 2;
-    private final Color color;
+    private Color color;
     private Centroid centroid;
     private final Set<Integer> neighbourIdxSet = new HashSet<>();
     private final PropertyHandler propertyHandler = new PropertyHandler();
@@ -55,6 +55,10 @@ public class Polygon {
         segmentList = segments;
         centroid = new Centroid(0.0,0.0);
         validateSegments();
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     /**

@@ -8,11 +8,6 @@ public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {
     private Map<Polygon, Integer> polygonsInverse = new HashMap<>();
     Integer id = 0;
 
-    public void addNeighbours(Integer id, Set<Polygon> neighbours) {
-        Polygon poly = polygons.get(id);
-        poly.addPolygonNeighbourSet(neighbours);
-    }
-
     /**
      * Must maintain Set property (any equal polygons can't be in set together)
      *

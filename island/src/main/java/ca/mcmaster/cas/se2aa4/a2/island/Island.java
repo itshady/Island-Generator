@@ -1,23 +1,20 @@
 package ca.mcmaster.cas.se2aa4.a2.island;
 
 import EnhancedSets.GeometrySet;
-import EnhancedSets.PolygonSet;
-import EnhancedSets.VertexSet;
 import Geometries.Polygon;
 import Geometries.Segment;
 import Geometries.Vertex;
-import Helpers.ADTToStructsConverter;
 import Helpers.ADTToStructsConverterNew;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.ADTContainer;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Circle;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.ShapeGenerator;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Shape;
 
 public class Island {
     GeometrySet<Vertex> vertices;
     GeometrySet<Segment> segments;
     GeometrySet<Polygon> tiles;
-    ShapeGenerator shape;
+    Shape shape;
     ADTContainer container;
 
     public Island(Structs.Mesh emptyMesh, Configuration configuration) { // pass in Configuration
