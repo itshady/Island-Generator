@@ -65,10 +65,10 @@ public class StructsToADTConverter {
 //            Float vertexThickness = propertyHandler.extractThicknessProperty(vertex.getPropertiesList());
             boolean isCentroid = propertyHandler.isCentroid(vertex.getPropertiesList());
             if (isCentroid) {
-                Centroid generatorVertex = new Centroid(vertexX, vertexY);
+                Centroid generatorVertex = new Centroid(vertexX, vertexY, Color.BLACK, 0f);
                 vertexSet.add(generatorVertex);
             } else {
-                Vertex generatorVertex = new Vertex(vertexX, vertexY);
+                Vertex generatorVertex = new Vertex(vertexX, vertexY, Color.BLACK, 0f);
                 vertexSet.add(generatorVertex);
             }
 
@@ -87,9 +87,9 @@ public class StructsToADTConverter {
         for (Structs.Segment segment : segments) {
             Vertex vertex1 = generatorVertices.get(segment.getV1Idx());
             Vertex vertex2 = generatorVertices.get(segment.getV2Idx());
-            Color segmentColor = propertyHandler.extractColorProperty(segment.getPropertiesList());
-            Float segmentThickness = propertyHandler.extractThicknessProperty(segment.getPropertiesList());
-            Segment generatorSegment = new Segment(vertex1, vertex2, segmentColor, segmentThickness);
+//            Color segmentColor = propertyHandler.extractColorProperty(segment.getPropertiesList());
+//            Float segmentThickness = propertyHandler.extractThicknessProperty(segment.getPropertiesList());
+            Segment generatorSegment = new Segment(vertex1, vertex2, Color.BLACK, 0f);
             segmentSet.add(generatorSegment);
         }
         return segmentSet;
@@ -111,9 +111,9 @@ public class StructsToADTConverter {
                 Segment currentSegment = generatorSegments.get(polygonSegmentIdx);
                 polygonSegments.add(currentSegment);
             }
-            Color polygonColor = propertyHandler.extractColorProperty(polygon.getPropertiesList());
-            Float polygonThickness = propertyHandler.extractThicknessProperty(polygon.getPropertiesList());
-            Polygon generatorPolygon = new Polygon(polygonSegments, polygonColor, polygonThickness);
+//            Color polygonColor = propertyHandler.extractColorProperty(polygon.getPropertiesList());
+//            Float polygonThickness = propertyHandler.extractThicknessProperty(polygon.getPropertiesList());
+            Polygon generatorPolygon = new Polygon(polygonSegments, Color.BLACK, 0f);
             Centroid centroid = (Centroid) (generatorVertices.get(polygon.getCentroidIdx()));
             generatorPolygon.setCentroid(centroid);
             polygonSet.add(generatorPolygon);

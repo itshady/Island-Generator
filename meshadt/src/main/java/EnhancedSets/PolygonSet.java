@@ -1,6 +1,8 @@
 package EnhancedSets;
 
 import Geometries.Polygon;
+import Geometries.Segment;
+
 import java.util.*;
 
 public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {

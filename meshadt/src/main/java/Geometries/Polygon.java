@@ -61,6 +61,10 @@ public class Polygon {
         this.color = color;
     }
 
+    public Color getColor() {
+        return this.color;
+    }
+
     /**
      * A polygon must be comprised of 3 or more segments
      */

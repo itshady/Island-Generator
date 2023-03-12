@@ -7,8 +7,7 @@ import Geometries.Vertex;
 import Helpers.ADTToStructsConverterNew;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.ADTContainer;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Circle;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Oval;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Lagoon;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Shape;
 
 public class Island {
@@ -27,7 +26,7 @@ public class Island {
 
     private void configure(Configuration configuration) {
         // feature = configuration.getFeature()
-        shape = new Circle();
+        shape = new Lagoon();
     }
 
     private void process() {

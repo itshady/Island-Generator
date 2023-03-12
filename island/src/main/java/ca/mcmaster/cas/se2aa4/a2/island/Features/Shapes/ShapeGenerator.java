@@ -9,17 +9,25 @@ import Geometries.Segment;
 import Geometries.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.island.ADTtoJTSConverter;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.ADTContainer;
+import ca.mcmaster.cas.se2aa4.a2.island.Tile;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class ShapeGenerator implements Shape {
     ADTContainer container;
-    Map<Polygon, Geometries.Polygon> polygonReferences = new HashMap<>();
+    Map<Polygon, Geometries.Polygon> polygonReferences;
+
+    Color oceanColor = new Color(0,87,143,255);
+    Color lagoonColor = new Color(103,168,209,255);
+    Color landColor = Color.WHITE;
+    Color beachColor = new Color(242,243,200,255);
 
     /**
      * Initializes the shape of the island using JTS polygons
@@ -39,12 +47,15 @@ public abstract class ShapeGenerator implements Shape {
      */
     public void process(ADTContainer container) {
         this.container = container;
-        mapPolygons();
+        polygonReferences = container.getMappedPolygons();
         initializeLand();
+        Map<Integer, Polygon> polygonList = new LinkedHashMap<>();
         for (org.locationtech.jts.geom.Polygon JTSPolygon : polygonReferences.keySet()) {
             Geometries.Polygon ADTPolygon = polygonReferences.get(JTSPolygon);
-            if (intersects(JTSPolygon)) ADTPolygon.setColor(new Color(255,255,255,255));
-            else ADTPolygon.setColor(new Color(0,87,143,255));
+            Tile tile = new Tile(ADTPolygon.getSegmentList());
+            polygonList.put(1,tile);
+            if (intersects(JTSPolygon)) ADTPolygon.setColor(landColor);
+            else ADTPolygon.setColor(oceanColor);
         }
     }
 
@@ -60,15 +71,5 @@ public abstract class ShapeGenerator implements Shape {
         }
         Coordinate centre = new Coordinate(max_x/2, max_y/2);
         gsf.setCentre(centre);
-    }
-
-    /**
-     * Maps the JTSPolygon to its ADT version
-     */
-    protected void mapPolygons() {
-        for (Geometries.Polygon p : container.getPolygons()) {
-            Polygon JTSPolygon = ADTtoJTSConverter.polygonToJTS(p);
-            polygonReferences.put(JTSPolygon, p);
-        }
     }
 }
