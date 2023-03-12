@@ -1,10 +1,9 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Containers;
 
-import EnhancedSets.GeometrySet;
 import EnhancedSets.PolygonSet;
 import EnhancedSets.SegmentSet;
 import EnhancedSets.VertexSet;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.PolygonMapper;
+import ca.mcmaster.cas.se2aa4.a2.island.Exporters.PolygonMapper;
 import org.locationtech.jts.geom.Polygon;
 
 import java.util.Map;

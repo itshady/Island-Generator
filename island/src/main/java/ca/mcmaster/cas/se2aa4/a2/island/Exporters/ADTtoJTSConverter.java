@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.island;
+package ca.mcmaster.cas.se2aa4.a2.island.Exporters;
 
 import EnhancedSets.SegmentSet;
 import EnhancedSets.VertexSet;
@@ -32,7 +32,6 @@ public class ADTtoJTSConverter {
             polygonCoordinates.add(v2Coordinate, false);
         }
         polygonCoordinates.add(polygonCoordinates.get(0), true);
-        org.locationtech.jts.geom.Polygon poly = geometryFactory.createPolygon(polygonCoordinates.toCoordinateArray());
-        return poly;
+        return geometryFactory.createPolygon(polygonCoordinates.toCoordinateArray());
     }
 }

@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.island;
+package ca.mcmaster.cas.se2aa4.a2.island.Exporters;
 
 import EnhancedSets.*;
 import Geometries.*;
@@ -34,9 +34,6 @@ public class StructsToADTConverter {
         extractGeometries(mesh);
 
         container.register(vertices);
-//        for (Vertex v : container.getVertices()) {
-//            System.out.println(v);
-//        }
         container.register(segments);
         container.register(polygons);
 

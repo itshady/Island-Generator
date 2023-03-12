@@ -1,13 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
-import EnhancedSets.GeometrySet;
-import EnhancedSets.PolygonSet;
-import EnhancedSets.SegmentSet;
-import EnhancedSets.VertexSet;
-import Geometries.Centroid;
-import Geometries.Segment;
 import Geometries.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.island.ADTtoJTSConverter;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.ADTContainer;
 import ca.mcmaster.cas.se2aa4.a2.island.Tile;
 import org.locationtech.jts.geom.Coordinate;
@@ -15,9 +8,6 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class ShapeGenerator implements Shape {

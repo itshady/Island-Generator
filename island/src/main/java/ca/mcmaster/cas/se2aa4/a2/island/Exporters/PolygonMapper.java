@@ -1,10 +1,8 @@
-package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
+package ca.mcmaster.cas.se2aa4.a2.island.Exporters;
 
-import ca.mcmaster.cas.se2aa4.a2.island.ADTtoJTSConverter;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.ADTContainer;
 import org.locationtech.jts.geom.Polygon;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
