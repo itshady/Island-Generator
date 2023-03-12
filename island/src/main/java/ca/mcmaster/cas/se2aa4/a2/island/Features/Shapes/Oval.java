@@ -16,33 +16,22 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 
-public class Oval extends ShapeGenerator implements Shape{
-    GeometricShapeFactory gsf = new GeometricShapeFactory();
+public class Oval extends ShapeGenerator {
     Geometry oval;
-    @Override
-    public void process(ADTContainer container) {
-        initialize(container);
-        initializeLand();
-        for (org.locationtech.jts.geom.Polygon JTSPolygon : polygonReferences.keySet()) {
-            Polygon ADTPolygon = polygonReferences.get(JTSPolygon);
-            if (JTSPolygon.intersects(oval)) {
-                ADTPolygon.setColor(new Color(255,255,255,255));
-            } else {
-                ADTPolygon.setColor(new Color(0,87,143,255));
-            }
-        }
 
-        // Map(JTSPolygon, ADTPolygon)
-        // Intersects
+    @Override
+    protected boolean intersects(org.locationtech.jts.geom.Polygon JTSPolygon) {
+        return JTSPolygon.intersects(oval);
     }
 
+    @Override
     protected void initializeLand() {
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
         determineMeshCentre(gsf);
         gsf.setHeight(400);
         gsf.setWidth(175);
         gsf.setNumPoints(350);
         gsf.setRotation(Math.toRadians(60));
         oval = gsf.createEllipse();
-
     }
 }

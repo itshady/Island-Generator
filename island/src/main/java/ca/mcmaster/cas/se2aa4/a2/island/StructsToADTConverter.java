@@ -47,15 +47,8 @@ public class StructsToADTConverter {
         vertices = extractVertices(mesh.getVerticesList());
         segments = extractSegments(mesh.getSegmentsList(), vertices);
         polygons = extractPolygons(mesh.getPolygonsList(), segments, vertices);
-//        for (Polygon polygon : polygons) {
-//            System.out.println(polygon);
-//        }
         // adds neighbours to our polygons
-
         extractNeighbours(mesh.getPolygonsList());
-//        for (Polygon polygon : polygons) {
-//            System.out.println(polygon.getPolygonNeighbours());
-//        }
     }
 
     /**
@@ -68,14 +61,14 @@ public class StructsToADTConverter {
         for (Structs.Vertex vertex : vertices) {
             double vertexX = vertex.getX();
             double vertexY = vertex.getY();
-            Color vertexColor = propertyHandler.extractColorProperty(vertex.getPropertiesList());
-            Float vertexThickness = propertyHandler.extractThicknessProperty(vertex.getPropertiesList());
+//            Color vertexColor = propertyHandler.extractColorProperty(vertex.getPropertiesList());
+//            Float vertexThickness = propertyHandler.extractThicknessProperty(vertex.getPropertiesList());
             boolean isCentroid = propertyHandler.isCentroid(vertex.getPropertiesList());
             if (isCentroid) {
-                Centroid generatorVertex = new Centroid(vertexX, vertexY, vertexColor, vertexThickness);
+                Centroid generatorVertex = new Centroid(vertexX, vertexY);
                 vertexSet.add(generatorVertex);
             } else {
-                Vertex generatorVertex = new Vertex(vertexX, vertexY, vertexColor, vertexThickness);
+                Vertex generatorVertex = new Vertex(vertexX, vertexY);
                 vertexSet.add(generatorVertex);
             }
 

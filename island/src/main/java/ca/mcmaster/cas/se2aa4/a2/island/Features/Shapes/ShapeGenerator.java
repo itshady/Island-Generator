@@ -1,5 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
+import EnhancedSets.GeometrySet;
 import EnhancedSets.PolygonSet;
 import EnhancedSets.SegmentSet;
 import EnhancedSets.VertexSet;
@@ -16,14 +17,36 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class ShapeGenerator {
-    VertexSet vertices;
-    SegmentSet segments;
-    PolygonSet polygons;
-
+public abstract class ShapeGenerator implements Shape {
+    ADTContainer container;
     Map<Polygon, Geometries.Polygon> polygonReferences = new HashMap<>();
 
+    /**
+     * Initializes the shape of the island using JTS polygons
+     */
+    protected abstract void initializeLand();
 
+    /**
+     * Checks if a polygon is within the island shape.
+     * @param JTSPolygon: A polygon to check intersects with the island shape
+     * @return boolean: true if it intersects, else false
+     */
+    protected abstract boolean intersects(Polygon JTSPolygon);
+
+    /**
+     * Takes a set of polygons and add shape to it, distinguished by color
+     * @param container: A container with a set of polygons and vertices
+     */
+    public void process(ADTContainer container) {
+        this.container = container;
+        mapPolygons();
+        initializeLand();
+        for (org.locationtech.jts.geom.Polygon JTSPolygon : polygonReferences.keySet()) {
+            Geometries.Polygon ADTPolygon = polygonReferences.get(JTSPolygon);
+            if (intersects(JTSPolygon)) ADTPolygon.setColor(new Color(255,255,255,255));
+            else ADTPolygon.setColor(new Color(0,87,143,255));
+        }
+    }
 
     /**
      * Determines the centre point of the mesh.
@@ -31,7 +54,7 @@ public abstract class ShapeGenerator {
     protected void determineMeshCentre(GeometricShapeFactory gsf) {
         double max_x = Double.MIN_VALUE;
         double max_y = Double.MIN_VALUE;
-        for (Vertex v: vertices) {
+        for (Vertex v: container.getVertices()) {
             max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
             max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
         }
@@ -40,51 +63,12 @@ public abstract class ShapeGenerator {
     }
 
     /**
-     * Strips all colours away from the vertices of the input mesh.
+     * Maps the JTSPolygon to its ADT version
      */
-    protected void changeAllVertices() {
-        for (Vertex v : vertices) {
-            double x = v.getX();
-            double y = v.getY();
-
-            if (v.isCentroid()) {
-                Centroid newVertex = new Centroid(x, y, Color.BLACK, 0f);
-                vertices.update(v, newVertex);
-            } else {
-                Vertex newVertex = new Vertex(x, y, Color.BLACK,0f);
-                vertices.update(v, newVertex);
-            }
-        }
-    }
-
-    /**
-     * Strips all colours away from the segments of the input mesh.
-     */
-    protected void changeAllSegments() {
-        for (Segment s : segments) {
-            Vertex v1 = s.getV1();
-            Vertex v2 = s.getV2();
-            Segment newSegment = new Segment(v1, v2, Color.BLACK, 0f);
-            segments.update(s, newSegment);
-        }
-    }
-
-    protected void initialize(ADTContainer container) {
-        vertices = container.getVertices();
-        segments = container.getSegments();
-        polygons = container.getPolygons();
-        changeAllVertices();
-        changeAllSegments();
-        mapPolygons();
-
-    }
-
     protected void mapPolygons() {
-        for (Geometries.Polygon p : polygons) {
+        for (Geometries.Polygon p : container.getPolygons()) {
             Polygon JTSPolygon = ADTtoJTSConverter.polygonToJTS(p);
             polygonReferences.put(JTSPolygon, p);
         }
     }
-
-
 }

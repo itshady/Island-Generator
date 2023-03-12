@@ -12,29 +12,17 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 import java.awt.*;
 
 
-public class Circle extends ShapeGenerator implements Shape {
-
-    GeometricShapeFactory gsf = new GeometricShapeFactory();
+public class Circle extends ShapeGenerator {
     Geometry circle;
 
     @Override
-    public void process(ADTContainer container) {
-        initialize(container);
-        initializeLand();
-        for (org.locationtech.jts.geom.Polygon JTSPolygon : polygonReferences.keySet()) {
-            Polygon ADTPolygon = polygonReferences.get(JTSPolygon);
-            if (JTSPolygon.intersects(circle)) {
-                ADTPolygon.setColor(new Color(255,255,255,255));
-            } else {
-                ADTPolygon.setColor(new Color(0,87,143,255));
-            }
-        }
-
-        // Map(JTSPolygon, ADTPolygon)
-        // Intersects
+    protected boolean intersects(org.locationtech.jts.geom.Polygon JTSPolygon) {
+        return JTSPolygon.intersects(circle);
     }
 
+    @Override
     protected void initializeLand() {
+        GeometricShapeFactory gsf = new GeometricShapeFactory();
         determineMeshCentre(gsf);
         gsf.setSize(350);
         gsf.setNumPoints(350);
