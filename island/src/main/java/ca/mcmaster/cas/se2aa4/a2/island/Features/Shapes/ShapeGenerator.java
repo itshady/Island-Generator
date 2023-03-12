@@ -49,11 +49,9 @@ public abstract class ShapeGenerator implements Shape {
         this.container = container;
         polygonReferences = container.getMappedPolygons();
         initializeLand();
-        Map<Integer, Polygon> polygonList = new LinkedHashMap<>();
         for (org.locationtech.jts.geom.Polygon JTSPolygon : polygonReferences.keySet()) {
             Geometries.Polygon ADTPolygon = polygonReferences.get(JTSPolygon);
             Tile tile = new Tile(ADTPolygon.getSegmentList());
-            polygonList.put(1,tile);
             if (intersects(JTSPolygon)) ADTPolygon.setColor(landColor);
             else ADTPolygon.setColor(oceanColor);
         }
