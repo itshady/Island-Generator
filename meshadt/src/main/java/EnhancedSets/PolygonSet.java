@@ -1,11 +1,13 @@
 package EnhancedSets;
 
 import Geometries.Polygon;
+import Geometries.Segment;
+
 import java.util.*;
 
 public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {
-    private final Map<Integer, Polygon> polygons = new HashMap<>();
-    private final Map<Polygon, Integer> polygonsInverse = new HashMap<>();
+    private Map<Integer, Polygon> polygons = new HashMap<>();
+    private Map<Polygon, Integer> polygonsInverse = new HashMap<>();
     Integer id = 0;
 
     /**
@@ -17,6 +19,7 @@ public class PolygonSet implements GeometrySet<Polygon>, Iterable<Polygon> {
     @Override
     public Integer add(Polygon polygon) {
         if (contains(polygon)) return polygonsInverse.get(polygon);
+        polygon.setId(id);
         polygons.put(id, polygon);
         polygonsInverse.put(polygon, id);
         return id++;

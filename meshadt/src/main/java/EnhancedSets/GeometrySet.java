@@ -26,4 +26,6 @@ public interface GeometrySet<E> extends Iterable<E> {
      * @return Geometry: Returns the geometry if it exists, else null.
      */
     public E get(Integer id);
+
+
 }
