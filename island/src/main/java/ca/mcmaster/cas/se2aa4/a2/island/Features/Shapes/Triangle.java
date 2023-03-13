@@ -20,16 +20,17 @@ public class Triangle extends ShapeGenerator{
         GeometryFactory gf = new GeometryFactory();
         Coordinate centroid = determineMeshCentre();
 
-        // Set the base and height of the triangle
-        double base = 200;
-        double height = 400;
+        // Set the base and height of the triangle (These should be variable)
+        double base = 300;
+        double height = 300;
 
-        // Calculate the coordinates of the vertices
+        // Calculate the coordinates of the vertices based on the centroid
         Coordinate[] vertices = new Coordinate[] {
-                new Coordinate(centroid.getX() - base/2, centroid.getY() - height/3),
-                new Coordinate(centroid.getX() + base/2, centroid.getY() - height/3),
-                new Coordinate(centroid.getX(), centroid.getY() + 2*height/3),
-                new Coordinate(centroid.getX() - base/2, centroid.getY() - height/3)
+                new Coordinate(centroid.getX() - base/2, centroid.getY() + height/3),
+                new Coordinate(centroid.getX() + base/2, centroid.getY() + height/3),
+                new Coordinate(centroid.getX(), centroid.getY() - 2*height/3),
+                // First and last point must be the same (Needs to be cyclic)
+                new Coordinate(centroid.getX() - base/2, centroid.getY() + height/3)
         };
 
         // Create a LinearRing representing the triangle's exterior boundary
