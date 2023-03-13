@@ -10,6 +10,7 @@ public class ShapeFactory implements Factory {
             case "circle" -> new Circle();
             case "oval" -> new Oval();
             case "triangle" -> new Triangle();
+            case "threecircle" -> new ThreeCircle();
             default -> new Circle();
         };
     }
