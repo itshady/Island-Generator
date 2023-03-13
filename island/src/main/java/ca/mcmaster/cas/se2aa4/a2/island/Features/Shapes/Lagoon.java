@@ -10,6 +10,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * NEEDS FIXING ONCE LAKE IS INTRODUCED, A LAGOON IS A SPECIALIZED SHAPE AND BIG LAKE
+ */
 public class Lagoon extends ShapeGenerator{
 
     Geometry land;

@@ -20,6 +20,11 @@ public abstract class ShapeGenerator implements Shape {
     Color beachColor = new Color(242,243,200,255);
 
     /**
+     * Note: intersects is abstracted so that irregular islands can be made.
+     * If multiple shapes need to be concatenated, intersects can check them all.
+     */
+
+    /**
      * Initializes the shape of the island using JTS polygons
      */
     protected abstract void initializeLand();
