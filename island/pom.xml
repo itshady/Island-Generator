@@ -13,7 +13,7 @@
     </parent>
 
     <version>1.0</version>
-    <artifactId>2aa4.mesh.island</artifactId>
+    <artifactId>2aa4.mesh.islandBuilder</artifactId>
     <name>McMaster :: CAS :: 2AA4 :: A2 :: Island</name>
 
     <dependencies>
@@ -36,7 +36,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>IslandMain</mainClass>
+                    <mainClass>Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>

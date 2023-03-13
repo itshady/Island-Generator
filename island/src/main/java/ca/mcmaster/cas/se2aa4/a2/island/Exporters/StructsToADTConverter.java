@@ -3,7 +3,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.Exporters;
 import EnhancedSets.*;
 import Geometries.*;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.ADTContainer;
+import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -28,8 +28,8 @@ public class StructsToADTConverter {
     public StructsToADTConverter(Structs.Mesh mesh) {
         this.mesh = mesh;
     }
-    public ADTContainer process() {
-        ADTContainer container = new ADTContainer();
+    public Island process() {
+        Island container = new Island();
 
         extractGeometries(mesh);
 

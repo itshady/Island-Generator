@@ -8,7 +8,7 @@ import org.locationtech.jts.geom.Polygon;
 
 import java.util.Map;
 
-public class ADTContainer {
+public class Island {
     private VertexSet vertexSet;
     private SegmentSet segmentSet;
     private PolygonSet polygonSet;

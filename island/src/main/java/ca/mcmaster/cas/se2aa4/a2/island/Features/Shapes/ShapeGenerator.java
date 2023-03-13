@@ -1,17 +1,16 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
 import Geometries.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.ADTContainer;
+import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Tile;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.util.GeometricShapeFactory;
 
 import java.awt.*;
 import java.util.Map;
 
 public abstract class ShapeGenerator implements Shape {
-    ADTContainer container;
+    Island container;
     Map<Polygon, Geometries.Polygon> polygonReferences;
 
     Color oceanColor = new Color(0,87,143,255);
@@ -40,7 +39,7 @@ public abstract class ShapeGenerator implements Shape {
      * Takes a set of polygons and add shape to it, distinguished by color
      * @param container: A container with a set of polygons and vertices
      */
-    public void process(ADTContainer container) {
+    public void process(Island container) {
         this.container = container;
         polygonReferences = container.getMappedPolygons();
         initializeLand();

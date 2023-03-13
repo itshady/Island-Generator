@@ -39,7 +39,7 @@ run-irregular-debug:
 	cd visualizer && java -jar visualizer.jar -mesh ../generator/sample.mesh -output sample.svg -X
 
 run-irregular-relaxed:
-	cd generator && java -jar generator.jar -m irregular -r 100 -p 100 -o sample.mesh
+	cd generator && java -jar generator.jar -m irregular -r 100 -p 1000 -o sample.mesh
 	cd visualizer && java -jar visualizer.jar -mesh ../generator/sample.mesh -output sample.svg
 
 run-irregular-relaxed-debug:

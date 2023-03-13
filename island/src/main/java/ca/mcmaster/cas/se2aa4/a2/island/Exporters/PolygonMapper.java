@@ -1,6 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Exporters;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.ADTContainer;
+import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import org.locationtech.jts.geom.Polygon;
 
 import java.util.LinkedHashMap;
@@ -12,7 +12,7 @@ public class PolygonMapper {
     /**
      * Maps the JTSPolygon to its ADT version
      */
-    public Map<Polygon, Geometries.Polygon> mapPolygons(ADTContainer container) {
+    public Map<Polygon, Geometries.Polygon> mapPolygons(Island container) {
         for (Geometries.Polygon p : container.getPolygons()) {
             Polygon JTSPolygon = ADTtoJTSConverter.polygonToJTS(p);
             polygonReferences.put(JTSPolygon, p);
