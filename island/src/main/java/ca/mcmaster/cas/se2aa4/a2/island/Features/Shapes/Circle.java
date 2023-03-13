@@ -15,7 +15,8 @@ public class Circle extends ShapeGenerator {
     @Override
     protected void initializeLand() {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
-        determineMeshCentre(gsf);
+        Coordinate meshCentre = determineMeshCentre();
+        gsf.setCentre(meshCentre);
         gsf.setSize(350);
         gsf.setNumPoints(350);
         circle = gsf.createCircle();

@@ -1,9 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.island.UI;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Circle;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Lagoon;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Oval;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Shape;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.*;
 
 public class ShapeFactory implements Factory {
     @Override
@@ -12,6 +9,7 @@ public class ShapeFactory implements Factory {
             case "lagoon" -> new Lagoon();
             case "circle" -> new Circle();
             case "oval" -> new Oval();
+            case "triangle" -> new Triangle();
             default -> new Circle();
         };
     }

@@ -1,6 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.ADTContainer;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.util.GeometricShapeFactory;
@@ -18,14 +19,16 @@ public class Lagoon extends ShapeGenerator{
 
     @Override
     protected void initializeLand() {
-        determineMeshCentre(gsf);
+        Coordinate meshCentre = determineMeshCentre();
+        gsf.setCentre(meshCentre);
         gsf.setSize(350);
         gsf.setNumPoints(350);
         land = gsf.createCircle();
     }
 
     protected void initializeLagoon() {
-        determineMeshCentre(gsf);
+        Coordinate meshCentre = determineMeshCentre();
+        gsf.setCentre(meshCentre);
         gsf.setSize(200);
         gsf.setNumPoints(200);
         lagoon = gsf.createCircle();

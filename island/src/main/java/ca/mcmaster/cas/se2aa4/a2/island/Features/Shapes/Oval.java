@@ -15,7 +15,8 @@ public class Oval extends ShapeGenerator {
     @Override
     protected void initializeLand() {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
-        determineMeshCentre(gsf);
+        Coordinate meshCentre = determineMeshCentre();
+        gsf.setCentre(meshCentre);
         gsf.setHeight(400);
         gsf.setWidth(175);
         gsf.setNumPoints(350);

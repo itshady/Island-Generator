@@ -49,8 +49,9 @@ public abstract class ShapeGenerator implements Shape {
 
     /**
      * Determines the centre point of the mesh.
+     * Returns the centre coordinate (Used to determine triangle)
      */
-    protected void determineMeshCentre(GeometricShapeFactory gsf) {
+    protected Coordinate determineMeshCentre() {
         double max_x = Double.MIN_VALUE;
         double max_y = Double.MIN_VALUE;
         for (Vertex v: container.getVertices()) {
@@ -58,6 +59,6 @@ public abstract class ShapeGenerator implements Shape {
             max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
         }
         Coordinate centre = new Coordinate(max_x/2, max_y/2);
-        gsf.setCentre(centre);
+        return centre;
     }
 }
