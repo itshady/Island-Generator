@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Mutable Mesh that generates square tessellation based on the square_size
+ * Mutable Mesh.Mesh that generates square tessellation based on the square_size
  */
 public class SquareRegularMesh extends RegularMesh {
     private final int square_size = 20;

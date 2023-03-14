@@ -15,11 +15,11 @@ class GraphicRenderer {
   -THICKNESS: int
   +turnOnDebug(): void
   +turnOffDebug(): void
-  +render(Mesh, Graphics2D): void
-  -visualizeSegments(Mesh, Graphics2D, List<Vertex>): void
-  -visualizeVertices(Mesh, Graphics2D): void
-  -visualizePolygon(Mesh, Graphics2D, List<Vertex>, List<Segment>): void
-  -visualizePolygonNeighbours(Mesh, Graphics2D, List<Vertex>, List<Segment>): void
+  +render(Mesh.Mesh, Graphics2D): void
+  -visualizeSegments(Mesh.Mesh, Graphics2D, List<Vertex>): void
+  -visualizeVertices(Mesh.Mesh, Graphics2D): void
+  -visualizePolygon(Mesh.Mesh, Graphics2D, List<Vertex>, List<Segment>): void
+  -visualizePolygonNeighbours(Mesh.Mesh, Graphics2D, List<Vertex>, List<Segment>): void
   -updateCoordsForPolygons(List<Vertex>, List<Segment> List<Integer>, int[], int[]): void
   -extractColor(List<Property>): Color
   -extractSegmentThickness(List<Property>): Float
@@ -29,7 +29,7 @@ class GraphicRenderer {
 }
 class MeshDump {
   +dump(String): void
-  +dump(Mesh): void
+  +dump(Mesh.Mesh): void
 }
 class SVGCanvas {
   +build(int, int): Graphics2D
@@ -37,17 +37,17 @@ class SVGCanvas {
 }
 
 Main ..> GraphicRenderer
-Main ..> Structs.Mesh
+Main ..> Structs.Mesh.Mesh
 Main ..> MeshDump
 Main ..> SVGCanvas
-GraphicRenderer ..> Structs.Mesh
+GraphicRenderer ..> Structs.Mesh.Mesh
 GraphicRenderer ..> Graphics2D
 GraphicRenderer ..> Structs.Vertex
 GraphicRenderer ..> Structs.Segment
 GraphicRenderer ..> Structs.Polygon
 GraphicRenderer ..> Structs.Property
 SVGCanvas ..> Graphics2D
-MeshDump ..> Structs.Mesh
+MeshDump ..> Structs.Mesh.Mesh
 
 
 @enduml

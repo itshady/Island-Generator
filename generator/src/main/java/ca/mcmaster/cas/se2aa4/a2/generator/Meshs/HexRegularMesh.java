@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Mutable Mesh that generates hexagonal tessellation.
+ * Mutable Mesh.Mesh that generates hexagonal tessellation.
  * Apothem is the length from the middle to a side
  */
 public class HexRegularMesh extends RegularMesh {

@@ -11,8 +11,6 @@ import java.util.Map;
 
 public abstract class ShapeGenerator implements Shape {
     Island container;
-    Map<Polygon, Geometries.Polygon> polygonReferences;
-
     Color oceanColor = new Color(0,87,143,255);
     Color lagoonColor = new Color(103,168,209,255);
     Color landColor = Color.WHITE;
@@ -41,13 +39,10 @@ public abstract class ShapeGenerator implements Shape {
      */
     public void process(Island container) {
         this.container = container;
-        polygonReferences = container.getMappedPolygons();
         initializeLand();
-        for (org.locationtech.jts.geom.Polygon JTSPolygon : polygonReferences.keySet()) {
-            Geometries.Polygon ADTPolygon = polygonReferences.get(JTSPolygon);
-            Tile tile = new Tile(ADTPolygon.getSegmentList());
-            if (intersects(JTSPolygon)) ADTPolygon.setColor(landColor);
-            else ADTPolygon.setColor(oceanColor);
+        for (Tile tile : container.getTiles()) {
+            if (intersects(tile.getJTSPolygon())) tile.setColor(landColor);
+            else tile.setColor(oceanColor);
         }
     }
 

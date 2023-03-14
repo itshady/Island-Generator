@@ -1,6 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Tile;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Polygon;
@@ -49,28 +50,25 @@ public class Lagoon extends ShapeGenerator{
     @Override
     public void process(Island container) {
         this.container = container;
-        polygonReferences = container.getMappedPolygons();
         initializeLand();
         initializeLagoon();
-        for (org.locationtech.jts.geom.Polygon JTSPolygon : polygonReferences.keySet()) {
-            Geometries.Polygon ADTPolygon = polygonReferences.get(JTSPolygon);
-            if (intersects(JTSPolygon, lagoon)) ADTPolygon.setColor(lagoonColor);
-            else if (intersects(JTSPolygon)) ADTPolygon.setColor(landColor);
-            else ADTPolygon.setColor(oceanColor);
+        for (Tile tile : container.getTiles()) {
+            if (intersects(tile.getJTSPolygon(), lagoon)) tile.setColor(lagoonColor);
+            else if (intersects(tile.getJTSPolygon())) tile.setColor(landColor);
+            else tile.setColor(oceanColor);
         }
         determineBeachTiles();
     }
 
     private void determineBeachTiles() {
-        List<Geometries.Polygon> polygonList = new ArrayList<>(polygonReferences.values());
-        for (Geometries.Polygon p : polygonReferences.values()) {
-            Color polygonColor = p.getColor();
+        for (Tile tile : container.getTiles()) {
+            Color polygonColor = tile.getColor();
             if (polygonColor == landColor) {
-                for (Integer neighbourIdx : p.getPolygonNeighbours()) {
-                    Geometries.Polygon currentNeighbour = polygonList.get(neighbourIdx);
+                for (Integer neighbourIdx : tile.getNeighbours()) {
+                    Tile currentNeighbour = container.getTiles().get(neighbourIdx);
                     Color neighbourPolygonColor = currentNeighbour.getColor();
                     if (neighbourPolygonColor == lagoonColor || neighbourPolygonColor == oceanColor) {
-                        p.setColor(beachColor);
+                        tile.setColor(beachColor);
                         break;
                     }
                 }

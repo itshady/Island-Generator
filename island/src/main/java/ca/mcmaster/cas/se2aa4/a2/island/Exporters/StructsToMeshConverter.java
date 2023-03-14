@@ -2,6 +2,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.Exporters;
 
 import EnhancedSets.*;
 import Geometries.*;
+import Mesh.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 
@@ -17,27 +18,28 @@ import java.util.Set;
  * Into our Generator data structures (Polygon, Segment, Vertex)
  */
 
-public class StructsToADTConverter {
+public class StructsToMeshConverter {
 
-    PropertyHandler propertyHandler = new PropertyHandler();
-    Structs.Mesh mesh;
-    VertexSet vertices = new VertexSet();
-    SegmentSet segments = new SegmentSet();
-    PolygonSet polygons = new PolygonSet();
+    private final PropertyHandler propertyHandler = new PropertyHandler();
+    private final Structs.Mesh mesh;
+    private VertexSet vertices = new VertexSet();
+    private SegmentSet segments = new SegmentSet();
+    private PolygonSet polygons = new PolygonSet();
 
-    public StructsToADTConverter(Structs.Mesh mesh) {
+    public StructsToMeshConverter(Structs.Mesh mesh) {
         this.mesh = mesh;
     }
-    public Island process() {
+    public Mesh process() {
         Island container = new Island();
 
         extractGeometries(mesh);
 
-        container.register(vertices);
-        container.register(segments);
-        container.register(polygons);
+        Mesh mesh = new Mesh();
+        mesh.vertices = vertices;
+        mesh.segments = segments;
+        mesh.polygons = polygons;
 
-        return container;
+        return mesh;
     }
 
     private void extractGeometries(Structs.Mesh mesh) {

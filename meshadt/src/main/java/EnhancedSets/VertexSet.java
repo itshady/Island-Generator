@@ -1,10 +1,10 @@
 package EnhancedSets;
 
 import Geometries.Coordinate;
+import Geometries.Segment;
 import Geometries.Vertex;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+
+import java.util.*;
 
 public class VertexSet implements GeometrySet<Vertex>, Iterable<Vertex> {
     private final Map<Coordinate, Vertex> coords = new HashMap<>();
@@ -13,6 +13,12 @@ public class VertexSet implements GeometrySet<Vertex>, Iterable<Vertex> {
     int id = 0;
 
     public VertexSet() {}
+
+    public VertexSet(List<Vertex> vertices) {
+        for (Vertex vertex : vertices) {
+            add(vertex);
+        }
+    }
 
     /**
      * Must maintain Set property (any equal vertices can't be in set together)
@@ -72,5 +78,9 @@ public class VertexSet implements GeometrySet<Vertex>, Iterable<Vertex> {
     @Override
     public Iterator<Vertex> iterator() {
         return idToVertex.values().iterator();
+    }
+
+    public List<Vertex> toList() {
+        return new ArrayList<>(idToVertex.values());
     }
 }

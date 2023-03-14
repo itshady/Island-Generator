@@ -1,5 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.generator.Meshs;
 
+import Mesh.Mesh;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import org.locationtech.jts.geom.Coordinate;
 
 import java.util.List;

@@ -161,13 +161,13 @@ namespace Helpers {
 }
 
 namespace Meshs {
-  abstract class Mesh {
+  abstract class Mesh.Mesh {
     #width: int
     #height: int
     -precision: double
-    mesh: Structs.Mesh
+    mesh: Structs.Mesh.Mesh
     -centroids: List<Centroid>
-    +generate(): Structs.Mesh
+    +generate(): Structs.Mesh.Mesh
     #generateDiagram(List<Coordinate>): void
     +getCentroids(): List<Centroid>
     #{abstract} generatePoints(): List<Coordinate>
@@ -177,8 +177,8 @@ namespace Meshs {
     #{abstract} generatePoints(): List<Coordinate>
   }
 
-  interface GeometryDiagram {
-    +generate(): Structs.Mesh
+  interface Mesh.GeometryDiagram {
+    +generate(): Structs.Mesh.Mesh
     +getCentroids(): List<Centroid>
   }
 
@@ -198,7 +198,7 @@ namespace Meshs {
   class IrregularMesh {
     -lloydRelaxationNumber: Integer
     -numOfPolygons: Integer
-    +^generate(): Structs.Mesh
+    +^generate(): Structs.Mesh.Mesh
     +setRelaxation(Integer): IrregularMesh
     +setNumOfPolygons(Integer): IrregularMesh
     -centroidToCoordinate(List<Centroid>): List<Coordinate>
@@ -210,12 +210,12 @@ namespace Meshs {
   }
 
   class MeshFactory {
-    +create(TypeOfMesh): Mesh
+    +create(TypeOfMesh): Mesh.Mesh
   }
 
-  GeometryDiagram <|.down. Mesh: "implements"
-  Mesh <|-- RegularMesh: "is_a"
-  Mesh <|-- IrregularMesh: "is_a"
+  Mesh.GeometryDiagram <|.down. Mesh.Mesh: "implements"
+  Mesh.Mesh <|-- RegularMesh: "is_a"
+  Mesh.Mesh <|-- IrregularMesh: "is_a"
   RegularMesh <|-- SquareRegularMesh: "is_a"
   RegularMesh <|-- HexRegularMesh: "is_a"
   RegularMesh <|-- DiamondRegularMesh: "is_a"
@@ -223,13 +223,13 @@ namespace Meshs {
 }
 
 DotGen ..> Enums.CommandLineOptions: "uses"
-Meshs.Mesh ..> Helpers.JTSToGeneratorConverter: "uses"
-Meshs.Mesh ..> Helpers.NeighbourCalculator: "uses"
-Meshs.Mesh ..> Helpers.VoronoiDiagram: "uses"
-Meshs.Mesh ..> Structs.Polygon: "uses"
-Meshs.Mesh ..> Structs.Segment: "uses"
-Meshs.Mesh ..> Structs.Vertex: "uses"
-Meshs.Mesh ..> Geometries.Centroid: "uses"
+Meshs.Mesh.Mesh ..> Helpers.JTSToGeneratorConverter: "uses"
+Meshs.Mesh.Mesh ..> Helpers.NeighbourCalculator: "uses"
+Meshs.Mesh.Mesh ..> Helpers.VoronoiDiagram: "uses"
+Meshs.Mesh.Mesh ..> Structs.Polygon: "uses"
+Meshs.Mesh.Mesh ..> Structs.Segment: "uses"
+Meshs.Mesh.Mesh ..> Structs.Vertex: "uses"
+Meshs.Mesh.Mesh ..> Geometries.Centroid: "uses"
 Meshs.MeshFactory ..> Enums.TypeOfMesh: "uses"
 
 

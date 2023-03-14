@@ -1,4 +1,4 @@
-# Assignment A2: Mesh Generator
+# Assignment A2: Mesh.Mesh Generator
 
   - Hady Ibrahim #1 [ibrahh14@mcmaster.ca]
   - Cyruss Amante #2 [amantec@mcmaster.ca]

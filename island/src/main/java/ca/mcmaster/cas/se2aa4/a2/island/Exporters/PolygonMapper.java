@@ -1,22 +1,34 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Exporters;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import org.locationtech.jts.geom.Polygon;
+import Geometries.Polygon;
+import Geometries.Segment;
+import Geometries.Vertex;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.CoordinateList;
+import org.locationtech.jts.geom.GeometryFactory;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class PolygonMapper {
-    Map<Polygon, Geometries.Polygon> polygonReferences = new LinkedHashMap<>();
 
     /**
-     * Maps the JTSPolygon to its ADT version
+     * Converts an ADT Polygon to a JTS Polygon
+     * @param p: A Structs Polygon
+     * @return : A JTS Polygon
      */
-    public Map<Polygon, Geometries.Polygon> mapPolygons(Island container) {
-        for (Geometries.Polygon p : container.getPolygons()) {
-            Polygon JTSPolygon = ADTtoJTSConverter.polygonToJTS(p);
-            polygonReferences.put(JTSPolygon, p);
+
+
+    public org.locationtech.jts.geom.Polygon process(Polygon p) {
+        GeometryFactory geometryFactory = new GeometryFactory();
+        CoordinateList polygonCoordinates = new CoordinateList();
+        for (Segment s : p.getSegmentList()) {
+            Vertex v1 = s.getV1();
+            Vertex v2 = s.getV2();
+            Coordinate v1Coordinate = new Coordinate(v1.getX(), v1.getY());
+            Coordinate v2Coordinate = new Coordinate(v2.getX(), v2.getY());
+            polygonCoordinates.add(v1Coordinate, false);
+            polygonCoordinates.add(v2Coordinate, false);
         }
-        return polygonReferences;
+        polygonCoordinates.add(polygonCoordinates.get(0), true);
+        return geometryFactory.createPolygon(polygonCoordinates.toCoordinateArray());
     }
 }

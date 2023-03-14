@@ -1,47 +1,33 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Containers;
 
-import EnhancedSets.PolygonSet;
-import EnhancedSets.SegmentSet;
-import EnhancedSets.VertexSet;
-import ca.mcmaster.cas.se2aa4.a2.island.Exporters.PolygonMapper;
+import Geometries.Segment;
+import Geometries.Vertex;
+import ca.mcmaster.cas.se2aa4.a2.island.Tile;
 import org.locationtech.jts.geom.Polygon;
 
+import java.util.List;
 import java.util.Map;
 
 public class Island {
-    private VertexSet vertexSet;
-    private SegmentSet segmentSet;
-    private PolygonSet polygonSet;
+    private List<Vertex> vertices;
+    private List<Segment> segments;
+    private List<Tile> tiles;
 
-    private Map<Polygon, Geometries.Polygon> polygonReferences;
-
-    public VertexSet getVertices() {
-        return vertexSet;
+    public List<Vertex> getVertices() {
+        return vertices;
     }
 
-    public SegmentSet getSegments() {
-        return segmentSet;
+    public List<Segment> getSegments() {
+        return segments;
     }
 
-    public PolygonSet getPolygons() {
-        return polygonSet;
+    public List<Tile> getTiles() {
+        return tiles;
     }
 
-    public Map<Polygon, Geometries.Polygon> getMappedPolygons() {
-        return polygonReferences;
-    }
-
-    public void register(VertexSet vertices) {
-        vertexSet = vertices;
-    }
-
-    public void register(SegmentSet segments) {
-        segmentSet = segments;
-    }
-
-    public void register(PolygonSet polygons) {
-        polygonSet = polygons;
-        PolygonMapper polygonMapper = new PolygonMapper();
-        polygonReferences = polygonMapper.mapPolygons(this);
+    public void register(List<Tile> polygons, List<Segment> segments, List<Vertex> vertices) {
+        tiles = polygons;
+        this.segments = segments;
+        this.vertices = vertices;
     }
 }

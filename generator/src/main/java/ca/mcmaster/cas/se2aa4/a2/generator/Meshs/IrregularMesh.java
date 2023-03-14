@@ -1,6 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.generator.Meshs;
 
 import Geometries.Centroid;
+import Mesh.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import org.locationtech.jts.geom.Coordinate;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Mutable Mesh that generates irregular mesh based on random points.
+ * Mutable Mesh.Mesh that generates irregular mesh based on random points.
  * Can apply lloyd's relaxation, which is the recomputation of voronoi diagram multiple times on the newly given centroids
  */
 public class IrregularMesh extends Mesh {

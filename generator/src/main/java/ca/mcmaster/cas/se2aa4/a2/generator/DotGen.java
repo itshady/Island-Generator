@@ -1,6 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.generator;
 import ca.mcmaster.cas.se2aa4.a2.generator.Meshs.IrregularMesh;
-import ca.mcmaster.cas.se2aa4.a2.generator.Meshs.Mesh;
+import Mesh.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.generator.Meshs.MeshFactory;
 import ca.mcmaster.cas.se2aa4.a2.generator.Enums.CommandLineOptions;
 import ca.mcmaster.cas.se2aa4.a2.generator.Enums.TypeOfMesh;

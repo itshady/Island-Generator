@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.generator.Meshs;
+package Mesh;
 
 import Geometries.Centroid;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
@@ -8,13 +8,13 @@ import java.util.List;
 public interface GeometryDiagram {
     /**
      * Generates a diagram using io.Structs Library.
-     * @return Structs.Mesh
+     * @return Structs.Mesh.Mesh
      */
-    public Structs.Mesh generate();
+    Structs.Mesh generate();
 
     /**
-     * Returns a list of the centroids of a Mesh's Polygons
+     * Returns a list of the centroids of a Mesh.Mesh's Polygons
      * @return List of Centroids
      */
-    public List<Centroid> getCentroids();
+    List<Centroid> getCentroids();
 }

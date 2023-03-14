@@ -3,11 +3,11 @@
 hide empty members
 skinparam linetype polyline
 
-title "Mesh Binary File Format"
+title "Mesh.Mesh Binary File Format"
 
-class Mesh {}
+class Mesh.Mesh {}
 
-note right of Mesh: In this data structure, attributes ending\nwith '_idx' are the index of the associated\nelement in the mesh container.
+note right of Mesh.Mesh: In this data structure, attributes ending\nwith '_idx' are the index of the associated\nelement in the mesh container.
 
 class Property {
     + key: String
@@ -34,9 +34,9 @@ Vertex *--> "0..n\n{ordered}"  Property
 Segment *--> "0..n\n{ordered}" Property 
 Polygon *--> "0..n\n{ordered}" Property 
 
-Mesh *--> "0..n\n{ordered}" Property 
-Mesh *--> "0..n\n{ordered}" Polygon
-Mesh *--> "0..n\n{ordered}" Segment
-Mesh *--> "0..n\n{ordered}" Vertex
+Mesh.Mesh *--> "0..n\n{ordered}" Property
+Mesh.Mesh *--> "0..n\n{ordered}" Polygon
+Mesh.Mesh *--> "0..n\n{ordered}" Segment
+Mesh.Mesh *--> "0..n\n{ordered}" Vertex
 
 @enduml

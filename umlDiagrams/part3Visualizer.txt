@@ -11,11 +11,11 @@ class Main {
 }
 
 abstract class VisualMode {
-  #render(Structs.Mesh, Graphics2D): void
-  #visualizeVertices(Structs.Mesh, Graphics2D):void
+  #render(Structs.Mesh.Mesh, Graphics2D): void
+  #visualizeVertices(Structs.Mesh.Mesh, Graphics2D):void
   #{abstract}isDebug(): void
-  #visualizeSegment(Structs.Mesh, Graphics2D, List<Structs.Vertex>): void
-  #visualizePolygons(Structs.Mesh, Graphics2D, List<Structs.Vertex>, List<Structs.Segment>): void
+  #visualizeSegment(Structs.Mesh.Mesh, Graphics2D, List<Structs.Vertex>): void
+  #visualizePolygons(Structs.Mesh.Mesh, Graphics2D, List<Structs.Vertex>, List<Structs.Segment>): void
   #updateCoordsForPolygons(Lis<Structs.Vertex>, List<Structs.Segment>, List<Integer> , int[], int[]): void
   #extractColor(List<Structs.Property>): Color
   #isCentroid(List<Structs.Property>): boolean
@@ -28,24 +28,24 @@ class SVGCanvas {
 }
 
 class NormalMode {
-  #render(Structs.Mesh, Graphics2D): void
+  #render(Structs.Mesh.Mesh, Graphics2D): void
   #isDebug(): boolean
 }
 
 class MeshDump {
-  +dump(Structs.Mesh): void
+  +dump(Structs.Mesh.Mesh): void
 }
 
 class GraphicRenderer {
   -debug: boolean
   +turnOnDebug(): void
   +turnOffDebug(): void
-  +render(Structs.Mesh, Graphics2D): void
+  +render(Structs.Mesh.Mesh, Graphics2D): void
 }
 
 class DebugMode {
-  #render(Structs.Mesh, Graphics2D)
-  #visualizePolygonNeighbours(Structs.Mesh, Graphics2D, List<Structs.Vertex>)
+  #render(Structs.Mesh.Mesh, Graphics2D)
+  #visualizePolygonNeighbours(Structs.Mesh.Mesh, Graphics2D, List<Structs.Vertex>)
   #isDebug(): boolean
 }
 
@@ -53,17 +53,17 @@ VisualMode <|-- NormalMode: "is_a"
 VisualMode <|-- DebugMode: "is_a"
 VisualMode ..> Structs.Property: "uses"
 VisualMode ..> Structs.Vertex: "uses"
-VisualMode ..> Structs.Mesh: "uses"
+VisualMode ..> Structs.Mesh.Mesh: "uses"
 VisualMode ..> Structs.Segment: "uses"
 VisualMode ..> Structs.Polygon: "uses"
-NormalMode ..> Structs.Mesh: "uses"
-DebugMode ..> Structs.Mesh: "uses"
+NormalMode ..> Structs.Mesh.Mesh: "uses"
+DebugMode ..> Structs.Mesh.Mesh: "uses"
 DebugMode ..> Structs.Vertex: "uses"
-GraphicRenderer ..> Structs.Mesh: "uses"
+GraphicRenderer ..> Structs.Mesh.Mesh: "uses"
 GraphicRenderer ..> VisualMode: "uses"
-MeshDump ..> Structs.Mesh: "uses"
+MeshDump ..> Structs.Mesh.Mesh: "uses"
 Main ..> GraphicRenderer: "uses"
-Main ..> Structs.Mesh: "uses"
+Main ..> Structs.Mesh.Mesh: "uses"
 Main ..> SVGCanvas: "uses"
 Main ..> MeshDump: "uses"
 

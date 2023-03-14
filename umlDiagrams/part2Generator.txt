@@ -10,16 +10,16 @@ class Main {
 }
 
 class DotGen {
-  +Structs.Mesh generate()
+  +Structs.Mesh.Mesh generate()
 }
-class Mesh {
+class Mesh.Mesh {
   -width: Integer
   -height: Integer
   -precision: Double
   -matrixWidth: Integer
   -matrixHeight: Integer
   -square_size: Integer
-  -mesh: Structs.Mesh
+  -mesh: Structs.Mesh.Mesh
   +void generate()
   -getCoordsForCentroid(List<Segment>, Map<Integer, Vertex>): List<List<Double>>
   -initializeSquarePolygons(Map<Integer, Segment>, Map<Integer, Vertex>): Map<Integer, Polygon>
@@ -113,10 +113,10 @@ class Centroid extends Vertex {
 }
 
 Main .left.> DotGen
-DotGen ..> Mesh
-Mesh "1" o-left- "*" Polygon
-Mesh "1" o-down- "*" Segment
-Mesh "1" o-- "*" Vertex
+DotGen ..> Mesh.Mesh
+Mesh.Mesh "1" o-left- "*" Polygon
+Mesh.Mesh "1" o-down- "*" Segment
+Mesh.Mesh "1" o-- "*" Vertex
 Polygon "1" *-- "1" Centroid
 Polygon "1" o-right- "4" Segment
 Segment "1" o-left- "2" Vertex

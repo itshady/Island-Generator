@@ -1,17 +1,36 @@
 package ca.mcmaster.cas.se2aa4.a2.island;
 
-import Geometries.Segment;
+import Geometries.Polygon;
+import ca.mcmaster.cas.se2aa4.a2.island.Exporters.PolygonMapper;
 
-import java.util.List;
+import java.awt.*;
+import java.util.Set;
 
-public class Tile extends Geometries.Polygon {
-    /**
-     * Creators: Overloaded constructors to support different input values
-     * Effects: Makes a new Polygon, generates a color, and the segments that makes up the polygon
-     *
-     * @param segments : A list of segments that makes the polygon
-     */
-    public Tile(List<Segment> segments) {
-        super(segments);
+public class Tile {
+    Polygon polygon;
+    org.locationtech.jts.geom.Polygon JTSPolygon;
+
+    public Polygon getPolygon() {
+        return polygon;
+    }
+
+    public org.locationtech.jts.geom.Polygon getJTSPolygon() {
+        return JTSPolygon;
+    }
+
+    public Tile(Polygon polygon) {
+        this.polygon = polygon;
+        JTSPolygon = new PolygonMapper().process(this.polygon);
+    }
+
+    public void setColor(Color color) {
+        polygon.setColor(color);
+    }
+    public Color getColor() {
+        return polygon.getColor();
+    }
+
+    public Set<Integer> getNeighbours() {
+        return polygon.getPolygonNeighbours();
     }
 }

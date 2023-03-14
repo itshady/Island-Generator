@@ -4,9 +4,7 @@ import Geometries.Coordinate;
 import Geometries.Segment;
 import Geometries.Vertex;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class SegmentSet implements GeometrySet<Segment>, Iterable<Segment> {
     private final Map<Integer, Segment> segments = new HashMap<>();
@@ -14,6 +12,12 @@ public class SegmentSet implements GeometrySet<Segment>, Iterable<Segment> {
     Integer id = 0;
 
     public SegmentSet() {}
+
+    public SegmentSet(List<Segment> segments) {
+        for (Segment segment : segments) {
+            add(segment);
+        }
+    }
 
     /**
      * Must maintain Set property (any equal segments can't be in set together)
@@ -71,5 +75,9 @@ public class SegmentSet implements GeometrySet<Segment>, Iterable<Segment> {
     @Override
     public Iterator<Segment> iterator() {
         return segments.values().iterator();
+    }
+
+    public List<Segment> toList() {
+        return new ArrayList<>(segments.values());
     }
 }
