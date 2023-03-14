@@ -12,9 +12,12 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        String input = args[0];
-        String output = args[1];
         Configuration config = new Configuration(args);
+        String input = config.export(Configuration.INPUT_MESH);
+        String output = config.export(Configuration.OUTPUT_MESH);
+
+        System.out.println(input);
+        System.out.println(output);
         Exporter exporter = new Exporter();
         Structs.Mesh aMesh = new MeshFactory().read(input);
         Mesh inputMesh = exporter.upgrade(aMesh);

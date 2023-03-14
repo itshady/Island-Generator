@@ -26,9 +26,10 @@ public class Configuration {
 //        return this;
 //    }
 
-
+    @Feature
     public static final String SHAPE = "shape";
     public static final String MODE = "mode";
+    @Feature
     public static final String ALTITUDE = "altitude";
     public static final String INPUT_MESH = "i";
     public static final String OUTPUT_MESH = "o";
