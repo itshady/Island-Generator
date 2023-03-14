@@ -15,9 +15,6 @@ public class Main {
         Configuration config = new Configuration(args);
         String input = config.export(Configuration.INPUT_MESH);
         String output = config.export(Configuration.OUTPUT_MESH);
-
-        System.out.println(input);
-        System.out.println(output);
         Exporter exporter = new Exporter();
         Structs.Mesh aMesh = new MeshFactory().read(input);
         Mesh inputMesh = exporter.upgrade(aMesh);
@@ -26,7 +23,7 @@ public class Main {
         Island richIsland = specification.build();
         Mesh richMesh = exporter.process(richIsland);
         Structs.Mesh exported = exporter.process(richMesh);
-        new MeshFactory().write(exported, output);    //config.export(Configuration.OUTPUT_MESH)
+        new MeshFactory().write(exported, output);
 
 
 //        Structs.Mesh aMesh = new MeshFactory().read(input);

@@ -1,10 +1,7 @@
-package ca.mcmaster.cas.se2aa4.a2.island.UI;
+package ca.mcmaster.cas.se2aa4.a2.island.UI.Factories;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Circle;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Oval;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.ThreeCircle;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Triangle;
+import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
