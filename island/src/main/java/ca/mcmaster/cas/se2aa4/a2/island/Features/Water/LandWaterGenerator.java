@@ -7,9 +7,8 @@ import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
-public abstract class LandWater implements BodiesOfWater {
+public abstract class LandWaterGenerator implements BodiesOfWater {
 
     Island island;
 
@@ -23,6 +22,13 @@ public abstract class LandWater implements BodiesOfWater {
         tiles = island.getTiles();
         determineLandTiles();
 
+        // Iterate n times (user specified)
+        // generateWater method
+
+        for (int i = 0; i < 3; i++) {
+            generateWater();
+        }
+
     }
 
     protected void determineLandTiles() {
@@ -33,12 +39,13 @@ public abstract class LandWater implements BodiesOfWater {
         }
     }
 
-    private void generateWater() {
+    protected abstract void setWater(Tile tile);
+
+    protected void generateWater() {
         Random random = new Random();
-        int currentWaterSize = 0;
         Tile sourceTile = landTiles.get(random.nextInt(landTiles.size()));
-        sourceTile.setAquifer(true);
-        currentWaterSize++;
+        setWater(sourceTile);
+    }
 
 //        while (currentWaterSize <= waterSize) {
 //            Set<Integer> neighbours = sourceTile.getNeighbours();
@@ -64,5 +71,5 @@ public abstract class LandWater implements BodiesOfWater {
 //                }
 //            }
 //        }
-    }
 }
+
