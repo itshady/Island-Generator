@@ -1,4 +1,4 @@
-# Assignment A2: Mesh.Mesh Generator
+# Assignment A2 + A3: Mesh Generator (A2) + Island Generator (A3)
 
   - Hady Ibrahim #1 [ibrahh14@mcmaster.ca]
   - Cyruss Amante #2 [amantec@mcmaster.ca]
@@ -134,5 +134,11 @@ Check [Generator.md](./generator/generator.md) and [Visualizer.md](./visualizer/
 | F16 | Minimize Mesh (unique segments) | Hady |  02/19/23 | 02/26/23 | D |
 | F17 | Minimize Mesh (unique polygons) | Hady |  02/19/23 | 02/26/23 | D |
 | F18 | Add Honeycomb Tessellation | Hady |  02/26/23 | 02/27/23 | D |
+| F19 | Support for Lagoon and Oval Shaped Island | Cyruss |  03/12/23 | 03/13/23 | D |
+| F20 | Support for Triangle Shaped Island | Richard |  03/12/23 | 03/13/23 | D |
+| F21 | User can choose which island shape | Hady, Richard, Cyruss |  03/14/23 | 03/14/23 | D |
+| F22 | Created Altimetric profile for Mountain | Hady |  03/14/23 | 03/14/23 | D |
+| F23 | Created Altimetric profile for Prairie | Hady |  03/14/23 | 03/14/23 | D |
+| F24 | User cna choose which Altimetric profile | Hady, Cyruss, Richard |  03/14/23 | 03/14/23 | D |
 
 
