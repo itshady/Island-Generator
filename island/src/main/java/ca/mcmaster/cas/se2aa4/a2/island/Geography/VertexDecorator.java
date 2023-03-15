@@ -9,7 +9,6 @@ public class VertexDecorator {
     Boolean isSpring = false;
     Integer altitude;
 
-
     public Vertex getVertex() {
         return vertex;
     }
@@ -25,7 +24,6 @@ public class VertexDecorator {
     public static VertexDecoratorBuilder newBuilder() {
         return new VertexDecoratorBuilder();
     }
-
 
     protected VertexDecorator(Vertex vertex) {
         this.vertex = vertex;

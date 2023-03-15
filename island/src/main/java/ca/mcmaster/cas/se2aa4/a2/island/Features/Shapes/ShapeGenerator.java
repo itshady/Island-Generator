@@ -8,14 +8,9 @@ import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 
-import java.awt.*;
 
 public abstract class ShapeGenerator implements Shape {
     Island island;
-    Color oceanColor = new Color(0,87,143,255);
-    Color lagoonColor = new Color(103,168,209,255);
-    Color landColor = Color.WHITE;
-    Color beachColor = new Color(242,243,200,255);
 
     /**
      * Note: intersects is abstracted so that irregular islands can be made.

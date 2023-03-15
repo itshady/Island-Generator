@@ -4,10 +4,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public abstract class LandWaterGenerator implements BodiesOfWater {
 
@@ -45,6 +42,8 @@ public abstract class LandWaterGenerator implements BodiesOfWater {
 
     protected abstract void selectWaters(Tile tile);
 
+    protected abstract boolean meetsRequirements(Tile tile, Tile sourceTile);
+
 
     protected void setWaters(Tile tile) {
         // Based on the source, pick number from 0 to tile.getNeighbours().size() for lake size
@@ -57,7 +56,7 @@ public abstract class LandWaterGenerator implements BodiesOfWater {
             for (Integer id: tileNeighbours) {
                 // Get the tile
                 Tile neighbour = tiles.get(id);
-                if (neighbour.getType() == TileType.LAND && !neighbour.hasAquifer() && neighbour.getType() != TileType.LAKE) {
+                if (neighbour.getType() == TileType.LAND && meetsRequirements(neighbour, tile) ) {
                     selectWaters(neighbour);
                 }
             }
@@ -67,7 +66,7 @@ public abstract class LandWaterGenerator implements BodiesOfWater {
     protected void generateWater() {
         Random random = new Random();
         Tile sourceTile = landTiles.get(random.nextInt(landTiles.size()));
-        while(sourceTile.hasAquifer()) {
+        while(!meetsRequirements(sourceTile, sourceTile)) {
             sourceTile = landTiles.get(random.nextInt(landTiles.size()));
         }
         setWaters(sourceTile);

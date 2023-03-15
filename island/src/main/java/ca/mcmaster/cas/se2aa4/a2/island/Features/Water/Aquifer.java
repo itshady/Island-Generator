@@ -16,4 +16,9 @@ public class Aquifer extends LandWaterGenerator {
         tile.setAquifer(true);
     }
 
+    @Override
+    protected boolean meetsRequirements(Tile tile, Tile sourceTile) {
+        return (!tile.hasAquifer() && tile.getType() != TileType.LAKE);
+    }
+
 }
