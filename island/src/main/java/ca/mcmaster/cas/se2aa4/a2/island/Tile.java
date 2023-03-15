@@ -9,6 +9,15 @@ import java.util.Set;
 public class Tile {
     Polygon polygon;
     org.locationtech.jts.geom.Polygon JTSPolygon;
+    TileType type;
+
+    public void setType(TileType type) {
+        this.type = type;
+    }
+
+    public TileType getType() {
+        return type;
+    }
 
     public Polygon getPolygon() {
         return polygon;

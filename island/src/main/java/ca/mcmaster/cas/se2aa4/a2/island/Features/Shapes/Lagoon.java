@@ -49,7 +49,7 @@ public class Lagoon extends ShapeGenerator{
 
     @Override
     public void process(Island container) {
-        this.container = container;
+        this.island = container;
         initializeLand();
         initializeLagoon();
         for (Tile tile : container.getTiles()) {
@@ -61,11 +61,11 @@ public class Lagoon extends ShapeGenerator{
     }
 
     private void determineBeachTiles() {
-        for (Tile tile : container.getTiles()) {
+        for (Tile tile : island.getTiles()) {
             Color polygonColor = tile.getColor();
             if (polygonColor == landColor) {
                 for (Integer neighbourIdx : tile.getNeighbours()) {
-                    Tile currentNeighbour = container.getTiles().get(neighbourIdx);
+                    Tile currentNeighbour = island.getTiles().get(neighbourIdx);
                     Color neighbourPolygonColor = currentNeighbour.getColor();
                     if (neighbourPolygonColor == lagoonColor || neighbourPolygonColor == oceanColor) {
                         tile.setColor(beachColor);
