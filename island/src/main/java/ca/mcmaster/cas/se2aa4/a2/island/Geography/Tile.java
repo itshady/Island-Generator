@@ -92,4 +92,12 @@ public class Tile {
         return polygon.getPolygonNeighbours();
     }
 
+    public void setAquifer(boolean hasAquifer) {
+        this.hasAquifer = hasAquifer;
+    }
+
+    public boolean hasAquifer() {
+        return hasAquifer;
+    }
+
 }

@@ -7,6 +7,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public abstract class LandWater{
 
@@ -35,9 +36,18 @@ public abstract class LandWater{
         Random random = new Random();
         int currentWaterSize = 0;
         Tile sourceTile = landTiles.get(random.nextInt(landTiles.size()));
-
+        sourceTile.setAquifer(true);
         currentWaterSize++;
 
+//        while (currentWaterSize <= waterSize) {
+//            Set<Integer> neighbours = sourceTile.getNeighbours();
+//            for (Integer idx : neighbours) {
+//                Tile currentNeighbour = tiles.get(idx);
+//                if (currentNeighbour.getType() == TileType.LAND && !currentNeighbour.hasAquifer()) {
+////                    currentNeighbour.
+//                }
+//            }
+//        }
 //        while (currentWaterSize <= waterSize) {
 //            Set<Integer> neighbours = sourceTilePolygon.getPolygonNeighbours();
 //            for (Integer idx : neighbours) {
