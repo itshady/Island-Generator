@@ -41,6 +41,7 @@ public class MeshToIslandConverter {
                     Tile.newBuilder()
                             .addPolygon(polygon)
                             .addBorders(getAssociatedBorders(polygon.getSegmentList()))
+                            .addCentroid(vertexDecorators.get(polygon.getCentroidId()))
                             .build()
             );
         }

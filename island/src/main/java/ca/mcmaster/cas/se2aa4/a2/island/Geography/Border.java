@@ -42,11 +42,11 @@ public class Border {
         return segment.getThickness();
     }
 
-    public Vertex getV1() {
-        return segment.getV1();
+    public VertexDecorator getV1() {
+        return v1;
     }
 
-    public Vertex getV2() {
-        return segment.getV2();
+    public VertexDecorator getV2() {
+        return v2;
     }
 }

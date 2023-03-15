@@ -8,6 +8,7 @@ import java.util.List;
 public class TileBuilder {
 
     List<Border> borders = new ArrayList<>();
+    VertexDecorator centroid;
 
     Polygon polygon;
 
@@ -26,9 +27,14 @@ public class TileBuilder {
         return this;
     }
 
+    public TileBuilder addCentroid(VertexDecorator centroid) {
+        this.centroid = centroid;
+        return this;
+    }
+
     public Tile build() {
-        if (polygon == null || borders.isEmpty()) throw new IllegalArgumentException("Polygon is required and borders list cannot be empty.");
-        return new Tile(polygon, borders);
+        if (polygon == null || borders.isEmpty() || centroid == null) throw new IllegalArgumentException("Polygon is required and borders list cannot be empty.");
+        return new Tile(polygon, borders, centroid);
     }
 
 }

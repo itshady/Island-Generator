@@ -5,6 +5,7 @@ import Geometries.Coordinate;
 import Geometries.Segment;
 import Geometries.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
@@ -12,11 +13,11 @@ import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 public abstract class ElevationUtil implements ElevationProfile {
     Coordinate center;
     Island island;
-    Integer maxAltitude = 300;
-    Integer minAltitude = 100;
+    public static Integer maxAltitude = 300;
+    public static Integer minAltitude = 100;
 
     // Calculate altitude of a vertex on a land tile only!! (setAllAltitudes takes care of if its ocean or not)
-    abstract Integer calculateAltitude(Vertex vertex);
+    abstract Integer calculateAltitude(VertexDecorator vertex);
 
     public void process(Island container) {
         island = container;
@@ -27,7 +28,7 @@ public abstract class ElevationUtil implements ElevationProfile {
 
     private void setAllAltitudes() {
         for (Tile tile : island.getTiles()) {
-            Centroid centroid = tile.getPolygon().getCentroid();
+            VertexDecorator centroid = tile.getCentroid();
             if (tile.getType() == TileType.OCEAN) centroid.setAltitude(minAltitude);
             else {
                 Integer altitude = calculateAltitude(centroid);
@@ -35,9 +36,9 @@ public abstract class ElevationUtil implements ElevationProfile {
             }
 
 
-            for (Segment segment : tile.getPolygon().getSegmentList()) {
-                Vertex v1 = segment.getV1();
-                Vertex v2 = segment.getV2();
+            for (Border border : tile.getBorders()) {
+                VertexDecorator v1 = border.getV1();
+                VertexDecorator v2 = border.getV2();
 
                 if (tile.getType() == TileType.OCEAN) {
                     v1.setAltitude(minAltitude);

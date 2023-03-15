@@ -62,6 +62,7 @@ public class Exporter {
     private PolygonSet convertToPolygons(List<Tile> tiles) {
         PolygonSet set = new PolygonSet();
         for (Tile tile : tiles) {
+            tile.enhancePolygon();
             set.add(tile.getPolygon());
         }
         return set;

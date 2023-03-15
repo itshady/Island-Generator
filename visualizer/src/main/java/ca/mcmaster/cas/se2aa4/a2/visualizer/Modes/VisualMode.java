@@ -207,15 +207,4 @@ public abstract class VisualMode {
         return Float.parseFloat(val);
     }
 
-    protected Integer extractAltitude(List<Structs.Property> properties) {
-        String val = null;
-        for(Structs.Property p: properties) {
-            if (p.getKey().equals("altitude")) {
-                val = p.getValue();
-            }
-        }
-        if (val == null)
-            return 0;
-        return Integer.parseInt(val);
-    }
 }
