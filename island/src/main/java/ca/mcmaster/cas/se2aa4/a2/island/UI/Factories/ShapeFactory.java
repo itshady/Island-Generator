@@ -10,6 +10,7 @@ import java.util.Map;
 public class ShapeFactory implements FeatureRunner {
 
     private static final Map<String, Class> bindings = new HashMap<>();
+    private static final String DEFAULT = null;
 
     static {
         bindings.put("circle", Circle.class);
@@ -18,15 +19,14 @@ public class ShapeFactory implements FeatureRunner {
         bindings.put("threecircle", ThreeCircle.class);
         bindings.put("lagoon", Lagoon.class);
         bindings.put("square", Square.class);
+        bindings.put(DEFAULT, Circle.class);
     }
 
     @Override
     public void process(Island island, Configuration config) {
         try {
             Class klass = bindings.get(config.export(Configuration.SHAPE));
-            System.out.println(klass);
             Shape shape = ((Shape) klass.getDeclaredConstructor().newInstance());
-            System.out.println(shape);
             shape.process(island);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

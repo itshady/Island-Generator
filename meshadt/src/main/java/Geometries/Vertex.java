@@ -14,6 +14,21 @@ public class Vertex {
     private Integer id;
     private final Coordinate coordinate;
     private final PropertyHandler propertyHandler = new PropertyHandler();
+    private Integer altitude = -1;
+
+    public void setAltitude(Integer altitude) {
+        if (this.altitude != -1) return;
+        this.altitude = altitude;
+        updateVertex(propertyHandler.setAltitudeProperty(altitude));
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public Integer getAltitude() {
+        return altitude;
+    }
 
     public boolean isCentroid() {
         return false;
@@ -82,6 +97,10 @@ public class Vertex {
                 .addProperties(propertyHandler.setThicknessProperty(thickness))
                 .addProperties(propertyHandler.setCentroidProperty(isCentroid()))
                 .build();
+    }
+
+    private void updateVertex(Structs.Property property) {
+        vertex = Structs.Vertex.newBuilder(vertex).addProperties(property).build();
     }
 
     /**

@@ -10,27 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Configuration {
-//    Shape shape;
-//    public Configuration() {
-//        // sets defaults
-//        this.shape = new Circle();
-//    }
-//
-//    public Shape getShape() {
-//        return shape;
-//    }
-//
-//    public Configuration setShape(String shape) {
-//        ShapeFactory shapeFactory = new ShapeFactory();
-//        this.shape = shapeFactory.create(shape);
-//        return this;
-//    }
-
     @Feature
     public static final String SHAPE = "shape";
-    public static final String MODE = "mode";
     @Feature
     public static final String ALTITUDE = "altitude";
+    public static final String MODE = "mode";
     public static final String INPUT_MESH = "i";
     public static final String OUTPUT_MESH = "o";
     public static final String HELP = "help";
