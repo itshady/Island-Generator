@@ -5,7 +5,8 @@ import Geometries.Coordinate;
 import Geometries.Segment;
 import Geometries.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Tile;
+import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
+import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
 public abstract class ElevationUtil implements ElevationProfile {
@@ -60,7 +61,7 @@ public abstract class ElevationUtil implements ElevationProfile {
     protected Coordinate determineMeshCentre() {
         double max_x = Double.MIN_VALUE;
         double max_y = Double.MIN_VALUE;
-        for (Vertex v: island.getVertices()) {
+        for (VertexDecorator v: island.getVertexDecorators()) {
             max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
             max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
         }

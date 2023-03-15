@@ -1,15 +1,13 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Tile;
+import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * NEEDS FIXING ONCE LAKE IS INTRODUCED, A LAGOON IS A SPECIALIZED SHAPE AND BIG LAKE

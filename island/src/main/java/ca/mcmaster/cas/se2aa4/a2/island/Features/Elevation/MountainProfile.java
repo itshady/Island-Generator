@@ -1,12 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation;
 
-import Geometries.Centroid;
-import Geometries.Coordinate;
-import Geometries.Segment;
 import Geometries.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Tile;
-import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
 public class MountainProfile extends ElevationUtil {
 

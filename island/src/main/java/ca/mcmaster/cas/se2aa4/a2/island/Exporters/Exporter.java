@@ -10,8 +10,11 @@ import Geometries.Vertex;
 import Mesh.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Tile;
+import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
+import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
+import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,11 +36,27 @@ public class Exporter {
 
     public Mesh process(Island island) {
         Mesh mesh = new Mesh();
-        mesh.vertices = new VertexSet(island.getVertices());
-        mesh.segments = new SegmentSet(island.getSegments());
+        mesh.vertices = new VertexSet(convertToVertices(island.getVertexDecorators()));
+        mesh.segments = new SegmentSet(convertToSegments(island.getSegments()));
 
         mesh.polygons = convertToPolygons(island.getTiles());
         return mesh;
+    }
+
+    private List<Vertex> convertToVertices(List<VertexDecorator> decorators) {
+        List<Vertex> vertices = new ArrayList<>();
+        for (VertexDecorator decorator : decorators) {
+            vertices.add(decorator.getVertex());
+        }
+        return vertices;
+    }
+
+    private List<Segment> convertToSegments(List<Border> borders) {
+        List<Segment> segments = new ArrayList<>();
+        for (Border border : borders) {
+            segments.add(border.getSegment());
+        }
+        return segments;
     }
 
     private PolygonSet convertToPolygons(List<Tile> tiles) {

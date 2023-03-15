@@ -43,7 +43,7 @@ public class Main {
                 SVGCanvas.write(canvas, output);
                 // Dump the mesh to stdout
                 MeshDump dumper = new MeshDump();
-                dumper.dump(aMesh);
+//                dumper.dump(aMesh);
             }
         } catch (ParseException e) {
             System.out.println(e.getMessage());
