@@ -19,6 +19,8 @@ public class Tile {
     org.locationtech.jts.geom.Polygon JTSPolygon;
     TileType type;
 
+    boolean hasAquifer = false;
+
     public VertexDecorator getCentroid() {
         return centroid;
     }
@@ -89,4 +91,5 @@ public class Tile {
     public Set<Integer> getNeighbours() {
         return polygon.getPolygonNeighbours();
     }
+
 }
