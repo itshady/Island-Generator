@@ -23,8 +23,8 @@ public class SpecificationFactory {
     public static void run(Field feature, Island island, Configuration config) {
         // This code can be simplified with a switch case over the kind of mesh
         try {
-            Class shapeClass = bindings.get(feature);
-            FeatureRunner runner = (FeatureRunner) shapeClass.getDeclaredConstructor().newInstance();
+            Class featureClass = bindings.get(feature);
+            FeatureRunner runner = (FeatureRunner) featureClass.getDeclaredConstructor().newInstance();
             runner.process(island, config);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

@@ -25,8 +25,8 @@ public class ShapeFactory implements FeatureRunner {
     @Override
     public void process(Island island, Configuration config) {
         try {
-            Class klass = bindings.get(config.export(Configuration.SHAPE));
-            Shape shape = ((Shape) klass.getDeclaredConstructor().newInstance());
+            Class shapeClass = bindings.get(config.export(Configuration.SHAPE));
+            Shape shape = ((Shape) shapeClass.getDeclaredConstructor().newInstance());
             shape.process(island);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

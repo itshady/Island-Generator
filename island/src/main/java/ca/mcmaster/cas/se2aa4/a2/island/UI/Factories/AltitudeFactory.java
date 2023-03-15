@@ -23,8 +23,8 @@ public class AltitudeFactory implements FeatureRunner {
     @Override
     public void process(Island island, Configuration config) {
         try {
-            Class klass = bindings.get(config.export(Configuration.ALTITUDE));
-            ElevationProfile shape = ((ElevationProfile) klass.getDeclaredConstructor().newInstance());
+            Class altitudeClass = bindings.get(config.export(Configuration.ALTITUDE));
+            ElevationProfile shape = ((ElevationProfile) altitudeClass.getDeclaredConstructor().newInstance());
             shape.process(island);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
