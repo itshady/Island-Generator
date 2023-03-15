@@ -17,18 +17,21 @@ public abstract class LandWaterGenerator implements BodiesOfWater {
     private final Integer waterSize = 5;
     List<Tile> landTiles = new ArrayList<>();
 
-    public void process(Island island) {
+    public void process(Island island, Integer num) {
         this.island = island;
         tiles = island.getTiles();
         determineLandTiles();
-
+        int waterNumber = setNum(num);
         // Iterate n times (user specified)
         // generateWater method
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < waterNumber; i++) {
             generateWater();
         }
+    }
 
+    public Integer setNum(Integer num) {
+        return num;
     }
 
     protected void determineLandTiles() {
@@ -44,32 +47,10 @@ public abstract class LandWaterGenerator implements BodiesOfWater {
     protected void generateWater() {
         Random random = new Random();
         Tile sourceTile = landTiles.get(random.nextInt(landTiles.size()));
+        while(sourceTile.hasAquifer()) {
+            sourceTile = landTiles.get(random.nextInt(landTiles.size()));
+        }
         setWater(sourceTile);
     }
-
-//        while (currentWaterSize <= waterSize) {
-//            Set<Integer> neighbours = sourceTile.getNeighbours();
-//            for (Integer idx : neighbours) {
-//                Tile currentNeighbour = tiles.get(idx);
-//                if (currentNeighbour.getType() == TileType.LAND && !currentNeighbour.hasAquifer()) {
-////                    currentNeighbour.
-//                }
-//            }
-//        }
-//        while (currentWaterSize <= waterSize) {
-//            Set<Integer> neighbours = sourceTilePolygon.getPolygonNeighbours();
-//            for (Integer idx : neighbours) {
-//                Tile currentNeighbour = tileSet.get(idx);
-//                Polygon neighbourPolygon = currentNeighbour.getPolygon();
-//                if (landTiles.contains(currentNeighbour))  {
-//                    LakeTile lakeNeighbourTile = new LakeTile(neighbourPolygon);
-//                    island.getTiles().update(currentNeighbour, lakeNeighbourTile);
-//                    currentLakeSize++;
-//                }
-//                if (currentLakeSize >= lakeSize || !availableTiles(sourceTile)) {
-//                    return;
-//                }
-//            }
-//        }
 }
 

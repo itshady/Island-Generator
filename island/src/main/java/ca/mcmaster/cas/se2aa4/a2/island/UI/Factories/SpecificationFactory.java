@@ -1,6 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.island.UI.Factories;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Aquifer;
 import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
 
 import java.lang.reflect.Field;
@@ -15,6 +16,8 @@ public class SpecificationFactory {
         try {
             bindings.put(Configuration.class.getDeclaredField("SHAPE"), ShapeFactory.class);
             bindings.put(Configuration.class.getDeclaredField("ALTITUDE"), AltitudeFactory.class);
+            bindings.put(Configuration.class.getDeclaredField("AQUIFER"), AquiferFactory.class);
+//            bindings.put(Configuration.class.getDeclaredField("LAKE"), AquiferFactory.class);
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         }

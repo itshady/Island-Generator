@@ -10,18 +10,13 @@ import java.util.Set;
 
 public class Aquifer extends LandWaterGenerator {
 
-
-    public void process(Island island, Tile tile) {
-        this.island = island;
-    }
-
-
     @Override
     protected void setWater(Tile tile) {
         // Based on the source, pick number from 0 to tile.getNeighbours().size() for lake size
         Random bag = new Random();
+        tile.setAquifer(true);
         int aquiferSize = bag.nextInt(0, tile.getNeighbours().size());
-        for (int i = 0; i < aquiferSize; i++) {
+        for (int i = 1; i < aquiferSize; i++) {
             // Get polygon neighbours
             Set<Integer> tileNeighbours = tile.getNeighbours();
             for (Integer id: tileNeighbours) {
@@ -29,7 +24,6 @@ public class Aquifer extends LandWaterGenerator {
                 Tile neighbour = tiles.get(id);
                 if (neighbour.getType() == TileType.LAND && !neighbour.hasAquifer()) {
                     neighbour.setAquifer(true);
-                    tile.setColor(Color.GREEN);
                 }
             }
         }
