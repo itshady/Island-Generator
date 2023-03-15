@@ -17,6 +17,7 @@ public class ShapeFactory implements FeatureRunner {
         bindings.put("triangle", Triangle.class);
         bindings.put("threecircle", ThreeCircle.class);
         bindings.put("lagoon", Lagoon.class);
+        bindings.put("square", Square.class);
     }
 
     @Override
