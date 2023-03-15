@@ -1,19 +1,22 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
-import java.awt.*;
 import java.util.Random;
-import java.util.Set;
 
-public class Aquifer extends LandWaterGenerator {
+public class Lake extends LandWaterGenerator {
 
 
     @Override
     protected void selectWaters(Tile tile) {
-        tile.setAquifer(true);
+        tile.setType(TileType.LAKE);
+    }
+
+    @Override
+    public Integer setNum(Integer num) {
+        Random random = new Random();
+        return random.nextInt(0, num + 1);
     }
 
 }

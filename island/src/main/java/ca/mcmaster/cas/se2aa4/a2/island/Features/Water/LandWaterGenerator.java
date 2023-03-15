@@ -7,6 +7,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public abstract class LandWaterGenerator implements BodiesOfWater {
 
@@ -42,7 +43,26 @@ public abstract class LandWaterGenerator implements BodiesOfWater {
         }
     }
 
-    protected abstract void setWater(Tile tile);
+    protected abstract void selectWaters(Tile tile);
+
+
+    protected void setWaters(Tile tile) {
+        // Based on the source, pick number from 0 to tile.getNeighbours().size() for lake size
+        Random bag = new Random();
+        selectWaters(tile);
+        int waterSize = bag.nextInt(0, tile.getNeighbours().size());
+        for (int i = 1; i < waterSize; i++) {
+            // Get polygon neighbours
+            Set<Integer> tileNeighbours = tile.getNeighbours();
+            for (Integer id: tileNeighbours) {
+                // Get the tile
+                Tile neighbour = tiles.get(id);
+                if (neighbour.getType() == TileType.LAND && !neighbour.hasAquifer() && neighbour.getType() != TileType.LAKE) {
+                    selectWaters(neighbour);
+                }
+            }
+        }
+    }
 
     protected void generateWater() {
         Random random = new Random();
@@ -50,7 +70,7 @@ public abstract class LandWaterGenerator implements BodiesOfWater {
         while(sourceTile.hasAquifer()) {
             sourceTile = landTiles.get(random.nextInt(landTiles.size()));
         }
-        setWater(sourceTile);
+        setWaters(sourceTile);
     }
 }
 

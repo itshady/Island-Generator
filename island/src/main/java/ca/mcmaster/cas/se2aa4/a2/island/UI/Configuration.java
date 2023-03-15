@@ -18,8 +18,8 @@ public class Configuration {
     @Feature
     public static final String AQUIFER = "aquifer";
 
-//    @Feature
-//    public static final String LAKE = "lake";
+    @Feature
+    public static final String LAKE = "lake";
     public static final String MODE = "mode";
     public static final String INPUT_MESH = "i";
     public static final String OUTPUT_MESH = "o";
@@ -65,7 +65,7 @@ public class Configuration {
         options.addOption(new Option(SHAPE, true, "Shape of island"));
         options.addOption(new Option(ALTITUDE, true, "Altitude profile of island"));
         options.addOption(new Option(AQUIFER, true, "Number of aquifers on island"));
-//        options.addOption(new Option(LAKE, true, "Maximum number of lakes on island"));
+        options.addOption(new Option(LAKE, true, "Maximum number of lakes on island"));
         options.addOption(new Option(MODE, true, "Sandbox or Normal mode"));
         options.addOption(new Option(INPUT_MESH, true, "Path to input .mesh file"));
         options.addOption(new Option(OUTPUT_MESH, true, "Path to output file name"));
