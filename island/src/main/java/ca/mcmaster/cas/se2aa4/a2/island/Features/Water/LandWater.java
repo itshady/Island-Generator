@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public abstract class LandWater{
+public abstract class LandWater implements BodiesOfWater {
 
     Island island;
 
@@ -22,6 +22,7 @@ public abstract class LandWater{
         this.island = island;
         tiles = island.getTiles();
         determineLandTiles();
+
     }
 
     protected void determineLandTiles() {

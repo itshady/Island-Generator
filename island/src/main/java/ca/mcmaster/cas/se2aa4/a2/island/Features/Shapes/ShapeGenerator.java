@@ -43,11 +43,9 @@ public abstract class ShapeGenerator implements Shape {
         initializeLand();
         for (Tile tile : container.getTiles()) {
             if (intersects(tile.getJTSPolygon())) {
-                tile.setColor(landColor);
                 tile.setType(TileType.LAND);
             }
             else {
-                tile.setColor(oceanColor);
                 tile.setType(TileType.OCEAN);
             }
         }
