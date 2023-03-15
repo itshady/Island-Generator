@@ -2,7 +2,6 @@ package ca.mcmaster.cas.se2aa4.a2.visualizer;
 
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.Modes.DebugMode;
-import ca.mcmaster.cas.se2aa4.a2.visualizer.Modes.Heatmap;
 import ca.mcmaster.cas.se2aa4.a2.visualizer.Modes.NormalMode;
 
 import java.awt.*;
@@ -20,7 +19,7 @@ public class GraphicRenderer {
 
     public void render(Mesh aMesh, Graphics2D canvas) {
         if (debug) new DebugMode().render(aMesh, canvas);
-        else new Heatmap().render(aMesh, canvas);
+        else new NormalMode().render(aMesh, canvas);
     }
 
 }

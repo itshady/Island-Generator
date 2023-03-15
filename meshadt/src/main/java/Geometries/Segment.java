@@ -12,7 +12,10 @@ import java.util.Objects;
 public class Segment {
     private Structs.Segment segment;
     private float thickness = (float) 0.5;
-    private final Color color;
+    private Color color;
+
+    private boolean isRiver = false;
+
     private Vertex v1;
     private Vertex v2;
     private Integer id;
@@ -103,4 +106,20 @@ public class Segment {
         if (v1.getY() > v2.getY()) return Objects.hash(v2,v1);
         return Objects.hash(v1,v2);
     }
+
+    public void setRiver(boolean isRiver) {
+        this.isRiver = isRiver;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setThickness(Float thickness) {
+        this.thickness = thickness;
+    }
+    public Float getThickness() {
+        return thickness;
+    }
+
 }

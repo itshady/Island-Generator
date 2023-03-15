@@ -1,15 +1,14 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Tile;
+import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
+import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * NEEDS FIXING ONCE LAKE IS INTRODUCED, A LAGOON IS A SPECIALIZED SHAPE AND BIG LAKE
@@ -53,22 +52,20 @@ public class Lagoon extends ShapeGenerator{
         initializeLand();
         initializeLagoon();
         for (Tile tile : container.getTiles()) {
-            if (intersects(tile.getJTSPolygon(), lagoon)) tile.setColor(lagoonColor);
-            else if (intersects(tile.getJTSPolygon())) tile.setColor(landColor);
-            else tile.setColor(oceanColor);
+            if (intersects(tile.getJTSPolygon(), lagoon)) tile.setType(TileType.LAKE);
+            else if (intersects(tile.getJTSPolygon())) tile.setType(TileType.LAND);
+            else tile.setType(TileType.OCEAN);
         }
         determineBeachTiles();
     }
 
     private void determineBeachTiles() {
         for (Tile tile : island.getTiles()) {
-            Color polygonColor = tile.getColor();
-            if (polygonColor == landColor) {
+            if (tile.getType() == TileType.LAND) {
                 for (Integer neighbourIdx : tile.getNeighbours()) {
                     Tile currentNeighbour = island.getTiles().get(neighbourIdx);
-                    Color neighbourPolygonColor = currentNeighbour.getColor();
-                    if (neighbourPolygonColor == lagoonColor || neighbourPolygonColor == oceanColor) {
-                        tile.setColor(beachColor);
+                    if (currentNeighbour.getType() == TileType.LAKE || currentNeighbour.getType() == TileType.OCEAN) {
+                        tile.setType(TileType.BEACH);
                         break;
                     }
                 }

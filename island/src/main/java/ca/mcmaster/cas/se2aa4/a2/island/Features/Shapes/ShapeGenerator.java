@@ -2,20 +2,15 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
 import Geometries.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Tile;
+import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
+import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 
-import java.awt.*;
-import java.util.Map;
 
 public abstract class ShapeGenerator implements Shape {
     Island island;
-    Color oceanColor = new Color(0,87,143,255);
-    Color lagoonColor = new Color(103,168,209,255);
-    Color landColor = Color.WHITE;
-    Color beachColor = new Color(242,243,200,255);
 
     /**
      * Note: intersects is abstracted so that irregular islands can be made.
@@ -43,11 +38,9 @@ public abstract class ShapeGenerator implements Shape {
         initializeLand();
         for (Tile tile : container.getTiles()) {
             if (intersects(tile.getJTSPolygon())) {
-                tile.setColor(landColor);
                 tile.setType(TileType.LAND);
             }
             else {
-                tile.setColor(oceanColor);
                 tile.setType(TileType.OCEAN);
             }
         }
@@ -60,7 +53,7 @@ public abstract class ShapeGenerator implements Shape {
     protected Coordinate determineMeshCentre() {
         double max_x = Double.MIN_VALUE;
         double max_y = Double.MIN_VALUE;
-        for (Vertex v: island.getVertices()) {
+        for (VertexDecorator v: island.getVertexDecorators()) {
             max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
             max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
         }
