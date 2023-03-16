@@ -61,7 +61,7 @@ public class Tile {
         // if ocean
         Color color;
         // if land
-        if (type == TileType.LAND && false) { // do && false if you wanna turn off heatmap
+        if (type == TileType.LAND) { // do && false if you wanna turn off heatmap
             List<Color> colors = new ArrayList<>();
             colors.add(new Color(233, 62, 58));
             colors.add(new Color(237, 104, 60));

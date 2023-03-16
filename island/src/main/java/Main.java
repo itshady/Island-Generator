@@ -3,6 +3,7 @@ import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Exporter;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
 import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
 import ca.mcmaster.cas.se2aa4.a2.island.UI.Buildable;
 import ca.mcmaster.cas.se2aa4.a2.island.UI.IslandBuilder;
@@ -15,6 +16,7 @@ public class Main {
         Configuration config = new Configuration(args);
         String input = config.export(Configuration.INPUT_MESH);
         String output = config.export(Configuration.OUTPUT_MESH);
+        new Seed().process(config);
         Exporter exporter = new Exporter();
         Structs.Mesh aMesh = new MeshFactory().read(input);
         Mesh inputMesh = exporter.upgrade(aMesh);

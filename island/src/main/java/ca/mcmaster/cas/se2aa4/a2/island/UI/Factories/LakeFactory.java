@@ -7,23 +7,21 @@ import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class LakeFactory implements FeatureRunner {
-
-    private static final Map<String, Class> bindings = new HashMap<>();
-    private static final String DEFAULT = null;
-
-    static {
-        bindings.put("lake", Lake.class);
-        bindings.put(DEFAULT, Lake.class);
-    }
-
     @Override
     public void process(Island island, Configuration config) {
         try {
-            Class lakeClass = bindings.get(config.export(Configuration.LAKE));
-            Lake lake = ((Lake) lakeClass.getDeclaredConstructor().newInstance());
-            lake.process(island, Integer.parseInt(config.export(Configuration.LAKE)));
+            String input = config.export(Configuration.LAKE);
+            Integer numOfLakes;
+            if (input != null) {
+                numOfLakes = Integer.parseInt(input);
+            } else {
+                numOfLakes = new Random().nextInt(0,5);
+            }
+            Lake lake = new Lake();
+            lake.process(island, numOfLakes);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

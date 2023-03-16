@@ -8,7 +8,6 @@ import org.apache.commons.cli.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class Configuration {
     @Feature
@@ -72,6 +71,7 @@ public class Configuration {
         options.addOption(new Option(MODE, true, "Sandbox or Normal mode"));
         options.addOption(new Option(INPUT_MESH, true, "Path to input .mesh file"));
         options.addOption(new Option(OUTPUT_MESH, true, "Path to output file name"));
+        options.addOption(new Option(SEED, true, "Seed"));
         // Global help
         options.addOption(new Option(HELP, false, "print help message"));
         return options;

@@ -1,6 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
@@ -47,7 +48,7 @@ public abstract class LandWaterGenerator implements BodiesOfWater {
 
     protected void setWaters(Tile tile) {
         // Based on the source, pick number from 0 to tile.getNeighbours().size() for lake size
-        Random bag = new Random();
+        Random bag = new Random(Seed.SEED);
         selectWaters(tile);
         int waterSize = bag.nextInt(0, tile.getNeighbours().size());
         for (int i = 1; i < waterSize; i++) {
@@ -64,7 +65,7 @@ public abstract class LandWaterGenerator implements BodiesOfWater {
     }
 
     protected void generateWater() {
-        Random random = new Random();
+        Random random = new Random(Seed.SEED);
         Tile sourceTile = landTiles.get(random.nextInt(landTiles.size()));
         while(!meetsRequirements(sourceTile, sourceTile)) {
             sourceTile = landTiles.get(random.nextInt(landTiles.size()));

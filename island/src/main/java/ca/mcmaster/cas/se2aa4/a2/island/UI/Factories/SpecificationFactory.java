@@ -14,6 +14,7 @@ public class SpecificationFactory {
 
     static {
         try {
+//            bindings.put(Configuration.class.getDeclaredField("SEED"), SeedFactory.class);
             bindings.put(Configuration.class.getDeclaredField("SHAPE"), ShapeFactory.class);
             bindings.put(Configuration.class.getDeclaredField("ALTITUDE"), AltitudeFactory.class);
             bindings.put(Configuration.class.getDeclaredField("AQUIFER"), AquiferFactory.class);
