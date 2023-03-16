@@ -14,12 +14,13 @@ public class AquiferFactory implements FeatureRunner {
 
     static {
         bindings.put("aquifer", Aquifer.class);
+        bindings.put(DEFAULT, Aquifer.class);
     }
 
     @Override
     public void process(Island island, Configuration config) {
         try {
-            Class aquiferClass = bindings.getOrDefault(config.export(Configuration.AQUIFER), Aquifer.class);
+            Class aquiferClass = bindings.get(config.export(Configuration.AQUIFER));
             Aquifer aquifer = ((Aquifer) aquiferClass.getDeclaredConstructor().newInstance());
             aquifer.process(island, Integer.parseInt(config.export(Configuration.AQUIFER)));
         } catch (Exception e) {

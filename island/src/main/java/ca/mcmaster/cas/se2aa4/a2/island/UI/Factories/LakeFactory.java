@@ -15,12 +15,13 @@ public class LakeFactory implements FeatureRunner {
 
     static {
         bindings.put("lake", Lake.class);
+        bindings.put(DEFAULT, Lake.class);
     }
 
     @Override
     public void process(Island island, Configuration config) {
         try {
-            Class lakeClass = bindings.getOrDefault(config.export(Configuration.LAKE), Lake.class);
+            Class lakeClass = bindings.get(config.export(Configuration.LAKE));
             Lake lake = ((Lake) lakeClass.getDeclaredConstructor().newInstance());
             lake.process(island, Integer.parseInt(config.export(Configuration.LAKE)));
         } catch (Exception e) {

@@ -8,6 +8,7 @@ import org.apache.commons.cli.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Configuration {
     @Feature
@@ -24,6 +25,8 @@ public class Configuration {
     public static final String INPUT_MESH = "i";
     public static final String OUTPUT_MESH = "o";
     public static final String HELP = "help";
+
+    public static final String SEED = "seed";
 
     private CommandLine cli;
 
