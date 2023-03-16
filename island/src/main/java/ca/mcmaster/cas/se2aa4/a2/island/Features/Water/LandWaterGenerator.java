@@ -59,6 +59,8 @@ public abstract class LandWaterGenerator implements BodiesOfWater {
                 Tile neighbour = tiles.get(id);
                 if (neighbour.getType() == TileType.LAND && meetsRequirements(neighbour, tile) ) {
                     selectWaters(neighbour);
+                    // Make the altitude of the neighbour the same as the source tile for lakes
+                    neighbour.getCentroid().setAltitude(tile.getCentroid().getAltitude());
                 }
             }
         }
