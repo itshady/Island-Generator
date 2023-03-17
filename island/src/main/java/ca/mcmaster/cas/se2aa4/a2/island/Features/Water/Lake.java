@@ -9,17 +9,9 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Lake extends LandWaterGenerator {
-
-
     @Override
     protected void selectWaters(Tile tile) {
         tile.setType(TileType.LAKE);
-    }
-
-    @Override
-    public Integer setNum(Integer num) {
-        Random random = new Random(Seed.SEED);
-        return random.nextInt(0, num + 1);
     }
 
     @Override

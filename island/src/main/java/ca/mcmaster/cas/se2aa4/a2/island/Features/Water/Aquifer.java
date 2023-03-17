@@ -9,8 +9,6 @@ import java.util.Random;
 import java.util.Set;
 
 public class Aquifer extends LandWaterGenerator {
-
-
     @Override
     protected void selectWaters(Tile tile) {
         tile.setAquifer(true);
@@ -20,5 +18,4 @@ public class Aquifer extends LandWaterGenerator {
     protected boolean meetsRequirements(Tile tile, Tile sourceTile) {
         return (!tile.hasAquifer() && tile.getType() != TileType.LAKE && tile.getType() != TileType.OCEAN);
     }
-
 }
