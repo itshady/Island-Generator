@@ -7,7 +7,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
 import java.util.*;
 
-public abstract class LandWaterGenerator implements BodiesOfWater {
+public abstract class LandWaterGenerator implements WaterGenerator {
 
     Island island;
 
