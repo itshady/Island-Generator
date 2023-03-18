@@ -18,6 +18,7 @@ public class SpecificationFactory {
             bindings.put(Configuration.class.getDeclaredField("ALTITUDE"), AltitudeFactory.class);
             bindings.put(Configuration.class.getDeclaredField("AQUIFER"), AquiferFactory.class);
             bindings.put(Configuration.class.getDeclaredField("LAKE"), LakeFactory.class);
+            bindings.put(Configuration.class.getDeclaredField("RIVER"), RiverFactory.class);
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         }

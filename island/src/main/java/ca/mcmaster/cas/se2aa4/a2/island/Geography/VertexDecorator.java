@@ -2,6 +2,8 @@ package ca.mcmaster.cas.se2aa4.a2.island.Geography;
 
 import Geometries.Vertex;
 
+import java.awt.*;
+
 public class VertexDecorator {
 
     Vertex vertex;
@@ -41,6 +43,9 @@ public class VertexDecorator {
         return this.vertex.getY();
     }
 
+    public void setColor(Color color) {
+        vertex.setColor(color);
+    }
 
 
 }

@@ -17,7 +17,7 @@ public class Island {
         return decorators;
     }
 
-    public List<Border> getSegments() {
+    public List<Border> getBorders() {
         return borders;
     }
 

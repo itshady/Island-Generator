@@ -37,7 +37,7 @@ public class Exporter {
     public Mesh process(Island island) {
         Mesh mesh = new Mesh();
         mesh.vertices = new VertexSet(convertToVertices(island.getVertexDecorators()));
-        mesh.segments = new SegmentSet(convertToSegments(island.getSegments()));
+        mesh.segments = new SegmentSet(convertToSegments(island.getBorders()));
 
         mesh.polygons = convertToPolygons(island.getTiles());
         return mesh;
@@ -54,6 +54,7 @@ public class Exporter {
     private List<Segment> convertToSegments(List<Border> borders) {
         List<Segment> segments = new ArrayList<>();
         for (Border border : borders) {
+            border.enhancedBorder();
             segments.add(border.getSegment());
         }
         return segments;
