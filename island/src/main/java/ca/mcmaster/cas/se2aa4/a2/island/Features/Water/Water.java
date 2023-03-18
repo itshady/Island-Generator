@@ -4,7 +4,11 @@ public abstract class Water implements BodyOfWater {
     Integer moisture;
     Integer multiplicity;
 
-    public Integer getMoisture() {
+    public void setMoisture(Integer moisture) {
+        this.moisture = moisture;
+    }
+
+    public Integer moisture() {
         return moisture;
     }
 
@@ -12,7 +16,24 @@ public abstract class Water implements BodyOfWater {
         this.multiplicity = multiplicity;
     }
 
-    public Integer getMultiplicity() {
+    public Integer multiplicity() {
         return multiplicity;
+    }
+
+    public abstract boolean isAboveGround();
+
+    /**
+     * These are all defaults which can be overridden by subclass
+     */
+    public boolean isLake() {
+        return false;
+    }
+
+    public boolean isRiver() {
+        return false;
+    }
+
+    public boolean isAquifer() {
+        return false;
     }
 }

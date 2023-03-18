@@ -30,4 +30,8 @@ public class Island {
         this.borders = borders;
         this.decorators = vertexDecorators;
     }
+
+    public Tile getTile(Integer id) {
+        return tiles.get(id);
+    }
 }
