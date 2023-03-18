@@ -17,6 +17,7 @@ import static ca.mcmaster.cas.se2aa4.a2.island.TileType.TEST;
 public class RiverGenerator implements WaterGenerator {
 
     Island island;
+    List<List<River>> rivers = new ArrayList<>();
 
     @Override
     public void process(Island island, Integer nums) {
@@ -51,25 +52,40 @@ public class RiverGenerator implements WaterGenerator {
         } else {
             spring = springBorder.getV2();
         }
-
+        // Get neighbouring vertices and check that there are no rivers in the borders from current spring to neighbouring vertices
+        if (isInRiver(spring)) return false;
         if (getLowerVertices(spring, getNeighbouringVertices(spring, island.getTiles())).isEmpty()) {
             return false;
         }
 
         spring.setColor(Color.MAGENTA);
-
+        List<River> riverList = new ArrayList<>();
         while (spring != null) {
             // Check all neighbouring vertices for a lower altitude
-            List<Tile> sourceNeighbours = source.getNeighbours().stream()
-                    .map(id -> island.getTile(id)).toList();
             List<VertexDecorator> springNeighbours = getNeighbouringVertices(spring, island.getTiles());
-            spring = riverFlow(spring, springNeighbours);
+            spring = riverFlow(spring, springNeighbours, riverList);
         }
+        rivers.add(riverList);
 
         return true;
     }
 
-    private VertexDecorator riverFlow(VertexDecorator spring, List<VertexDecorator> springNeighbours) {
+    private boolean isInRiver(VertexDecorator spring) {
+        List<VertexDecorator> neighbouringVertices = getNeighbouringVertices(spring, island.getTiles());
+
+        for (Tile tile: island.getTiles()) {
+            // Iterate through the border
+            for (Border border: tile.getBorders()) {
+                if ((spring == border.getV1() && neighbouringVertices.contains(border.getV2())) ||
+                        (spring == border.getV2() && neighbouringVertices.contains(border.getV1()))) {
+                    if (border.hasRiver()) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private VertexDecorator riverFlow(VertexDecorator spring, List<VertexDecorator> springNeighbours, List<River> currentRiver) {
         List<VertexDecorator> lowerAltitudeNeighbours = getLowerVertices(spring, springNeighbours);
         VertexDecorator maxValue;
         if (lowerAltitudeNeighbours.isEmpty()) return null;
@@ -77,11 +93,19 @@ public class RiverGenerator implements WaterGenerator {
             // Choose the highest neighbour from lowest neighbours
             maxValue = lowerAltitudeNeighbours.stream()
                     .max(Comparator.comparing(VertexDecorator::getAltitude)).get();
-            Border river = searchForBorder(spring, maxValue);
-            if (borderOfLandWater(river)) return null;
-            if (river != null) {
-                river.setWater(new River());
+            Border border = searchForBorder(spring, maxValue);
+            if (borderOfLandWater(border)) return null;
+            assert border != null;
+            if (border.hasRiver()) {
+                Integer multiplicity = border.getWater().multiplicity();
+                ((Water) border.getWater()).setMultiplicity(multiplicity + 1);
+            } else {
+                River newRiver = new River();
+                border.setWater(newRiver);
+                currentRiver.add(newRiver);
             }
+
+
         }
         return maxValue;
     }
@@ -137,7 +161,7 @@ public class RiverGenerator implements WaterGenerator {
 
         for (Border border: borders) {
             if ((border.getV1() == spring && border.getV2() == lowerAltitude) ||
-            border.getV1() == lowerAltitude && border.getV2() == spring) {
+                    (border.getV1() == lowerAltitude && border.getV2() == spring)) {
                 return border;
             }
         }

@@ -62,7 +62,11 @@ public class Border {
     public void enhancedBorder() {
         if (hasRiver()) {
             setColor(Color.BLUE);
-            setThickness(2*water.multiplicity());
+            setThickness(water.multiplicity());
         }
+    }
+
+    public BodyOfWater getWater(){
+        return water;
     }
 }
