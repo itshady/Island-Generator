@@ -1,5 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 
+import Geometries.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
@@ -58,15 +59,26 @@ public class RiverGenerator implements WaterGenerator {
             return false;
         }
 
-        spring.setColor(Color.MAGENTA);
+//        spring.setColor(Color.MAGENTA);
+        VertexDecorator previousSpring = spring;
         List<River> riverList = new ArrayList<>();
         while (spring != null) {
             // Check all neighbouring vertices for a lower altitude
             List<VertexDecorator> springNeighbours = getNeighbouringVertices(spring, island.getTiles());
+            previousSpring = spring;
             spring = riverFlow(spring, springNeighbours, riverList);
+
         }
         rivers.add(riverList);
 
+        //If river doesn't end in a lake or an ocean
+        if (!decoratorOfLandWater(previousSpring)) {
+            // Check the shared tiles with that final vertex and search for the one that doesn't contain a river border.
+            for (Tile tile : getNeighbouringTiles(previousSpring)) {
+                // Create a lake at that tile.
+                if (!tileContainsRiverBorder(tile)) tile.setWater(new Lake());
+            }
+        }
         return true;
     }
 
@@ -83,6 +95,23 @@ public class RiverGenerator implements WaterGenerator {
             }
         }
         return false;
+    }
+
+    private boolean tileContainsRiverBorder(Tile tile) {
+        for (Border border : tile.getBorders()) {
+            if (border.hasRiver()) return true;
+       }
+        return false;
+    }
+
+    private List<Tile> getNeighbouringTiles(VertexDecorator source) {
+        Set<Tile> neighbouringTiles = new HashSet<>();
+        for (Tile tile : island.getTiles()) {
+            for (Border border : tile.getBorders()) {
+                if (border.getV1() == source || border.getV2() == source) neighbouringTiles.add(tile);
+            }
+        }
+        return new ArrayList<>(neighbouringTiles);
     }
 
     private VertexDecorator riverFlow(VertexDecorator spring, List<VertexDecorator> springNeighbours, List<River> currentRiver) {
@@ -123,6 +152,16 @@ public class RiverGenerator implements WaterGenerator {
     private boolean borderOfLandWater(Border border) {
         for (Tile tile : island.getTiles()) {
             if (tile.getBorders().contains(border) && (tile.isOcean() || tile.hasLake())) return true;
+        }
+        return false;
+    }
+
+    private boolean decoratorOfLandWater(VertexDecorator vertexDecorator) {
+        for (Tile tile : island.getTiles()) {
+            for (Border border : tile.getBorders()){
+                if ((border.getV1() == vertexDecorator || border.getV2() == vertexDecorator) && (tile.isOcean() || tile.hasLake())) return true;
+            }
+
         }
         return false;
     }
