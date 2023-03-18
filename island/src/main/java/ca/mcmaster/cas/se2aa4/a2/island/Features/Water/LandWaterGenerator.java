@@ -10,6 +10,8 @@ import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static ca.mcmaster.cas.se2aa4.a2.island.TileType.TEST;
+
 public abstract class LandWaterGenerator implements WaterGenerator {
     Island island;
 
@@ -17,13 +19,11 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         this.island = island;
         // Iterate n times (user specified)
         // generateWater method
-        System.out.println(numOfBodies);
         int i = 0;
-        Integer numOfTiles = island.getTiles().size();
+        int numOfTiles = island.getTiles().size();
 
         // try to generate water on every tile until you've checked them all
         while (i < numOfBodies && numOfTiles > 0) {
-            System.out.println("LOOP");
             if (generateWater()) i++;
             numOfTiles--;
         }
@@ -37,19 +37,18 @@ public abstract class LandWaterGenerator implements WaterGenerator {
 
         List<Tile> sourceNeighbours = source.getNeighbours().stream()
                 .map(id -> island.getTile(id)).toList();
-        for (Tile tile : sourceNeighbours) {
-//            System.out.println("HEREEEE111");
-//            System.out.println(source);
-//            System.out.println(source.hasBodyOfWater());
-//            System.out.println(tile);
-//            System.out.println(tile.hasLake() +" "+ tile.hasAquifer() + " " + tile.isOcean());
-//            System.out.println(containsOcean(sourceNeighbours));
-//            System.out.println(containsLake(sourceNeighbours));
-        }
+
         // if source or neighbours are water, then don't make it a water source
         if (source.hasBodyOfWater()) return false;
-        if (containsOcean(sourceNeighbours) || containsLake(sourceNeighbours)) return false;
+        if (containsWater(sourceNeighbours)) return false;
+        System.out.println("Source:" +source);
+        System.out.print("Neighbours: ");
+        for (Tile tile : sourceNeighbours) {
+            System.out.print(tile + " ");
+        }
+        System.out.println();
         source.setWater(getNewWater());
+        source.getPolygon().setColor(TEST.toColor());
         expandWater(source);
         return true;
     }
@@ -58,7 +57,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         Integer[] neighbourIds = source.getNeighbours().toArray(new Integer[0]);
 
         // generate a random number of values to select
-        int numValues = Seed.nextInt(neighbourIds.length + 1);
+        int numValues = Seed.nextInt(Math.max(neighbourIds.length-2, 0), neighbourIds.length + 1);
 
         // get random neighbours up to value above
         List<Tile> selectedNeighbours = new ArrayList<>();
@@ -74,7 +73,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
             // get neighbours of neighbour that aren't the sources neighbours
             // if any are bodies of water, don't make this a water
             List<Tile> uniqueNeighbours = getDifferentNeighbours(source, neighbour);
-            if (containsLake(uniqueNeighbours) || containsOcean(uniqueNeighbours)) continue;
+            if (containsWater(uniqueNeighbours)) continue;
             neighbour.setWater(getNewWater());
             updateTileAltitude(neighbour, source.getCentroid().getAltitude());
         }
@@ -112,6 +111,13 @@ public abstract class LandWaterGenerator implements WaterGenerator {
     private boolean containsLake(List<Tile> tiles) {
         for (Tile neighbour : tiles) {
             if (neighbour.hasLake()) return true;
+        }
+        return false;
+    }
+
+    private boolean containsWater(List<Tile> tiles) {
+        for (Tile neighbour : tiles) {
+            if (neighbour.hasBodyOfWater()) return true;
         }
         return false;
     }
