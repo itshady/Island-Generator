@@ -13,6 +13,7 @@ import java.util.List;
 
 import static ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil.maxAltitude;
 import static ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil.minAltitude;
+import static ca.mcmaster.cas.se2aa4.a2.island.TileType.TEST;
 
 public class Tile {
     Polygon polygon;
@@ -79,6 +80,12 @@ public class Tile {
     }
 
     public void enhancePolygon() {
+        if (polygon.getColor() == TEST.toColor()) return;
+
+        if (hasAquifer()) {
+            polygon.setColor(new Color(92, 255, 0));
+            return;
+        }
         // if ocean
         Color color;
         // if land
