@@ -41,13 +41,9 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         // if source or neighbours are water, then don't make it a water source
         if (source.hasBodyOfWater()) return false;
         if (containsWater(sourceNeighbours)) return false;
-        System.out.println("Source:" +source);
-        System.out.print("Neighbours: ");
-        for (Tile tile : sourceNeighbours) {
-            System.out.print(tile + " ");
-        }
-        System.out.println();
+
         source.setWater(getNewWater());
+        //ONLY FOR TESTING
         source.getPolygon().setColor(TEST.toColor());
         expandWater(source);
         return true;
@@ -67,13 +63,20 @@ public abstract class LandWaterGenerator implements WaterGenerator {
             selectedNeighbours.add(neighbour);
         }
 
+        List<Tile> currentBodyOfWater = new ArrayList<>();
+        currentBodyOfWater.add(source);
+
         // loop through selected neighbours and give them water
         for (Tile neighbour : selectedNeighbours) {
             if (neighbour.hasBodyOfWater()) continue;
-            // get neighbours of neighbour that aren't the sources neighbours
-            // if any are bodies of water, don't make this a water
-            List<Tile> uniqueNeighbours = getDifferentNeighbours(source, neighbour);
-            if (containsWater(uniqueNeighbours)) continue;
+            // get neighbours of the neighbour
+            // if any are bodies of water that aren't already part of the current body, don't make this a water
+            List<Tile> neighboursNeighbours = new ArrayList<>(neighbour.getNeighbours().stream()
+                    .map(id -> island.getTile(id)).toList());
+            neighboursNeighbours.removeAll(currentBodyOfWater);
+
+            if (containsWater(neighboursNeighbours)) continue;
+
             neighbour.setWater(getNewWater());
             updateTileAltitude(neighbour, source.getCentroid().getAltitude());
         }
@@ -93,38 +96,16 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         }
     }
 
-    private List<Tile> getDifferentNeighbours(Tile tile1, Tile tile2) {
-        List<Tile> tile1Neighbours = tile1.getNeighbours().stream()
-                .map(id -> island.getTile(id)).toList();
-        List<Tile> tile2Neighbours = tile2.getNeighbours().stream()
-                .map(id -> island.getTile(id)).toList();
-
+    private List<Tile> getDifferentNeighbours(List<Tile> tile1Neighbours, List<Tile> tile2Neighbours) {
         List<Tile> uniques = new ArrayList<>(tile1Neighbours);
         uniques.removeAll(tile2Neighbours);
 
-        // remove the two input tiles
-        uniques.remove(tile1);
-        uniques.remove(tile2);
         return uniques;
     }
-
-    private boolean containsLake(List<Tile> tiles) {
-        for (Tile neighbour : tiles) {
-            if (neighbour.hasLake()) return true;
-        }
-        return false;
-    }
-
+    
     private boolean containsWater(List<Tile> tiles) {
         for (Tile neighbour : tiles) {
             if (neighbour.hasBodyOfWater()) return true;
-        }
-        return false;
-    }
-
-    private boolean containsOcean(List<Tile> tiles) {
-        for (Tile neighbour : tiles) {
-            if (neighbour.isOcean()) return true;
         }
         return false;
     }
