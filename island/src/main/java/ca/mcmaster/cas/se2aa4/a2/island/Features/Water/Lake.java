@@ -1,39 +1,27 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
-import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
-import ca.mcmaster.cas.se2aa4.a2.island.TileType;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil;
+public class Lake extends Water implements Cloneable {
+    protected Lake() {
+        // make moisture number random, or based on how many lake tiles
+        moisture = 90;
+        setMultiplicity(1);
+    }
 
-import java.util.Objects;
-import java.util.Random;
-
-public class Lake extends LandWaterGenerator {
-    @Override
-    protected void selectWaters(Tile tile) {
-        tile.setType(TileType.LAKE);
+    public boolean isAboveGround() {
+        return true;
     }
 
     @Override
-    protected boolean meetsRequirements(Tile tile, Tile sourceTile) {
-        return (tile.getType() != TileType.LAKE && !touchesOcean(tile) && sameElevation(tile, sourceTile));
+    public boolean isLake() {
+        return true;
     }
 
-    private boolean sameElevation(Tile tile, Tile sourceTile) {
-        int maxAltitude = ElevationUtil.maxAltitude;
-        int minAltitude = ElevationUtil.minAltitude;
-        double separation = (maxAltitude-minAltitude)/5.0;
-        int tileAltitude = tile.getCentroid().getAltitude();
-        int sourceAltitude = sourceTile.getCentroid().getAltitude();
-        return (sourceAltitude-separation <= tileAltitude && tileAltitude <= sourceAltitude+separation);
+    @Override
+    public Lake clone() {
+        try {
+            return (Lake) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
-
-    private boolean touchesOcean(Tile currentTile) {
-        for (Integer idx : currentTile.getNeighbours()) {
-            Tile currentNeighbour = tiles.get(idx);
-            if (currentNeighbour.getType() == TileType.OCEAN) return true;
-         }
-        return false;
-    }
-
 }

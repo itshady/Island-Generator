@@ -1,11 +1,9 @@
 package ca.mcmaster.cas.se2aa4.a2.island.UI.Factories;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Aquifer;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.AquiferGenerator;
 import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class AquiferFactory implements FeatureRunner {
@@ -20,7 +18,7 @@ public class AquiferFactory implements FeatureRunner {
             } else {
                 numOfAquifers = new Random().nextInt(0,7);
             }
-            Aquifer aquifer = new Aquifer();
+            AquiferGenerator aquifer = new AquiferGenerator();
             aquifer.process(island, numOfAquifers);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

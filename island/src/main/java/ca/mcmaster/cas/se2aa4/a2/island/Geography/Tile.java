@@ -2,6 +2,8 @@ package ca.mcmaster.cas.se2aa4.a2.island.Geography;
 
 import Geometries.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.island.Exporters.PolygonMapper;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.BodyOfWater;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Lake;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
 import java.awt.Color;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import static ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil.maxAltitude;
 import static ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil.minAltitude;
+import static ca.mcmaster.cas.se2aa4.a2.island.TileType.TEST;
 
 public class Tile {
     Polygon polygon;
@@ -18,8 +21,27 @@ public class Tile {
     VertexDecorator centroid;
     org.locationtech.jts.geom.Polygon JTSPolygon;
     TileType type;
+    BodyOfWater water;
 
-    boolean hasAquifer = false;
+    public void setWater(BodyOfWater water) {
+        this.water = water;
+    }
+
+    public boolean isOcean() {
+        return type == TileType.OCEAN;
+    }
+
+    public boolean hasLake() {
+        return water != null && water.isLake();
+    }
+
+    public boolean hasAquifer() {
+        return water != null && water.isAquifer();
+    }
+
+    public boolean hasBodyOfWater() {
+        return hasAquifer() || hasLake() || isOcean();
+    }
 
     public VertexDecorator getCentroid() {
         return centroid;
@@ -58,6 +80,12 @@ public class Tile {
     }
 
     public void enhancePolygon() {
+        if (polygon.getColor() == TEST.toColor()) return;
+
+        if (hasAquifer()) {
+            polygon.setColor(new Color(92, 255, 0));
+            return;
+        }
         // if ocean
         Color color;
         // if land
@@ -79,26 +107,17 @@ public class Tile {
             else if (centroid.getAltitude() <= min + separation * 4) color = colors.get(1);
             else color = colors.get(0);
         } else color = type.toColor();
+        if (hasLake()) color = new Color(103,168,209,255);
+        else if (isOcean()) color = new Color(0,87,143,255);
         polygon.setColor(color);
-    }
-
-    public void setColor(Color color) {
-        polygon.setColor(color);
-    }
-    public Color getColor() {
-        return polygon.getColor();
     }
 
     public Set<Integer> getNeighbours() {
         return polygon.getPolygonNeighbours();
     }
 
-    public void setAquifer(boolean hasAquifer) {
-        this.hasAquifer = hasAquifer;
+    @Override
+    public String toString() {
+        return "("+centroid.getX()+", "+centroid.getY()+")";
     }
-
-    public boolean hasAquifer() {
-        return hasAquifer;
-    }
-
 }
