@@ -54,7 +54,7 @@ public class Exporter {
     private List<Segment> convertToSegments(List<Border> borders) {
         List<Segment> segments = new ArrayList<>();
         for (Border border : borders) {
-            border.enhancedBorder();
+            border.enhanceBorder();
             segments.add(border.getSegment());
         }
         return segments;

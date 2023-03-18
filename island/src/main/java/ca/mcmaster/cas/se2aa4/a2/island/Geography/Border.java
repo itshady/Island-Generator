@@ -1,9 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Geography;
 
 import Geometries.Segment;
-import Geometries.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.BodyOfWater;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.River;
 
 import java.awt.*;
 
@@ -59,9 +57,9 @@ public class Border {
         return water != null && water.isRiver();
     }
 
-    public void enhancedBorder() {
+    public void enhanceBorder() {
         if (hasRiver()) {
-            setColor(Color.BLUE);
+            setColor(new Color(103,168,209,255));
             setThickness(water.multiplicity());
         }
     }
