@@ -38,7 +38,6 @@ public class NeighbourCalculator {
     private Map<Polygon, Set<Polygon>> calculateNeighbours(List<Geometry> polygonsJTS, GeometrySet<Polygon> polygons, List<Centroid> centroids) {
         Map<Polygon, Set<Polygon>> neighbours = new LinkedHashMap<>();
         List<Coordinate> c_coordList = new ArrayList<>();
-
         // add each centroid's coordinates to a new list
         for (Centroid c : centroids) {
             Coordinate c_coord = new Coordinate(c.getX(), c.getY());

@@ -16,10 +16,10 @@ import java.util.*;
 import java.util.List;
 
 public class JTSToGeneratorConverter {
-    private final VertexSet vertexSet = new VertexSet();
-    private final SegmentSet segmentSet = new SegmentSet();
-    private final PolygonSet polygonSet = new PolygonSet();
-    private final List<Centroid> centroids = new ArrayList<>();
+    private VertexSet vertexSet;
+    private SegmentSet segmentSet;
+    private PolygonSet polygonSet;
+    private List<Centroid> centroids;
 
     public GeometrySet<Vertex> getVertices() {
         return vertexSet;
@@ -50,6 +50,10 @@ public class JTSToGeneratorConverter {
      * @param polygonsJTS is a List of type Geometry (generated via VoronoiDiagram)
      */
     private void JTSDataConversion(List<Geometry> polygonsJTS) {
+        vertexSet = new VertexSet();
+        polygonSet = new PolygonSet();
+        segmentSet = new SegmentSet();
+        centroids = new ArrayList<>();
         for (Geometry polygon : polygonsJTS) {
             // adds vertices and segments of the polygon to the vertex and segment list
             Coordinate[] coords = polygon.getCoordinates();
