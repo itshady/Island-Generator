@@ -24,13 +24,16 @@ public abstract class LandWaterGenerator implements WaterGenerator {
 
         // try to generate water on every tile until you've checked them all
         while (i < numOfBodies && numOfTiles > 0) {
-            if (generateWater()) i++;
+            if (generateWater(getLayers())) i++;
             numOfTiles--;
         }
     }
 
+    protected abstract Integer getLayers();
+
     // returns true if water was successfully generated
-    public boolean generateWater() {
+    // layers = number of layers of how big water will be
+    public boolean generateWater(Integer layers) {
         // get random source tile for lake
         List<Tile> landTiles = getLandTiles();
         Tile source = landTiles.get(Seed.nextInt(landTiles.size()));
@@ -45,26 +48,38 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         source.setWater(getNewWater());
         //ONLY FOR TESTING
         source.getPolygon().setColor(TEST.toColor());
-        expandWater(source);
+
+        // start with only expanding source
+        List<Tile> currentSetOfSources = new ArrayList<>();
+        currentSetOfSources.add(source);
+
+        // go through each "layer" of neighbours and expand
+        for (int i=0; i<layers; i++) {
+            List<Tile> nextSetOfSources = new ArrayList<>();
+            for (Tile tile : currentSetOfSources) {
+                nextSetOfSources.addAll(tile.getNeighbours().stream()
+                        .map(id -> island.getTile(id)).toList());
+                List<Tile> partOfBodyOfWater = new ArrayList<>();
+                partOfBodyOfWater.addAll(nextSetOfSources);
+                partOfBodyOfWater.addAll(currentSetOfSources);
+                expandWater(tile, tile.getNeighbours().size(), partOfBodyOfWater);
+            }
+            currentSetOfSources.addAll(nextSetOfSources);
+        }
         return true;
     }
 
-    private void expandWater(Tile source) {
+    // expansion = how many tiles to EXPAND by (max), can be lower if no tiles qualified
+    private void expandWater(Tile source, Integer expansion, List<Tile> currentBodyOfWater) {
         Integer[] neighbourIds = source.getNeighbours().toArray(new Integer[0]);
 
-        // generate a random number of values to select
-        int numValues = Seed.nextInt(Math.max(neighbourIds.length-2, 0), neighbourIds.length + 1);
-
-        // get random neighbours up to value above
+        // get random neighbours up to value of amount to expand
         List<Tile> selectedNeighbours = new ArrayList<>();
-        while (selectedNeighbours.size() < numValues) {
+        while (selectedNeighbours.size() < expansion) {
             int index = Seed.nextInt(neighbourIds.length);
             Tile neighbour = island.getTile(neighbourIds[index]);
             selectedNeighbours.add(neighbour);
         }
-
-        List<Tile> currentBodyOfWater = new ArrayList<>();
-        currentBodyOfWater.add(source);
 
         // loop through selected neighbours and give them water
         for (Tile neighbour : selectedNeighbours) {
@@ -75,12 +90,14 @@ public abstract class LandWaterGenerator implements WaterGenerator {
                     .map(id -> island.getTile(id)).toList());
             neighboursNeighbours.removeAll(currentBodyOfWater);
 
-            if (containsWater(neighboursNeighbours)) continue;
+            if (containsWater(neighboursNeighbours) && !canBeAdjacentWater()) continue;
 
             neighbour.setWater(getNewWater());
             updateTileAltitude(neighbour, source.getCentroid().getAltitude());
         }
     }
+
+    protected abstract boolean canBeAdjacentWater();
 
     /**
      * Updates all the associated vertices and the centroid of the tile to the given altitude
@@ -96,13 +113,6 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         }
     }
 
-    private List<Tile> getDifferentNeighbours(List<Tile> tile1Neighbours, List<Tile> tile2Neighbours) {
-        List<Tile> uniques = new ArrayList<>(tile1Neighbours);
-        uniques.removeAll(tile2Neighbours);
-
-        return uniques;
-    }
-    
     private boolean containsWater(List<Tile> tiles) {
         for (Tile neighbour : tiles) {
             if (neighbour.hasBodyOfWater()) return true;

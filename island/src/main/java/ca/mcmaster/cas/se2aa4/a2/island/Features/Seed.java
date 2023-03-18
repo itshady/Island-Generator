@@ -28,4 +28,8 @@ public class Seed {
     public static Integer nextInt(Integer max) {
         return random.nextInt(max);
     }
+
+    public static boolean nextBoolean() {
+        return random.nextBoolean();
+    }
 }
