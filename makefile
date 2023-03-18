@@ -3,7 +3,7 @@ run:
 	cd visualizer && java -jar visualizer.jar -mesh ../generator/sample.mesh -output sample.svg
 
 island:
-	cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circle -altitude mountain -aquifer 0 -lake 0 -river 5
+	cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circle -altitude mountain -aquifer 5 -lake 5 -river 5
 	cd visualizer && java -jar visualizer.jar -mesh ../island/lagoon.mesh -output sample.svg
 
 help:

@@ -78,6 +78,7 @@ public class RiverGenerator implements WaterGenerator {
             maxValue = lowerAltitudeNeighbours.stream()
                     .max(Comparator.comparing(VertexDecorator::getAltitude)).get();
             Border river = searchForBorder(spring, maxValue);
+            if (borderOfLandWater(river)) return null;
             if (river != null) {
                 river.setWater(new River());
             }
@@ -93,6 +94,13 @@ public class RiverGenerator implements WaterGenerator {
             }
         }
         return landTiles;
+    }
+
+    private boolean borderOfLandWater(Border border) {
+        for (Tile tile : island.getTiles()) {
+            if (tile.getBorders().contains(border) && (tile.isOcean() || tile.hasLake())) return true;
+        }
+        return false;
     }
 
     private List<VertexDecorator> getNeighbouringVertices(VertexDecorator spring, List<Tile> tilesToCheck) {

@@ -93,7 +93,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
             if (containsWater(neighboursNeighbours) && !canBeAdjacentWater()) continue;
 
             neighbour.setWater(getNewWater());
-            updateTileAltitude(neighbour, source.getCentroid().getAltitude());
+            if (neighbour.hasLake()) updateTileAltitude(neighbour, source.getCentroid().getAltitude());
         }
     }
 
