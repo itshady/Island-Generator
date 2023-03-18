@@ -2,6 +2,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.Geography;
 
 import Geometries.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.island.Exporters.PolygonMapper;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Soil.SoilProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.BodyOfWater;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Lake;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil.maxAltitude;
 import static ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil.minAltitude;
+import static ca.mcmaster.cas.se2aa4.a2.island.Features.Soil.SoilUtil.maxAbsorption;
 import static ca.mcmaster.cas.se2aa4.a2.island.TileType.TEST;
 
 public class Tile {
@@ -22,6 +24,9 @@ public class Tile {
     org.locationtech.jts.geom.Polygon JTSPolygon;
     TileType type;
     BodyOfWater water;
+
+    Double absorption;
+    SoilProfile soilProfile;
 
     public void setWater(BodyOfWater water) {
         this.water = water;
@@ -88,8 +93,9 @@ public class Tile {
         }
         // if ocean
         Color color;
+        // ELEVATION HEATMAP
         // if land
-        if (type == TileType.LAND) { // do && false if you wanna turn off heatmap
+        if (type == TileType.LAND && false) { // do && false if you wanna turn off heatmap
             List<Color> colors = new ArrayList<>();
             colors.add(new Color(233, 62, 58));
             colors.add(new Color(237, 104, 60));
@@ -106,7 +112,23 @@ public class Tile {
             else if (centroid.getAltitude() <= min + separation * 3) color = colors.get(2);
             else if (centroid.getAltitude() <= min + separation * 4) color = colors.get(1);
             else color = colors.get(0);
-        } else color = type.toColor();
+        } else if (type == TileType.LAND){ // ABSORPTION HEAT MAP - do && false if you wanna turn off heatmap
+            List<Color> colors = new ArrayList<>();
+            colors.add(new Color(235, 185, 215));
+            colors.add(new Color(209, 109, 170));
+            colors.add(new Color(179, 66, 135));
+            colors.add(new Color(135, 18, 90));
+            colors.add(new Color(77,2,48));
+
+            Double max = maxAbsorption;
+            Double separation = max / colors.size();
+            if (this.getAbsorption() <= separation) color = colors.get(0);
+            else if (this.getAbsorption() <= separation * 2) color = colors.get(1);
+            else if (this.getAbsorption()<= separation * 3) color = colors.get(2);
+            else if (this.getAbsorption() <= separation * 4) color = colors.get(3);
+            else color = colors.get(4);
+
+        } else color = polygon.getColor();
         if (hasLake()) color = new Color(103,168,209,255);
         else if (isOcean()) color = new Color(0,87,143,255);
         polygon.setColor(color);
@@ -119,5 +141,29 @@ public class Tile {
     @Override
     public String toString() {
         return "("+centroid.getX()+", "+centroid.getY()+")";
+    }
+
+    public BodyOfWater getWater() {
+        return water;
+    }
+
+    public void setSoilProfile(SoilProfile soilProfile) {
+        this.soilProfile = soilProfile;
+    }
+
+    public void setColor(Color color) {
+        polygon.setColor(color);
+    }
+
+    public void setAbsorption(Double absorption) {
+        this.absorption = absorption;
+    }
+
+    public Double getAbsorption() {
+        return absorption;
+    }
+
+    public SoilProfile getSoilProfile() {
+        return soilProfile;
     }
 }
