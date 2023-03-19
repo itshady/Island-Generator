@@ -1,9 +1,11 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
+
 public class River extends Water {
     public River() {
         moisture = 70;
-        setMultiplicity(1);
+        setMultiplicity(Seed.nextInt(1,4));
     }
 
     public boolean isAboveGround() {

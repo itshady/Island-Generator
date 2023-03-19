@@ -1,12 +1,9 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Soil;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
-import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class DryProfile extends SoilUtil {
 
@@ -21,7 +18,7 @@ public class DryProfile extends SoilUtil {
     }
 
     protected double calcOceanAbsorption(double distance) {
-        return 100 * Math.pow(getAbsorptionRate(), distance / 50);
+        return 200 * Math.pow(getAbsorptionRate(), distance / 50);
     }
 
     protected double calcLandWaterAbsorption(Tile currentTile, double distance) {
