@@ -21,13 +21,11 @@ public abstract class SoilUtil implements SoilProfile {
         setSoilProfiles();
     }
 
-    public abstract Double getAbsorptionRate();
-
     public abstract SoilProfile getSoilProfile();
 
     public abstract Color getSoilColor();
 
-    private Double calculateAbsorption(Tile tile, Double absorptionRate) {
+    private Double calculateAbsorption(Tile tile) {
 
         double absorption = 0.0;
 
@@ -35,7 +33,7 @@ public abstract class SoilUtil implements SoilProfile {
             if (currentTile.getType() == TileType.OCEAN) continue;
             if (currentTile.hasLake() || currentTile.hasAquifer()) {
                 double distance = calculateDistance(tile, currentTile);
-                absorption += (currentTile.getWater().moisture() * Math.pow(absorptionRate,distance/50));
+                absorption += calcLandWaterAbsorption(currentTile, distance);
             }
 
             if (touchesRiver(currentTile)) {
@@ -44,23 +42,29 @@ public abstract class SoilUtil implements SoilProfile {
                         double distance = calculateDistance(tile, border);
                         Integer riverMultiplicity = border.getWater().multiplicity();
                         Integer riverMoisture = border.getWater().moisture();
-                        absorption += (riverMoisture*riverMultiplicity*(Math.pow((absorptionRate), distance/50)));
+                        absorption += calcRiverAbsorption(distance, riverMultiplicity, riverMoisture);
                     }
                 }
             }
 
             if (touchesOcean(currentTile)) {
                 double distance = calculateDistance(tile, currentTile);
-                absorption += (100 * Math.pow(absorptionRate,distance/50));
+                absorption += calcOceanAbsorption(distance);
             }
         }
         return absorption;
     }
 
+    protected abstract double calcOceanAbsorption(double distance);
+
+    protected abstract double calcLandWaterAbsorption(Tile currentTile, double distance);
+
+    protected abstract double calcRiverAbsorption(double distance, Integer riverMultiplicity, Integer riverMoisture);
+
     private void setSoilProfiles() {
         for (Tile tile : island.getTiles()) {
             tile.setSoilProfile(getSoilProfile());
-            Double absorption = calculateAbsorption(tile, getAbsorptionRate());
+            Double absorption = calculateAbsorption(tile);
             if (absorption > maxAbsorption) maxAbsorption = absorption;
             tile.setAbsorption(absorption);
             tile.setColor(getSoilColor());
