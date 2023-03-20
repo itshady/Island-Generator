@@ -68,7 +68,7 @@ public abstract class SoilUtil implements SoilProfile {
             if (absorption > maxAbsorption) maxAbsorption = absorption;
             tile.setAbsorption(absorption);
             tile.setColor(getSoilColor());
-//            System.out.println(tile.getAbsorption());
+            System.out.println(tile.getAbsorption());
         }
     }
 

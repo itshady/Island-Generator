@@ -4,6 +4,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Soil.DryProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Soil.SoilProfile;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Soil.WetProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
 
 import java.util.HashMap;
@@ -16,6 +17,7 @@ public class SoilFactory implements FeatureRunner {
 
     static {
         bindings.put("dry", DryProfile.class);
+        bindings.put("wet", WetProfile.class);
         bindings.put(DEFAULT, DryProfile.class);
     }
 
