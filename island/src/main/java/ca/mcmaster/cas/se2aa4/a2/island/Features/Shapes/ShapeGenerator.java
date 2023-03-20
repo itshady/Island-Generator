@@ -2,6 +2,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
 import Geometries.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Ocean;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
@@ -38,10 +39,10 @@ public abstract class ShapeGenerator implements Shape {
         initializeLand();
         for (Tile tile : container.getTiles()) {
             if (intersects(tile.getJTSPolygon())) {
-                tile.setType(TileType.LAND);
+                tile.setColor(TileType.LAND.toColor());
             }
             else {
-                tile.setType(TileType.OCEAN);
+                tile.setWater(new Ocean());
             }
         }
     }

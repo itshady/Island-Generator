@@ -29,7 +29,7 @@ public abstract class ElevationUtil implements ElevationProfile {
     private void setAllAltitudes() {
         for (Tile tile : island.getTiles()) {
             VertexDecorator centroid = tile.getCentroid();
-            if (tile.getType() == TileType.OCEAN) centroid.setAltitude(minAltitude);
+            if (tile.isOcean()) centroid.setAltitude(minAltitude);
             else {
                 Integer altitude = calculateAltitude(centroid);
                 centroid.setAltitude(altitude);
@@ -40,7 +40,7 @@ public abstract class ElevationUtil implements ElevationProfile {
                 VertexDecorator v1 = border.getV1();
                 VertexDecorator v2 = border.getV2();
 
-                if (tile.getType() == TileType.OCEAN) {
+                if (tile.isOcean()) {
                     v1.setAltitude(minAltitude);
                     v2.setAltitude(minAltitude);
                 }

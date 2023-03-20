@@ -1,7 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 
 public class Lake extends Water implements Cloneable {
-    protected Lake() {
+    public Lake() {
         // make moisture number random, or based on how many lake tiles
         moisture = 90;
         setMultiplicity(1);

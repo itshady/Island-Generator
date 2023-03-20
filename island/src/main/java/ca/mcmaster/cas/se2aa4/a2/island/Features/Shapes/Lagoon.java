@@ -1,6 +1,8 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Lake;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Ocean;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import org.locationtech.jts.geom.Coordinate;
@@ -52,20 +54,20 @@ public class Lagoon extends ShapeGenerator{
         initializeLand();
         initializeLagoon();
         for (Tile tile : container.getTiles()) {
-            if (intersects(tile.getJTSPolygon(), lagoon)) tile.setType(TileType.LAKE);
-            else if (intersects(tile.getJTSPolygon())) tile.setType(TileType.LAND);
-            else tile.setType(TileType.OCEAN);
+            if (intersects(tile.getJTSPolygon(), lagoon)) tile.setWater(new Lake());
+            else if (intersects(tile.getJTSPolygon())) tile.setColor(TileType.LAND.toColor());
+            else tile.setWater(new Ocean());
         }
         determineBeachTiles();
     }
 
     private void determineBeachTiles() {
         for (Tile tile : island.getTiles()) {
-            if (tile.getType() == TileType.LAND) {
+            if (tile.isLand()) {
                 for (Integer neighbourIdx : tile.getNeighbours()) {
                     Tile currentNeighbour = island.getTiles().get(neighbourIdx);
-                    if (currentNeighbour.getType() == TileType.LAKE || currentNeighbour.getType() == TileType.OCEAN) {
-                        tile.setType(TileType.BEACH);
+                    if (currentNeighbour.hasLake() || currentNeighbour.isOcean()) {
+                        tile.setColor(TileType.BEACH.toColor());
                         break;
                     }
                 }

@@ -36,4 +36,8 @@ public abstract class Water implements BodyOfWater {
     public boolean isAquifer() {
         return false;
     }
+
+    public boolean isOcean() {
+        return false;
+    }
 }

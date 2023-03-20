@@ -4,8 +4,6 @@ import Geometries.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.island.Exporters.PolygonMapper;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Soil.SoilProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.BodyOfWater;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Lake;
-import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -14,7 +12,6 @@ import java.util.List;
 
 import static ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil.maxAltitude;
 import static ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil.minAltitude;
-import static ca.mcmaster.cas.se2aa4.a2.island.Features.Soil.SoilUtil.maxAbsorption;
 import static ca.mcmaster.cas.se2aa4.a2.island.TileType.TEST;
 
 public class Tile {
@@ -22,9 +19,7 @@ public class Tile {
     List<Border> borders;
     VertexDecorator centroid;
     org.locationtech.jts.geom.Polygon JTSPolygon;
-    TileType type;
     BodyOfWater water;
-
     Double absorption;
     SoilProfile soilProfile;
 
@@ -32,8 +27,16 @@ public class Tile {
         this.water = water;
     }
 
+    public Integer getAltitude() {
+        return centroid.getAltitude();
+    }
+
+    public boolean isLand() {
+        return water == null || !water.isOcean();
+    }
+
     public boolean isOcean() {
-        return type == TileType.OCEAN;
+        return water != null && water.isOcean();
     }
 
     public boolean hasLake() {
@@ -58,15 +61,6 @@ public class Tile {
 
     public static TileBuilder newBuilder() {
         return new TileBuilder();
-    }
-
-    public void setType(TileType type) {
-        this.type = type;
-        this.polygon.setColor(this.type.toColor());
-    }
-
-    public TileType getType() {
-        return type;
     }
 
     public Polygon getPolygon() {
@@ -95,7 +89,7 @@ public class Tile {
         Color color;
         // ELEVATION HEATMAP
         // if land
-        if (type == TileType.LAND && false) { // do && false if you wanna turn off heatmap
+        if (isLand() && false) { // do && false if you wanna turn off heatmap
             List<Color> colors = new ArrayList<>();
             colors.add(new Color(233, 62, 58));
             colors.add(new Color(237, 104, 60));
@@ -112,7 +106,7 @@ public class Tile {
             else if (centroid.getAltitude() <= min + separation * 3) color = colors.get(2);
             else if (centroid.getAltitude() <= min + separation * 4) color = colors.get(1);
             else color = colors.get(0);
-        } else if (type == TileType.LAND){ // ABSORPTION HEAT MAP - do && false if you wanna turn off heatmap
+        } else if (isLand()){ // ABSORPTION HEAT MAP - do && false if you wanna turn off heatmap
             List<Color> colors = new ArrayList<>();
             colors.add(new Color(255, 225, 255));
             colors.add(new Color(235, 185, 215));
@@ -124,22 +118,16 @@ public class Tile {
             colors.add(new Color(135, 18, 90));
             colors.add(new Color(110, 4, 71));
             colors.add(new Color(77,2,48));
-//            colors.add(new Color(0, 119, 51));
-//            colors.add(new Color(170, 220, 173));
-//            colors.add(new Color(143, 136, 53));
-//            colors.add(new Color(220, 105, 10));
-//            colors.add(new Color(253, 253, 216));
 
-            Double max = maxAbsorption;
-            Double separation = max / colors.size();
+            Double separation = 100.0 / colors.size();
             if (this.getAbsorption() <= separation) color = colors.get(0);
-            else if (this.getAbsorption() <= separation * 1.5) color = colors.get(1);
-            else if (this.getAbsorption() <= separation * 2) color = colors.get(2);
-            else if (this.getAbsorption() <= separation * 2.5) color = colors.get(3);
-            else if (this.getAbsorption()<= separation * 3) color = colors.get(4);
-            else if (this.getAbsorption() <= separation * 3.5) color = colors.get(5);
-            else if (this.getAbsorption() <= separation * 4) color = colors.get(6);
-            else if (this.getAbsorption() <= separation * 4.5) color = colors.get(8);
+            else if (this.getAbsorption() <= separation * 2) color = colors.get(1);
+            else if (this.getAbsorption() <= separation * 3) color = colors.get(2);
+            else if (this.getAbsorption() <= separation * 4) color = colors.get(3);
+            else if (this.getAbsorption()<= separation * 5) color = colors.get(4);
+            else if (this.getAbsorption() <= separation * 6) color = colors.get(5);
+            else if (this.getAbsorption() <= separation * 7) color = colors.get(6);
+            else if (this.getAbsorption() <= separation * 8) color = colors.get(8);
             else color = colors.get(9);
 
         } else color = polygon.getColor();

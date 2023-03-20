@@ -83,7 +83,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
 
         // loop through selected neighbours and give them water
         for (Tile neighbour : selectedNeighbours) {
-            if (neighbour.hasBodyOfWater()) continue;
+            if (neighbour.hasBodyOfWater() || (hasOceanNeighbours(neighbour) && !canBeAdjacentWater())) continue;
             // get neighbours of the neighbour
             // if any are bodies of water that aren't already part of the current body, don't make this a water
             List<Tile> neighboursNeighbours = new ArrayList<>(neighbour.getNeighbours().stream()
@@ -125,11 +125,20 @@ public abstract class LandWaterGenerator implements WaterGenerator {
     protected List<Tile> getLandTiles() {
         List<Tile> landTiles = new ArrayList<>();
         for (Tile tile : island.getTiles()) {
-            if (tile.getType() == TileType.LAND) {
+            if (tile.isLand()) {
                 landTiles.add(tile);
             }
         }
         return landTiles;
+    }
+
+    private boolean hasOceanNeighbours(Tile tile) {
+        List<Tile> neighbours = new ArrayList<>(tile.getNeighbours().stream()
+                .map(id -> island.getTile(id)).toList());
+        for (Tile neighbour : neighbours) {
+            if (neighbour.isOcean()) return true;
+        }
+        return false;
     }
 }
 

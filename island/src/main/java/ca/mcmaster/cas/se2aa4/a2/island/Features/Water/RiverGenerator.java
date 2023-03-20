@@ -100,7 +100,7 @@ public class RiverGenerator implements WaterGenerator {
     private boolean tileContainsRiverBorder(Tile tile) {
         for (Border border : tile.getBorders()) {
             if (border.hasRiver()) return true;
-       }
+        }
         return false;
     }
 
@@ -142,7 +142,7 @@ public class RiverGenerator implements WaterGenerator {
     private List<Tile> getLandTiles() {
         List<Tile> landTiles = new ArrayList<>();
         for (Tile tile : island.getTiles()) {
-            if (tile.getType() == TileType.LAND) {
+            if (tile.isLand()) {
                 landTiles.add(tile);
             }
         }

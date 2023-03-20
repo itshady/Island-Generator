@@ -13,4 +13,6 @@ public interface BodyOfWater {
     boolean isRiver();
 
     boolean isAquifer();
+
+    boolean isOcean();
 }

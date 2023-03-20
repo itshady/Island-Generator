@@ -3,34 +3,53 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features.Soil;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
-import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public abstract class SoilUtil implements SoilProfile {
 
     Island island;
 
-    public static Double maxAbsorption = 0.0;
+    // max for land tiles
+    private Double maxAbsorption = Double.MIN_VALUE;
+    // min for land tiles
+    private Double minAbsorption = Double.MAX_VALUE;
 
     public void process(Island island) {
         this.island = island;
-        setSoilProfiles();
+        setSoilProfiles(island);
+        standardizeAbsorbances(island);
+
+        for (Tile tile : island.getTiles()) {
+            if (tile.isOcean()) System.out.println(tile.getAbsorption() + " " + tile.getAltitude());
+        }
+    }
+
+    private void setSoilProfiles(Island island) {
+        for (Tile tile : island.getTiles()) {
+            if (tile.isOcean()) tile.setAbsorption(0.0);
+            else {
+                tile.setSoilProfile(getSoilProfile());
+                Double absorption = calculateAbsorption(tile);
+                if (absorption < minAbsorption) minAbsorption = absorption;
+                if (absorption > maxAbsorption) maxAbsorption = absorption;
+                tile.setAbsorption(absorption);
+            }
+        }
     }
 
     public abstract SoilProfile getSoilProfile();
 
-    public abstract Color getSoilColor();
 
     private Double calculateAbsorption(Tile tile) {
-
         double absorption = 0.0;
 
         for (Tile currentTile: island.getTiles()) {
-            if (currentTile.getType() == TileType.OCEAN) continue;
+            // don't get moisture from ocean
+            if (currentTile.isOcean()) continue;
+
+            // if the tile is a lake or aquifer, get distance to it then calculate absorbance based on that
             if (currentTile.hasLake() || currentTile.hasAquifer()) {
                 double distance = calculateDistance(tile, currentTile);
                 absorption += calcLandWaterAbsorption(currentTile, distance);
@@ -46,40 +65,13 @@ public abstract class SoilUtil implements SoilProfile {
                     }
                 }
             }
-
-            if (touchesOcean(currentTile)) {
-                double distance = calculateDistance(tile, currentTile);
-                absorption += calcOceanAbsorption(distance);
-            }
         }
         return absorption;
     }
 
-    protected abstract double calcOceanAbsorption(double distance);
-
     protected abstract double calcLandWaterAbsorption(Tile currentTile, double distance);
 
     protected abstract double calcRiverAbsorption(double distance, Integer riverMultiplicity, Integer riverMoisture);
-
-    private void setSoilProfiles() {
-        for (Tile tile : island.getTiles()) {
-            tile.setSoilProfile(getSoilProfile());
-            Double absorption = calculateAbsorption(tile);
-            if (absorption > maxAbsorption) maxAbsorption = absorption;
-            tile.setAbsorption(absorption);
-            tile.setColor(getSoilColor());
-            System.out.println(tile.getAbsorption());
-        }
-    }
-
-    protected boolean touchesOcean(Tile tile) {
-        List<Tile> neighbours = new ArrayList<>(tile.getNeighbours().stream()
-                .map(id -> island.getTile(id)).toList());
-        for (Tile neighbour : neighbours) {
-            if (neighbour.isOcean()) return true;
-        }
-        return false;
-    }
 
     protected boolean touchesRiver(Tile tile) {
         List<Tile> neighbours = new ArrayList<>(tile.getNeighbours().stream()
@@ -92,6 +84,7 @@ public abstract class SoilUtil implements SoilProfile {
         return false;
     }
 
+    // calculate distance between two centroids
     protected double calculateDistance(Tile sourceTile, Tile endTile) {
         double sourceX = sourceTile.getCentroid().getX();
         double sourceY = sourceTile.getCentroid().getY();
@@ -114,5 +107,15 @@ public abstract class SoilUtil implements SoilProfile {
         double xDifference = midpointX - sourceX;
         double yDifference = midpointY - sourceY;
         return Math.sqrt(Math.pow(xDifference,2) + Math.pow(yDifference,2));
+    }
+
+    protected void standardizeAbsorbances(Island island) {
+        for (Tile tile : island.getTiles()) {
+            if (tile.isOcean()) tile.setAbsorption(0.0);
+            else {
+                Double standardized = 100 * (tile.getAbsorption() - minAbsorption) / maxAbsorption;
+                tile.setAbsorption(standardized);
+            }
+        }
     }
 }
