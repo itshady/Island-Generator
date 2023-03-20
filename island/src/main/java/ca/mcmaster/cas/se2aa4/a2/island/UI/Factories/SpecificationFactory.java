@@ -21,6 +21,7 @@ public class SpecificationFactory {
             bindings.put(Configuration.class.getDeclaredField("LAKE"), LakeFactory.class);
             bindings.put(Configuration.class.getDeclaredField("RIVER"), RiverFactory.class);
             bindings.put(Configuration.class.getDeclaredField("SOIL"), SoilFactory.class);
+            bindings.put(Configuration.class.getDeclaredField("BIOME"), BiomeFactory.class);
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
