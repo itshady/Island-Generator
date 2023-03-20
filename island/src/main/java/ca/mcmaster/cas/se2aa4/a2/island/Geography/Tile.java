@@ -114,19 +114,33 @@ public class Tile {
             else color = colors.get(0);
         } else if (type == TileType.LAND){ // ABSORPTION HEAT MAP - do && false if you wanna turn off heatmap
             List<Color> colors = new ArrayList<>();
+            colors.add(new Color(255, 225, 255));
             colors.add(new Color(235, 185, 215));
+            colors.add(new Color(227, 139, 191));
             colors.add(new Color(209, 109, 170));
+            colors.add(new Color(224, 67, 164));
             colors.add(new Color(179, 66, 135));
+            colors.add(new Color(187, 32, 128));
             colors.add(new Color(135, 18, 90));
+            colors.add(new Color(110, 4, 71));
             colors.add(new Color(77,2,48));
+//            colors.add(new Color(0, 119, 51));
+//            colors.add(new Color(170, 220, 173));
+//            colors.add(new Color(143, 136, 53));
+//            colors.add(new Color(220, 105, 10));
+//            colors.add(new Color(253, 253, 216));
 
             Double max = maxAbsorption;
             Double separation = max / colors.size();
             if (this.getAbsorption() <= separation) color = colors.get(0);
-            else if (this.getAbsorption() <= separation * 2) color = colors.get(1);
-            else if (this.getAbsorption()<= separation * 3) color = colors.get(2);
-            else if (this.getAbsorption() <= separation * 4) color = colors.get(3);
-            else color = colors.get(4);
+            else if (this.getAbsorption() <= separation * 1.5) color = colors.get(1);
+            else if (this.getAbsorption() <= separation * 2) color = colors.get(2);
+            else if (this.getAbsorption() <= separation * 2.5) color = colors.get(3);
+            else if (this.getAbsorption()<= separation * 3) color = colors.get(4);
+            else if (this.getAbsorption() <= separation * 3.5) color = colors.get(5);
+            else if (this.getAbsorption() <= separation * 4) color = colors.get(6);
+            else if (this.getAbsorption() <= separation * 4.5) color = colors.get(8);
+            else color = colors.get(9);
 
         } else color = polygon.getColor();
         if (hasLake()) color = new Color(103,168,209,255);
