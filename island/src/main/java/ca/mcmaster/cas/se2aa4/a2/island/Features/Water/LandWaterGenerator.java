@@ -47,7 +47,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
 
         source.setWater(getNewWater());
         //ONLY FOR TESTING
-        source.getPolygon().setColor(TEST.toColor());
+//        source.getPolygon().setColor(TEST.toColor());
 
         // start with only expanding source
         List<Tile> currentSetOfSources = new ArrayList<>();
@@ -93,7 +93,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
             if (containsWater(neighboursNeighbours) && !canBeAdjacentWater()) continue;
 
             neighbour.setWater(getNewWater());
-            updateTileAltitude(neighbour, source.getCentroid().getAltitude());
+            if (neighbour.hasLake()) updateTileAltitude(neighbour, source.getCentroid().getAltitude());
         }
     }
 

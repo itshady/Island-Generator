@@ -76,6 +76,10 @@ public class Vertex {
         return color;
     }
 
+    public void setColor(Color color) {
+        setVertex(getX(), getY(), color);
+    }
+
     public Integer getId() {
         return id;
     }

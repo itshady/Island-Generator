@@ -20,12 +20,17 @@ public class Configuration {
 
     @Feature
     public static final String LAKE = "lake";
+    @Feature
+    public static final String RIVER = "river";
+    @Feature
+    public static final String SOIL = "soil";
     public static final String MODE = "mode";
     public static final String INPUT_MESH = "i";
     public static final String OUTPUT_MESH = "o";
     public static final String HELP = "help";
 
     public static final String SEED = "seed";
+
 
     private CommandLine cli;
 
@@ -68,6 +73,8 @@ public class Configuration {
         options.addOption(new Option(ALTITUDE, true, "Altitude profile of island"));
         options.addOption(new Option(AQUIFER, true, "Number of aquifers on island"));
         options.addOption(new Option(LAKE, true, "Maximum number of lakes on island"));
+        options.addOption(new Option(RIVER, true, "Number of rivers on island"));
+        options.addOption(new Option(SOIL, true, "Soil profile of land"));
         options.addOption(new Option(MODE, true, "Sandbox or Normal mode"));
         options.addOption(new Option(INPUT_MESH, true, "Path to input .mesh file"));
         options.addOption(new Option(OUTPUT_MESH, true, "Path to output file name"));

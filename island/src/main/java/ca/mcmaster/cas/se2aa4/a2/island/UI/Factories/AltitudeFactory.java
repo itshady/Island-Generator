@@ -1,6 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.island.UI.Factories;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.CraterProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.MountainProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.PrairieProfile;
@@ -17,6 +18,7 @@ public class AltitudeFactory implements FeatureRunner {
     static {
         bindings.put("mountain", MountainProfile.class);
         bindings.put("prairie", PrairieProfile.class);
+        bindings.put("crater", CraterProfile.class);
         bindings.put(DEFAULT, MountainProfile.class);
     }
 
