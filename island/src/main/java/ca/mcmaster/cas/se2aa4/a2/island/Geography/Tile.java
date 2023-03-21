@@ -2,6 +2,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.Geography;
 
 import Geometries.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.island.Exporters.PolygonMapper;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.Biome;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Soil.SoilProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.BodyOfWater;
 
@@ -22,6 +23,12 @@ public class Tile {
     BodyOfWater water;
     Double absorption;
     SoilProfile soilProfile;
+    Biome biome;
+
+    public void setBiome(Biome biome) {
+        this.biome = biome;
+        setColor(biome.toColor());
+    }
 
     public void setWater(BodyOfWater water) {
         this.water = water;
@@ -106,7 +113,7 @@ public class Tile {
             else if (centroid.getAltitude() <= min + separation * 3) color = colors.get(2);
             else if (centroid.getAltitude() <= min + separation * 4) color = colors.get(1);
             else color = colors.get(0);
-        } else if (isLand()){ // ABSORPTION HEAT MAP - do && false if you wanna turn off heatmap
+        } else if (isLand() && false){ // ABSORPTION HEAT MAP - do && false if you wanna turn off heatmap
             List<Color> colors = new ArrayList<>();
             colors.add(new Color(255, 225, 255));
             colors.add(new Color(235, 185, 215));
