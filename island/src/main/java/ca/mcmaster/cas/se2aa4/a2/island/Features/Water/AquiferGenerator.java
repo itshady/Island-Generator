@@ -15,7 +15,7 @@ public class AquiferGenerator extends LandWaterGenerator {
     }
 
     @Override
-    protected BodyOfWater getNewWater() {
+    protected BodyOfWater getNewWater(Integer multiplicity) {
         return new Aquifer();
     }
 }

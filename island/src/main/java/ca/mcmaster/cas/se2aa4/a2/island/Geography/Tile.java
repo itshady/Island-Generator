@@ -108,7 +108,7 @@ public class Tile {
             else color = colors.get(0);
         } else if (isLand()){ // ABSORPTION HEAT MAP - do && false if you wanna turn off heatmap
             List<Color> colors = new ArrayList<>();
-            colors.add(new Color(255, 225, 255));
+            colors.add(new Color(255, 255, 255));
             colors.add(new Color(235, 185, 215));
             colors.add(new Color(227, 139, 191));
             colors.add(new Color(209, 109, 170));

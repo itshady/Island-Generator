@@ -12,11 +12,11 @@ public class DryProfile extends SoilUtil {
     }
 
     protected double calcRiverAbsorption(double distance, Integer riverMultiplicity, Integer riverMoisture) {
-        return riverMoisture * riverMultiplicity * (Math.pow(getAbsorptionRate(), distance / 50)) / 10;
+        return riverMoisture * riverMultiplicity * (Math.pow(getAbsorptionRate(), distance / 20));
     }
 
     protected double calcLandWaterAbsorption(Tile currentTile, double distance) {
-        return currentTile.getWater().moisture() * Math.pow(getAbsorptionRate(), distance / 50);
+        return currentTile.getWater().moisture() * currentTile.getWater().multiplicity() * Math.pow(getAbsorptionRate(), distance / 40) * 4;
     }
 
     public SoilProfile getSoilProfile() {
