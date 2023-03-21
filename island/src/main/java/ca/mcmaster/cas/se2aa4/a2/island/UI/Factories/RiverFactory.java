@@ -15,7 +15,7 @@ public class RiverFactory implements FeatureRunner {
             if (input != null) {
                 numOfRivers = Integer.parseInt(input);
             } else {
-                numOfRivers = new Random().nextInt(0,5);
+                numOfRivers = 0;
             }
             RiverGenerator river = new RiverGenerator();
             river.process(island, numOfRivers);
