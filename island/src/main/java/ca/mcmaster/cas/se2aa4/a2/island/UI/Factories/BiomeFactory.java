@@ -2,6 +2,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.UI.Factories;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.AmericaProfile;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.AsiaProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.DiagramProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.CraterProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationProfile;
@@ -18,6 +19,7 @@ public class BiomeFactory implements FeatureRunner {
 
     static {
         bindings.put("america", AmericaProfile.class);
+        bindings.put("asia", AsiaProfile.class);
         bindings.put(DEFAULT, AmericaProfile.class);
     }
 

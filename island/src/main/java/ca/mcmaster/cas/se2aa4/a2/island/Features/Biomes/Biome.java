@@ -12,7 +12,9 @@ public enum Biome {
     SAVANNA(new Color(255, 100, 4)),
 
     // REST
-    RAINFOREST(new Color(7, 86, 17,255)),
+    RAINFOREST(new Color(0, 87, 67,255)),
+    ALPINETUNDRA(new Color(201, 215, 227,255)),
+    MOUNTAIN(new Color(59, 59, 59,255)),
     MANGROVE(new Color(78, 84, 11));
 
 

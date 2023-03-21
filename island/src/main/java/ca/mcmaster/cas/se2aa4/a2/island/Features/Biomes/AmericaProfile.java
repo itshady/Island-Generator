@@ -49,16 +49,4 @@ public class AmericaProfile extends WhittakerUtil {
         ));
 
     }
-
-    @Override
-    Map<String, Double> setBiomeProperty(Double minElevation, Double maxElevation,
-                                         Double minMoisture, Double maxMoisture) {
-        Map<String, Double> biome = new HashMap<>();
-        biome.put("minElevation", minElevation);
-        biome.put("maxElevation", maxElevation);
-        biome.put("minMoisture", minMoisture);
-        biome.put("maxMoisture", maxMoisture);
-
-        return biome;
-    }
 }

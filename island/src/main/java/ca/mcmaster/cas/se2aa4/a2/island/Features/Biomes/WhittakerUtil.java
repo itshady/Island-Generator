@@ -50,8 +50,16 @@ public abstract class WhittakerUtil implements DiagramProfile {
         return null;
     }
 
-    abstract Map<String, Double> setBiomeProperty(Double minElevation, Double maxElevation,
-                                                  Double minMoisture, Double maxMoisture);
+    protected Map<String, Double> setBiomeProperty(Double minElevation, Double maxElevation,
+                                         Double minMoisture, Double maxMoisture) {
+        Map<String, Double> biome = new HashMap<>();
+        biome.put("minElevation", minElevation);
+        biome.put("maxElevation", maxElevation);
+        biome.put("minMoisture", minMoisture);
+        biome.put("maxMoisture", maxMoisture);
+
+        return biome;
+    }
 
     // May need to refactor, since we use this same method in LandWaterGenerator
     protected List<Tile> getLandTiles() {
