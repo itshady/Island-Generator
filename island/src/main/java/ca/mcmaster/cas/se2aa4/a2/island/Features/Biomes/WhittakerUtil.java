@@ -47,7 +47,7 @@ public abstract class WhittakerUtil implements DiagramProfile {
             }
         }
 
-        return null;
+        throw new IllegalArgumentException("Either absorption or altitude is completely out of whittaker graph.");
     }
 
     protected Map<String, Double> setBiomeProperty(Double minElevation, Double maxElevation,

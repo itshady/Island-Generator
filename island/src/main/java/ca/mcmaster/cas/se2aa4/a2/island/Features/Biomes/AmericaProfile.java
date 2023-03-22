@@ -30,7 +30,7 @@ public class AmericaProfile extends WhittakerUtil {
                 65.0
         ));
         boundaries.put(Biome.MIXEDFOREST, setBiomeProperty(
-                75.0,
+                ElevationUtil.minAltitude + 75.0,
                 ElevationUtil.maxAltitude + 0.0,
                 25.0,
                 65.0

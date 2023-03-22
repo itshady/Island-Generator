@@ -30,6 +30,17 @@ public class Tile {
         setColor(biome.toColor());
     }
 
+    public Biome getBiome() {
+        return biome;
+    }
+
+    public void setAltitude(Integer altitude) {
+        // error handling for out of boundary altitudes
+        if (altitude < minAltitude) centroid.setAltitude(minAltitude);
+        else if (altitude > maxAltitude) centroid.setAltitude(maxAltitude);
+        else centroid.setAltitude(altitude);
+    }
+
     public void setWater(BodyOfWater water) {
         this.water = water;
     }
@@ -88,10 +99,10 @@ public class Tile {
     public void enhancePolygon() {
         if (polygon.getColor() == TEST.toColor()) return;
 
-        if (hasAquifer()) {
-            polygon.setColor(new Color(92, 255, 0));
-            return;
-        }
+//        if (hasAquifer()) {
+//            polygon.setColor(new Color(92, 255, 0));
+//            return;
+//        }
         // if ocean
         Color color;
         // ELEVATION HEATMAP

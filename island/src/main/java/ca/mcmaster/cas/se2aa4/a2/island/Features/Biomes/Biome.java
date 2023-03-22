@@ -4,9 +4,9 @@ import java.awt.*;
 
 public enum Biome {
     // USA
-    DESERT(new Color(234, 150, 77,255)),
+    DESERT(new Color(217, 186, 120,255)),
     TUNDRA(new Color(178, 233, 255,255)),
-    GRASSLAND(new Color(132, 238, 105,255)),
+    GRASSLAND(new Color(127, 189, 107,255)),
     MIXEDFOREST(new Color(96, 138, 98,255)),
     MONTANEFOREST(new Color(0, 131, 79,255)),
     SAVANNA(new Color(255, 100, 4)),
