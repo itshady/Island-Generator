@@ -106,7 +106,7 @@ public class AsiaProfileTest {
     @Test
     public void MangroveTest() {
         // Action
-        tile.setAbsorption(54.0);
+        tile.setAbsorption(55.0);
         tile.setAltitude(174);
 
         asiaProfile.process(island);
@@ -162,7 +162,7 @@ public class AsiaProfileTest {
         // Action
 
         // Out of boundary conditions
-        tile.setAbsorption(99.0);
+        tile.setAbsorption(65.0);
         tile.setAltitude(176);
 
         asiaProfile.process(island);

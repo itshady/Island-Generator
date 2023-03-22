@@ -60,7 +60,7 @@ public class AmericaProfileTest {
     public void DesertTest() {
         // Action
         tile.setAbsorption(0.0);
-        tile.setAltitude(149);
+        tile.setAltitude(150);
 
         americaProfile.process(island);
 
