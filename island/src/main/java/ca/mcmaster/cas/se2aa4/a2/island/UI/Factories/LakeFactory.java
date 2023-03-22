@@ -15,7 +15,7 @@ public class LakeFactory implements FeatureRunner {
             if (input != null) {
                 numOfLakes = Integer.parseInt(input);
             } else {
-                numOfLakes = new Random().nextInt(0,5);
+                numOfLakes = 0;
             }
             LakeGenerator lake = new LakeGenerator();
             lake.process(island, numOfLakes);

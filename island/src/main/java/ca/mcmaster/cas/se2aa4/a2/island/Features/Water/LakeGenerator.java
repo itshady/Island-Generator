@@ -17,7 +17,7 @@ public class LakeGenerator extends LandWaterGenerator {
         return false;
     }
 
-    protected BodyOfWater getNewWater() {
-        return new Lake();
+    protected BodyOfWater getNewWater(Integer multiplicity) {
+        return new Lake(multiplicity);
     }
 }

@@ -4,7 +4,7 @@ public abstract class Water implements BodyOfWater {
     Integer moisture;
     Integer multiplicity;
 
-    public void setMoisture(Integer moisture) {
+    protected void setMoisture(Integer moisture) {
         this.moisture = moisture;
     }
 
@@ -12,7 +12,7 @@ public abstract class Water implements BodyOfWater {
         return moisture;
     }
 
-    public void setMultiplicity(Integer multiplicity) {
+    protected void setMultiplicity(Integer multiplicity) {
         this.multiplicity = multiplicity;
     }
 

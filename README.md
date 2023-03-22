@@ -139,6 +139,16 @@ Check [Generator.md](./generator/generator.md) and [Visualizer.md](./visualizer/
 | F21 | User can choose which island shape | Hady, Richard, Cyruss |  03/14/23 | 03/14/23 | D |
 | F22 | Created Altimetric profile for Mountain | Hady |  03/14/23 | 03/14/23 | D |
 | F23 | Created Altimetric profile for Prairie | Hady |  03/14/23 | 03/14/23 | D |
-| F24 | User cna choose which Altimetric profile | Hady, Cyruss, Richard |  03/14/23 | 03/14/23 | D |
+| F24 | User can choose which Altimetric profile | Hady, Cyruss, Richard |  03/14/23 | 03/14/23 | D |
+| F  |  |  |   | | D |
+| F |  |  |   | | D |
+| F |  |  |   | | D |
+| F |  |  |   | | D |
+| F |  |  |   | | D |
+| F |  |  |   | | D |
+| F |  |  |   | | D |
+| F |  |  |   | | D |
+| F |  |  |   | | D |
+| F |  |  |   | | D |
 
 

@@ -52,13 +52,7 @@ public abstract class ShapeGenerator implements Shape {
      * Returns the centre coordinate (Used to determine triangle)
      */
     protected Coordinate determineMeshCentre() {
-        double max_x = Double.MIN_VALUE;
-        double max_y = Double.MIN_VALUE;
-        for (VertexDecorator v: island.getVertexDecorators()) {
-            max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
-            max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
-        }
-        Coordinate centre = new Coordinate(max_x/2, max_y/2);
-        return centre;
+        Geometries.Coordinate center = island.center();
+        return new Coordinate(center.getX(), center.getY());
     }
 }

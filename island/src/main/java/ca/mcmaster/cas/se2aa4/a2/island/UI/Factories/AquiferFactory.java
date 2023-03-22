@@ -16,7 +16,7 @@ public class AquiferFactory implements FeatureRunner {
             if (input != null) {
                 numOfAquifers = Integer.parseInt(input);
             } else {
-                numOfAquifers = new Random().nextInt(0,7);
+                numOfAquifers = 0;
             }
             AquiferGenerator aquifer = new AquiferGenerator();
             aquifer.process(island, numOfAquifers);

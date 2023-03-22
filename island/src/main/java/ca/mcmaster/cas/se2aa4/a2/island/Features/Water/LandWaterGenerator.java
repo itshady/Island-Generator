@@ -45,9 +45,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         if (source.hasBodyOfWater()) return false;
         if (containsWater(sourceNeighbours)) return false;
 
-        source.setWater(getNewWater());
-        //ONLY FOR TESTING
-//        source.getPolygon().setColor(TEST.toColor());
+        source.setWater(getNewWater(1));
 
         // start with only expanding source
         List<Tile> currentSetOfSources = new ArrayList<>();
@@ -62,7 +60,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
                 List<Tile> partOfBodyOfWater = new ArrayList<>();
                 partOfBodyOfWater.addAll(nextSetOfSources);
                 partOfBodyOfWater.addAll(currentSetOfSources);
-                expandWater(tile, tile.getNeighbours().size(), partOfBodyOfWater);
+                expandWater(tile, tile.getNeighbours().size(), partOfBodyOfWater, Math.abs(i-layers));
             }
             currentSetOfSources.addAll(nextSetOfSources);
         }
@@ -70,7 +68,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
     }
 
     // expansion = how many tiles to EXPAND by (max), can be lower if no tiles qualified
-    private void expandWater(Tile source, Integer expansion, List<Tile> currentBodyOfWater) {
+    private void expandWater(Tile source, Integer expansion, List<Tile> currentBodyOfWater, Integer multiplicity) {
         Integer[] neighbourIds = source.getNeighbours().toArray(new Integer[0]);
 
         // get random neighbours up to value of amount to expand
@@ -92,7 +90,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
 
             if (containsWater(neighboursNeighbours) && !canBeAdjacentWater()) continue;
 
-            neighbour.setWater(getNewWater());
+            neighbour.setWater(getNewWater(multiplicity));
             if (neighbour.hasLake()) updateTileAltitude(neighbour, source.getCentroid().getAltitude());
         }
     }
@@ -120,7 +118,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         return false;
     }
 
-    protected abstract BodyOfWater getNewWater();
+    protected abstract BodyOfWater getNewWater(Integer multiplicity);
 
     protected List<Tile> getLandTiles() {
         List<Tile> landTiles = new ArrayList<>();
