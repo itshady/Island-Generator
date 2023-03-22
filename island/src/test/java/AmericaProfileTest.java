@@ -56,144 +56,142 @@ public class AmericaProfileTest {
     }
 
 
-//    @Test
-//    public void DesertTest() {
-//        // Action
-//        tile.setAbsorption(0.0);
-//        tile.setAltitude(150);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertEquals(Biome.DESERT, tile.getBiome());
-//
-//        // Action
-//
-//        // Out of boundary conditions
-//        tile.setAbsorption(0.0);
-//        tile.setAltitude(151);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertNotEquals(Biome.DESERT, tile.getBiome());
-//
-//    }
-//
-//    @Test
-//    public void TundraTest() {
-//        // Action
-//        tile.setAbsorption(24.0);
-//        tile.setAltitude(151);
-//        System.out.println(tile.getAltitude());
-//        System.out.println(tile.getAbsorption());
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertEquals(Biome.TUNDRA, tile.getBiome());
-//
-//        // Action
-//
-//        // Out of boundary conditions
-//        tile.setAbsorption(25.0);
-//        tile.setAltitude(151);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertNotEquals(Biome.TUNDRA, tile.getBiome());
-//    }
-//
-//    @Test
-//    public void MixedForestTest() {
-//        // Action
-//        tile.setAbsorption(64.0);
-//        tile.setAltitude(176);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertEquals(Biome.MIXEDFOREST, tile.getBiome());
-//
-//        // Action
-//
-//        // Out of boundary conditions
-//        tile.setAbsorption(65.0);
-//        tile.setAltitude(151);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertNotEquals(Biome.MIXEDFOREST, tile.getBiome());
-//    }
-//    @Test
-//    public void GrasslandTest() {
-//        // Action
-//        tile.setAbsorption(64.0);
-//        tile.setAltitude(150);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertEquals(Biome.GRASSLAND, tile.getBiome());
-//
-//        // Action
-//
-//        // Out of boundary conditions
-//        tile.setAbsorption(66.0);
-//        tile.setAltitude(150);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertNotEquals(Biome.GRASSLAND, tile.getBiome());
-//    }
-//    @Test
-//    public void MontaneForestTest() {
-//        // Action
-//        tile.setAbsorption(99.0);
-//        tile.setAltitude(190);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertEquals(Biome.MONTANEFOREST, tile.getBiome());
-//
-//        // Action
-//
-//        // Out of boundary conditions
-//        tile.setAbsorption(64.0);
-//        tile.setAltitude(190);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertNotEquals(Biome.MONTANEFOREST, tile.getBiome());
-//    }
-//
-//    @Test
-//    public void SavannaTest() {
-//        // Action
-//        tile.setAbsorption(99.9);
-//        tile.setAltitude(219);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertEquals(Biome.SAVANNA, tile.getBiome());
-//
-//        // Action
-//
-//        // Out of boundary conditions
-//        tile.setAbsorption(99.9);
-//        tile.setAltitude(220);
-//
-//        americaProfile.process(island);
-//
-//        // Assertion
-//        assertNotEquals(Biome.SAVANNA, tile.getBiome());
-//    }
+    @Test
+    public void DesertTest() {
+        // Action
+        tile.setAbsorption(0.0);
+        tile.setAltitude(149);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertEquals(Biome.DESERT, tile.getBiome());
+
+        // Action
+
+        // Out of boundary conditions
+        tile.setAbsorption(0.0);
+        tile.setAltitude(151);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertNotEquals(Biome.DESERT, tile.getBiome());
+
+    }
+
+    @Test
+    public void TundraTest() {
+        // Action
+        tile.setAbsorption(24.0);
+        tile.setAltitude(151);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertEquals(Biome.TUNDRA, tile.getBiome());
+
+        // Action
+
+        // Out of boundary conditions
+        tile.setAbsorption(27.0);
+        tile.setAltitude(151);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertNotEquals(Biome.TUNDRA, tile.getBiome());
+    }
+
+    @Test
+    public void MixedForestTest() {
+        // Action
+        tile.setAbsorption(64.0);
+        tile.setAltitude(176);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertEquals(Biome.MIXEDFOREST, tile.getBiome());
+
+        // Action
+
+        // Out of boundary conditions
+        tile.setAbsorption(65.0);
+        tile.setAltitude(151);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertNotEquals(Biome.MIXEDFOREST, tile.getBiome());
+    }
+
+    @Test
+    public void GrasslandTest() {
+        // Action
+        tile.setAbsorption(64.0);
+        tile.setAltitude(174);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertEquals(Biome.GRASSLAND, tile.getBiome());
+
+        // Action
+
+        // Out of boundary conditions
+        tile.setAbsorption(64.0);
+        tile.setAltitude(176);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertNotEquals(Biome.GRASSLAND, tile.getBiome());
+    }
+    @Test
+    public void MontaneForestTest() {
+        // Action
+        tile.setAbsorption(99.0);
+        tile.setAltitude(221);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertEquals(Biome.MONTANEFOREST, tile.getBiome());
+
+        // Action
+
+        // Out of boundary conditions
+        tile.setAbsorption(64.0);
+        tile.setAltitude(190);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertNotEquals(Biome.MONTANEFOREST, tile.getBiome());
+    }
+    @Test
+    public void SavannaTest() {
+        // Action
+        tile.setAbsorption(99.9);
+        tile.setAltitude(220);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertEquals(Biome.SAVANNA, tile.getBiome());
+
+        // Action
+
+        // Out of boundary conditions
+        tile.setAbsorption(99.9);
+        tile.setAltitude(221);
+
+        americaProfile.process(island);
+
+        // Assertion
+        assertNotEquals(Biome.SAVANNA, tile.getBiome());
+    }
 
 
 }
