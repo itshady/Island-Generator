@@ -24,6 +24,8 @@ public class Configuration {
     public static final String RIVER = "river";
     @Feature
     public static final String SOIL = "soil";
+    @Feature
+    public static final String BIOME = "biomes";
     public static final String MODE = "mode";
     public static final String INPUT_MESH = "i";
     public static final String OUTPUT_MESH = "o";
@@ -75,6 +77,7 @@ public class Configuration {
         options.addOption(new Option(LAKE, true, "Maximum number of lakes on island"));
         options.addOption(new Option(RIVER, true, "Number of rivers on island"));
         options.addOption(new Option(SOIL, true, "Soil profile of land"));
+        options.addOption(new Option(BIOME, true, "Selects the whittaker diagram"));
         options.addOption(new Option(MODE, true, "Sandbox or Normal mode"));
         options.addOption(new Option(INPUT_MESH, true, "Path to input .mesh file"));
         options.addOption(new Option(OUTPUT_MESH, true, "Path to output file name"));
