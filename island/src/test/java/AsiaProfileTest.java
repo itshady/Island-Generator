@@ -4,7 +4,7 @@ import Geometries.Vertex;
 import Mesh.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Exporters.MeshToIslandConverter;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.AmericaProfile;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.AsiaProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.Biome;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.WhittakerUtil;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
@@ -21,10 +21,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AmericaProfileTest {
+public class AsiaProfileTest {
 
     static Tile tile;
-    static AmericaProfile americaProfile = new AmericaProfile();
+    static AsiaProfile asiaProfile = new AsiaProfile();
 
     static Island island;
 
@@ -60,9 +60,9 @@ public class AmericaProfileTest {
     public void DesertTest() {
         // Action
         tile.setAbsorption(0.0);
-        tile.setAltitude(149);
+        tile.setAltitude(174);
 
-        americaProfile.process(island);
+        asiaProfile.process(island);
 
         // Assertion
         assertEquals(Biome.DESERT, tile.getBiome());
@@ -71,9 +71,9 @@ public class AmericaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(0.0);
-        tile.setAltitude(151);
+        tile.setAltitude(176);
 
-        americaProfile.process(island);
+        asiaProfile.process(island);
 
         // Assertion
         assertNotEquals(Biome.DESERT, tile.getBiome());
@@ -81,117 +81,94 @@ public class AmericaProfileTest {
     }
 
     @Test
-    public void TundraTest() {
+    public void MountainTest() {
         // Action
         tile.setAbsorption(24.0);
-        tile.setAltitude(151);
+        tile.setAltitude(176);
 
-        americaProfile.process(island);
+        asiaProfile.process(island);
 
         // Assertion
-        assertEquals(Biome.TUNDRA, tile.getBiome());
+        assertEquals(Biome.MOUNTAIN, tile.getBiome());
 
         // Action
 
         // Out of boundary conditions
         tile.setAbsorption(27.0);
-        tile.setAltitude(151);
-
-        americaProfile.process(island);
-
-        // Assertion
-        assertNotEquals(Biome.TUNDRA, tile.getBiome());
-    }
-
-    @Test
-    public void MixedForestTest() {
-        // Action
-        tile.setAbsorption(64.0);
-        tile.setAltitude(176);
-
-        americaProfile.process(island);
-
-        // Assertion
-        assertEquals(Biome.MIXEDFOREST, tile.getBiome());
-
-        // Action
-
-        // Out of boundary conditions
-        tile.setAbsorption(65.0);
-        tile.setAltitude(151);
-
-        americaProfile.process(island);
-
-        // Assertion
-        assertNotEquals(Biome.MIXEDFOREST, tile.getBiome());
-    }
-
-    @Test
-    public void GrasslandTest() {
-        // Action
-        tile.setAbsorption(64.0);
         tile.setAltitude(174);
 
-        americaProfile.process(island);
+        asiaProfile.process(island);
 
         // Assertion
-        assertEquals(Biome.GRASSLAND, tile.getBiome());
+        assertNotEquals(Biome.MOUNTAIN, tile.getBiome());
+    }
+
+    @Test
+    public void MangroveTest() {
+        // Action
+        tile.setAbsorption(54.0);
+        tile.setAltitude(174);
+
+        asiaProfile.process(island);
+
+        // Assertion
+        assertEquals(Biome.MANGROVE, tile.getBiome());
 
         // Action
 
         // Out of boundary conditions
+        tile.setAbsorption(54.0);
+        tile.setAltitude(176);
+
+        asiaProfile.process(island);
+
+        // Assertion
+        assertNotEquals(Biome.MANGROVE, tile.getBiome());
+    }
+
+    @Test
+    public void AlpineTundraTest() {
+        // Action
         tile.setAbsorption(64.0);
         tile.setAltitude(176);
 
-        americaProfile.process(island);
+        asiaProfile.process(island);
 
         // Assertion
-        assertNotEquals(Biome.GRASSLAND, tile.getBiome());
+        assertEquals(Biome.ALPINETUNDRA, tile.getBiome());
+
+        // Action
+
+        // Out of boundary conditions
+        tile.setAbsorption(44.0);
+        tile.setAltitude(176);
+
+        asiaProfile.process(island);
+
+        // Assertion
+        assertNotEquals(Biome.ALPINETUNDRA, tile.getBiome());
     }
     @Test
-    public void MontaneForestTest() {
+    public void RainForestTest() {
         // Action
         tile.setAbsorption(99.0);
-        tile.setAltitude(221);
+        tile.setAltitude(174);
 
-        americaProfile.process(island);
+        asiaProfile.process(island);
 
         // Assertion
-        assertEquals(Biome.MONTANEFOREST, tile.getBiome());
+        assertEquals(Biome.RAINFOREST, tile.getBiome());
 
         // Action
 
         // Out of boundary conditions
-        tile.setAbsorption(64.0);
-        tile.setAltitude(190);
+        tile.setAbsorption(99.0);
+        tile.setAltitude(176);
 
-        americaProfile.process(island);
+        asiaProfile.process(island);
 
         // Assertion
-        assertNotEquals(Biome.MONTANEFOREST, tile.getBiome());
+        assertNotEquals(Biome.RAINFOREST, tile.getBiome());
     }
-    @Test
-    public void SavannaTest() {
-        // Action
-        tile.setAbsorption(99.9);
-        tile.setAltitude(219);
-
-        americaProfile.process(island);
-
-        // Assertion
-        assertEquals(Biome.SAVANNA, tile.getBiome());
-
-        // Action
-
-        // Out of boundary conditions
-        tile.setAbsorption(99.9);
-        tile.setAltitude(221);
-
-        americaProfile.process(island);
-
-        // Assertion
-        assertNotEquals(Biome.SAVANNA, tile.getBiome());
-    }
-
 
 }
