@@ -17,6 +17,8 @@ mvn clean install
 
 After installation, you'll find an application named `generator.jar` in the `generator` directory, and a file named `visualizer.jar` in the `visualizer` one. 
 
+# A2 - Mesh Generation
+
 ## Running The Product
 
 ### Without Make
@@ -91,7 +93,41 @@ Need help? Simply use `-h` or `--help` within the generator execution or run `ma
 
 If running the project in normal mode, vertices will be randomly choose between two colours. The segment colours will be the average colour between its two vertices and the polygon colour will be filled in as the average colour of all its vertices.
 
-_For TA: Go to JTSToGeneratorConverter [lines 97-105](https://github.com/2AA4-W23/a2---mesh-generator-team-1/blob/4009122343966ac63634c0c6535294f71b35b18b/generator/src/main/java/ca/mcmaster/cas/se2aa4/a2/generator/Helpers/JTSToGeneratorConverter.java#L97) to be able to test with colours_ 
+For TA: Go to JTSToGeneratorConverter [lines 97-105](https://github.com/2AA4-W23/a2---mesh-generator-team-1/blob/4009122343966ac63634c0c6535294f71b35b18b/generator/src/main/java/ca/mcmaster/cas/se2aa4/a2/generator/Helpers/JTSToGeneratorConverter.java#L97) to be able to test with colours_ 
+
+# A3 - Island Generation
+
+## Running The Product
+
+### Without Make
+
+To generate an island, enter this into the terminal. This assumes you have generated a mesh from 
+
+```
+cd island
+java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circle -altitude mountain -aquifer 2 -lake 3 -river 4 -soil dry -biomes america
+```
+
+Then go to the visualizer directory.
+```
+cd visualizer
+java -jar visualizer.jar -m ../generator/sample.mesh -o sample.svg
+```
+
+To vizualize the SVG file:
+
+- Open it with a web browser
+- If need be: Convert it into something else with tool slike `rsvg-convert`
+
+### With Make (Has scenarios)
+
+A makefile has been provided to easily create islands according to their default types (however, this can be adjusted accordingly).
+
+* To begin, make a starting irregular relaxed mesh with this command:
+  * `make run-irregular-relaxed`
+
+* To make an island, simply run the following command adjusting values to your liking in the makefile:
+  * `make island`
 
 ## How to contribute to the project
 
@@ -99,7 +135,7 @@ When you develop features and enrich the product, remember that you have first t
 
 ## Developer information
 
-Check [Generator.md](./generator/generator.md) and [Visualizer.md](./visualizer/visualizer.md) for more in depth information, such as geometry properties, or command line args.
+Check [Island.md](./island/island.md), [Generator.md](./generator/generator.md) and [Visualizer.md](./visualizer/visualizer.md) for more in depth information, such as geometry properties, or command line args.
 
 ## Backlog
 
