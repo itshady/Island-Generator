@@ -19,8 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CraterProfileTest {
     static Tile tile;
-    static AsiaProfile asiaProfile = new AsiaProfile();
-
     static Island island;
 
     @BeforeEach
@@ -66,5 +64,19 @@ class CraterProfileTest {
         elevation.process(island);
 
         assertEquals(ElevationUtil.minAltitude + 1, tile.getAltitude());
+    }
+
+    @Test
+    public void OuterHighAltitudeTest() {
+        // setup has 10x10 grid and centroid of our tile is (5,5) aka dead middle
+        // add some vertex far right and it should be a tile far from the center of the crater.
+        // Should reach MAX altitude if set extremely far
+        ElevationProfile elevation = new CraterProfile();
+        List<VertexDecorator> vertices = island.getVertexDecorators();
+        Vertex farVertex = new Vertex(500.0,500.0);
+        vertices.add(VertexDecorator.newBuilder().addVertex(farVertex).build());
+        elevation.process(island);
+
+        assertEquals(ElevationUtil.maxAltitude, tile.getAltitude());
     }
 }
