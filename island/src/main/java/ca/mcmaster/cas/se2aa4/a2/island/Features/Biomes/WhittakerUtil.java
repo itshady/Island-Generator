@@ -39,9 +39,10 @@ public abstract class WhittakerUtil implements DiagramProfile {
 
         for (Biome biome: boundaries.keySet()) {
             Map<String, Double> properties = boundaries.get(biome);
+//            System.out.println("Tile: " + tile + "- Absorption: " + tile.getAbsorption() + " - Elevation: " + tile.getAltitude());
 
-            if (elevation >= properties.get("minElevation") && elevation <= properties.get("maxElevation")) {
-                if (moisture >= properties.get("minMoisture") && moisture <= properties.get("maxMoisture")) {
+            if (Math.round(elevation) >= properties.get("minElevation") && Math.round(elevation) <= properties.get("maxElevation")) {
+                if (Math.round(moisture)  >= properties.get("minMoisture") && Math.round(moisture) <= properties.get("maxMoisture")) {
                     return biome;
                 }
             }
