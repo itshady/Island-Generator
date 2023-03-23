@@ -1,3 +1,5 @@
+package ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes;
+
 import Geometries.Polygon;
 import Geometries.Segment;
 import Geometries.Vertex;
