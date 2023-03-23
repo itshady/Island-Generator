@@ -175,7 +175,7 @@ _**NOTE: For any features with more than 1 person, means it was most likely one 
 | F19 | Support for Lagoon and Oval Shaped Island | Cyruss |  03/11/23 | 03/13/23 | D |
 | F20 | Support for Triangle Shaped Island | Richard |  03/12/23 | 03/13/23 | D |
 | F21 | User can choose which island shape | Hady, Richard, Cyruss |  03/12/23 | 03/14/23 | D |
-| F22 | Supper for ThreeCircle (Complex) Shaped Island | Hady | 03/13/23 | 03/13/23 | D |
+| F22 | Support for ThreeCircle (Complex) Shaped Island | Hady | 03/13/23 | 03/13/23 | D |
 | F23 | Created Altimetric profile for Mountain | Hady |  03/14/23 | 03/14/23 | D |
 | F24 | Created Altimetric profile for Prairie | Hady |  03/14/23 | 03/14/23 | D |
 | F25 | User can choose which Altimetric profile | Hady, Cyruss, Richard |  03/14/23 | 03/14/23 | D |
