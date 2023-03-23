@@ -114,6 +114,8 @@ Check [Generator.md](./generator/generator.md) and [Visualizer.md](./visualizer/
 
 ### Product Backlog
 
+_**NOTE: For any features with more than 1 person, means it was most likely one person worked on it and others came in later to finish or fix it. Or some rare cases of pair programming during difficult features.**_ 
+
 | Id | Feature title | Who? | Start | End | Status |
 |:--:|---------------|------|-------|-----|--------|
 | F01 | Square visualization | Richard, Hady, Cyruss | 01/30/23 | 02/03/23 | D |
@@ -134,21 +136,28 @@ Check [Generator.md](./generator/generator.md) and [Visualizer.md](./visualizer/
 | F16 | Minimize Mesh (unique segments) | Hady |  02/19/23 | 02/26/23 | D |
 | F17 | Minimize Mesh (unique polygons) | Hady |  02/19/23 | 02/26/23 | D |
 | F18 | Add Honeycomb Tessellation | Hady |  02/26/23 | 02/27/23 | D |
-| F19 | Support for Lagoon and Oval Shaped Island | Cyruss |  03/12/23 | 03/13/23 | D |
+| F19 | Support for Lagoon and Oval Shaped Island | Cyruss |  03/11/23 | 03/13/23 | D |
 | F20 | Support for Triangle Shaped Island | Richard |  03/12/23 | 03/13/23 | D |
-| F21 | User can choose which island shape | Hady, Richard, Cyruss |  03/14/23 | 03/14/23 | D |
-| F22 | Created Altimetric profile for Mountain | Hady |  03/14/23 | 03/14/23 | D |
-| F23 | Created Altimetric profile for Prairie | Hady |  03/14/23 | 03/14/23 | D |
-| F24 | User can choose which Altimetric profile | Hady, Cyruss, Richard |  03/14/23 | 03/14/23 | D |
-| F  |  |  |   | | D |
-| F |  |  |   | | D |
-| F |  |  |   | | D |
-| F |  |  |   | | D |
-| F |  |  |   | | D |
-| F |  |  |   | | D |
-| F |  |  |   | | D |
-| F |  |  |   | | D |
-| F |  |  |   | | D |
-| F |  |  |   | | D |
+| F21 | User can choose which island shape | Hady, Richard, Cyruss |  03/12/23 | 03/14/23 | D |
+| F22 | Supper for ThreeCircle (Complex) Shaped Island | Hady | 03/13/23 | 03/13/23 | D |
+| F23 | Created Altimetric profile for Mountain | Hady |  03/14/23 | 03/14/23 | D |
+| F24 | Created Altimetric profile for Prairie | Hady |  03/14/23 | 03/14/23 | D |
+| F25 | User can choose which Altimetric profile | Hady, Cyruss, Richard |  03/14/23 | 03/14/23 | D |
+| F26 | Add randomly spawning lakes of random size in a range within the island | Hady, Cyruss, Richard | 03/15/23 | 03/18/23 | D |
+| F27 | Randomly spawn rivers that flow from high to low elevation, ending in a lake/ocean or lowest point (creating a lake) | Richard, Hady | 03/18/23 | 03/18/23 | D |
+| F28 | User can choose the max number of lakes | | 03/15/23 | 03/18/23 | D |
+| F29 | Rivers can merge and multiply | Richard, Hady | 03/18/23 | 03/18/23 | D |
+| F30 | User can choose the number of rivers to spawn | Hady | 03/18/23 | 03/18/23 | D |
+| F31 | Aquifers randomly generated based on user input | Hady, Richard, Cyruss | 03/15/23 | 03/18/23 | D |
+| F32 | Add soil types that get moisture based on their type and the humidity | Cyruss | 03/18/23 | 03/18/23 | D |
+| F33 | Add Dry Soil Type | Cyruss, Hady | 03/18/23 | 03/20/23 | D |
+| F34 | Add Wet Soil Type | Cyruss, Hady | 03/18/23 | 03/20/23 | D |
+| F35 | User can choose the absorption profile | Cyruss | 03/18/23 | 03/18/23 | D |
+| F36 | Add a American Whittaker Diagram | Richard, Cyruss | 03/21/23 | 03/22/23 | D |
+| F37 | Add a second Asian Whittaker Diagram | Richard, Cyruss | 03/21/23 | 03/22/23 | D |
+| F38 | User can choose which whittaker diagram to follow | Richard, Cyruss | 03/21/23  | 03/22/23 | D |
+| F39 | Regions are split into biomes based on the environment and whittaker diagrams | Richard, Cyruss |  03/21/23 | 03/22/23 | D |
+| F40 | Randomly generate islands based off of a seed  | Hady | 03/15/23 | 03/18/23 | D |
+| F41 | Return the seed to the user and allow them to pass in a seed (this should produce the same map every time) | Hady | 03/15/23 | 03/18/23 | D |
 
 
