@@ -145,7 +145,7 @@ _**NOTE: For any features with more than 1 person, means it was most likely one 
 | F25 | User can choose which Altimetric profile | Hady, Cyruss, Richard |  03/14/23 | 03/14/23 | D |
 | F26 | Add randomly spawning lakes of random size in a range within the island | Hady, Cyruss, Richard | 03/15/23 | 03/18/23 | D |
 | F27 | Randomly spawn rivers that flow from high to low elevation, ending in a lake/ocean or lowest point (creating a lake) | Richard, Hady | 03/18/23 | 03/18/23 | D |
-| F28 | User can choose the max number of lakes | | 03/15/23 | 03/18/23 | D |
+| F28 | User can choose the max number of lakes | Hady | 03/15/23 | 03/18/23 | D |
 | F29 | Rivers can merge and multiply | Richard, Hady | 03/18/23 | 03/18/23 | D |
 | F30 | User can choose the number of rivers to spawn | Hady | 03/18/23 | 03/18/23 | D |
 | F31 | Aquifers randomly generated based on user input | Hady, Richard, Cyruss | 03/15/23 | 03/18/23 | D |
