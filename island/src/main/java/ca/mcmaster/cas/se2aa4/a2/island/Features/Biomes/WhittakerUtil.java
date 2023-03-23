@@ -27,7 +27,6 @@ public abstract class WhittakerUtil implements DiagramProfile {
         for (Tile tile: landTiles) {
             // Find associated biome for this tile
             Biome biome = checkForBiome(tile);
-            System.out.println(biome);
             tile.setBiome(biome);
         }
 
@@ -39,7 +38,6 @@ public abstract class WhittakerUtil implements DiagramProfile {
 
         for (Biome biome: boundaries.keySet()) {
             Map<String, Double> properties = boundaries.get(biome);
-//            System.out.println("Tile: " + tile + "- Absorption: " + tile.getAbsorption() + " - Elevation: " + tile.getAltitude());
 
             if (Math.round(elevation) >= properties.get("minElevation") && Math.round(elevation) <= properties.get("maxElevation")) {
                 if (Math.round(moisture)  >= properties.get("minMoisture") && Math.round(moisture) <= properties.get("maxMoisture")) {

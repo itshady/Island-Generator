@@ -20,9 +20,6 @@ public abstract class SoilUtil implements SoilProfile {
         this.island = island;
         setSoilProfiles(island);
         standardizeAbsorbances(island);
-        for (Tile tile : island.getTiles()) {
-            if (tile.hasLake()) System.out.println(tile.getWater().multiplicity() + " " + tile.getAbsorption());
-        }
     }
 
     private void setSoilProfiles(Island island) {
