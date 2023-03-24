@@ -1,0 +1,44 @@
+@startuml
+
+
+package UI {}
+package MeshADT {}
+package Exporter {}
+package Containers {}
+package JTS LightSalmon {}
+package "Apache CLI" LightSalmon {}
+package io LightBlue {}
+package Features {}
+package Geography {}
+
+Features <.. Containers
+Features <.. Geography
+Features <.. MeshADT
+Features <.. JTS
+Features <. UI
+
+Containers .> Geography
+Geography .> MeshADT
+Geography .> JTS
+
+MeshADT .> JTS
+MeshADT ..> io
+UI .> "Apache CLI"
+Exporter ..> Containers
+Exporter ..> Geography
+Exporter .> io
+MeshADT <. Exporter
+
+class Main
+
+Main .> UI
+Main .> MeshADT
+Main .> io
+Main .> Geography
+Main .> Exporter
+Main .> Containers
+Main .> Features
+
+
+
+@enduml

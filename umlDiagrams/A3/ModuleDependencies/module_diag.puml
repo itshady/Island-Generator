@@ -1,0 +1,23 @@
+@startuml
+
+skin rose
+
+title Island Module Dependencies - Class Diagram
+
+page 5x5
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+
+component [Island]
+component [MeshADT]
+
+component [CLI] #LightSalmon
+component [JTS] #LightSalmon
+
+[Island] --> [CLI]
+[Island] --> [MeshADT]
+[Island] --> [JTS]
+
+
+@enduml
