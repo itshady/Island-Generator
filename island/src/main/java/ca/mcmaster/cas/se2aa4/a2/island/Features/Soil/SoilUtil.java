@@ -25,15 +25,23 @@ public abstract class SoilUtil implements SoilProfile {
     private void setSoilProfiles(Island island) {
         for (Tile tile : island.getTiles()) {
             if (tile.isOcean()) tile.setAbsorption(0.0);
-            else if (tile.hasLake()) tile.setAbsorption((double)tile.getWater().moisture());
+            else if (tile.hasLake()) {
+                Double moisture = (double)tile.getWater().moisture();
+                tile.setAbsorption(moisture);
+                checkMinMax(moisture);
+            }
             else {
                 tile.setSoilProfile(getSoilProfile());
                 Double absorption = calculateAbsorption(tile);
-                if (absorption < minAbsorption) minAbsorption = absorption;
-                if (absorption > maxAbsorption) maxAbsorption = absorption;
+                checkMinMax(absorption);
                 tile.setAbsorption(absorption);
             }
         }
+    }
+
+    private void checkMinMax(Double moisture) {
+        if (moisture < minAbsorption) minAbsorption = moisture;
+        if (moisture > maxAbsorption) maxAbsorption = moisture;
     }
 
     public abstract SoilProfile getSoilProfile();
@@ -109,7 +117,7 @@ public abstract class SoilUtil implements SoilProfile {
     protected void standardizeAbsorbances(Island island) {
         for (Tile tile : island.getTiles()) {
             if (tile.isOcean()) tile.setAbsorption(0.0);
-            else if (tile.hasLake()) tile.setAbsorption(100.0);
+            else if (tile.hasLake()) tile.setAbsorption(tile.getWater().moisture()*1.0);
             else {
                 Double standardized = 100 * (tile.getAbsorption() - minAbsorption) / maxAbsorption;
                 tile.setAbsorption(standardized);
