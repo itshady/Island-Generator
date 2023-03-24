@@ -1,6 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 
 import java.util.ArrayList;

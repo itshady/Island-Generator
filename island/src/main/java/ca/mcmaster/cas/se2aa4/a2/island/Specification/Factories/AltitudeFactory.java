@@ -1,12 +1,11 @@
-package ca.mcmaster.cas.se2aa4.a2.island.UI.Factories;
+package ca.mcmaster.cas.se2aa4.a2.island.Specification.Factories;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.CraterProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.MountainProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.PrairieProfile;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.*;
-import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
+import ca.mcmaster.cas.se2aa4.a2.island.Configuration.Configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +24,9 @@ public class AltitudeFactory implements FeatureRunner {
     @Override
     public void process(Island island, Configuration config) {
         try {
-            Class altitudeClass = bindings.get(config.export(Configuration.ALTITUDE));
+            String value = config.export(Configuration.ALTITUDE);
+            value = value != null ? value.toLowerCase() : null;
+            Class altitudeClass = bindings.get(value);
             ElevationProfile shape = ((ElevationProfile) altitudeClass.getDeclaredConstructor().newInstance());
             shape.process(island);
         } catch (Exception e) {

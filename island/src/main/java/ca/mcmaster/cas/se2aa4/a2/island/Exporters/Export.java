@@ -2,10 +2,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.Exporters;
 
 import Mesh.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Converters.IslandToMeshConverter;
-import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Converters.MeshToIslandConverter;
-import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Converters.StructsToMeshConverter;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 
 public interface Export {
     Mesh upgrade(Structs.Mesh mesh);

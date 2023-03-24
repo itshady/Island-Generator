@@ -1,10 +1,8 @@
-package ca.mcmaster.cas.se2aa4.a2.island.UI.Factories;
+package ca.mcmaster.cas.se2aa4.a2.island.Specification.Factories;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.RiverGenerator;
-import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
-
-import java.util.Random;
+import ca.mcmaster.cas.se2aa4.a2.island.Configuration.Configuration;
 
 public class RiverFactory implements FeatureRunner {
     @Override

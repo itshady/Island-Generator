@@ -1,6 +1,5 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features;
 
-import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

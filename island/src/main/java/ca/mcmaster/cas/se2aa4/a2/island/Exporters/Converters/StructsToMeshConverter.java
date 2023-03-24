@@ -4,7 +4,6 @@ import EnhancedSets.*;
 import Geometries.*;
 import Mesh.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 
 import java.awt.Color;
 import java.util.ArrayList;

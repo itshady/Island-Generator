@@ -1,19 +1,13 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 
-import Geometries.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
-import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static ca.mcmaster.cas.se2aa4.a2.island.TileType.TEST;
 
 public class RiverGenerator implements WaterGenerator {
 

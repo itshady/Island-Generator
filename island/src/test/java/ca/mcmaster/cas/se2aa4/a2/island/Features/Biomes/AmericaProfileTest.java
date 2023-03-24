@@ -3,7 +3,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes;
 import Geometries.Polygon;
 import Geometries.Segment;
 import Geometries.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;

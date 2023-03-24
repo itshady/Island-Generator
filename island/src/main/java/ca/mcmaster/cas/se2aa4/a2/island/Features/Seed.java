@@ -1,7 +1,5 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features;
 
-import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
-
 import java.util.Random;
 
 public class Seed {

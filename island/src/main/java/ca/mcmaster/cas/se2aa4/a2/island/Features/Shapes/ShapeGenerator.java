@@ -1,10 +1,8 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 
-import Geometries.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Ocean;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
-import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;

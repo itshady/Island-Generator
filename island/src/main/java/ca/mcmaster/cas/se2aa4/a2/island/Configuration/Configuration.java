@@ -1,9 +1,8 @@
-package ca.mcmaster.cas.se2aa4.a2.island.UI;
+package ca.mcmaster.cas.se2aa4.a2.island.Configuration;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Circle;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Lagoon;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Oval;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Shape;
+import ca.mcmaster.cas.se2aa4.a2.island.Specification.Feature;
+import ca.mcmaster.cas.se2aa4.a2.island.Specification.PostFeatures;
+import ca.mcmaster.cas.se2aa4.a2.island.Specification.PreFeatures;
 import org.apache.commons.cli.*;
 
 import java.util.HashMap;

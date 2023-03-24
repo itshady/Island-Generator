@@ -1,16 +1,11 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 
-import Geometries.Segment;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
-import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static ca.mcmaster.cas.se2aa4.a2.island.TileType.TEST;
 
 public abstract class LandWaterGenerator implements WaterGenerator {
     Island island;

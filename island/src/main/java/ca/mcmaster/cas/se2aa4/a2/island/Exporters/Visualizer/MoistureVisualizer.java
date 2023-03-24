@@ -1,13 +1,10 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Exporters.Visualizer;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MoistureVisualizer extends Heatmap {
     /**

@@ -1,9 +1,10 @@
-package ca.mcmaster.cas.se2aa4.a2.island.UI;
+package ca.mcmaster.cas.se2aa4.a2.island.Specification;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Shape;
-import ca.mcmaster.cas.se2aa4.a2.island.UI.Factories.SpecificationFactory;
+import ca.mcmaster.cas.se2aa4.a2.island.Configuration.Configuration;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Visualizer.LagoonVisualizer;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Lagoon;
+import ca.mcmaster.cas.se2aa4.a2.island.Specification.Factories.SpecificationFactory;
 
 import java.lang.reflect.Field;
 
@@ -21,6 +22,13 @@ public class IslandBuilder implements Buildable {
             if(candidate.isAnnotationPresent(PreFeatures.class)) {
                 SpecificationFactory.run(candidate, island, configuration);
             }
+        }
+        String mode = configuration.export(Configuration.MODE);
+        if (mode != null && mode.equalsIgnoreCase("lagoon")) {
+            System.out.println("heyy");
+            new Lagoon().process(island);
+            new LagoonVisualizer().process(island);
+            return;
         }
 
         for(Field candidate: configuration.getClass().getFields()) {

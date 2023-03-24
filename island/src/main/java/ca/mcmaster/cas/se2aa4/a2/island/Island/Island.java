@@ -1,8 +1,6 @@
-package ca.mcmaster.cas.se2aa4.a2.island.Containers;
+package ca.mcmaster.cas.se2aa4.a2.island.Island;
 
 import Geometries.Coordinate;
-import Geometries.Segment;
-import Geometries.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;

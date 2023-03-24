@@ -1,14 +1,12 @@
 import Mesh.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.MeshFactory;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Export;
 import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Exporter;
-import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Visualizer.*;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
-import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
-import ca.mcmaster.cas.se2aa4.a2.island.UI.Buildable;
-import ca.mcmaster.cas.se2aa4.a2.island.UI.IslandBuilder;
+import ca.mcmaster.cas.se2aa4.a2.island.Configuration.Configuration;
+import ca.mcmaster.cas.se2aa4.a2.island.Specification.Buildable;
+import ca.mcmaster.cas.se2aa4.a2.island.Specification.IslandBuilder;
 
 import java.io.IOException;
 

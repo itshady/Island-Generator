@@ -1,14 +1,10 @@
-package ca.mcmaster.cas.se2aa4.a2.island.UI.Factories;
+package ca.mcmaster.cas.se2aa4.a2.island.Specification.Factories;
 
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.AmericaProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.AsiaProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.DiagramProfile;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.CraterProfile;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationProfile;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.MountainProfile;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.PrairieProfile;
-import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
+import ca.mcmaster.cas.se2aa4.a2.island.Configuration.Configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +22,9 @@ public class BiomeFactory implements FeatureRunner {
     @Override
     public void process(Island island, Configuration config) {
         try {
-            Class diagramClass = bindings.get(config.export(Configuration.BIOME));
+            String value = config.export(Configuration.BIOME);
+            value = value != null ? value.toLowerCase() : null;
+            Class diagramClass = bindings.get(value);
             DiagramProfile diagram = ((DiagramProfile) diagramClass.getDeclaredConstructor().newInstance());
             diagram.process(island);
         } catch (Exception e) {

@@ -1,14 +1,10 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation;
 
-import Geometries.Centroid;
 import Geometries.Coordinate;
-import Geometries.Segment;
-import Geometries.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
-import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 
 public abstract class ElevationUtil implements ElevationProfile {
     Coordinate center;
