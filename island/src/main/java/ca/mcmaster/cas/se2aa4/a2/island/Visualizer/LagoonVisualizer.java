@@ -10,13 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Adds water sources on top of current colors in island
+ */
 public class LagoonVisualizer implements Visualizer {
     private static final Map<String, Color> colors = new HashMap<>();
 
     static {
         colors.put("lagoon", new Color(103,168,209,255));
         colors.put("ocean", new Color(0,87,143,255));
-        colors.put("land", new Color(255,255,255,255));
     }
 
     @Override
