@@ -1,0 +1,85 @@
+@startuml
+
+package Containers {
+
+  class Island {
+
+    -decorators: List<VertexDecorator>
+    -borders: List<Border>
+    -tiles: List<Tile
+
+    +getBorders(): List<Border>
+    +getTiles(): List<Tile>
+    +register(List<VertexDecorator>, List<Border>, List<Tile>): void
+    +getTile(Integer): Tile
+    +center(): Coordinate
+
+  }
+
+}
+
+package Geography {
+  class VertexDecorator {
+    ~vertex: Vertex
+    ~isSpring: Boolean
+    ~altitude: Integer
+
+    +getVertex(): Vertex
+    +getAltitude(): Integer
+    +setAltitude(Integer): void
+    +{static} newBuilder(): VertexDecoratorBuilder
+    +getX(): double
+    +getY(): double
+  }
+  class Border {
+    ~segment: Segment
+    ~v1: VertexDecorator
+    ~v2: VertexDecorator
+    ~water: BodyOfWater
+
+    +getSegment(): Segment
+    +{static} newBuilder(): BorderBuilder
+    #Border(Segment, VertexDecorator, VertexDecorator)
+    +getV1(): VertexDecorator
+    +getV2(): VertexDecorator
+    +setWater(BodyOfWater): void
+    +hasRiver(): boolean
+    +enhanceBorder(): void
+    +getWater(): BodyOfWater
+
+  }
+  class Tile {
+
+    ~polygon: Polygon
+    ~borders: List<Border>
+    ~centroid: VertexDecorator
+    ~JTSPolygon: JTS.Polygon
+    ~water: BodyOfWater
+    ~absorption: Double
+    ~soilProfile: SoilProfile
+    ~biome: Biome
+
+    +setBiome(Biome): void
+    +getBiome(): Biome
+    +setWater(BodyOfWater): void
+    +getAltitude(): Integer
+    +isLand(): boolean
+    +isOcean(): boolean
+    +hasLake(): boolean
+    +hasAquifer(): boolean
+    +hasBodyOfWater(): boolean
+    +newBuilder(): TileBuilder
+    +getWater(): BodyOfWater
+    +setSoilProfile(SoilProfile): void
+    +setAbsorption(Double): void
+    +getAbsorption(): Double
+
+  }
+}
+
+Containers.Island *-- Geography.VertexDecorator
+Containers.Island *-- Geography.Border
+Containers.Island *-- Geography.Tile
+
+
+@enduml

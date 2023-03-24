@@ -1,0 +1,69 @@
+@startuml
+
+package Geography {
+
+  class Border
+  class BorderBuilder
+  class Tile
+  class TileBuilder
+  class VertexDecorator
+  class VertexDecoratorBuilder
+
+}
+
+package MeshADT {
+
+  class Geometries.Segment
+  class Geometries.Polygon
+  class Geometries.Vertex
+
+}
+
+package Geography {
+
+  class Border
+  class Tile
+  class VertexDecorator
+
+}
+
+package Features {
+
+  class Water.BodyOfWater
+  class Soil.SoilProfile
+  class Biomes.Biome
+
+}
+
+package JTS {
+
+  class Polygon
+
+}
+
+Border *-- MeshADT.Geometries.Segment
+Border *-- Geography.VertexDecorator
+Border *-- Features.Water.BodyOfWater
+
+BorderBuilder *-- MeshADT.Geometries.Segment
+BorderBuilder *-- Geography.VertexDecorator
+
+Tile *-- MeshADT.Geometries.Polygon
+Tile *-- Geography.Border
+Tile *-- Geography.VertexDecorator
+Tile *-- JTS.Polygon
+Tile *-- Features.Water.BodyOfWater
+Tile *-- Features.Soil.SoilProfile
+Tile *-- Features.Biomes.Biome
+
+TileBuilder *-- Geography.Border
+TileBuilder *-- Geography.VertexDecorator
+TileBuilder *-- MeshADT.Geometries.Polygon
+
+VertexDecorator *-- MeshADT.Geometries.Vertex
+
+VertexDecoratorBuilder *-- MeshADT.Geometries.Vertex
+
+
+
+@enduml

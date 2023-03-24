@@ -109,6 +109,7 @@ public abstract class SoilUtil implements SoilProfile {
     protected void standardizeAbsorbances(Island island) {
         for (Tile tile : island.getTiles()) {
             if (tile.isOcean()) tile.setAbsorption(0.0);
+            else if (tile.hasLake()) tile.setAbsorption(100.0);
             else {
                 Double standardized = 100 * (tile.getAbsorption() - minAbsorption) / maxAbsorption;
                 tile.setAbsorption(standardized);

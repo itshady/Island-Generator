@@ -26,8 +26,6 @@ public class MoistureVisualizer extends Heatmap {
         colors.add(new Color(110, 4, 71));
         colors.add(new Color(77,2,48));
 
-        if (tile.hasLake()) return colors.get(9);
-
         Double separation = 100.0 / colors.size();
         if (tile.getAbsorption() <= separation) return colors.get(0);
         else if (tile.getAbsorption() <= separation * 2) return colors.get(1);

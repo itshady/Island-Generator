@@ -1,0 +1,79 @@
+@startuml
+
+package Exporters {
+
+  class Exporter
+  class MeshToIslandConverter
+  class PolygonMapper
+  class StructsToMeshConverter
+
+}
+
+package Structs {
+  class Mesh
+}
+
+package MeshADT {
+
+  class Mesh
+  class Geometries.Polygon
+  class Geometries.Segment
+  class Geometries.Vertex
+  class EnhancedSets.SegmentSet
+  class EnhancedSets.VertexSet
+  class EnhancedSets.PolygonSet
+
+}
+
+package Geography {
+
+  class Border
+  class Tile
+  class VertexDecorator
+
+}
+
+package JTS {
+
+  class GeometryFactory
+  class CoordinateList
+
+}
+
+package Containers {
+
+  class Island
+
+}
+
+Exporter ..> Structs.Mesh
+Exporter ..> MeshADT.Mesh
+Exporter ..> Containers.Island
+Exporter ..> Geography.VertexDecorator
+Exporter ..> Geography.Border
+Exporter ..> Geography.Tile
+Exporter ..> MeshADT.Geometries.Polygon
+Exporter ..> MeshADT.Geometries.Segment
+Exporter ..> MeshADT.Geometries.Vertex
+
+MeshToIslandConverter *-- Geography.VertexDecorator
+MeshToIslandConverter *-- Geography.Border
+MeshToIslandConverter *-- Geography.Tile
+MeshToIslandConverter ..> MeshADT.Mesh
+MeshToIslandConverter ..> Containers.Island
+MeshToIslandConverter ..> MeshADT.EnhancedSets.SegmentSet
+MeshToIslandConverter ..> MeshADT.EnhancedSets.VertexSet
+MeshToIslandConverter ..> MeshADT.EnhancedSets.PolygonSet
+
+PolygonMapper ..> MeshADT.Geometries.Polygon
+PolygonMapper ..> JTS.GeometryFactory
+PolygonMapper ..> JTS.CoordinateList
+
+StructsToMeshConverter *-- MeshADT.Geometries.PropertyHandler
+StructsToMeshConverter *-- Structs.Mesh
+StructsToMeshConverter *-- MeshADT.EnhancedSets.VertexSet
+StructsToMeshConverter *-- MeshADT.EnhancedSets.SegmentSet
+StructsToMeshConverter *-- MeshADT.EnhancedSets.PolygonSet
+
+
+@enduml
