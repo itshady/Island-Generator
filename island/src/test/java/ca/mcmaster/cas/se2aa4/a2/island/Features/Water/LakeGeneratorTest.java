@@ -9,6 +9,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -20,8 +21,8 @@ class LakeGeneratorTest {
     static Tile tile;
     static Island island;
 
-    @BeforeAll
-    public static void setup() {
+    @BeforeEach
+    public void setup() {
         //Context
         Vertex v1 = new Vertex(0.0,0.0);
         Vertex v2 = new Vertex(0.0,10.0);
@@ -64,6 +65,7 @@ class LakeGeneratorTest {
     @Test
     public void GenerateNoLakeTest() {
         new LakeGenerator().process(island, 0);
+        System.out.println(tile.hasLake());
         assertFalse(tile.hasLake());
     }
 }
