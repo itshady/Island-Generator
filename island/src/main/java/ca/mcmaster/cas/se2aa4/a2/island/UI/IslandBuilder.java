@@ -1,6 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.island.UI;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes.Shape;
 import ca.mcmaster.cas.se2aa4.a2.island.UI.Factories.SpecificationFactory;
 
@@ -15,8 +16,22 @@ public class IslandBuilder implements Buildable {
     }
 
     private void configure(Configuration configuration) {
+        // Run before all features
+        for(Field candidate: configuration.getClass().getFields()) {
+            if(candidate.isAnnotationPresent(PreFeatures.class)) {
+                SpecificationFactory.run(candidate, island, configuration);
+            }
+        }
+
         for(Field candidate: configuration.getClass().getFields()) {
             if(candidate.isAnnotationPresent(Feature.class)) {
+                SpecificationFactory.run(candidate, island, configuration);
+            }
+        }
+
+        // Run after all features
+        for(Field candidate: configuration.getClass().getFields()) {
+            if(candidate.isAnnotationPresent(PostFeatures.class)) {
                 SpecificationFactory.run(candidate, island, configuration);
             }
         }

@@ -1,24 +1,15 @@
 package ca.mcmaster.cas.se2aa4.a2.island.UI.Factories;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Containers.Island;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.LakeGenerator;
 import ca.mcmaster.cas.se2aa4.a2.island.UI.Configuration;
 
-import java.util.Random;
-
-public class LakeFactory implements FeatureRunner {
+public class SeedFactory implements FeatureRunner {
     @Override
     public void process(Island island, Configuration config) {
         try {
-            String input = config.export(Configuration.LAKE);
-            Integer numOfLakes;
-            if (input != null) {
-                numOfLakes = Integer.parseInt(input);
-            } else {
-                numOfLakes = 0;
-            }
-            LakeGenerator lake = new LakeGenerator();
-            lake.process(island, numOfLakes);
+            new Seed().process(config.export(Configuration.SEED));
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

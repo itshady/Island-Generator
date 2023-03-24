@@ -14,7 +14,7 @@ public class SpecificationFactory {
 
     static {
         try {
-//            bindings.put(Configuration.class.getDeclaredField("SEED"), SeedFactory.class);
+            bindings.put(Configuration.class.getDeclaredField("SEED"), SeedFactory.class);
             bindings.put(Configuration.class.getDeclaredField("SHAPE"), ShapeFactory.class);
             bindings.put(Configuration.class.getDeclaredField("ALTITUDE"), AltitudeFactory.class);
             bindings.put(Configuration.class.getDeclaredField("AQUIFER"), AquiferFactory.class);
@@ -22,6 +22,7 @@ public class SpecificationFactory {
             bindings.put(Configuration.class.getDeclaredField("RIVER"), RiverFactory.class);
             bindings.put(Configuration.class.getDeclaredField("SOIL"), SoilFactory.class);
             bindings.put(Configuration.class.getDeclaredField("BIOME"), BiomeFactory.class);
+            bindings.put(Configuration.class.getDeclaredField("VISUAL"), VisualizerFactory.class);
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         }

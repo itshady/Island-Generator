@@ -18,9 +18,8 @@ public class Main {
         Configuration config = new Configuration(args);
         String input = config.export(Configuration.INPUT_MESH);
         String output = config.export(Configuration.OUTPUT_MESH);
-        new Seed().process(config.export(Configuration.SEED));
-        Export exporter = new Exporter();
 
+        Export exporter = new Exporter();
         Structs.Mesh aMesh = new MeshFactory().read(input);
         Mesh inputMesh = exporter.upgrade(aMesh);
         Island emptyIsland = exporter.upgrade(inputMesh);
@@ -28,15 +27,6 @@ public class Main {
         Buildable specification = new IslandBuilder(emptyIsland, config).create();
 
         Island richIsland = specification.build();
-        String visual = config.export(Configuration.VISUAL).toLowerCase();
-        Visualizer visualizer = switch (visual) {
-            case "altitude" -> new AltitudeVisualizer();
-            case "moisture" -> new MoistureVisualizer();
-            case "debug" -> new DebugVisualizer();
-            default -> new BiomeVisualizer();
-        };
-
-        visualizer.process(richIsland);
         Mesh richMesh = exporter.process(richIsland);
         Structs.Mesh exported = exporter.process(richMesh);
 

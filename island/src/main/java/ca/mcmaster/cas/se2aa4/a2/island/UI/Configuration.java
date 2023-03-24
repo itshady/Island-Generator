@@ -27,10 +27,12 @@ public class Configuration {
     @Feature
     public static final String BIOME = "biomes";
     public static final String MODE = "mode";
+    @PostFeatures
     public static final String VISUAL = "visual";
     public static final String INPUT_MESH = "i";
     public static final String OUTPUT_MESH = "o";
     public static final String HELP = "help";
+    @PreFeatures
     public static final String SEED = "seed";
 
 

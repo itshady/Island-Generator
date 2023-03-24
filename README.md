@@ -198,5 +198,6 @@ _**NOTE: For any features with more than 1 person, means it was most likely one 
 | F42 | Add Altitude Heatmap Visualization | Hady | 03/23/23 | 03/24/23 | D |
 | F43 | Add Moisture Heatmap Visualization | Hady | 03/23/23 | 03/24/23 | D |
 | F44 | Add Debug Visualization (show spring sources and aquifers) | Hady | 03/23/23 | 03/24/23 | D |
+| F45 | User can choose visualization type | Hady | 03/23/23 | 03/24/23 | D |
 
 
