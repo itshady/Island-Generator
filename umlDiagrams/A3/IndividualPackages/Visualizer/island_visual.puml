@@ -1,0 +1,47 @@
+@startuml
+
+title Island: Configuration
+
+package Visualizer {
+
+  interface Visualizer
+  abstract class Heatmap
+  class AltitudeVisualizer
+  class BiomeVisualizer
+  class DebugVisualizer
+  class LagoonVisualizer
+  class MoistureVisualizer
+
+}
+
+package Island {
+
+  class Island
+
+}
+
+package Geography {
+
+  class Border
+  class Tile
+  class VertexDecorator
+
+}
+
+AltitudeVisualizer --|> Visualizer.Heatmap
+
+BiomeVisualizer ..|> Visualizer.Visualizer
+
+DebugVisualizer ..|> Visualizer.Visualizer
+
+Heatmap ..|> Visualizer.Visualizer
+Heatmap .down.> Island
+Heatmap .up.> Geography
+
+LagoonVisualizer ..|> Visualizer.Visualizer
+
+MoistureVisualizer --|> Visualizer.Heatmap
+
+Visualizer .up.> Island.Island
+
+@enduml
