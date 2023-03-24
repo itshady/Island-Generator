@@ -4,6 +4,7 @@ import Geometries.Polygon;
 import Geometries.Segment;
 import Geometries.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Lake;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Ocean;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
@@ -15,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DryProfileTest {
+class SoilUtilTest {
 
     static Tile tile1;
     static Tile tile2;
@@ -63,11 +64,18 @@ class DryProfileTest {
         island.register(vertices, new ArrayList<>(), tiles);
     }
     @Test
-    public void moistureTest() {
+    public void LakeMoistureTest() {
         tile1.setWater(new Lake());
         new DryProfile().process(island);
 
-        // Expected value calculated prior, therefore source of truth
-        assertEquals(Math.round(73.97),  Math.round(tile2.getAbsorption()));
+        assertEquals(new Lake().moisture()*1.0, tile1.getAbsorption());
+    }
+
+    @Test
+    public void OceanMoistureTest() {
+        tile1.setWater(new Ocean());
+        new DryProfile().process(island);
+
+        assertEquals(new Ocean().moisture()*1.0, tile1.getAbsorption());
     }
 }
