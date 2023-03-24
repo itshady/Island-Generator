@@ -7,16 +7,15 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateList;
 import org.locationtech.jts.geom.GeometryFactory;
 
-
+/**
+ * Maps a
+ */
 public class PolygonMapper {
-
     /**
      * Converts an ADT Polygon to a JTS Polygon
      * @param p: A Structs Polygon
      * @return : A JTS Polygon
      */
-
-
     public org.locationtech.jts.geom.Polygon process(Polygon p) {
         GeometryFactory geometryFactory = new GeometryFactory();
         CoordinateList polygonCoordinates = new CoordinateList();

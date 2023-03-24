@@ -16,21 +16,19 @@ public class Main {
         Configuration config = new Configuration(args);
         String input = config.export(Configuration.INPUT_MESH);
         String output = config.export(Configuration.OUTPUT_MESH);
-        new Seed().process(config);
+        new Seed().process(config.export(Configuration.SEED));
         Exporter exporter = new Exporter();
+
         Structs.Mesh aMesh = new MeshFactory().read(input);
         Mesh inputMesh = exporter.upgrade(aMesh);
         Island emptyIsland = exporter.upgrade(inputMesh);
+
         Buildable specification = new IslandBuilder(emptyIsland, config).create();
+
         Island richIsland = specification.build();
         Mesh richMesh = exporter.process(richIsland);
         Structs.Mesh exported = exporter.process(richMesh);
+
         new MeshFactory().write(exported, output);
-
-
-//        Structs.Mesh aMesh = new MeshFactory().read(input);
-//        Structs.Mesh terrain = new Generator().generate(aMesh);
-//        MeshFactory terrainFactory = new MeshFactory();
-//        terrainFactory.write(terrain, output);
     }
 }

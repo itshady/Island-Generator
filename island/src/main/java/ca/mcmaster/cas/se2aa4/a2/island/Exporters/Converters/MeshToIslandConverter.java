@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.island.Exporters;
+package ca.mcmaster.cas.se2aa4.a2.island.Exporters.Converters;
 
 import EnhancedSets.PolygonSet;
 import EnhancedSets.SegmentSet;
@@ -16,17 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeshToIslandConverter {
-    private final Mesh mesh;
-
     private final List<VertexDecorator> vertexDecorators = new ArrayList<>();
     private final List<Border> borders = new ArrayList<>();
     private final List<Tile> tiles = new ArrayList<>();
 
-    public MeshToIslandConverter(Mesh mesh) {
-        this.mesh = mesh;
-    }
-
-    public Island process() {
+    public Island process(Mesh mesh) {
         Island island = new Island();
         convert(mesh.vertices);
         convert(mesh.segments);

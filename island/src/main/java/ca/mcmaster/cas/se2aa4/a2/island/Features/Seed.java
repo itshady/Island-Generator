@@ -8,13 +8,18 @@ public class Seed {
     private static Integer SEED;
     private static Random random;
 
-    public void process(Configuration config) {
-        String input = config.export(Configuration.SEED);
-        if (input != null) {
-            SEED = Integer.parseInt(input);
-        } else SEED = (new Random().nextInt()) & Integer.MAX_VALUE; // gets rid of signed bit so only positive seeds
-        System.out.println("Seed: " + SEED);
-        random = new Random(SEED);
+    public void process(String seed) {
+        try {
+            if (seed != null) {
+                SEED = Integer.parseInt(seed);
+            } else SEED = (new Random().nextInt()) & Integer.MAX_VALUE; // gets rid of signed bit so only positive seeds
+            System.out.println("Seed: " + SEED);
+            random = new Random(SEED);
+        } catch (Exception e) {
+            System.out.println("You did not enter a valid seed so a random one was chosen.");
+            SEED = (new Random().nextInt()) & Integer.MAX_VALUE;
+            random = new Random(SEED);
+        }
     }
 
     public static Integer nextInt() {
