@@ -70,12 +70,12 @@ public class Vertex {
 
     public void setColor(Color color) {
         this.color = color;
-        setVertex(getX(), getY(), color, thickness);
+        setVertex(getX(), getY(), color, propertyHandler.extractThicknessProperty(getVertex().getPropertiesList()));
     }
 
     public void setThickness(Float thickness) {
         this.thickness = thickness;
-        setVertex(getX(), getY(), color, thickness);
+        setVertex(getX(), getY(), propertyHandler.extractColorProperty(getVertex().getPropertiesList()), thickness);
     }
 
     public Integer getId() {
