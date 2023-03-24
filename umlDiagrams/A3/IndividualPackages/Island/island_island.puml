@@ -1,6 +1,8 @@
 @startuml
 
-package Containers {
+title Island: Island
+
+package Island {
 
   class Island {
 
