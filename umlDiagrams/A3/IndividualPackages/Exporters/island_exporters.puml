@@ -1,0 +1,67 @@
+@startuml
+
+title Island: Exporters
+
+package Geography {
+
+  class VertexDecorator
+  class Border
+  class Tile
+
+}
+
+package Exporters {
+
+  package Converters {
+    class IslandToMeshConverter
+    class MeshToIslandConverter
+    class MeshToStructsConverter
+    class StructsToMeshConverter
+  }
+
+  interface Export
+  class Exporter
+  class PolygonMapper
+
+}
+
+package MeshADT {
+
+  package EnhancedSets {
+
+    class PolygonSet
+    class SegmentSet
+    class VertexSet
+
+  }
+
+}
+
+package io {
+
+  package Structs {
+
+    class Polygon
+    class Vertex
+    class Segment
+
+  }
+
+}
+
+Exporters.Converters.MeshToIslandConverter *-down- Geography
+
+Export ..> Island
+Exporter ..|> Export
+
+Exporters.Converters.IslandToMeshConverter .> Island
+Exporters.Converters.IslandToMeshConverter ..> Geography
+
+Exporters.Converters.MeshToStructsConverter ..> MeshADT.EnhancedSets
+
+Exporters.Converters.StructsToMeshConverter *-- MeshADT.EnhancedSets
+Exporters.Converters.StructsToMeshConverter ..> io.Structs
+
+Exporters.PolygonMapper ..> io.Structs.Polygon
+
+@enduml
