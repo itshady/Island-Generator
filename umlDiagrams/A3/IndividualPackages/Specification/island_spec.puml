@@ -1,10 +1,13 @@
 @startuml
 
-package UI {
+title Island: Specification
+
+package Specification {
 
   interface Buildable
-  class Configuration
   annotation Feature
+  annotation PreFeature
+  annotation PostFeature
   class IslandBuilder
 
   package Factories {
@@ -17,19 +20,21 @@ package UI {
     class RiverFactory
     class ShapeFactory
     class SoilFactory
+    class SeedFactory
     class SpecificationFactory
+    class VisualizerFactory
 
   }
 
 }
 
-package Containers {
+package Island {
 
   class Island
 
 }
 
-package UI {
+package Configuration {
 
   class Configuration
 
@@ -46,34 +51,39 @@ package Features {
 
 }
 
-Configuration ..> Feature
-
-IslandBuilder *-- Containers.Island
+IslandBuilder *-- Island.Island
 IslandBuilder ..> Configuration
 
-FeatureRunner ..> Containers.Island
+FeatureRunner ..> Island.Island
 FeatureRunner ..> Configuration
 
 AltitudeFactory ..|> FeatureRunner
-AltitudeFactory ..> Features.Elevation.ElevationProfile
+AltitudeFactory .up.> Features.Elevation.ElevationProfile
 
 AquiferFactory ..|> FeatureRunner
-AquiferFactory ..> Features.Water.AquiferGenerator
+AquiferFactory .up.> Features.Water.AquiferGenerator
 
 BiomeFactory ..|> FeatureRunner
-BiomeFactory ..> Features.Biomes.DiagramProfile
+BiomeFactory .up.> Features.Biomes.DiagramProfile
 
 LakeFactory ..|> FeatureRunner
-LakeFactory ..> Features.Water.LakeGenerator
+LakeFactory .up.> Features.Water.LakeGenerator
 
 RiverFactory ..|> FeatureRunner
-RiverFactory ..> Features.Water.RiverGenerator
+RiverFactory .up.> Features.Water.RiverGenerator
 
 ShapeFactory ..|> FeatureRunner
-ShapeFactory ..> Features.Shapes.Shape
+ShapeFactory .up.> Features.Shapes.Shape
 
 SoilFactory ..|> FeatureRunner
-SoilFactory ..> Features.Soil.SoilProfile
+SoilFactory .up.> Features.Soil.SoilProfile
+
+SeedFactory ..|> FeatureRunner
+SeedFactory .up.> Features.Seed
+
+VisualizerFactory ..|> FeatureRunner
+VisualizerFactory .up.> Visuazlier.Visualizer
+
 
 SpecificationFactory ..> FeatureRunner
 
