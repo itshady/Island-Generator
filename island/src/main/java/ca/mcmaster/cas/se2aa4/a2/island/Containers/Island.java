@@ -42,10 +42,15 @@ public class Island {
     public Coordinate center() {
         double max_x = Double.MIN_VALUE;
         double max_y = Double.MIN_VALUE;
+        double min_x = Double.MAX_VALUE;
+        double min_y = Double.MAX_VALUE;
         for (VertexDecorator v: getVertexDecorators()) {
-            max_x = (Double.compare(max_x, v.getX()) < 0? v.getX(): max_x);
-            max_y = (Double.compare(max_y, v.getY()) < 0? v.getY(): max_y);
+            max_x = (Double.compare(max_x, v.getX()) < 0 ? v.getX() : max_x);
+            max_y = (Double.compare(max_y, v.getY()) < 0 ? v.getY() : max_y);
+
+            min_x = (Double.compare(min_x, v.getX()) > 0 ? v.getX() : min_x);
+            min_y = (Double.compare(min_y, v.getY()) > 0 ? v.getY() : min_y);
         }
-        return new Coordinate(max_x/2, max_y/2);
+        return new Coordinate((max_x+min_x)/2, (max_y+min_y)/2);
     }
 }
