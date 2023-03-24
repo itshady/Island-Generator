@@ -1,9 +1,11 @@
 @startuml
 
+title Island Architecture
+
 package Exporter {}
 package Configuration {}
 package Specification {}
-package Island {}
+package Containers {}
 package MeshADT {}
 package JTS LightSalmon {}
 package "Apache CLI" LightSalmon {}
@@ -20,19 +22,21 @@ Configuration <. Specification
 
 Main ..> Exporter
 Exporter ..> MeshADT
-Specification ..> Island
-Exporter .> Island
+Specification ..> Containers
+Exporter .> Containers
 Exporter ..> io
 
-Island .> JTS
+Containers .> JTS
 Configuration ..> "Apache CLI"
 Exporter ..> Geography
 
 Specification .> Features
-Features ..> Island
+Features ..> Containers
 Features ..> Geography
 Features ..> MeshADT
 Features ..> JTS
+
+Containers ..> Geography
 
 
 @enduml
