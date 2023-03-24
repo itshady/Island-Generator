@@ -3,12 +3,10 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 import Geometries.Polygon;
 import Geometries.Segment;
 import Geometries.Vertex;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.AmericaProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LakeGeneratorTest {
+class AquiferGeneratorTest {
     static Tile tile;
     static Island island;
 
@@ -57,14 +55,14 @@ class LakeGeneratorTest {
     }
 
     @Test
-    public void GenerateLakeTest() {
-        new LakeGenerator().process(island, 1);
-        assertTrue(tile.hasLake());
+    public void GenerateAquiferTest() {
+        new AquiferGenerator().process(island, 1);
+        assertTrue(tile.hasAquifer());
     }
 
     @Test
-    public void GenerateNoLakeTest() {
-        new LakeGenerator().process(island, 0);
-        assertFalse(tile.hasLake());
+    public void GenerateNoAquiferTest() {
+        new AquiferGenerator().process(island, 0);
+        assertFalse(tile.hasAquifer());
     }
 }
