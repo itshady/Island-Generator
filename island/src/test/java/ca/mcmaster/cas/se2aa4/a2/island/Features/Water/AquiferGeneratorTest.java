@@ -16,8 +16,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AquiferGeneratorTest {
+    List<Segment> segmentList = new ArrayList<>();
+    Polygon mockPolygon;
     static Tile tile;
+    static Tile tile2;
+    static Tile tile3;
     static Island island;
+    List<VertexDecorator> vertices = new ArrayList<>();
+    List<Border> borders = new ArrayList<>();
+    List<Tile> tiles = new ArrayList<>();
 
     @BeforeEach
     public void setup() {
@@ -26,30 +33,26 @@ class AquiferGeneratorTest {
         Vertex v2 = new Vertex(0.0,10.0);
         Vertex v3 = new Vertex(10.0,10.0);
         Vertex v4 = new Vertex(10.0,0.0);
-        List<Segment> segmentList = new ArrayList<>();
+
         segmentList.add(new Segment(v1, v2));
         segmentList.add(new Segment(v2, v3));
         segmentList.add(new Segment(v3, v4));
         segmentList.add(new Segment(v1, v3));
-        Polygon mockPolygon = new Polygon(segmentList);
 
-        List<VertexDecorator> vertices = new ArrayList<>();
+        mockPolygon = new Polygon(segmentList);
         vertices.add(VertexDecorator.newBuilder().addVertex(v1).build());
         vertices.add(VertexDecorator.newBuilder().addVertex(v2).build());
         vertices.add(VertexDecorator.newBuilder().addVertex(v3).build());
         vertices.add(VertexDecorator.newBuilder().addVertex(v4).build());
 
-        List<Border> borders = new ArrayList<>();
         borders.add(Border.newBuilder().addV1(vertices.get(0)).addV2(vertices.get(0)).addSegment(new Segment(v1,  v2)).build());
-        List<Border> mockBorder = new ArrayList<>();
-        mockBorder.add(borders.get(0));
 
         VertexDecorator mockCentroid = VertexDecorator.newBuilder().addVertex(new Vertex(5.0,5.0)).build();
         vertices.add(mockCentroid);
 
-        tile = Tile.newBuilder().addPolygon(mockPolygon).addBorders(mockBorder).addCentroid(mockCentroid).build();
+        tile = Tile.newBuilder().addPolygon(mockPolygon).addBorders(borders).addCentroid(mockCentroid).build();
+
         island = new Island();
-        List<Tile> tiles = new ArrayList<>();
         tiles.add(tile);
         island.register(vertices, new ArrayList<>(), tiles);
     }
@@ -58,6 +61,31 @@ class AquiferGeneratorTest {
     public void GenerateAquiferTest() {
         new AquiferGenerator().process(island, 1);
         assertTrue(tile.hasAquifer());
+    }
+
+    @Test
+    public void GenerateSpecificNumberOfAquiferTest() {
+        VertexDecorator mockCentroid2 = VertexDecorator.newBuilder().addVertex(new Vertex(50.0,50.0)).build();
+        vertices.add(mockCentroid2);
+        segmentList.add(new Segment(new Vertex(12.0,32.0),new Vertex(12.0,20.0)));
+        Polygon polygon2 = new Polygon(segmentList);
+        tile2 = Tile.newBuilder().addPolygon(polygon2).addBorders(borders).addCentroid(mockCentroid2).build();
+        island.getTiles().add(tile2);
+
+        VertexDecorator mockCentroid3 = VertexDecorator.newBuilder().addVertex(new Vertex(100.0,100.0)).build();
+        vertices.add(mockCentroid3);
+
+        segmentList.add(new Segment(new Vertex(131.0,22.0),new Vertex(11.0,23.0)));
+        Polygon polygon3 = new Polygon(segmentList);
+        tile3 = Tile.newBuilder().addPolygon(polygon3).addBorders(borders).addCentroid(mockCentroid3).build();
+        island.getTiles().add(tile3);
+        new AquiferGenerator().process(island, 2);
+
+        int aquiferCounter = 0;
+        for (Tile tile : island.getTiles()) {
+            if (tile.hasAquifer()) aquiferCounter++;
+        }
+        assertEquals(2, aquiferCounter);
     }
 
     @Test
