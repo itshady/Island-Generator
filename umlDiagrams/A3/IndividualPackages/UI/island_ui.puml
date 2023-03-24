@@ -1,0 +1,80 @@
+@startuml
+
+package UI {
+
+  interface Buildable
+  class Configuration
+  annotation Feature
+  class IslandBuilder
+
+  package Factories {
+
+    interface FeatureRunner
+    class AltitudeFactory
+    class AquiferFactory
+    class BiomeFactory
+    class LakeFactory
+    class RiverFactory
+    class ShapeFactory
+    class SoilFactory
+    class SpecificationFactory
+
+  }
+
+}
+
+package Containers {
+
+  class Island
+
+}
+
+package UI {
+
+  class Configuration
+
+}
+
+package Features {
+
+  interface Elevation.ElevationProfile
+  class Water.AquiferGenerator
+  class Water.LakeGenerator
+  class Biomes.DiagramProfile
+  class Shapes.Shape
+  class Soil.SoilProfile
+
+}
+
+Configuration ..> Feature
+
+IslandBuilder *-- Containers.Island
+IslandBuilder ..> Configuration
+
+FeatureRunner ..> Containers.Island
+FeatureRunner ..> Configuration
+
+AltitudeFactory ..|> FeatureRunner
+AltitudeFactory ..> Features.Elevation.ElevationProfile
+
+AquiferFactory ..|> FeatureRunner
+AquiferFactory ..> Features.Water.AquiferGenerator
+
+BiomeFactory ..|> FeatureRunner
+BiomeFactory ..> Features.Biomes.DiagramProfile
+
+LakeFactory ..|> FeatureRunner
+LakeFactory ..> Features.Water.LakeGenerator
+
+RiverFactory ..|> FeatureRunner
+RiverFactory ..> Features.Water.RiverGenerator
+
+ShapeFactory ..|> FeatureRunner
+ShapeFactory ..> Features.Shapes.Shape
+
+SoilFactory ..|> FeatureRunner
+SoilFactory ..> Features.Soil.SoilProfile
+
+SpecificationFactory ..> FeatureRunner
+
+@enduml

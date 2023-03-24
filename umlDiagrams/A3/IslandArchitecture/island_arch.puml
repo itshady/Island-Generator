@@ -1,0 +1,42 @@
+@startuml
+
+title Island Architecture
+
+package Exporter {}
+package Configuration {}
+package Specification {}
+package Containers {}
+package MeshADT {}
+package JTS LightSalmon {}
+package "Apache CLI" LightSalmon {}
+package io LightBlue {}
+package Geography {}
+package Features {}
+
+class Main
+
+
+Main .> Specification
+Configuration <. Main
+Configuration <. Specification
+
+Main ..> Exporter
+Exporter ..> MeshADT
+Specification ..> Containers
+Exporter .> Containers
+Exporter ..> io
+
+Containers .> JTS
+Configuration ..> "Apache CLI"
+Exporter ..> Geography
+
+Specification .> Features
+Features ..> Containers
+Features ..> Geography
+Features ..> MeshADT
+Features ..> JTS
+
+Containers ..> Geography
+
+
+@enduml
