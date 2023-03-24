@@ -20,45 +20,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExporterTest {
-//    @Test
-//    public void StructsToMeshTest() {
+    @Test
+    public void StructsToMeshTest() {
     // Left this as it is not to be tested for island.
     // This is a MeshADT functionality that we rewrote to show how proper OOP would be done here.
-//        int[] ints = new int[]{1, 2, 3, 4, 5};
-//        List<Integer> neighbourIds = Arrays.stream(ints).boxed().toList();
-//
-//        List<Structs.Vertex> vertices = new ArrayList<>();
-//        vertices.add(Structs.Vertex.newBuilder().setX(0).setY(1).build());
-//
-//        Structs.Property centroid = Structs.Property.newBuilder().setKey("centroid").setValue("true").build();
-//        vertices.add(Structs.Vertex.newBuilder().setX(1).setY(2).addProperties(centroid).build());
-//        vertices.add(Structs.Vertex.newBuilder().setX(2).setY(3).build());
-//        vertices.add(Structs.Vertex.newBuilder().setX(4).setY(3).build());
-//
-//        List<Structs.Segment> segments = new ArrayList<>();
-//        segments.add(Structs.Segment.newBuilder().setV1Idx(0).setV2Idx(1).build());
-//        segments.add(Structs.Segment.newBuilder().setV1Idx(1).setV2Idx(2).build());
-//        segments.add(Structs.Segment.newBuilder().setV1Idx(2).setV2Idx(3).build());
-//        List<Structs.Polygon> polygons = new ArrayList<>();
-//        polygons.add(Structs.Polygon.newBuilder()
-//                .setCentroidIdx(2)
-//                .addSegmentIdxs(0)
-//                .addSegmentIdxs(1)
-//                .addSegmentIdxs(2)
-//                .addAllNeighborIdxs(neighbourIds).build());
-//
-//        Structs.Mesh mesh = Structs.Mesh.newBuilder()
-//                .addAllPolygons(polygons)
-//                .addAllSegments(segments)
-//                .addAllVertices(vertices).build();
-//        Mesh meshADT = new Exporter().upgrade(mesh);
-//        Polygon polygonADT = meshADT.polygons.get(0);
-//        assertEquals(2, polygonADT.getCentroidId());
-//        Integer[] neighboursADT = polygonADT.getPolygonNeighbours().toArray(new Integer[0]);
-//        for (int i=0; i<ints.length; i++) {
-//            assertEquals(ints[i], neighboursADT[i]);
-//        }
-//    }
+    }
 
     @Test
     public void MeshToIslandTest() {
