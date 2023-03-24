@@ -1,4 +1,4 @@
-package ca.mcmaster.cas.se2aa4.a2.island.Exporters.Visualizer;
+package ca.mcmaster.cas.se2aa4.a2.island.Visualizer;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes.Biome;

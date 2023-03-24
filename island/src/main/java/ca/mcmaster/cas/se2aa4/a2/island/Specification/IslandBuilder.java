@@ -2,7 +2,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.Specification;
 
 import ca.mcmaster.cas.se2aa4.a2.island.Configuration.Configuration;
 import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
-import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Visualizer.LagoonVisualizer;
+import ca.mcmaster.cas.se2aa4.a2.island.Visualizer.LagoonVisualizer;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Lagoon;
 import ca.mcmaster.cas.se2aa4.a2.island.Specification.Factories.SpecificationFactory;
 
