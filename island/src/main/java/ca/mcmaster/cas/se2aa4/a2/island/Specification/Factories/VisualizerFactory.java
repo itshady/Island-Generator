@@ -9,26 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VisualizerFactory implements FeatureRunner {
-//    @Override
-//    public void process(Island island, Configuration config) {
-//        try {
-//            if (config.export(Configuration.VISUAL) == null) {
-//                new BiomeVisualizer();
-//            }
-//            String visual = config.export(Configuration.VISUAL).toLowerCase();
-//            Visualizer visualizer = switch (visual) {
-//                case "altitude" -> new AltitudeVisualizer();
-//                case "moisture" -> new MoistureVisualizer();
-//                case "debug" -> new DebugVisualizer();
-//                default -> new BiomeVisualizer();
-//            };
-//
-//            visualizer.process(island);
-//        } catch (Exception e) {
-//            throw new IllegalArgumentException(e);
-//        }
-//    }
-
 
     private static final Map<String, Class> bindings = new HashMap<>();
     private static final String DEFAULT = null;

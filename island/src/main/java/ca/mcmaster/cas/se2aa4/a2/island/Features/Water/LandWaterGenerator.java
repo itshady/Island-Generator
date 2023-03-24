@@ -39,7 +39,6 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         // if source or neighbours are water, then don't make it a water source
         if (source.hasBodyOfWater()) return false;
         if (containsWater(sourceNeighbours)) return false;
-
         source.setWater(getNewWater(1));
         source.setWaterCenter(true);
 
