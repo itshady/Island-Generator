@@ -32,11 +32,11 @@ public class MeshToIslandConverter {
     private void convert(PolygonSet polygons) {
         for (Polygon polygon : polygons) {
             tiles.add(
-                    Tile.newBuilder()
-                            .addPolygon(polygon)
-                            .addBorders(getAssociatedBorders(polygon.getSegmentList()))
-                            .addCentroid(vertexDecorators.get(polygon.getCentroidId()))
-                            .build()
+                Tile.newBuilder()
+                    .addPolygon(polygon)
+                    .addBorders(getAssociatedBorders(polygon.getSegmentList()))
+                    .addCentroid(vertexDecorators.get(polygon.getCentroidId()))
+                    .build()
             );
         }
     }
@@ -56,7 +56,7 @@ public class MeshToIslandConverter {
             VertexDecorator v2 = vertexDecorators.get(segment.getV2().getId());
 
             borders.add(
-                    Border.newBuilder().addSegment(segment).addV1(v1).addV2(v2).build()
+                Border.newBuilder().addSegment(segment).addV1(v1).addV2(v2).build()
             );
         }
     }
@@ -64,7 +64,7 @@ public class MeshToIslandConverter {
     private void convert(VertexSet vertices) {
         for (Vertex vertex : vertices) {
             vertexDecorators.add(
-                    VertexDecorator.newBuilder().addVertex(vertex).build()
+                VertexDecorator.newBuilder().addVertex(vertex).build()
             );
         }
     }

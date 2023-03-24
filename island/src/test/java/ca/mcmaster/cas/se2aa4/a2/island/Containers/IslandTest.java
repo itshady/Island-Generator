@@ -66,7 +66,7 @@ class IslandTest {
         // center should be (5,5) since the smallest coord is (0,0) and largest (10,10)
         Island island = new Island();
         island.register(vertices, borders, tiles);
-        
+
         assertEquals(new Coordinate(5,5), island.center());
     }
 }

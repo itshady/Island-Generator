@@ -5,11 +5,21 @@ import Geometries.Vertex;
 import java.awt.*;
 
 public class VertexDecorator {
-
     Vertex vertex;
-
     Boolean isSpring = false;
     Integer altitude;
+
+    public boolean isSpring() {
+        return isSpring;
+    }
+
+    public void setSpring(Boolean spring) {
+        isSpring = spring;
+    }
+
+    public void setThickness(Float thickness) {
+        vertex.setThickness(thickness);
+    }
 
     public Vertex getVertex() {
         return vertex;
@@ -31,10 +41,6 @@ public class VertexDecorator {
         this.vertex = vertex;
     }
 
-    public void setIsSpring(Boolean isSpring) {
-        this.isSpring = isSpring;
-    }
-
     public double getX() {
         return this.vertex.getX();
     }
@@ -46,6 +52,4 @@ public class VertexDecorator {
     public void setColor(Color color) {
         vertex.setColor(color);
     }
-
-
 }

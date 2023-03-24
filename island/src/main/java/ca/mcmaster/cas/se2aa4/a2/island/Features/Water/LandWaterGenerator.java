@@ -46,6 +46,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         if (containsWater(sourceNeighbours)) return false;
 
         source.setWater(getNewWater(1));
+        source.setWaterCenter(true);
 
         // start with only expanding source
         List<Tile> currentSetOfSources = new ArrayList<>();

@@ -21,18 +21,12 @@ import java.util.Set;
 public class StructsToMeshConverter {
 
     private final PropertyHandler propertyHandler = new PropertyHandler();
-    private final Structs.Mesh mesh;
     private VertexSet vertices = new VertexSet();
     private SegmentSet segments = new SegmentSet();
     private PolygonSet polygons = new PolygonSet();
 
-    public StructsToMeshConverter(Structs.Mesh mesh) {
-        this.mesh = mesh;
-    }
-    public Mesh process() {
-        Island container = new Island();
-
-        extractGeometries(mesh);
+    public Mesh process(Structs.Mesh structsMesh) {
+        extractGeometries(structsMesh);
 
         Mesh mesh = new Mesh();
         mesh.vertices = vertices;
@@ -60,8 +54,6 @@ public class StructsToMeshConverter {
         for (Structs.Vertex vertex : vertices) {
             double vertexX = vertex.getX();
             double vertexY = vertex.getY();
-//            Color vertexColor = propertyHandler.extractColorProperty(vertex.getPropertiesList());
-//            Float vertexThickness = propertyHandler.extractThicknessProperty(vertex.getPropertiesList());
             boolean isCentroid = propertyHandler.isCentroid(vertex.getPropertiesList());
             if (isCentroid) {
                 Centroid generatorVertex = new Centroid(vertexX, vertexY, Color.BLACK, 0f);
@@ -86,8 +78,6 @@ public class StructsToMeshConverter {
         for (Structs.Segment segment : segments) {
             Vertex vertex1 = generatorVertices.get(segment.getV1Idx());
             Vertex vertex2 = generatorVertices.get(segment.getV2Idx());
-//            Color segmentColor = propertyHandler.extractColorProperty(segment.getPropertiesList());
-//            Float segmentThickness = propertyHandler.extractThicknessProperty(segment.getPropertiesList());
             Segment generatorSegment = new Segment(vertex1, vertex2, Color.BLACK, 0f);
             segmentSet.add(generatorSegment);
         }

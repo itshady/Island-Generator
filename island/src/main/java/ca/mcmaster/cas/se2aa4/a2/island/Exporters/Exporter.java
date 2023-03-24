@@ -8,19 +8,13 @@ import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Converters.MeshToIslandConvert
 import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Converters.MeshToStructsConverter;
 import ca.mcmaster.cas.se2aa4.a2.island.Exporters.Converters.StructsToMeshConverter;
 
-public class Exporter {
-
-    public Exporter() {
-    }
-
+public class Exporter implements Export {
     public Mesh upgrade(Structs.Mesh mesh) {
-        StructsToMeshConverter converter = new StructsToMeshConverter(mesh);
-        return converter.process();
+        return new StructsToMeshConverter().process(mesh);
     }
 
     public Island upgrade(Mesh mesh) {
-        MeshToIslandConverter converter = new MeshToIslandConverter();
-        return converter.process(mesh);
+        return new MeshToIslandConverter().process(mesh);
     }
 
     public Mesh process(Island island) {

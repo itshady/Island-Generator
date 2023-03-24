@@ -27,10 +27,10 @@ public class Configuration {
     @Feature
     public static final String BIOME = "biomes";
     public static final String MODE = "mode";
+    public static final String VISUAL = "visual";
     public static final String INPUT_MESH = "i";
     public static final String OUTPUT_MESH = "o";
     public static final String HELP = "help";
-
     public static final String SEED = "seed";
 
 
@@ -81,7 +81,8 @@ public class Configuration {
         options.addOption(new Option(MODE, true, "Sandbox or Normal mode"));
         options.addOption(new Option(INPUT_MESH, true, "Path to input .mesh file"));
         options.addOption(new Option(OUTPUT_MESH, true, "Path to output file name"));
-        options.addOption(new Option(SEED, true, "Seed"));
+        options.addOption(new Option(SEED, true, "Seed for the island generation"));
+        options.addOption(new Option(VISUAL, true, "Visual Mode: Debug, Normal, Altitude, Moisture"));
         // Global help
         options.addOption(new Option(HELP, false, "print help message"));
         return options;

@@ -35,7 +35,6 @@ public class IslandToMeshConverter {
     private List<Segment> convertToSegments(List<Border> borders) {
         List<Segment> segments = new ArrayList<>();
         for (Border border : borders) {
-            border.enhanceBorder();
             segments.add(border.getSegment());
         }
         return segments;
@@ -44,7 +43,6 @@ public class IslandToMeshConverter {
     private PolygonSet convertToPolygons(List<Tile> tiles) {
         PolygonSet set = new PolygonSet();
         for (Tile tile : tiles) {
-            tile.enhancePolygon();
             set.add(tile.getPolygon());
         }
         return set;

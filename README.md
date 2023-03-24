@@ -195,5 +195,8 @@ _**NOTE: For any features with more than 1 person, means it was most likely one 
 | F39 | Regions are split into biomes based on the environment and whittaker diagrams | Richard, Cyruss |  03/21/23 | 03/22/23 | D |
 | F40 | Randomly generate islands based off of a seed  | Hady | 03/15/23 | 03/18/23 | D |
 | F41 | Return the seed to the user and allow them to pass in a seed (this should produce the same map every time) | Hady | 03/15/23 | 03/18/23 | D |
+| F42 | Add Altitude Heatmap Visualization | Hady | 03/23/23 | 03/24/23 | D |
+| F43 | Add Moisture Heatmap Visualization | Hady | 03/23/23 | 03/24/23 | D |
+| F44 | Add Debug Visualization (show spring sources and aquifers) | Hady | 03/23/23 | 03/24/23 | D |
 
 

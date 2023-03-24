@@ -6,12 +6,10 @@ import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.BodyOfWater;
 import java.awt.*;
 
 public class Border {
-
     Segment segment;
     VertexDecorator v1;
     VertexDecorator v2;
     BodyOfWater water;
-
 
     public Segment getSegment() {
         return segment;
@@ -27,20 +25,12 @@ public class Border {
         this.v2 = v2;
     }
 
-    private void setColor(Color color) {
+    public void setColor(Color color) {
         segment.setColor(color);
     }
 
-    public Color getColor() {
-        return segment.getColor();
-    }
-
-    private void setThickness(float thickness) {
+    public void setThickness(float thickness) {
         segment.setThickness(thickness);
-    }
-
-    public Float getThickness() {
-        return segment.getThickness();
     }
 
     public VertexDecorator getV1() {
@@ -55,13 +45,6 @@ public class Border {
 
     public boolean hasRiver() {
         return water != null && water.isRiver();
-    }
-
-    public void enhanceBorder() {
-        if (hasRiver()) {
-            setColor(new Color(103,168,209,255));
-            setThickness(water.multiplicity());
-        }
     }
 
     public BodyOfWater getWater(){

@@ -6,16 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileBuilder {
-
     List<Border> borders = new ArrayList<>();
     VertexDecorator centroid;
-
     Polygon polygon;
-
-
-    public TileBuilder() {
-
-    }
 
     public TileBuilder addBorders(List<Border> borderList) {
         borders = borderList;
@@ -36,7 +29,6 @@ public class TileBuilder {
         if (polygon == null || borders.isEmpty() || centroid == null) throw new IllegalArgumentException("Polygon is required and borders list cannot be empty.");
         return new Tile(polygon, borders, centroid);
     }
-
 }
 
 

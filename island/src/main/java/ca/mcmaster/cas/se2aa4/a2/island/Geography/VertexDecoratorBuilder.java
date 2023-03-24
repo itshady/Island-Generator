@@ -8,9 +8,6 @@ import java.util.List;
 
 public class VertexDecoratorBuilder {
     Vertex vertex;
-    public VertexDecoratorBuilder() {
-
-    }
 
     public VertexDecoratorBuilder addVertex(Vertex v) {
         vertex = v;

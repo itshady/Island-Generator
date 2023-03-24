@@ -59,7 +59,7 @@ public class RiverGenerator implements WaterGenerator {
             return false;
         }
 
-//        spring.setColor(Color.MAGENTA);
+        spring.setSpring(true);
         VertexDecorator previousSpring = spring;
         List<River> riverList = new ArrayList<>();
         while (spring != null) {

@@ -10,24 +10,14 @@ import java.util.Objects;
  */
 public class Vertex {
     private Structs.Vertex vertex;
-    private final Color color;
+    private Color color;
     private Integer id;
     private final Coordinate coordinate;
     private final PropertyHandler propertyHandler = new PropertyHandler();
-    private Integer altitude = -1;
-
-    public void setAltitude(Integer altitude) {
-        if (this.altitude != -1) return;
-        this.altitude = altitude;
-        updateVertex(propertyHandler.setAltitudeProperty(altitude));
-    }
+    private Float thickness;
 
     public Coordinate getCoordinate() {
         return coordinate;
-    }
-
-    public Integer getAltitude() {
-        return altitude;
     }
 
     public boolean isCentroid() {
@@ -44,6 +34,7 @@ public class Vertex {
     public Vertex(Double x, Double y, Float thickness) {
         // randomly generates colour
         color = propertyHandler.generateColors();
+        this.thickness = thickness;
         coordinate = new Coordinate(x,y);
         setVertex(x, y, color, thickness);
     }
@@ -57,6 +48,7 @@ public class Vertex {
     public Vertex(Double x, Double y, Color color, Float thickness) {
         this.color = color;
         coordinate = new Coordinate(x,y);
+        this.thickness = thickness;
         setVertex(x, y, color, thickness);
     }
 
@@ -77,7 +69,13 @@ public class Vertex {
     }
 
     public void setColor(Color color) {
-        setVertex(getX(), getY(), color);
+        this.color = color;
+        setVertex(getX(), getY(), color, thickness);
+    }
+
+    public void setThickness(Float thickness) {
+        this.thickness = thickness;
+        setVertex(getX(), getY(), color, thickness);
     }
 
     public Integer getId() {
@@ -101,10 +99,6 @@ public class Vertex {
                 .addProperties(propertyHandler.setThicknessProperty(thickness))
                 .addProperties(propertyHandler.setCentroidProperty(isCentroid()))
                 .build();
-    }
-
-    private void updateVertex(Structs.Property property) {
-        vertex = Structs.Vertex.newBuilder(vertex).addProperties(property).build();
     }
 
     /**
