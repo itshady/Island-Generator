@@ -1,0 +1,50 @@
+@startuml
+
+title Island: Configuration
+
+package Configuration {
+
+  class Configuration {
+
+    +{static} SHAPE: String
+    +{static} ALTITUDE: String
+    +{static} AQUIFER: String
+    +{static} LAKE: String
+    +{static} RIVER: String
+    +{static} SOIL: String
+    +{static} BIOME: String
+    +{static} MODE: String
+    +{static} VISUAL: String
+    +{static} INPUT_MESH: String
+    +{static} OUTPUT_MESH: String
+    +{static} HELP: String
+    +{static} SEED: String
+    -cli: CommandLine
+
+    +this(String[])
+    -help(): void
+    +export(): Map<String, String>
+    +export(String): String
+    -parser(): CommandLineParser
+    -options(): Options
+
+  }
+
+}
+
+package Specification {
+
+  annotation Feature
+  annotation PostFeature
+  annotation PreFeature
+
+}
+
+package "Apache CLI" LightSalmon {}
+
+Configuration.Configuration *-- "Apache CLI"
+Configuration.Configuration ..> Specification
+
+
+
+@enduml
