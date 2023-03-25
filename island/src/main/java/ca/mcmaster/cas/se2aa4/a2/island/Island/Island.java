@@ -86,4 +86,18 @@ public class Island {
     public Double height() {
         return this.height;
     }
+
+    /**
+     * Given all tiles in the island, returns the "land" classified ones
+     * @return List<Tile>
+     */
+    public List<Tile> getLandTiles() {
+        List<Tile> landTiles = new ArrayList<>();
+        for (Tile tile : this.getTiles()) {
+            if (tile.isLand()) {
+                landTiles.add(tile);
+            }
+        }
+        return landTiles;
+    }
 }

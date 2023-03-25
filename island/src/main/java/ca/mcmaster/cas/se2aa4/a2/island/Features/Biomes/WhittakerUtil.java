@@ -34,7 +34,7 @@ public abstract class WhittakerUtil implements DiagramProfile {
      * Iterate through all land tiles, and associate biome to a tile
      */
     private void setAllBiomes() {
-        List<Tile> landTiles = getLandTiles();
+        List<Tile> landTiles = island.getLandTiles();
         for (Tile tile: landTiles) {
             // Find associated biome for this tile
             Biome biome = checkForBiome(tile);
@@ -84,19 +84,7 @@ public abstract class WhittakerUtil implements DiagramProfile {
         return biome;
     }
 
-    /**
-     * Given all tiles in the island, returns the "land" classified ones
-     * @return List<Tile>
-     */
-    protected List<Tile> getLandTiles() {
-        List<Tile> landTiles = new ArrayList<>();
-        for (Tile tile : island.getTiles()) {
-            if (tile.isLand()) {
-                landTiles.add(tile);
-            }
-        }
-        return landTiles;
-    }
+
 
 
 }

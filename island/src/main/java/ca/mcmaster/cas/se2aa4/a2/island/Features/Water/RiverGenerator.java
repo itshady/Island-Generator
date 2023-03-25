@@ -35,7 +35,7 @@ public class RiverGenerator implements WaterGenerator {
         VertexDecorator spring;
 
         // Randomly select a tile
-        List<Tile> landTiles = getLandTiles();
+        List<Tile> landTiles = island.getLandTiles();
         Seed seed = Seed.getInstance();
         Tile source = landTiles.get(seed.nextInt(landTiles.size()));
 
@@ -145,16 +145,6 @@ public class RiverGenerator implements WaterGenerator {
             }
         }
         return maxValue;
-    }
-
-    private List<Tile> getLandTiles() {
-        List<Tile> landTiles = new ArrayList<>();
-        for (Tile tile : island.getTiles()) {
-            if (tile.isLand()) {
-                landTiles.add(tile);
-            }
-        }
-        return landTiles;
     }
 
     private boolean borderOfLandWater(Border border) {

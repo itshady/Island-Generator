@@ -45,7 +45,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
      */
     public boolean generateWater(Integer layers) {
         // get random source tile for lake
-        List<Tile> landTiles = getLandTiles();
+        List<Tile> landTiles = island.getLandTiles();
         Seed seed = Seed.getInstance();
         Tile source = landTiles.get(seed.nextInt(landTiles.size()));
 
@@ -145,15 +145,6 @@ public abstract class LandWaterGenerator implements WaterGenerator {
 
     protected abstract BodyOfWater getNewWater(Integer multiplicity);
 
-    protected List<Tile> getLandTiles() {
-        List<Tile> landTiles = new ArrayList<>();
-        for (Tile tile : island.getTiles()) {
-            if (tile.isLand()) {
-                landTiles.add(tile);
-            }
-        }
-        return landTiles;
-    }
 
     private boolean hasOceanNeighbours(Tile tile) {
         List<Tile> neighbours = new ArrayList<>(tile.getNeighbours().stream()
