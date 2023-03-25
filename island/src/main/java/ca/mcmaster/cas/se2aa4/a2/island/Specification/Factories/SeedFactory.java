@@ -16,7 +16,7 @@ public class SeedFactory implements FeatureRunner {
      */
 
     @Override
-    public void process(Island island, Configuration config) {
+    public void run(Island island, Configuration config) {
         try {
             Seed seed = Seed.getInstance(config.export(Configuration.SEED));
             seed.printSeed();

@@ -1,0 +1,83 @@
+@startuml
+
+participant Main
+participant Configuration
+participant MeshFactory
+participant Exporter
+participant IslandBuilder
+participant SpecificationFactory
+participant Factories
+participant PreFeatures
+participant Features
+participant PostFeatures
+
+
+Main -> Configuration : new(args)
+activate Main
+activate Configuration
+
+Configuration --> Main : return this
+deactivate Configuration
+
+Main -> MeshFactory : read(input)
+activate MeshFactory
+MeshFactory --> Main : return Structs.Mesh
+deactivate MeshFactory
+
+
+Main -> Exporter : upgrade(Structs.Mesh)
+activate Exporter
+Exporter --> Main : return Mesh
+Main -> Exporter : upgrade(Mesh)
+Exporter --> Main : return Island
+deactivate Exporter
+
+Main -> IslandBuilder : create()
+activate IslandBuilder
+
+IslandBuilder -> SpecificationFactory : run(candidate, island, configuration)
+activate SpecificationFactory
+
+SpecificationFactory -> Factories : run(island, config)
+activate Factories
+Factories -> PreFeatures : process(Island.island)
+activate PreFeatures
+PreFeatures --> Factories
+deactivate PreFeatures
+
+Factories --> SpecificationFactory: run(island, config)
+SpecificationFactory -> Factories
+Factories -> Features : process(Island.island)
+activate Features
+Features --> Factories
+deactivate Features
+
+Factories --> SpecificationFactory
+SpecificationFactory -> Factories : run(island, config)
+Factories -> PostFeatures : process(Island.island)
+activate PostFeatures
+PostFeatures --> Factories
+deactivate PostFeatures
+
+Factories --> SpecificationFactory
+
+SpecificationFactory --> IslandBuilder
+deactivate Factories
+deactivate SpecificationFactory
+IslandBuilder --> Main : return Island
+deactivate IslandBuilder
+Main -> Exporter : process(Island)
+activate Exporter
+Exporter --> Main : return Mesh
+Main -> Exporter : process(Mesh)
+Exporter --> Main : return Structs.Mesh
+deactivate Exporter
+
+Main -> MeshFactory : write(Structs.Mesh, output)
+activate MeshFactory
+MeshFactory --> Main
+deactivate MeshFactory
+
+deactivate Main
+
+@enduml

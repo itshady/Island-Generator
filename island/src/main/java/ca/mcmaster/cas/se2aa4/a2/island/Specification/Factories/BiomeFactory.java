@@ -30,7 +30,7 @@ public class BiomeFactory implements FeatureRunner {
      * @param config: Specified whittaker diagram
      */
     @Override
-    public void process(Island island, Configuration config) {
+    public void run(Island island, Configuration config) {
         try {
             String value = config.export(Configuration.BIOME);
             value = value != null ? value.toLowerCase() : null;

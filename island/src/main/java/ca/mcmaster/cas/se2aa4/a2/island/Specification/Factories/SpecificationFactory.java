@@ -43,7 +43,7 @@ public class SpecificationFactory {
         try {
             Class featureClass = bindings.get(feature);
             FeatureRunner runner = (FeatureRunner) featureClass.getDeclaredConstructor().newInstance();
-            runner.process(island, config);
+            runner.run(island, config);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
