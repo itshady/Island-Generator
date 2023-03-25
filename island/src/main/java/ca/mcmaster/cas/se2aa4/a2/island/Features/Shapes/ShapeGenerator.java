@@ -7,7 +7,9 @@ import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 
-
+/**
+ * Contains methods that all Shapes require to be processed
+ */
 public abstract class ShapeGenerator implements Shape {
     Island island;
 
