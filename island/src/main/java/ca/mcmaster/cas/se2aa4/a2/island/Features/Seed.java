@@ -2,6 +2,9 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features;
 
 import java.util.Random;
 
+/**
+ * Singleton for reproducibility of islands
+ */
 public class Seed {
     private static Seed instance;
     private Integer seed;
@@ -12,6 +15,10 @@ public class Seed {
         this.random = random;
     }
 
+    /**
+     * Gather the specific "seed" value to reproduce that island
+     * @return Seed value
+     */
     public static Seed getInstance() {
         if (instance != null) return instance;
         int seed = (new Random().nextInt()) & Integer.MAX_VALUE; // gets rid of signed bit so only positive seeds
@@ -19,6 +26,11 @@ public class Seed {
         instance = new Seed(seed, random);
         return instance;
     }
+
+    /**
+     * Gather the specific "seed" value to reproduce that island
+     * @return Seed value
+     */
     public static Seed getInstance(String inputSeed) {
         if (inputSeed == null) return getInstance();
         try {
