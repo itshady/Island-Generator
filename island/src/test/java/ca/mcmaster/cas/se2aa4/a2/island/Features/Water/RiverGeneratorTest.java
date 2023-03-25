@@ -20,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class RiverGeneratorTest {
     List<Segment> segmentList = new ArrayList<>();
     Polygon mockPolygon;
-    static Tile tile;
-    static Island island = new Island();
+    Tile tile;
+    Island island = new Island();
     List<VertexDecorator> vertices = new ArrayList<>();
     List<Border> borders = new ArrayList<>();
     List<Tile> tiles = new ArrayList<>();

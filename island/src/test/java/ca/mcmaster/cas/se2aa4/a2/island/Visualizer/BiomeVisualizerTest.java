@@ -20,8 +20,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BiomeVisualizerTest {
-    static Tile tile;
-    static Island island;
+    Tile tile;
+    Island island;
 
     @BeforeEach
     public void setup() {

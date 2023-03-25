@@ -8,7 +8,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AmericaProfileTest {
 
-    static Tile tile;
-    static AmericaProfile americaProfile = new AmericaProfile();
+    Tile tile;
+    AmericaProfile americaProfile = new AmericaProfile();
 
-    static Island island;
+    Island island;
 
-    @BeforeAll
-    public static void setup() {
+    @BeforeEach
+    public void setup() {
 
         //Context
         Vertex v1 = new Vertex(0.0,0.0);

@@ -8,6 +8,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,12 +17,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IslandTest {
-    static List<VertexDecorator> vertices = new ArrayList<>();
-    static List<Border> borders = new ArrayList<>();
-    static List<Tile> tiles = new ArrayList<>();
+    List<VertexDecorator> vertices = new ArrayList<>();
+    List<Border> borders = new ArrayList<>();
+    List<Tile> tiles = new ArrayList<>();
 
-    @BeforeAll
-    public static void setup() {
+    @BeforeEach
+    public void setup() {
         //Context
         Vertex v1 = new Vertex(0.0,0.0);
         Vertex v2 = new Vertex(0.0,10.0);
@@ -67,5 +68,30 @@ class IslandTest {
         island.register(vertices, borders, tiles);
 
         assertEquals(new Coordinate(5,5), island.center());
+    }
+
+    @Test
+    public void WidthandHeightTest() {
+        // the smallest coord is (0,0) and largest (10,15)
+        Island island = new Island();
+        vertices.add(VertexDecorator.newBuilder().addVertex(new Vertex(10.0,15.0)).build());
+        island.register(vertices, borders, tiles);
+
+        assertEquals(10, island.width());
+        assertEquals(15, island.height());
+    }
+
+    @Test
+    public void ShallowCopyTest() {
+        // the smallest coord is (0,0) and largest (10,15)
+        Island island = new Island();
+        island.register(vertices, borders, tiles);
+        Integer numOfVertices = island.getVertexDecorators().size();
+
+        // Action
+        island.getVertexDecorators().add(VertexDecorator.newBuilder().addVertex(new Vertex(10.0,15.0)).build());
+
+        // Assertion
+        assertEquals(numOfVertices, island.getVertexDecorators().size());
     }
 }

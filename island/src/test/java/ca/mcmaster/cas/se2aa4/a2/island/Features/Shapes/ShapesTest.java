@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ShapesTest {
     List<Segment> segmentList = new ArrayList<>();
     Polygon mockPolygon;
-    static Island island = new Island();
+    Island island = new Island();
     List<VertexDecorator> vertices = new ArrayList<>();
     List<Border> borders = new ArrayList<>();
     List<Tile> tiles = new ArrayList<>();

@@ -18,8 +18,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AltitudeVisualizerTest {
-    static Tile tile;
-    static Island island;
+    Tile tile;
+    Island island;
 
     @BeforeEach
     public void setup() {

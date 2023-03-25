@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WetProfileTest {
 
-    static Tile tile1;
-    static Tile tile2;
-    static Island island;
+    Tile tile1;
+    Tile tile2;
+    Island island;
 
     @BeforeEach
     public void setup() {

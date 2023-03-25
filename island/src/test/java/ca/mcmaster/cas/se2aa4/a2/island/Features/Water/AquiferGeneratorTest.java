@@ -18,10 +18,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class AquiferGeneratorTest {
     List<Segment> segmentList = new ArrayList<>();
     Polygon mockPolygon;
-    static Tile tile;
-    static Tile tile2;
-    static Tile tile3;
-    static Island island;
+    Tile tile;
+    Tile tile2;
+    Tile tile3;
+    Island island;
     List<VertexDecorator> vertices = new ArrayList<>();
     List<Border> borders = new ArrayList<>();
     List<Tile> tiles = new ArrayList<>();
