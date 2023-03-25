@@ -7,10 +7,18 @@ import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 
 import java.util.*;
 
+/**
+ * Contains methods that all Land Water (lakes, aquifers) must contain
+ */
 public abstract class LandWaterGenerator implements WaterGenerator {
     Island island;
     List<Tile> uncheckedTiles;
 
+    /**
+     * For user specified number of water elements, and for all land tiles, create bodies of water
+     * @param island, container for all Vertex Decorator, Borders, and Tiles
+     * @param numOfBodies
+     */
     public void process(Island island, Integer numOfBodies) {
         this.island = island;
         uncheckedTiles = new ArrayList<>(island.getTiles());
@@ -24,10 +32,17 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         }
     }
 
+    /**
+     * Obtaining the number of tile layers the body of water will extrude from the source
+     * @return
+     */
     protected abstract Integer getLayers();
 
-    // returns true if water was successfully generated
-    // layers = number of layers of how big water will be
+    /**
+     * Sets the number of layers for the body of water
+     * @param layers, how big the water will be
+     * @return true if the water was successfully generated
+     */
     public boolean generateWater(Integer layers) {
         // get random source tile for lake
         List<Tile> landTiles = getLandTiles();
@@ -65,6 +80,13 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         return true;
     }
 
+    /**
+     * How many tiles to expand by, can be lower if no tiles qualified
+     * @param source, original tile where the water starts
+     * @param expansion, the maximum value to expand by
+     * @param currentBodyOfWater, current body of water (collection of tiles)
+     * @param multiplicity, integer
+     */
     // expansion = how many tiles to EXPAND by (max), can be lower if no tiles qualified
     private void expandWater(Tile source, Integer expansion, List<Tile> currentBodyOfWater, Integer multiplicity) {
         Integer[] neighbourIds = source.getNeighbours().toArray(new Integer[0]);
@@ -94,6 +116,10 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         }
     }
 
+    /**
+     * Checks if the body of water cna be adjacent to an ocean
+     * @return true for aquifer, false for lake
+     */
     protected abstract boolean canBeAdjacentWater();
 
     /**

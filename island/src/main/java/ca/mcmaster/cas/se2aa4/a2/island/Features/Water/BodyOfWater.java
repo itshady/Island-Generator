@@ -1,5 +1,8 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 
+/**
+ * Interface representing all services that a body of water must contain
+ */
 public interface BodyOfWater {
     Integer multiplicity();
 

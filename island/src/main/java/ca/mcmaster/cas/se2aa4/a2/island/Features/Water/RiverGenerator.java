@@ -42,6 +42,7 @@ public class RiverGenerator implements WaterGenerator {
         // Randomly select a border
         Border springBorder = source.getBorders().get(seed.nextInt(source.getBorders().size()));
         uncheckedBorders.remove(springBorder);
+
         // Check to see which vertex is higher
         if (springBorder.getV1().getAltitude() >= springBorder.getV2().getAltitude()) {
             spring = springBorder.getV1();
@@ -59,6 +60,7 @@ public class RiverGenerator implements WaterGenerator {
         VertexDecorator previousSpring = spring;
         List<River> riverList = new ArrayList<>();
         while (spring != null) {
+
             // Check all neighbouring vertices for a lower altitude
             List<VertexDecorator> springNeighbours = getNeighbouringVertices(spring, island.getTiles());
             previousSpring = spring;
@@ -100,6 +102,11 @@ public class RiverGenerator implements WaterGenerator {
         return false;
     }
 
+    /**
+     * For a given tile, gather the neighbouring tiles
+     * @param source, land tile
+     * @return Collection of Tiles
+     */
     private List<Tile> getNeighbouringTiles(VertexDecorator source) {
         Set<Tile> neighbouringTiles = new HashSet<>();
         for (Tile tile : island.getTiles()) {
@@ -110,6 +117,13 @@ public class RiverGenerator implements WaterGenerator {
         return new ArrayList<>(neighbouringTiles);
     }
 
+    /**
+     * Returns a VertexDecorator that the river should connect to next if valid
+     * @param spring, source vertex
+     * @param springNeighbours, neighbours of the source
+     * @param currentRiver, current path
+     * @return VertexDecorator
+     */
     private VertexDecorator riverFlow(VertexDecorator spring, List<VertexDecorator> springNeighbours, List<River> currentRiver) {
         List<VertexDecorator> lowerAltitudeNeighbours = getLowerVertices(spring, springNeighbours);
         VertexDecorator maxValue;
@@ -129,8 +143,6 @@ public class RiverGenerator implements WaterGenerator {
                 border.setWater(newRiver);
                 currentRiver.add(newRiver);
             }
-
-
         }
         return maxValue;
     }
@@ -152,6 +164,11 @@ public class RiverGenerator implements WaterGenerator {
         return false;
     }
 
+    /**
+     * Checks if the current vertex also belongs to an ocean or lake
+     * @param vertexDecorator, current vertex
+     * @return true if belongs to an ocean or lake, false if not
+     */
     private boolean decoratorOfLandWater(VertexDecorator vertexDecorator) {
         for (Tile tile : island.getTiles()) {
             for (Border border : tile.getBorders()){
@@ -179,6 +196,12 @@ public class RiverGenerator implements WaterGenerator {
         return new ArrayList<>(neighbours);
     }
 
+    /**
+     * Gets the vertices at a lower altitude compared to the source
+     * @param spring, source vertex
+     * @param neighbours, vertex that neighbours the spring
+     * @return collection of vertices that are lower
+     */
     private List<VertexDecorator> getLowerVertices(VertexDecorator spring, List<VertexDecorator> neighbours) {
         List<VertexDecorator> lowerAltitudes = new ArrayList<>();
 

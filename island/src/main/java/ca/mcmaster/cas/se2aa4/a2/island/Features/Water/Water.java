@@ -1,5 +1,8 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Water;
 
+/**
+ * Data that all bodies of water should possess
+ */
 public abstract class Water implements BodyOfWater {
     Integer moisture;
     Integer multiplicity;
