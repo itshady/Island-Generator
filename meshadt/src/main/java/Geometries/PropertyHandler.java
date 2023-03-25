@@ -23,10 +23,6 @@ public class PropertyHandler {
         return new Color(red, green, blue, alpha);
     }
 
-    public Structs.Property setAltitudeProperty(Integer altitude) {
-        return Structs.Property.newBuilder().setKey("altitude").setValue(""+altitude).build();
-    }
-
     /**
      * Takes a Color in and turns it into a property
      * @param color: a color to turn into a property

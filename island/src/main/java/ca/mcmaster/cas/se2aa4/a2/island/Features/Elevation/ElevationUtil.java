@@ -9,8 +9,8 @@ import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 public abstract class ElevationUtil implements ElevationProfile {
     Coordinate center;
     Island island;
-    public static Integer maxAltitude = 300;
-    public static Integer minAltitude = 100;
+    public static Integer maxAltitude = 200;
+    public static Integer minAltitude = 0;
 
     // Calculate altitude of a vertex on a land tile only!! (setAllAltitudes takes care of if its ocean or not)
     abstract Integer calculateAltitude(VertexDecorator vertex);
@@ -54,7 +54,6 @@ public abstract class ElevationUtil implements ElevationProfile {
      * Determines the centre point of the mesh.
      * Returns the centre coordinate (Used to determine triangle)
      */
-    // THIS IS COPY PASTED FROM SHAPEGENERATOR: MIGHT WANNA ABSTRACT BUT IDK HOW
     protected Coordinate determineMeshCentre() {
         return island.center();
     }

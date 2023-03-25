@@ -4,6 +4,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes;
 import Geometries.Polygon;
 import Geometries.Segment;
 import Geometries.Vertex;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil;
 import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
@@ -55,7 +56,7 @@ public class AsiaProfileTest {
     public void DesertTest() {
         // Action
         tile.setAbsorption(0.0);
-        tile.setAltitude(174);
+        tile.setAltitude(ElevationUtil.minAltitude + 74);
 
         asiaProfile.process(island);
 
@@ -66,7 +67,7 @@ public class AsiaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(0.0);
-        tile.setAltitude(176);
+        tile.setAltitude(ElevationUtil.minAltitude + 76);
 
         asiaProfile.process(island);
 
@@ -79,7 +80,7 @@ public class AsiaProfileTest {
     public void MountainTest() {
         // Action
         tile.setAbsorption(24.0);
-        tile.setAltitude(176);
+        tile.setAltitude(ElevationUtil.minAltitude + 76);
 
         asiaProfile.process(island);
 
@@ -90,7 +91,7 @@ public class AsiaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(27.0);
-        tile.setAltitude(174);
+        tile.setAltitude(ElevationUtil.minAltitude + 74);
 
         asiaProfile.process(island);
 
@@ -102,7 +103,7 @@ public class AsiaProfileTest {
     public void MangroveTest() {
         // Action
         tile.setAbsorption(55.0);
-        tile.setAltitude(174);
+        tile.setAltitude(ElevationUtil.minAltitude + 74);
 
         asiaProfile.process(island);
 
@@ -113,7 +114,7 @@ public class AsiaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(54.0);
-        tile.setAltitude(176);
+        tile.setAltitude(ElevationUtil.minAltitude + 76);
 
         asiaProfile.process(island);
 
@@ -125,7 +126,7 @@ public class AsiaProfileTest {
     public void AlpineTundraTest() {
         // Action
         tile.setAbsorption(64.0);
-        tile.setAltitude(176);
+        tile.setAltitude(ElevationUtil.minAltitude + 76);
 
         asiaProfile.process(island);
 
@@ -136,7 +137,7 @@ public class AsiaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(44.0);
-        tile.setAltitude(176);
+        tile.setAltitude(ElevationUtil.minAltitude + 76);
 
         asiaProfile.process(island);
 
@@ -147,7 +148,7 @@ public class AsiaProfileTest {
     public void RainForestTest() {
         // Action
         tile.setAbsorption(99.0);
-        tile.setAltitude(174);
+        tile.setAltitude(ElevationUtil.minAltitude + 74);
 
         asiaProfile.process(island);
 
@@ -158,7 +159,7 @@ public class AsiaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(65.0);
-        tile.setAltitude(176);
+        tile.setAltitude(ElevationUtil.minAltitude + 76);
 
         asiaProfile.process(island);
 

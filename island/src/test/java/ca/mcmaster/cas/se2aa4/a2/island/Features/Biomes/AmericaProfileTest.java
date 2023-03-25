@@ -3,6 +3,7 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes;
 import Geometries.Polygon;
 import Geometries.Segment;
 import Geometries.Vertex;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil;
 import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
@@ -43,6 +44,9 @@ public class AmericaProfileTest {
         List<Border> mockBorder = new ArrayList<>();
         mockBorder.add(border1);
         tile = Tile.newBuilder().addPolygon(mockPolygon).addBorders(mockBorder).addCentroid(mockCentroid).build();
+
+        // set two land tiles that have min and max
+
         island = new Island();
         List<Tile> tiles = new ArrayList<>();
         tiles.add(tile);
@@ -54,7 +58,7 @@ public class AmericaProfileTest {
     public void DesertTest() {
         // Action
         tile.setAbsorption(0.0);
-        tile.setAltitude(150);
+        tile.setAltitude(ElevationUtil.minAltitude + 50);
 
         americaProfile.process(island);
 
@@ -65,7 +69,7 @@ public class AmericaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(0.0);
-        tile.setAltitude(151);
+        tile.setAltitude(ElevationUtil.minAltitude + 51);
 
         americaProfile.process(island);
 
@@ -78,7 +82,7 @@ public class AmericaProfileTest {
     public void TundraTest() {
         // Action
         tile.setAbsorption(24.0);
-        tile.setAltitude(151);
+        tile.setAltitude(ElevationUtil.minAltitude + 51);
 
         americaProfile.process(island);
 
@@ -89,7 +93,7 @@ public class AmericaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(27.0);
-        tile.setAltitude(151);
+        tile.setAltitude(ElevationUtil.minAltitude + 51);
 
         americaProfile.process(island);
 
@@ -101,7 +105,7 @@ public class AmericaProfileTest {
     public void MixedForestTest() {
         // Action
         tile.setAbsorption(64.0);
-        tile.setAltitude(176);
+        tile.setAltitude(ElevationUtil.minAltitude + 76);
 
         americaProfile.process(island);
 
@@ -112,7 +116,7 @@ public class AmericaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(65.0);
-        tile.setAltitude(151);
+        tile.setAltitude(ElevationUtil.minAltitude + 51);
 
         americaProfile.process(island);
 
@@ -124,7 +128,7 @@ public class AmericaProfileTest {
     public void GrasslandTest() {
         // Action
         tile.setAbsorption(64.0);
-        tile.setAltitude(174);
+        tile.setAltitude(ElevationUtil.minAltitude + 74);
 
         americaProfile.process(island);
 
@@ -135,7 +139,7 @@ public class AmericaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(64.0);
-        tile.setAltitude(176);
+        tile.setAltitude(ElevationUtil.minAltitude + 76);
 
         americaProfile.process(island);
 
@@ -146,7 +150,7 @@ public class AmericaProfileTest {
     public void MontaneForestTest() {
         // Action
         tile.setAbsorption(99.0);
-        tile.setAltitude(221);
+        tile.setAltitude(ElevationUtil.minAltitude + 121);
 
         americaProfile.process(island);
 
@@ -157,7 +161,7 @@ public class AmericaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(64.0);
-        tile.setAltitude(190);
+        tile.setAltitude(ElevationUtil.minAltitude + 90);
 
         americaProfile.process(island);
 
@@ -168,7 +172,7 @@ public class AmericaProfileTest {
     public void SavannaTest() {
         // Action
         tile.setAbsorption(99.9);
-        tile.setAltitude(219);
+        tile.setAltitude(ElevationUtil.minAltitude + 119);
 
         americaProfile.process(island);
 
@@ -179,7 +183,7 @@ public class AmericaProfileTest {
 
         // Out of boundary conditions
         tile.setAbsorption(99.9);
-        tile.setAltitude(221);
+        tile.setAltitude(ElevationUtil.minAltitude + 121);
 
         americaProfile.process(island);
 
