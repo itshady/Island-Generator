@@ -128,6 +128,24 @@ A makefile has been provided to easily create islands according to their default
 
 * To make an island, simply run the following command adjusting values to your liking in the makefile:
   * `make island`
+ 
+You can make your own combination island with the command-line arguments in [Island.md](./island/island.md), however different scenarios have been added to the makefile for easy execution:
+
+* To make a lagoon island (sandbox):
+  * `make island-lagoon`
+ 
+* To make an island with an already specified seed (reproducability):
+  * `make island-seed`
+  * Different heatmap modes have been added to view this specific seed:
+    * `make island-seed-debug` for debug mode
+    * `make island-seed-moisture` for a moisture heatmap
+    * `make island-seed-altitude` for an altitude heatmap
+
+* To make a square mountain island:
+  * `make island-mountain-square`    
+
+* To make a three circle prairie island:
+  * `make island-prairie-threecircle`   
 
 ## How to contribute to the project
 

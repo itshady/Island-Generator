@@ -7,10 +7,15 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The factory where all features are called upon and ran
+ */
+
 public class SpecificationFactory {
 
     private static final Map<Field, Class> bindings = new HashMap<>();
 
+    // Puts all the necessary features into the bindings map
     static {
         try {
             bindings.put(Configuration.class.getDeclaredField("SEED"), SeedFactory.class);
@@ -27,6 +32,12 @@ public class SpecificationFactory {
         }
     }
 
+    /**
+     * Runs the designated feature on the given island based on its configuration
+     * @param feature: Feature to be executed
+     * @param island: Island to execute feature on
+     * @param config: Specified value for feature
+     */
     public static void run(Field feature, Island island, Configuration config) {
         // This code can be simplified with a switch case over the kind of mesh
         try {

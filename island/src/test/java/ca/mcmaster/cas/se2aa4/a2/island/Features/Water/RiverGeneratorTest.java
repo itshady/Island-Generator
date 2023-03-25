@@ -108,6 +108,7 @@ class RiverGeneratorTest {
                 // CheckedBorders ensures that we have not already visited that border
                 if (!checkedBorders.contains(b) && b.hasRiver() && (b.getV1() == spring || b.getV2() == spring)) {
                     if (b.getV1() == spring && (b.getV2().getAltitude() < b.getV1().getAltitude())) {
+                        System.out.println("Spring Altitude: " + b.getV1().getAltitude() + " V2 Altitude: " + b.getV2().getAltitude());
                         spring = b.getV2();
                         riverFlow = true;
                         checkedBorders.add(b);

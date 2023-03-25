@@ -15,6 +15,7 @@ public class MoistureVisualizer extends Heatmap {
     @Override
     protected Color getTileColor(Tile tile) {
         List<Color> colors = new ArrayList<>();
+        // Going down, colours go from lowest moisture to highest moisture.
         colors.add(new Color(255, 255, 255));
         colors.add(new Color(235, 185, 215));
         colors.add(new Color(227, 139, 191));
@@ -27,6 +28,8 @@ public class MoistureVisualizer extends Heatmap {
         colors.add(new Color(77,2,48));
 
         Double separation = 100.0 / colors.size();
+
+        // Determining colours based on absorption values
         if (tile.getAbsorption() <= separation) return colors.get(0);
         else if (tile.getAbsorption() <= separation * 2) return colors.get(1);
         else if (tile.getAbsorption() <= separation * 3) return colors.get(2);

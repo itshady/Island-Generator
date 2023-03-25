@@ -2,6 +2,9 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features.Biomes;
 
 import java.awt.*;
 
+/**
+ * Enumeration which represents Biomes, and each Biome is only associated with a colour
+ */
 public enum Biome {
     // USA
     DESERT(new Color(217, 186, 120,255)),
