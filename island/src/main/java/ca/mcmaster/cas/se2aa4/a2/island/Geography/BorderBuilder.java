@@ -7,9 +7,9 @@ import Geometries.Segment;
  * Creation class for borders
  */
 public class BorderBuilder {
-    Segment segment;
-    VertexDecorator v1;
-    VertexDecorator v2;
+    private Segment segment;
+    private VertexDecorator v1;
+    private VertexDecorator v2;
 
     public BorderBuilder addV1(VertexDecorator v1) {
         this.v1 = v1;

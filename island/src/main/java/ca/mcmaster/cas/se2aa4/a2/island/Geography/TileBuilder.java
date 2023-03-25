@@ -10,9 +10,9 @@ import java.util.List;
  */
 
 public class TileBuilder {
-    List<Border> borders = new ArrayList<>();
-    VertexDecorator centroid;
-    Polygon polygon;
+    private List<Border> borders = new ArrayList<>();
+    private VertexDecorator centroid;
+    private Polygon polygon;
 
     public TileBuilder addBorders(List<Border> borderList) {
         borders = borderList;

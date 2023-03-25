@@ -6,7 +6,7 @@ import Geometries.Vertex;
  * Creation class for vertex decorators
  */
 public class VertexDecoratorBuilder {
-    Vertex vertex;
+    private Vertex vertex;
 
     public VertexDecoratorBuilder addVertex(Vertex v) {
         vertex = v;
