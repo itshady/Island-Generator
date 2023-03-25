@@ -3,9 +3,10 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features.Shapes;
 import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.Ocean;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
-import ca.mcmaster.cas.se2aa4.a2.island.TileType;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
+
+import java.awt.*;
 
 /**
  * Contains methods that all Shapes require to be processed
@@ -37,9 +38,10 @@ public abstract class ShapeGenerator implements Shape {
     public void process(Island container) {
         island = container;
         initializeLand();
+        Color land = Color.WHITE;
         for (Tile tile : container.getTiles()) {
             if (intersects(tile.getJTSPolygon())) {
-                tile.setColor(TileType.LAND.toColor());
+                tile.setColor(land);
             }
             else {
                 tile.setWater(new Ocean());
