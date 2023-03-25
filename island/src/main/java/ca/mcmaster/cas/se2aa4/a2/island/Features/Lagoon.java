@@ -12,7 +12,7 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 import java.awt.Color;
 
 /**
- * NEEDS FIXING ONCE LAKE IS INTRODUCED, A LAGOON IS A SPECIALIZED SHAPE AND BIG LAKE
+ * Sandbox island (MVP) for part 1. Does not utilize any other features.
  */
 public class Lagoon {
 
@@ -22,6 +22,9 @@ public class Lagoon {
     GeometricShapeFactory gsf = new GeometricShapeFactory();
 
 
+    /**
+     * Initializes the land tiles based on desired size and number of points.
+     */
     protected void initializeLand() {
         Coordinate meshCentre = new Coordinate(island.center().getX(), island.center().getY());
         gsf.setCentre(meshCentre);
@@ -30,6 +33,9 @@ public class Lagoon {
         land = gsf.createCircle();
     }
 
+    /**
+     * Initializes the lagoon tiles based on desired size and number of points.
+     */
     protected void initializeLagoon() {
         Coordinate meshCentre = new Coordinate(island.center().getX(), island.center().getY());
         gsf.setCentre(meshCentre);
@@ -38,14 +44,30 @@ public class Lagoon {
         lagoon = gsf.createCircle();
     }
 
+    /**
+     * Checks the intersection of a polygon with land
+     * @param JTSPolygon: Associated JTS polygon with our polygon
+     * @return if polygon intersects with land radius
+     */
+
     protected boolean intersects(Polygon JTSPolygon) {
         return intersects(JTSPolygon, land);
     }
+
+    /**
+     * Checks the intersection of a polygon with lagoon
+     * @param JTSPolygon: Associated JTS polygon with our polygon
+     * @return if polygon intersects with lagoon radius
+     */
 
     protected boolean intersects(Polygon JTSPolygon, Geometry geometry) {
         return JTSPolygon.intersects(geometry);
     }
 
+    /**
+     * Enriches the tiles according to their position relative to the land and lagoon radii
+     * @param container: island to enrich
+     */
     public void process(Island container) {
         this.island = container;
         initializeLand();
@@ -57,6 +79,9 @@ public class Lagoon {
         determineBeachTiles();
     }
 
+    /**
+     * Determines which land tiles are classified as beach based on if their neighbours are water tiles
+     */
     private void determineBeachTiles() {
         Color beach = new Color(242,243,200,255);
         Color land = Color.WHITE;

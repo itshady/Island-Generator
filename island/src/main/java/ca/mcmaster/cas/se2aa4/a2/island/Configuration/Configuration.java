@@ -8,6 +8,10 @@ import org.apache.commons.cli.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Holds all CLI arguments needed for island creation
+ */
+
 public class Configuration {
     @Feature
     public static final String SHAPE = "shape";
