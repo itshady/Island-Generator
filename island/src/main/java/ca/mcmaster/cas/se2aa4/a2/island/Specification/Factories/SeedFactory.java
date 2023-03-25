@@ -8,7 +8,7 @@ public class SeedFactory implements FeatureRunner {
     @Override
     public void process(Island island, Configuration config) {
         try {
-            new Seed().process(config.export(Configuration.SEED));
+            Seed.getInstance(config.export(Configuration.SEED));
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

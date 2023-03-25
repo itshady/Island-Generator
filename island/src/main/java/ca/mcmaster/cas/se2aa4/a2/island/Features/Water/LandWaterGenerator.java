@@ -9,18 +9,18 @@ import java.util.*;
 
 public abstract class LandWaterGenerator implements WaterGenerator {
     Island island;
+    List<Tile> uncheckedTiles;
 
     public void process(Island island, Integer numOfBodies) {
         this.island = island;
+        uncheckedTiles = new ArrayList<>(island.getTiles());
         // Iterate n times (user specified)
         // generateWater method
         int i = 0;
-        int numOfTiles = island.getTiles().size();
 
         // try to generate water on every tile until you've checked them all
-        while (i < numOfBodies && numOfTiles > 0) {
+        while (i < numOfBodies && !uncheckedTiles.isEmpty()) {
             if (generateWater(getLayers())) i++;
-            numOfTiles--;
         }
     }
 
@@ -31,11 +31,14 @@ public abstract class LandWaterGenerator implements WaterGenerator {
     public boolean generateWater(Integer layers) {
         // get random source tile for lake
         List<Tile> landTiles = getLandTiles();
-        Tile source = landTiles.get(Seed.nextInt(landTiles.size()));
+        Seed seed = Seed.getInstance();
+        Tile source = landTiles.get(seed.nextInt(landTiles.size()));
 
         List<Tile> sourceNeighbours = source.getNeighbours().stream()
                 .map(id -> island.getTile(id)).toList();
 
+        // remove it from the list of tiles to check
+        uncheckedTiles.remove(source);
         // if source or neighbours are water, then don't make it a water source
         if (source.hasBodyOfWater()) return false;
         if (containsWater(sourceNeighbours)) return false;
@@ -69,7 +72,8 @@ public abstract class LandWaterGenerator implements WaterGenerator {
         // get random neighbours up to value of amount to expand
         List<Tile> selectedNeighbours = new ArrayList<>();
         while (selectedNeighbours.size() < expansion) {
-            int index = Seed.nextInt(neighbourIds.length);
+            Seed seed = Seed.getInstance();
+            int index = seed.nextInt(neighbourIds.length);
             Tile neighbour = island.getTile(neighbourIds[index]);
             selectedNeighbours.add(neighbour);
         }

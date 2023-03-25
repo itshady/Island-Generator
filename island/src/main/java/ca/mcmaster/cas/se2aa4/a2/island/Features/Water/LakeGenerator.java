@@ -8,7 +8,8 @@ import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil;
 public class LakeGenerator extends LandWaterGenerator {
     @Override
     protected Integer getLayers() {
-        if (Seed.nextBoolean()) return 1;
+        Seed seed = Seed.getInstance();
+        if (seed.nextBoolean()) return 1;
         else return 2;
     }
 

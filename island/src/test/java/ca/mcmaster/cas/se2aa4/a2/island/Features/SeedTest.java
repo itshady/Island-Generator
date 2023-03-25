@@ -8,12 +8,11 @@ class SeedTest {
     @Test
     public void ReproducibilityTest() {
         // this is a known seed that should always return that number on first nextInt call
-        new Seed().process("1");
-        assertEquals(-1155869325, Seed.nextInt());
+        Seed seed = Seed.getInstance("1");
+        assertEquals(-1155869325, seed.nextInt());
 
-        // there is a basically 0% chance it gets that number
-        // This tests that wrong input give random seed
-        new Seed().process("1.");
-        assertNotEquals(-1155869325, Seed.nextInt());
+        // also known number that will be returned on second nextInt call for seed 1
+        Seed seed2 = Seed.getInstance();
+        assertEquals(431529176, seed2.nextInt());
     }
 }

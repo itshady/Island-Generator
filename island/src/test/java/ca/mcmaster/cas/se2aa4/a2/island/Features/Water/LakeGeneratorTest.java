@@ -49,7 +49,7 @@ class LakeGeneratorTest {
 
         borders.add(Border.newBuilder().addV1(vertices.get(0)).addV2(vertices.get(0)).addSegment(new Segment(v1,  v2)).build());
 
-        VertexDecorator mockCentroid = VertexDecorator.newBuilder().addVertex(new Vertex(5.0,5.0)).build();
+        VertexDecorator mockCentroid = VertexDecorator.newBuilder().addVertex(new Vertex(25.0,25.0)).build();
         vertices.add(mockCentroid);
 
         tile = Tile.newBuilder().addPolygon(mockPolygon).addBorders(borders).addCentroid(mockCentroid).build();
@@ -65,7 +65,6 @@ class LakeGeneratorTest {
         assertTrue(tile.hasLake());
     }
 
-    // SOMTIMES DOESNT WORK
     @Test
     public void GenerateSpecificNumberOfLakesTest() {
         VertexDecorator mockCentroid2 = VertexDecorator.newBuilder().addVertex(new Vertex(50.0,50.0)).build();
@@ -82,6 +81,7 @@ class LakeGeneratorTest {
         Polygon polygon3 = new Polygon(segmentList);
         tile3 = Tile.newBuilder().addPolygon(polygon3).addBorders(borders).addCentroid(mockCentroid3).build();
         island.getTiles().add(tile3);
+
         new LakeGenerator().process(island, 2);
 
         int lakeCounter = 0;

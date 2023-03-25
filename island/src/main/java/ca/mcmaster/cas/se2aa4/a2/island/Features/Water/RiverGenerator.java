@@ -13,19 +13,19 @@ public class RiverGenerator implements WaterGenerator {
 
     Island island;
     List<List<River>> rivers = new ArrayList<>();
+    List<Border> uncheckedBorders;
 
     @Override
     public void process(Island island, Integer nums) {
         this.island = island;
+        uncheckedBorders = new ArrayList<>(island.getBorders());
         // Iterate n times (user specified)
         // generateWater method
         int i = 0;
-        int numOfTiles = island.getTiles().size();
 
         // try to generate water on every tile until you've checked them all
-        while (i < nums && numOfTiles > 0) {
+        while (i < nums && !uncheckedBorders.isEmpty()) {
             if (generateWater()) i++;
-            numOfTiles--;
         }
     }
 
@@ -36,11 +36,12 @@ public class RiverGenerator implements WaterGenerator {
 
         // Randomly select a tile
         List<Tile> landTiles = getLandTiles();
-        Tile source = landTiles.get(Seed.nextInt(landTiles.size()));
+        Seed seed = Seed.getInstance();
+        Tile source = landTiles.get(seed.nextInt(landTiles.size()));
 
         // Randomly select a border
-        Border springBorder = source.getBorders().get(Seed.nextInt(source.getBorders().size()));
-
+        Border springBorder = source.getBorders().get(seed.nextInt(source.getBorders().size()));
+        uncheckedBorders.remove(springBorder);
         // Check to see which vertex is higher
         if (springBorder.getV1().getAltitude() >= springBorder.getV2().getAltitude()) {
             spring = springBorder.getV1();
