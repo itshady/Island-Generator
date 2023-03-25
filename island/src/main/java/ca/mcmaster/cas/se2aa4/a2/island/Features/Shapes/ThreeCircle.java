@@ -10,6 +10,11 @@ import java.util.List;
 public class ThreeCircle extends ShapeGenerator {
     List<Geometry> shapes = new ArrayList<>();
 
+    /**
+     * Checks whether a polygon intersects with the island for boundary purposes (seperate water and land)
+     * @param JTSPolygon: A polygon to check intersects with the island shape
+     * @return boolean
+     */
     @Override
     protected boolean intersects(org.locationtech.jts.geom.Polygon JTSPolygon) {
         for (Geometry shape : shapes) {
@@ -18,6 +23,9 @@ public class ThreeCircle extends ShapeGenerator {
         return false;
     }
 
+    /**
+     * Generates three circles (Looks like Mickey Mouse)
+     */
     @Override
     protected void initializeLand() {
         GeometricShapeFactory gsf = new GeometricShapeFactory();

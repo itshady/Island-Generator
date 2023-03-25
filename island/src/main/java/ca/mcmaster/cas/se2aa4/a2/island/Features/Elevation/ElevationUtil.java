@@ -6,15 +6,23 @@ import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 
+/**
+ * Contains methods that all profiles for elevation requires
+ */
 public abstract class ElevationUtil implements ElevationProfile {
     Coordinate center;
     Island island;
     public static Integer maxAltitude = 300;
     public static Integer minAltitude = 100;
 
-    // Calculate altitude of a vertex on a land tile only!! (setAllAltitudes takes care of if its ocean or not)
+    // Calculate altitude of a vertex on a land tile only (setAllAltitudes takes care of if its ocean or not)
+    // Every profile will need this method, except the implementation will be different
     abstract Integer calculateAltitude(VertexDecorator vertex);
 
+    /**
+     * Gets the centre of the mesh and sets altitudes based on the profile
+     * @param container, Island
+     */
     public void process(Island container) {
         island = container;
         center = determineMeshCentre();
@@ -22,6 +30,9 @@ public abstract class ElevationUtil implements ElevationProfile {
         setAllAltitudes();
     }
 
+    /**
+     * Iterates through each tile and sets corresponding altitude values
+     */
     private void setAllAltitudes() {
         for (Tile tile : island.getTiles()) {
             VertexDecorator centroid = tile.getCentroid();
