@@ -8,6 +8,7 @@ class SeedTest {
     @Test
     public void ReproducibilityTest() {
         // this is a known seed that should always return that number on first nextInt call
+        Seed.reset();
         Seed seed = Seed.getInstance("1");
         assertEquals(-1155869325, seed.nextInt());
 
