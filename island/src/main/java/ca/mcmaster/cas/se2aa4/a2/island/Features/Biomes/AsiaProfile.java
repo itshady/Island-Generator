@@ -5,10 +5,13 @@ import ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil;
 
 public class AsiaProfile extends WhittakerUtil {
 
-    // Stored in this format:
-    // {Desert -> {minElevation -> value, maxElevation -> value, minMoisture -> value, maxMoisture -> value}
+    /**
+     * Sets the moisture and elevation boundaries for each biome in the whittaker diagram
+     */
     @Override
     void setBiomesBoundaries() {
+        // Stored in this format:
+        // {Desert -> {minElevation -> value, maxElevation -> value, minMoisture -> value, maxMoisture -> value}
         boundaries.put(Biome.DESERT, setBiomeProperty(
                 ElevationUtil.minAltitude + 0.0,
                 ElevationUtil.minAltitude + 75.0,

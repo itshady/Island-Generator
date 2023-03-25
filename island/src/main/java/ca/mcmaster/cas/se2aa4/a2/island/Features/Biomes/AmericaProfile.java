@@ -7,10 +7,13 @@ import java.util.Map;
 
 public class AmericaProfile extends WhittakerUtil {
 
-    // Stored in this format:
-    // {Desert -> {minElevation -> value, maxElevation -> value, minMoisture -> value, maxMoisture -> value}
+    /**
+     * Sets the moisture and elevation boundaries for each biome in the whittaker diagram
+     */
     @Override
     void setBiomesBoundaries() {
+        // Stored in this format:
+        // {Desert -> {minElevation -> value, maxElevation -> value, minMoisture -> value, maxMoisture -> value}
         boundaries.put(Biome.DESERT, setBiomeProperty(
                 ElevationUtil.minAltitude + 0.0,
                 ElevationUtil.minAltitude + 50.0,

@@ -8,11 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Contains methods that all Whittaker Diagrams requires
+ */
 public abstract class WhittakerUtil implements DiagramProfile {
 
     Island island;
 
     protected Map<Biome, Map<String, Double>> boundaries = new HashMap<>();
+
+    /**
+     * Processes the Whittaker Diagram on a given Island
+     * @param island, Island
+     */
     public void process(Island island) {
         this.island = island;
         setBiomesBoundaries();
@@ -22,6 +30,9 @@ public abstract class WhittakerUtil implements DiagramProfile {
     // For each profile, set the boundaries for the biomes
     abstract void setBiomesBoundaries();
 
+    /**
+     * Iterate through all land tiles, and associate biome to a tile
+     */
     private void setAllBiomes() {
         List<Tile> landTiles = getLandTiles();
         for (Tile tile: landTiles) {
@@ -32,6 +43,11 @@ public abstract class WhittakerUtil implements DiagramProfile {
 
     }
 
+    /**
+     * Given moisture and elevation, associate a biome for that tile
+     * @param tile, Island
+     * @return Biome, Enum
+     */
     private Biome checkForBiome(Tile tile) {
         Double elevation = tile.getAltitude() * 1.0;
         Double moisture = tile.getAbsorption();
@@ -49,6 +65,14 @@ public abstract class WhittakerUtil implements DiagramProfile {
         throw new IllegalArgumentException("Either absorption or altitude is completely out of whittaker graph.");
     }
 
+    /**
+     * Stores the boundaries for each biome in the whittaker diagram in a Hashmap Data Structure
+     * @param minElevation, double
+     * @param maxElevation, double
+     * @param minMoisture, double
+     * @param maxMoisture, double
+     * @return Boundaries Hashmap
+     */
     protected Map<String, Double> setBiomeProperty(Double minElevation, Double maxElevation,
                                          Double minMoisture, Double maxMoisture) {
         Map<String, Double> biome = new HashMap<>();
@@ -60,7 +84,10 @@ public abstract class WhittakerUtil implements DiagramProfile {
         return biome;
     }
 
-    // May need to refactor, since we use this same method in LandWaterGenerator
+    /**
+     * Given all tiles in the island, returns the "land" classified ones
+     * @return List<Tile>
+     */
     protected List<Tile> getLandTiles() {
         List<Tile> landTiles = new ArrayList<>();
         for (Tile tile : island.getTiles()) {
