@@ -32,7 +32,7 @@ public abstract class ShapeGenerator implements Shape {
 
     /**
      * Takes a set of polygons and add shape to it, distinguished by color
-     * @param container: A container with a set of polygons and vertices
+     * @param container: container with a set of tiles, borders, and VertexDecorators
      */
     public void process(Island container) {
         island = container;
