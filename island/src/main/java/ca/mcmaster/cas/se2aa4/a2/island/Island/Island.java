@@ -47,6 +47,9 @@ public class Island {
         setProperties();
     }
 
+    /**
+     * Sets the geometric properties of the mesh such as centre point, height and width
+     */
     private void setProperties() {
         double max_x = Double.MIN_VALUE;
         double max_y = Double.MIN_VALUE;
@@ -68,9 +71,6 @@ public class Island {
         return tiles.get(id);
     }
 
-    /**
-     * Returns the centre coordinate
-     */
     public Coordinate center() {
         return this.center;
     }
