@@ -73,6 +73,7 @@ class MountainProfileTest {
         List<VertexDecorator> vertices = island.getVertexDecorators();
         Vertex farVertex = new Vertex(500.0,500.0);
         vertices.add(VertexDecorator.newBuilder().addVertex(farVertex).build());
+        island.register(vertices, island.getBorders(), island.getTiles());
         elevation.process(island);
 
         assertEquals(ElevationUtil.minAltitude + 1, tile.getAltitude());

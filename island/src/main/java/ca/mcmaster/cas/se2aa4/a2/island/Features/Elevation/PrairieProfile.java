@@ -9,6 +9,6 @@ import java.util.Random;
 public class PrairieProfile extends ElevationUtil {
     protected Integer calculateAltitude(VertexDecorator vertex) {
         Seed seed = Seed.getInstance();
-        return seed.nextInt(minAltitude+1, maxAltitude);
+        return seed.nextInt(minAltitude+1, minAltitude+50);
     }
 }

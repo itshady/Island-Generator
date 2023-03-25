@@ -5,39 +5,49 @@ import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Island {
     private List<VertexDecorator> decorators;
     private List<Border> borders;
     private List<Tile> tiles;
+    private double width;
+    private double height;
+    private Coordinate center;
 
+    /**
+     * Returns a shallow copy of the vertex decorators
+     * This is so that no one can update the current island without regenerating center, width and height
+     */
     public List<VertexDecorator> getVertexDecorators() {
-        return decorators;
-    }
-
-    public List<Border> getBorders() {
-        return borders;
-    }
-
-    public List<Tile> getTiles() {
-        return tiles;
-    }
-
-    public void register(List<VertexDecorator> vertexDecorators,  List<Border> borders, List<Tile> tiles ) {
-        this.tiles = tiles;
-        this.borders = borders;
-        this.decorators = vertexDecorators;
-    }
-
-    public Tile getTile(Integer id) {
-        return tiles.get(id);
+        return new ArrayList<>(decorators);
     }
 
     /**
-     * Returns the centre coordinate
+     * Returns a shallow copy of the borders
+     * This is so that no one can update the current island without regenerating center, width and height
      */
-    public Coordinate center() {
+    public List<Border> getBorders() {
+        return new ArrayList<>(borders);
+    }
+
+    /**
+     * Returns a shallow copy of the tiles
+     * This is so that no one can update the current island without regenerating center, width and height
+     */
+    public List<Tile> getTiles() {
+        return new ArrayList<>(tiles);
+    }
+
+    public void register(List<VertexDecorator> vertexDecorators,  List<Border> borders, List<Tile> tiles) {
+        this.tiles = tiles;
+        this.borders = borders;
+        this.decorators = vertexDecorators;
+        setProperties();
+    }
+
+    private void setProperties() {
         double max_x = Double.MIN_VALUE;
         double max_y = Double.MIN_VALUE;
         double min_x = Double.MAX_VALUE;
@@ -49,6 +59,27 @@ public class Island {
             min_x = (Double.compare(min_x, v.getX()) > 0 ? v.getX() : min_x);
             min_y = (Double.compare(min_y, v.getY()) > 0 ? v.getY() : min_y);
         }
-        return new Coordinate((max_x+min_x)/2, (max_y+min_y)/2);
+        width = Math.abs(max_x - min_x);
+        height = Math.abs(max_y - min_y);
+        center = new Coordinate((max_x+min_x)/2, (max_y+min_y)/2);
+    }
+
+    public Tile getTile(Integer id) {
+        return tiles.get(id);
+    }
+
+    /**
+     * Returns the centre coordinate
+     */
+    public Coordinate center() {
+        return this.center;
+    }
+
+    public Double width() {
+        return this.width;
+    }
+
+    public Double height() {
+        return this.height;
     }
 }

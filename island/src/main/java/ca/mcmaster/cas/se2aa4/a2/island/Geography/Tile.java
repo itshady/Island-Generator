@@ -26,6 +26,13 @@ public class Tile {
     Biome biome;
     boolean isWaterCenter = false;
 
+    protected Tile(Polygon polygon, List<Border> borderList, VertexDecorator centroid) {
+        this.polygon = polygon;
+        borders = borderList;
+        JTSPolygon = new PolygonMapper().process(this.polygon);
+        this.centroid = centroid;
+    }
+
     public boolean isWaterCenter() {
         return isWaterCenter;
     }
@@ -95,13 +102,6 @@ public class Tile {
 
     public org.locationtech.jts.geom.Polygon getJTSPolygon() {
         return JTSPolygon;
-    }
-
-    protected Tile(Polygon polygon, List<Border> borderList, VertexDecorator centroid) {
-        this.polygon = polygon;
-        borders = borderList;
-        JTSPolygon = new PolygonMapper().process(this.polygon);
-        this.centroid = centroid;
     }
 
     public Set<Integer> getNeighbours() {

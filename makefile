@@ -36,6 +36,7 @@ island-prairie-threecircle:
 
 help:
 	cd generator && java -jar generator.jar -h
+	cd island && java -jar island.jar -help
 	cd visualizer && java -jar visualizer.jar -h
 
 run-square-debug:

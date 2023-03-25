@@ -17,7 +17,7 @@ public class Circle extends ShapeGenerator {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         Coordinate meshCentre = determineMeshCentre();
         gsf.setCentre(meshCentre);
-        gsf.setSize(350);
+        gsf.setSize(0.7 * (Math.min(island.height(), island.width())));
         gsf.setNumPoints(350);
         circle = gsf.createCircle();
     }

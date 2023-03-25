@@ -24,7 +24,7 @@ public class ThreeCircle extends ShapeGenerator {
         Coordinate meshCentre = determineMeshCentre();
         Coordinate topLeft = new Coordinate(meshCentre.getX()*2/3, meshCentre.getY()*2/3);
         gsf.setCentre(topLeft);
-        gsf.setSize(200);
+        gsf.setSize(0.4 * Math.min(island.height(), island.width()));
         gsf.setNumPoints(350);
         shapes.add(gsf.createCircle());
 
