@@ -1,0 +1,107 @@
+@startuml
+
+title Island: Features
+
+package Features {
+
+  package Biomes {
+
+    class AmericaProfile
+    class AsiaProfile
+    enum Biome
+    interface DiagramProfile
+    abstract class WhittakerUtil
+
+  }
+  package Elevation {
+
+    class CraterProfile
+    interface ElevationProfile
+    abstract class ElevationUtil
+    class MountainProfile
+    class PrairieProfile
+
+  }
+  package Shapes {
+
+    interface Shape
+    abstract class ShapeGenerator
+    class Circle
+    class Oval
+    class Square
+    class ThreeCircle
+    class Triangle
+
+  }
+  package Soil {
+
+    interface SoilProfile
+    abstract class SoilUtil
+    class DryProfile
+    class WetProfile
+
+  }
+  package Water {
+
+    interface BodyOfWater
+    interface WaterGenerator
+    abstract class LandWaterGenerator
+    class LakeGenerator
+    class RiverGenerator
+    class AquiferGenerator
+    class Ocean
+    class River
+    class Lake
+    class Aquifer
+
+  }
+  class Lagoon
+
+}
+
+DiagramProfile .up.> Island.Island
+WhittakerUtil .up.|> DiagramProfile
+WhittakerUtil .down.> Geography.Tile
+WhittakerUtil *-up- Island.Island
+AmericaProfile .up.|> WhittakerUtil
+AsiaProfile .up.|> WhittakerUtil
+WhittakerUtil *-- Biome
+
+ElevationProfile .up.> Island.Island
+ElevationUtil *-up- Island.Island
+ElevationUtil .right.|> ElevationProfile
+ElevationUtil .down.> Geography.Tile
+ElevationUtil .down.> Geography.VertexDecorator
+CraterProfile -up-|> ElevationUtil
+MountainProfile -up-|> ElevationUtil
+PrairieProfile -up-|> ElevationUtil
+
+Features.Shapes.Shape .up.> Island.Island
+Features.Shapes.ShapeGenerator .up.|> Features.Shapes.Shape
+Features.Shapes.Circle -up-|> Features.Shapes.ShapeGenerator
+Features.Shapes.ThreeCircle -up-|> Features.Shapes.ShapeGenerator
+Features.Shapes.Square -up-|> Features.Shapes.ShapeGenerator
+Features.Shapes.Triangle -up-|> Features.Shapes.ShapeGenerator
+Features.Shapes.Oval -up-|> Features.Shapes.ShapeGenerator
+
+SoilProfile .up.> Island.Island
+SoilUtil .up.|> SoilProfile
+SoilUtil .down.> Geography.Tile
+DryProfile -up-|> SoilUtil
+WetProfile -up-|> SoilUtil
+
+WaterGenerator .up.> Island.Island
+Features.Water.Water .up.|> BodyOfWater
+LandWaterGenerator .up.|> WaterGenerator
+LakeGenerator .up.|> LandWaterGenerator
+LakeGenerator ..> Lake
+RiverGenerator .up.|> WaterGenerator
+RiverGenerator *-- River
+RiverGenerator .down.> Geography
+AquiferGenerator .up.|> LandWaterGenerator
+Ocean -up-|> Features.Water.Water
+River -up-|> Features.Water.Water
+Lake -up-|> Features.Water.Water
+Aquifer -up-|> Features.Water.Water
+
+@enduml
