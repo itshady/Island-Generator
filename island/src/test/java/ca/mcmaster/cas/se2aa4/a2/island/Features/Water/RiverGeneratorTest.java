@@ -21,7 +21,7 @@ class RiverGeneratorTest {
     List<Segment> segmentList = new ArrayList<>();
     Polygon mockPolygon;
     static Tile tile;
-    static Island island;
+    static Island island = new Island();
     List<VertexDecorator> vertices = new ArrayList<>();
     List<Border> borders = new ArrayList<>();
     List<Tile> tiles = new ArrayList<>();
@@ -53,14 +53,12 @@ class RiverGeneratorTest {
         borders.add(Border.newBuilder().addV1(vertices.get(0)).addV2(vertices.get(1)).addSegment(new Segment(v1,  v2)).build());
         borders.add(Border.newBuilder().addV1(vertices.get(1)).addV2(vertices.get(2)).addSegment(new Segment(v2,  v3)).build());
         borders.add(Border.newBuilder().addV1(vertices.get(2)).addV2(vertices.get(3)).addSegment(new Segment(v3,  v4)).build());
-        borders.add(Border.newBuilder().addV1(vertices.get(0)).addV2(vertices.get(3)).addSegment(new Segment(v1,  v3)).build());
+        borders.add(Border.newBuilder().addV1(vertices.get(3)).addV2(vertices.get(0)).addSegment(new Segment(v4,  v1)).build());
 
         VertexDecorator mockCentroid = VertexDecorator.newBuilder().addVertex(new Vertex(5.0,5.0)).build();
         vertices.add(mockCentroid);
 
         tile = Tile.newBuilder().addPolygon(mockPolygon).addBorders(borders).addCentroid(mockCentroid).build();
-
-        island = new Island();
         tiles.add(tile);
         island.register(vertices, borders, tiles);
     }
@@ -71,15 +69,13 @@ class RiverGeneratorTest {
         int count = 0;
         Set<VertexDecorator> springs = new HashSet<>();
         for (Border b: tile.getBorders()) {
-            if (b.getV1().isSpring() && !springs.contains(b.getV1())) {
-                count++;
-                springs.add(b.getV1());
-            } else if (b.getV2().isSpring() && !springs.contains(b.getV2())) {
-                count++;
-                springs.add(b.getV1());
+            if (b.getV1().isSpring()) {
+                count += springs.add(b.getV1()) ? 1 : 0;
+            } else if (b.getV2().isSpring()) {
+                count += springs.add(b.getV2()) ? 1 : 0;
             }
-            assertEquals(1, count);
         }
+        assertEquals(1, count);
     }
 
     @Test
@@ -95,7 +91,7 @@ class RiverGeneratorTest {
                 spring = b.getV1();
                 break;
             } else if (b.getV2().isSpring()) {
-                spring = b.getV1();
+                spring = b.getV2();
                 break;
             }
         }
@@ -136,15 +132,13 @@ class RiverGeneratorTest {
         int count = 0;
         Set<VertexDecorator> springs = new HashSet<>();
         for (Border b: tile.getBorders()) {
-            if (b.getV1().isSpring() && !springs.contains(b.getV1())) {
-                count++;
-                springs.add(b.getV1());
-            } else if (b.getV2().isSpring() && !springs.contains(b.getV2())) {
-                count++;
-                springs.add(b.getV1());
+            if (b.getV1().isSpring()) {
+                count += springs.add(b.getV1()) ? 1 : 0;
+            } else if (b.getV2().isSpring()) {
+                count += springs.add(b.getV2()) ? 1 : 0;
             }
-            assertEquals(0, count);
         }
+        assertEquals(0, count);
     }
 
 }
