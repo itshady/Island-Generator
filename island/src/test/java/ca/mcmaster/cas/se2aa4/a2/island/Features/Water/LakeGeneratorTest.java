@@ -119,10 +119,10 @@ class LakeGeneratorTest {
         tile3.getPolygon().setId(3);
         tile4.getPolygon().setId(4);
 
-        tile.getCentroid().setAltitude(10);
-        tile2.getCentroid().setAltitude(20);
-        tile3.getCentroid().setAltitude(15);
-        tile4.getCentroid().setAltitude(5);
+        tile.getCentroid().setAltitude(10.0);
+        tile2.getCentroid().setAltitude(20.0);
+        tile3.getCentroid().setAltitude(15.0);
+        tile4.getCentroid().setAltitude(5.0);
 
         Set<Polygon> tileNeighbour = new HashSet<>();
         tileNeighbour.add(tile2.getPolygon());
