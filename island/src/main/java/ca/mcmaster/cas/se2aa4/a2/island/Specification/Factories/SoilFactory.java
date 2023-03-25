@@ -9,17 +9,26 @@ import ca.mcmaster.cas.se2aa4.a2.island.Configuration.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Factory for soil profiles
+ */
+
 public class SoilFactory implements FeatureRunner {
 
     private static final Map<String, Class> bindings = new HashMap<>();
     private static final String DEFAULT = null;
 
+    // Puts all the necessary soil types into the bindings map
     static {
         bindings.put("dry", DryProfile.class);
         bindings.put("wet", WetProfile.class);
         bindings.put(DEFAULT, DryProfile.class);
     }
-
+    /**
+     * Runs the designated soil profile class on the given island based on its configuration
+     * @param island: Island to execute feature on
+     * @param config: Specified soil type
+     */
     @Override
     public void process(Island island, Configuration config) {
         try {

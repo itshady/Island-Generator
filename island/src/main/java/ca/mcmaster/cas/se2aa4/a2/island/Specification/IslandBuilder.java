@@ -11,10 +11,20 @@ import java.lang.reflect.Field;
 public class IslandBuilder implements Buildable {
     Island island;
 
+    /**
+     * Initializes the island and calls the configure method to create a "rich" island
+     * @param emptyIsland: The island to be modified with all configurations.
+     * @param configuration: The desired configurations
+     */
     public IslandBuilder(Island emptyIsland, Configuration configuration) { // pass in Configuration
         island = emptyIsland;
         configure(configuration);
     }
+
+    /**
+     * Builds an island based on the command line arguments provided
+     * @param configuration: Command line argument configuration
+     */
 
     private void configure(Configuration configuration) {
         // Run before all features
@@ -24,6 +34,7 @@ public class IslandBuilder implements Buildable {
             }
         }
 
+        // Sandbox mode if lagoon command line argument is found. Ignore all other features
         String mode = configuration.export(Configuration.MODE);
         if (mode != null && mode.equalsIgnoreCase("lagoon")) {
             new Lagoon().process(island);
@@ -31,6 +42,7 @@ public class IslandBuilder implements Buildable {
             return;
         }
 
+        // Run all features
         for(Field candidate: configuration.getClass().getFields()) {
             if(candidate.isAnnotationPresent(Feature.class)) {
                 SpecificationFactory.run(candidate, island, configuration);

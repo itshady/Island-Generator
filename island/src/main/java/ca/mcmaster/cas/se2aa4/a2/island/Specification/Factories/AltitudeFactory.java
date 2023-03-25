@@ -10,10 +10,15 @@ import ca.mcmaster.cas.se2aa4.a2.island.Configuration.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Factory for altitude profiles
+ */
+
 public class AltitudeFactory implements FeatureRunner {
     private static final Map<String, Class> bindings = new HashMap<>();
     private static final String DEFAULT = null;
 
+    // Puts all the necessary altitude profiles into the bindings map
     static {
         bindings.put("mountain", MountainProfile.class);
         bindings.put("prairie", PrairieProfile.class);
@@ -21,6 +26,11 @@ public class AltitudeFactory implements FeatureRunner {
         bindings.put(DEFAULT, MountainProfile.class);
     }
 
+    /**
+     * Runs the designated altitude profile on the given island based on its configuration
+     * @param island: Island to execute feature on
+     * @param config: Specified altitude profile
+     */
     @Override
     public void process(Island island, Configuration config) {
         try {
