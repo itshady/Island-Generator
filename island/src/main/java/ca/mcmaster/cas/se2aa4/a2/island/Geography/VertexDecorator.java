@@ -10,7 +10,7 @@ import java.awt.*;
 public class VertexDecorator {
     Vertex vertex;
     Boolean isSpring = false;
-    Integer altitude;
+    Double altitude;
 
     public boolean isSpring() {
         return isSpring;
@@ -28,11 +28,11 @@ public class VertexDecorator {
         return vertex;
     }
 
-    public Integer getAltitude() {
+    public Double getAltitude() {
         return altitude;
     }
 
-    public void setAltitude(Integer altitude) {
+    public void setAltitude(Double altitude) {
         this.altitude = altitude;
     }
 

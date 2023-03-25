@@ -60,12 +60,10 @@ public class RiverGenerator implements WaterGenerator {
         VertexDecorator previousSpring = spring;
         List<River> riverList = new ArrayList<>();
         while (spring != null) {
-
             // Check all neighbouring vertices for a lower altitude
             List<VertexDecorator> springNeighbours = getNeighbouringVertices(spring, island.getTiles());
             previousSpring = spring;
             spring = riverFlow(spring, springNeighbours, riverList);
-
         }
         rivers.add(riverList);
 
@@ -126,13 +124,13 @@ public class RiverGenerator implements WaterGenerator {
      */
     private VertexDecorator riverFlow(VertexDecorator spring, List<VertexDecorator> springNeighbours, List<River> currentRiver) {
         List<VertexDecorator> lowerAltitudeNeighbours = getLowerVertices(spring, springNeighbours);
-        VertexDecorator maxValue;
+        VertexDecorator minValue;
         if (lowerAltitudeNeighbours.isEmpty()) return null;
         else {
-            // Choose the highest neighbour from lowest neighbours
-            maxValue = lowerAltitudeNeighbours.stream()
-                    .max(Comparator.comparing(VertexDecorator::getAltitude)).get();
-            Border border = searchForBorder(spring, maxValue);
+            // Choose the lowest neighbour from neighbours lower than it (gravity :))
+            minValue = lowerAltitudeNeighbours.stream()
+                    .min(Comparator.comparing(VertexDecorator::getAltitude)).get();
+            Border border = searchForBorder(spring, minValue);
             if (borderOfLandWater(border)) return null;
             assert border != null;
             if (border.hasRiver()) {
@@ -144,7 +142,7 @@ public class RiverGenerator implements WaterGenerator {
                 currentRiver.add(newRiver);
             }
         }
-        return maxValue;
+        return minValue;
     }
 
     private boolean borderOfLandWater(Border border) {

@@ -9,8 +9,8 @@ public class PrairieProfile extends ElevationUtil {
      * @param vertex, VertexDecorator
      * @return Integer, represents the altitude level
      */
-    protected Integer calculateAltitude(VertexDecorator vertex) {
+    protected Double calculateAltitude(VertexDecorator vertex) {
         Seed seed = Seed.getInstance();
-        return seed.nextInt(minAltitude+1, minAltitude+50);
+        return (double)seed.nextInt(Math.toIntExact(Math.round(minAltitude+1)), Math.toIntExact(Math.round(minAltitude+50)));
     }
 }

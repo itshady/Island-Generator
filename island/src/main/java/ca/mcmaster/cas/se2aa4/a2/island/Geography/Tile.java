@@ -51,7 +51,7 @@ public class Tile {
         return biome;
     }
 
-    public void setAltitude(Integer altitude) {
+    public void setAltitude(Double altitude) {
         // error handling for out of boundary altitudes
         if (altitude < minAltitude) centroid.setAltitude(minAltitude);
         else if (altitude > maxAltitude) centroid.setAltitude(maxAltitude);
@@ -62,7 +62,7 @@ public class Tile {
         this.water = water;
     }
 
-    public Integer getAltitude() {
+    public Double getAltitude() {
         return centroid.getAltitude();
     }
 

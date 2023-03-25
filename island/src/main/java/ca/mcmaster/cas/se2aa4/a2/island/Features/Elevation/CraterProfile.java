@@ -8,10 +8,10 @@ public class CraterProfile extends ElevationUtil{
      * @param vertex, VertexDecorator
      * @return Integer, represents the altitude level
      */
-    protected Integer calculateAltitude(VertexDecorator vertex) {
+    protected Double calculateAltitude(VertexDecorator vertex) {
         Double distanceFromCenter = getDistance(center,vertex.getVertex().getCoordinate());
         Double slope = 200/(0.35* Math.min(island.width(), island.height()));
-        Integer y = Math.toIntExact(minAltitude + 1 + Math.round(distanceFromCenter * slope));
+        Double y = minAltitude + 1 + distanceFromCenter * slope;
         if (y > maxAltitude) return maxAltitude;
         return y;
     }

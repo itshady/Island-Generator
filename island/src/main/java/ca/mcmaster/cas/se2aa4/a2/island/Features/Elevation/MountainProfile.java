@@ -9,10 +9,10 @@ public class MountainProfile extends ElevationUtil {
      * @param vertex, VertexDecorator
      * @return Integer, represents the altitude level
      */
-    protected Integer calculateAltitude(VertexDecorator vertex) {
+    protected Double calculateAltitude(VertexDecorator vertex) {
         Double distanceFromCenter = getDistance(center,vertex.getVertex().getCoordinate());
         Double slope = -200/(0.35* Math.min(island.width(), island.height()));
-        Integer y = Math.toIntExact(maxAltitude + (Math.round((distanceFromCenter * slope))));
+        Double y = maxAltitude + distanceFromCenter * slope;
         if (y <= minAltitude) return minAltitude+1;
         return y;
     }

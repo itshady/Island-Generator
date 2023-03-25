@@ -29,9 +29,9 @@ public class AltitudeVisualizer extends Heatmap {
         colors.add(new Color(243, 144, 63));
         colors.add(new Color(253, 199, 12));
         colors.add(new Color(255, 243, 59));
-        Integer max = maxAltitude;
-        Integer min = minAltitude;
-        int separation = (max - min) / colors.size();
+        Double max = maxAltitude;
+        Double min = minAltitude;
+        double separation = (max - min) / colors.size();
 
         // Determining colours based on altitude values.
         if (tile.getAltitude() <= min + separation) return colors.get(4);

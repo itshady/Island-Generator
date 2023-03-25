@@ -127,7 +127,7 @@ public abstract class LandWaterGenerator implements WaterGenerator {
      * @param tile The tile to update
      * @param altitude The altitude to update to
      */
-    private void updateTileAltitude(Tile tile, Integer altitude) {
+    private void updateTileAltitude(Tile tile, Double altitude) {
         tile.getCentroid().setAltitude(altitude);
 
         for (Border border : tile.getBorders()) {

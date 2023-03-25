@@ -48,7 +48,7 @@ class RiverGeneratorTest {
         vertices.add(d2);
         vertices.add(d3);
         vertices.add(d4);
-        d1.setAltitude(20); d2.setAltitude(15); d3.setAltitude(10); d4.setAltitude(5);
+        d1.setAltitude(20.0); d2.setAltitude(15.0); d3.setAltitude(10.0); d4.setAltitude(5.0);
 
         borders.add(Border.newBuilder().addV1(vertices.get(0)).addV2(vertices.get(1)).addSegment(new Segment(v1,  v2)).build());
         borders.add(Border.newBuilder().addV1(vertices.get(1)).addV2(vertices.get(2)).addSegment(new Segment(v2,  v3)).build());
