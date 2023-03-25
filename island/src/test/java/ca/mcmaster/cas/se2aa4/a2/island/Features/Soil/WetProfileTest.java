@@ -16,7 +16,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class WetProfileTest {
-
     Tile tile1;
     Tile tile2;
     Island island;

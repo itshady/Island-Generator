@@ -16,7 +16,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DryProfileTest {
-
     Tile tile1;
     Tile tile2;
     Island island;
@@ -48,7 +47,7 @@ class DryProfileTest {
         mockBorder.add(borders.get(0));
 
         VertexDecorator mockCentroid = VertexDecorator.newBuilder().addVertex(new Vertex(5.0,5.0)).build();
-        VertexDecorator mockCentroid2 = VertexDecorator.newBuilder().addVertex(new Vertex(6.0,5.0)).build();
+        VertexDecorator mockCentroid2 = VertexDecorator.newBuilder().addVertex(new Vertex(20.0,20.0)).build();
 
         vertices.add(mockCentroid);
         vertices.add(mockCentroid2);
@@ -62,12 +61,13 @@ class DryProfileTest {
         island = new Island();
         island.register(vertices, new ArrayList<>(), tiles);
     }
+
     @Test
     public void moistureTest() {
         tile1.setWater(new Lake());
         new DryProfile().process(island);
 
         // Expected value calculated prior, therefore source of truth
-        assertEquals(Math.round(73.97),  Math.round(tile2.getAbsorption()));
+        assertEquals(Math.round(41.30),  Math.round(tile2.getAbsorption()));
     }
 }
