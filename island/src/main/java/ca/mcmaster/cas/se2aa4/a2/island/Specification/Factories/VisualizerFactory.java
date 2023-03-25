@@ -21,7 +21,7 @@ public class VisualizerFactory implements FeatureRunner {
     }
 
     @Override
-    public void process(Island island, Configuration config) {
+    public void run(Island island, Configuration config) {
         try {
             String value = config.export(Configuration.VISUAL);
             value = value != null ? value.toLowerCase() : null;

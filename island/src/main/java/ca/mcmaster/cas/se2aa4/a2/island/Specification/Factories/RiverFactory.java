@@ -15,7 +15,7 @@ public class RiverFactory implements FeatureRunner {
      * @param config: Number of rivers
      */
     @Override
-    public void process(Island island, Configuration config) {
+    public void run(Island island, Configuration config) {
         try {
             String input = config.export(Configuration.RIVER);
             Integer numOfRivers;

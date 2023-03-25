@@ -15,7 +15,7 @@ public class AquiferFactory implements FeatureRunner {
      * @param config: Number of aquifer
      */
     @Override
-    public void process(Island island, Configuration config) {
+    public void run(Island island, Configuration config) {
         try {
             String input = config.export(Configuration.AQUIFER);
             Integer numOfAquifers;

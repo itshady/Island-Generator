@@ -32,7 +32,7 @@ public class ShapeFactory implements FeatureRunner {
      * @param config: Specified shape
      */
     @Override
-    public void process(Island island, Configuration config) {
+    public void run(Island island, Configuration config) {
         try {
             String value = config.export(Configuration.SHAPE);
             value = value != null ? value.toLowerCase() : null;

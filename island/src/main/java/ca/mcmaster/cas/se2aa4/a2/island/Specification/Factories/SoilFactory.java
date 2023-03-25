@@ -30,7 +30,7 @@ public class SoilFactory implements FeatureRunner {
      * @param config: Specified soil type
      */
     @Override
-    public void process(Island island, Configuration config) {
+    public void run(Island island, Configuration config) {
         try {
             String value = config.export(Configuration.SOIL);
             value = value != null ? value.toLowerCase() : null;
