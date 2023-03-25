@@ -50,6 +50,7 @@ public class RiverGenerator implements WaterGenerator {
         }
         // Get neighbouring vertices and check that there are no rivers in the borders from current spring to neighbouring vertices
         if (isInRiver(spring)) return false;
+        if (decoratorOfLandWater(spring)) return false;
         if (getLowerVertices(spring, getNeighbouringVertices(spring, island.getTiles())).isEmpty()) {
             return false;
         }
