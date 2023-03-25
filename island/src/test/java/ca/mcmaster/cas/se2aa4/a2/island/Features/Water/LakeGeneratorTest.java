@@ -12,8 +12,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +26,7 @@ class LakeGeneratorTest {
     static Tile tile;
     static Tile tile2;
     static Tile tile3;
+    static Tile tile4;
     static Island island;
     List<VertexDecorator> vertices = new ArrayList<>();
     List<Border> borders = new ArrayList<>();
@@ -92,6 +96,76 @@ class LakeGeneratorTest {
             if (tile.hasLake()) lakeCounter++;
         }
         assertEquals(2, lakeCounter);
+    }
+
+    @Test
+    public void FlatLakes() {
+        List<Tile> tiles = new ArrayList<>();
+        // Making neighbour polygons to test for flat lakes
+        Polygon polygon2 = new Polygon(segmentList);
+        Polygon polygon3 = new Polygon(segmentList);
+        Polygon polygon4 = new Polygon(segmentList);
+
+        VertexDecorator mockCentroid2 = VertexDecorator.newBuilder().addVertex(new Vertex(26.0,26.0)).build();
+        VertexDecorator mockCentroid3 = VertexDecorator.newBuilder().addVertex(new Vertex(27.0,27.0)).build();
+        VertexDecorator mockCentroid4 = VertexDecorator.newBuilder().addVertex(new Vertex(28.0,28.0)).build();
+
+        tile2 = Tile.newBuilder().addPolygon(polygon2).addBorders(borders).addCentroid(mockCentroid2).build();
+        tile3 = Tile.newBuilder().addPolygon(polygon3).addBorders(borders).addCentroid(mockCentroid3).build();
+        tile4 = Tile.newBuilder().addPolygon(polygon4).addBorders(borders).addCentroid(mockCentroid4).build();
+
+        tile.getPolygon().setId(1);
+        tile2.getPolygon().setId(2);
+        tile3.getPolygon().setId(3);
+        tile4.getPolygon().setId(4);
+
+        tile.getCentroid().setAltitude(10);
+        tile2.getCentroid().setAltitude(20);
+        tile3.getCentroid().setAltitude(15);
+        tile4.getCentroid().setAltitude(5);
+
+        Set<Polygon> tileNeighbour = new HashSet<>();
+        tileNeighbour.add(tile2.getPolygon());
+        tileNeighbour.add(tile3.getPolygon());
+        tileNeighbour.add(tile4.getPolygon());
+
+        Set<Polygon> tileNeighbour2 = new HashSet<>();
+        tileNeighbour2.add(tile.getPolygon());
+        tileNeighbour2.add(tile3.getPolygon());
+        tileNeighbour2.add(tile4.getPolygon());
+
+        Set<Polygon> tileNeighbour3 = new HashSet<>();
+        tileNeighbour3.add(tile.getPolygon());
+        tileNeighbour3.add(tile2.getPolygon());
+        tileNeighbour3.add(tile4.getPolygon());
+
+        Set<Polygon> tileNeighbour4 = new HashSet<>();
+        tileNeighbour4.add(tile.getPolygon());
+        tileNeighbour4.add(tile2.getPolygon());
+        tileNeighbour4.add(tile3.getPolygon());
+
+        tile.getPolygon().addPolygonNeighbourSet(tileNeighbour);
+        tile2.getPolygon().addPolygonNeighbourSet(tileNeighbour2);
+        tile3.getPolygon().addPolygonNeighbourSet(tileNeighbour3);
+        tile4.getPolygon().addPolygonNeighbourSet(tileNeighbour4);
+
+        tiles.add(tile);
+        tiles.add(tile2);
+        tiles.add(tile4);
+        tiles.add(tile4);
+
+        island.register(island.getVertexDecorators(), island.getBorders(), tiles);
+
+        new LakeGenerator().process(island, 1);
+        // Action
+        List<Tile> checkedTiles = new ArrayList<>();
+        for (Tile tile : tiles) {
+            if (checkedTiles.isEmpty() && tile.hasLake()) checkedTiles.add(tile);
+            else if (!checkedTiles.isEmpty() && tile.hasLake() && !checkedTiles.contains(tile)) {
+                assertEquals(tile.getCentroid().getAltitude(), checkedTiles.get(0).getCentroid().getAltitude());
+            }
+        }
+
     }
 
     @Test
