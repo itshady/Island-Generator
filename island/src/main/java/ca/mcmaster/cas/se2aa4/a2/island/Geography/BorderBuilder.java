@@ -2,6 +2,10 @@ package ca.mcmaster.cas.se2aa4.a2.island.Geography;
 
 import Geometries.Segment;
 
+
+/**
+ * Creation class for borders
+ */
 public class BorderBuilder {
     Segment segment;
     VertexDecorator v1;

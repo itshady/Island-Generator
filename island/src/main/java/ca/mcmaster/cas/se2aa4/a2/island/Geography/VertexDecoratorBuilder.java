@@ -1,11 +1,10 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Geography;
 
-import Geometries.Polygon;
 import Geometries.Vertex;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Creation class for vertex decorators
+ */
 public class VertexDecoratorBuilder {
     Vertex vertex;
 

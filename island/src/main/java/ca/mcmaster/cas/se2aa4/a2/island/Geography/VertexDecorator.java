@@ -4,6 +4,9 @@ import Geometries.Vertex;
 
 import java.awt.*;
 
+/**
+ * VertexDecorator holds a mesh Vertex and adds additional properties to it
+ */
 public class VertexDecorator {
     Vertex vertex;
     Boolean isSpring = false;

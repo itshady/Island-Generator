@@ -5,6 +5,10 @@ import Geometries.Polygon;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Creation class for tiles
+ */
+
 public class TileBuilder {
     List<Border> borders = new ArrayList<>();
     VertexDecorator centroid;

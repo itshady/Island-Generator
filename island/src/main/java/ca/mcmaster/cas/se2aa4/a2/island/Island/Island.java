@@ -8,6 +8,10 @@ import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Island which holds the tiles, borders and decorators
+ */
+
 public class Island {
     private List<VertexDecorator> decorators;
     private List<Border> borders;

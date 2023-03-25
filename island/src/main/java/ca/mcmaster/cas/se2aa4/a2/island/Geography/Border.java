@@ -5,6 +5,10 @@ import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.BodyOfWater;
 
 import java.awt.*;
 
+/**
+ * Border holds a mesh segment and adds additional properties to it
+ */
+
 public class Border {
     Segment segment;
     VertexDecorator v1;

@@ -7,14 +7,16 @@ import ca.mcmaster.cas.se2aa4.a2.island.Features.Soil.SoilProfile;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.BodyOfWater;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.List;
 
 import static ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil.maxAltitude;
 import static ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation.ElevationUtil.minAltitude;
-import static ca.mcmaster.cas.se2aa4.a2.island.TileType.TEST;
 
+
+/**
+ * Tile holds a mesh polygon and adds additional properties to it
+ */
 public class Tile {
     Polygon polygon;
     List<Border> borders;
