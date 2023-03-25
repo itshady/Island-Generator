@@ -12,15 +12,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Visualizer to see all the different biomes.
+ */
+
 public class BiomeVisualizer implements Visualizer {
     private static final Map<String, Color> colors = new HashMap<>();
 
+    // Initializes the colour map with its needed colours.
     static {
         colors.put("lake", new Color(103,168,209,255));
         colors.put("ocean", new Color(0,87,143,255));
         colors.put("river", new Color(103,168,209,255));
     }
 
+    /**
+     * Processes all the tiles, borders and decorators into their biome colours.
+     * @param island: Given island to process
+     */
     @Override
     public void process(Island island) {
         traverseTiles(island.getTiles());
@@ -28,6 +37,10 @@ public class BiomeVisualizer implements Visualizer {
         traverseVertexDecorators(island.getVertexDecorators());
     }
 
+    /**
+     * Sets the tile to its designated colours.
+     * @param tiles: a list of tiles
+     */
     private void traverseTiles(List<Tile> tiles) {
         for (Tile tile : tiles) {
             if (tile.hasLake()) tile.setColor(colors.get("lake"));
@@ -37,6 +50,11 @@ public class BiomeVisualizer implements Visualizer {
         }
     }
 
+    /**
+     * Sets all borders colours to black and thicknesses to zero if no river is found.
+     * Border is set to the multiplicity thickness if a river is found.
+     * @param borders: a list of borders
+     */
     private void traverseBorders(List<Border> borders) {
         for (Border border : borders) {
             if (border.hasRiver()) {
@@ -49,6 +67,10 @@ public class BiomeVisualizer implements Visualizer {
         }
     }
 
+    /**
+     * Sets all vertex decorators colours to black and thicknesses to zero.
+     * @param vertices: a list of vertex decorators
+     */
     private void traverseVertexDecorators(List<VertexDecorator> vertices) {
         for (VertexDecorator vertex : vertices) {
             vertex.setColor(Color.BLACK);

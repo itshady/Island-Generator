@@ -12,9 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Debug visualizer to show lakes, lake sources, rivers, river springs and aquifers
+ */
+
 public class DebugVisualizer implements Visualizer {
     private static final Map<String, Color> colors = new HashMap<>();
 
+    // Initializes the colour map with its needed colours.
     static {
         colors.put("lake", new Color(103,168,209,255));
         colors.put("lakeSource", Color.MAGENTA);
@@ -24,6 +29,10 @@ public class DebugVisualizer implements Visualizer {
         colors.put("aquifer", Color.GREEN);
     }
 
+    /**
+     * Processes all the tiles, borders and decorators into their debugged colours.
+     * @param island: Given island to process
+     */
     @Override
     public void process(Island island) {
         traverseTiles(island.getTiles());
@@ -31,6 +40,10 @@ public class DebugVisualizer implements Visualizer {
         traverseVertexDecorators(island.getVertexDecorators());
     }
 
+    /**
+     * Sets the tile to its designated colours.
+     * @param tiles: a list of tiles
+     */
     private void traverseTiles(java.util.List<Tile> tiles) {
         for (Tile tile : tiles) {
             if (tile.isWaterCenter()) tile.setColor(colors.get("lakeSource"));
@@ -42,6 +55,11 @@ public class DebugVisualizer implements Visualizer {
         }
     }
 
+    /**
+     * Sets all borders colours to black and thicknesses to zero if no river is found.
+     * Border is set to the multiplicity thickness if a river is found.
+     * @param borders: a list of borders
+     */
     private void traverseBorders(java.util.List<Border> borders) {
         for (Border border : borders) {
             if (border.hasRiver()) {
@@ -54,6 +72,11 @@ public class DebugVisualizer implements Visualizer {
         }
     }
 
+    /**
+     * Sets all vertex decorators colours to black and thicknesses to zero if no spring is found.
+     * If a spring is found, set the thickness to 1.5f and show its designated colour.
+     * @param vertices: a list of vertex decorators
+     */
     private void traverseVertexDecorators(List<VertexDecorator> vertices) {
         for (VertexDecorator vertex : vertices) {
             if (vertex.isSpring()) {
