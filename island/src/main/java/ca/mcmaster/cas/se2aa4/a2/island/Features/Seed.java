@@ -17,6 +17,7 @@ public class Seed {
         int seed = (new Random().nextInt()) & Integer.MAX_VALUE; // gets rid of signed bit so only positive seeds
         Random random = new Random(seed);
         instance = new Seed(seed, random);
+        instance.printSeed();
         return instance;
     }
     public static Seed getInstance(String inputSeed) {
@@ -26,6 +27,7 @@ public class Seed {
             Integer seed = Integer.parseInt(inputSeed);
             Random random = new Random(seed);
             instance = new Seed(seed, random);
+            instance.printSeed();
             return instance;
         } catch (Exception e) {
             System.out.println("You did not enter a valid seed so a random one was chosen.");
