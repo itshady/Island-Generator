@@ -17,8 +17,8 @@ public class Oval extends ShapeGenerator {
         GeometricShapeFactory gsf = new GeometricShapeFactory();
         Coordinate meshCentre = determineMeshCentre();
         gsf.setCentre(meshCentre);
-        gsf.setHeight(400);
-        gsf.setWidth(175);
+        gsf.setHeight(0.8 * island.height());
+        gsf.setWidth(0.35 * island.width());
         gsf.setNumPoints(350);
         gsf.setRotation(Math.toRadians(60));
         oval = gsf.createEllipse();

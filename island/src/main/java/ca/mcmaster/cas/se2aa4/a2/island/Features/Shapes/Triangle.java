@@ -20,9 +20,9 @@ public class Triangle extends ShapeGenerator{
         GeometryFactory gf = new GeometryFactory();
         Coordinate centroid = determineMeshCentre();
 
-        // Set the base and height of the triangle (These should be variable)
-        double base = 300;
-        double height = 300;
+        // Set the base and height of the triangle
+        double base = 0.6 * island.width();
+        double height = 0.6 * island.height();
 
         // Calculate the coordinates of the vertices based on the centroid
         Coordinate[] vertices = new Coordinate[] {

@@ -70,7 +70,9 @@ class AquiferGeneratorTest {
         segmentList.add(new Segment(new Vertex(12.0,32.0),new Vertex(12.0,20.0)));
         Polygon polygon2 = new Polygon(segmentList);
         tile2 = Tile.newBuilder().addPolygon(polygon2).addBorders(borders).addCentroid(mockCentroid2).build();
-        island.getTiles().add(tile2);
+
+        List<Tile> newTiles = island.getTiles();
+        newTiles.add(tile2);
 
         VertexDecorator mockCentroid3 = VertexDecorator.newBuilder().addVertex(new Vertex(100.0,100.0)).build();
         vertices.add(mockCentroid3);
@@ -78,7 +80,10 @@ class AquiferGeneratorTest {
         segmentList.add(new Segment(new Vertex(131.0,22.0),new Vertex(11.0,23.0)));
         Polygon polygon3 = new Polygon(segmentList);
         tile3 = Tile.newBuilder().addPolygon(polygon3).addBorders(borders).addCentroid(mockCentroid3).build();
-        island.getTiles().add(tile3);
+
+        newTiles.add(tile3);
+        island.register(island.getVertexDecorators(), island.getBorders(), newTiles);
+
         new AquiferGenerator().process(island, 2);
 
         int aquiferCounter = 0;

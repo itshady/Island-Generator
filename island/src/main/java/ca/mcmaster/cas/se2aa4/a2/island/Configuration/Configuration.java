@@ -72,14 +72,14 @@ public class Configuration {
 
     private Options options() {
         Options options = new Options();
-        options.addOption(new Option(SHAPE, true, "Shape of island"));
+        options.addOption(new Option(SHAPE, true, "Shape of island: circle, square, triangle, oval, threecircle"));
         options.addOption(new Option(ALTITUDE, true, "Altitude profile of island"));
         options.addOption(new Option(AQUIFER, true, "Number of aquifers on island"));
         options.addOption(new Option(LAKE, true, "Maximum number of lakes on island"));
         options.addOption(new Option(RIVER, true, "Number of rivers on island"));
-        options.addOption(new Option(SOIL, true, "Soil profile of land"));
-        options.addOption(new Option(BIOME, true, "Selects the whittaker diagram"));
-        options.addOption(new Option(MODE, true, "Sandbox or Normal mode"));
+        options.addOption(new Option(SOIL, true, "Soil profile of land: Dry, Wet"));
+        options.addOption(new Option(BIOME, true, "Selects the whittaker diagram: america, asia"));
+        options.addOption(new Option(MODE, true, "Sandbox or Normal mode (defaults to normal)"));
         options.addOption(new Option(INPUT_MESH, true, "Path to input .mesh file"));
         options.addOption(new Option(OUTPUT_MESH, true, "Path to output file name"));
         options.addOption(new Option(SEED, true, "Seed for the island generation"));

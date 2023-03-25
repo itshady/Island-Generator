@@ -23,9 +23,9 @@ public class IslandBuilder implements Buildable {
                 SpecificationFactory.run(candidate, island, configuration);
             }
         }
+
         String mode = configuration.export(Configuration.MODE);
         if (mode != null && mode.equalsIgnoreCase("lagoon")) {
-            System.out.println("heyy");
             new Lagoon().process(island);
             new LagoonVisualizer().process(island);
             return;
