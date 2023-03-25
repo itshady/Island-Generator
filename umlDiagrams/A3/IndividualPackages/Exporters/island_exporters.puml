@@ -13,26 +13,68 @@ package Geography {
 package Exporters {
 
   package Converters {
-    class IslandToMeshConverter
-    class MeshToIslandConverter
-    class MeshToStructsConverter
-    class StructsToMeshConverter
+    class IslandToMeshConverter {
+      +process(Island): Mesh
+      -convertToVertices(List<VertexDecorator>): VertexSet
+      -convertToSegments(List<Border>): SegmentSet
+      -convertToPolygons(List<Tile>): PolygonSet
+
+    }
+    class MeshToIslandConverter {
+      -{final} vertexDecorators: List<VertexDecorator>
+      -{final} borders: List<Border>
+      -{final} tiles: List<Tile>
+      +process(Mesh): Island
+      -convert(PolygonSet): void
+      -getAssociatedBorder(List<Segment>): List<Border>
+      -convert(SegmentSet): void
+      -convert(VertexSet): void
+    }
+    class MeshToStructsConverter {
+      +process(Mesh): Structs.Mesh
+      -convertVertices(GeometrySet<Vertex>): Set<Structs.Vertex>
+      -convertSegments(GeometrySet<Segment>): Set<Structs.Segment>
+      -convertPolygons(GeometrySet<Polygon>): Set<Structs.Polygon>
+    }
+    class StructsToMeshConverter {
+      -{final} propertyHandler: PropertyHandler
+      -vertices: VertexSet
+      -segments: SegmentSet
+      -polygons: PolygonSet
+
+      +process(Structs.Mesh): Mesh
+      -extractGeometries(Structs.Mesh): void
+      -extractVertices(List<Structs.Vertex>): VertexSet
+      -extractSegments(List<Structs.Segment>, GeometrySet<Vertex>): SegmentSet
+      -extractPolygons(List<Structs.Polygon>, GeometrySet<Segment>, GeometrySet<Vertex>): PolygonSet
+      -extractNeighbours(List<Structs.Polygon>): void
+    }
   }
 
-  interface Export
-  class Exporter
-  class PolygonMapper
+  interface Export {
+    ~upgrade(Structs.Mesh): Mesh
+    ~upgrade(Mesh): Island
+    ~process(Island): Mesh
+    ~process(Mesh): Structs.Mesh
+  }
+  class Exporter {
+    +upgrade(Structs.Mesh): Mesh
+    +upgrade(Mesh): Island
+    +process(Island): Mesh
+    +process(Mesh): Structs.Mesh
+  }
+  class PolygonMapper {
+    +process(Polygon): JTS.Polygon
+  }
 
 }
 
 package MeshADT {
 
   package EnhancedSets {
-
     class PolygonSet
     class SegmentSet
     class VertexSet
-
   }
 
 }
@@ -49,18 +91,18 @@ package io {
 
 }
 
-Exporters.Converters.MeshToIslandConverter *-down- Geography
+Exporters.Converters.MeshToIslandConverter *-up- Geography
 
-Export ..> Island
-Exporter ..|> Export
+Export .up.> Island
+Exporter .up.|> Export
 
 Exporters.Converters.IslandToMeshConverter .> Island
-Exporters.Converters.IslandToMeshConverter ..> Geography
+Exporters.Converters.IslandToMeshConverter .up.> Geography
 
-Exporters.Converters.MeshToStructsConverter ..> MeshADT.EnhancedSets
+Exporters.Converters.MeshToStructsConverter .up.> MeshADT.EnhancedSets
 
-Exporters.Converters.StructsToMeshConverter *-- MeshADT.EnhancedSets
-Exporters.Converters.StructsToMeshConverter ..> io.Structs
+Exporters.Converters.StructsToMeshConverter *-up- MeshADT.EnhancedSets
+Exporters.Converters.StructsToMeshConverter .up.> io.Structs
 
 Exporters.PolygonMapper ..> io.Structs.Polygon
 

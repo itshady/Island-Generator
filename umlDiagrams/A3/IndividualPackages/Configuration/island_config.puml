@@ -42,9 +42,7 @@ package Specification {
 
 package "Apache CLI" LightSalmon {}
 
-Configuration.Configuration *-- "Apache CLI"
-Configuration.Configuration ..> Specification
-
-
+Configuration.Configuration *-left- "Apache CLI"
+Configuration.Configuration .right.> Specification
 
 @enduml

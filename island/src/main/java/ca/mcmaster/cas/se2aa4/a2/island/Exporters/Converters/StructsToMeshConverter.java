@@ -99,8 +99,6 @@ public class StructsToMeshConverter {
                 Segment currentSegment = generatorSegments.get(polygonSegmentIdx);
                 polygonSegments.add(currentSegment);
             }
-//            Color polygonColor = propertyHandler.extractColorProperty(polygon.getPropertiesList());
-//            Float polygonThickness = propertyHandler.extractThicknessProperty(polygon.getPropertiesList());
             Polygon generatorPolygon = new Polygon(polygonSegments, Color.BLACK, 0f);
             Centroid centroid = (Centroid) (generatorVertices.get(polygon.getCentroidIdx()));
             generatorPolygon.setCentroid(centroid);

@@ -6,46 +6,117 @@ package Features {
 
   package Biomes {
 
-    class AmericaProfile
-    class AsiaProfile
-    enum Biome
-    interface DiagramProfile
-    abstract class WhittakerUtil
+    class AmericaProfile {}
+    class AsiaProfile {}
+    enum Biome {
+      DESERT
+      TUNDRA
+      GRASSLAND
+      MIXEDFOREST
+      MONTANEFOREST
+      SAVANNA
+      RAINFOREST
+      ALPINETUNDRA
+      MOUNTAIN
+      MANGROVE
+      -{final} color: Color
+      +Biome(Color)
+      +toColor(): Color
+    }
+    interface DiagramProfile {
+      process(Island): void
+    }
+    abstract class WhittakerUtil {
+      ~island: Island
+      #boundaries: Map<Biome, Map<String, Double>>
+      +process(Island): void
+      ~{abstract} setBiomeBoundaries(): void
+      -setAllBiomes(): void
+      -checkForBiome(Tile): Biome
+      #setBiomeProperty(Double, Double, Double, Double): Map<String, Double>
+    }
 
   }
   package Elevation {
 
     class CraterProfile
-    interface ElevationProfile
-    abstract class ElevationUtil
-    class MountainProfile
-    class PrairieProfile
+    interface ElevationProfile {
+      ~process(Island): void
+    }
+    abstract class ElevationUtil {
+      ~center: Coordinate
+      ~island: Island
+      +{static} maxAltitude: Double
+      +{static} minAltitude: Double
+      ~{abstract} calculateAltitude(VertexDecorator): Double
+      +process(Island): void
+      -setAllAltitudes(): void
+      #getDistance(Coordinate, Coordinate): double
+    }
+    class MountainProfile {}
+    class PrairieProfile {}
 
   }
   package Shapes {
 
-    interface Shape
-    abstract class ShapeGenerator
-    class Circle
-    class Oval
-    class Square
-    class ThreeCircle
-    class Triangle
+    interface Shape {
+      ~process(Island): void
+    }
+    abstract class ShapeGenerator {
+      ~island: Island
+      #{abstract}initializeLand(): void
+      #{abstract}intersects(Polygon): boolean
+      +process(Island): void
+      #determineMeshCentre(): Coordinate
+    }
+    class Circle {}
+    class Oval {}
+    class Square {}
+    class ThreeCircle {}
+    class Triangle {}
 
   }
   package Soil {
 
-    interface SoilProfile
-    abstract class SoilUtil
-    class DryProfile
-    class WetProfile
+    interface SoilProfile {
+      ~process(Island): void
+    }
+    abstract class SoilUtil {
+      ~island: Island
+      -maxAbsorption: Double
+      -minAbsorption: Double
+      +process(Island): void
+      +{abstract} getSoilProfile(): SoilProfile
+      #{abstract} calcLandWaterAbsorption(Tile, double): double
+      #{abstract} calcRiverAbsorption(Tile, double): double
+    }
+    class DryProfile {}
+    class WetProfile {}
 
   }
   package Water {
 
-    interface BodyOfWater
-    interface WaterGenerator
-    abstract class LandWaterGenerator
+    interface BodyOfWater {
+      ~multiplicity(): Integer
+      ~isAboveGround(): boolean
+      ~moisture(): Integer
+      ~isLake(): boolean
+      ~isRiver(): boolean
+      ~isAquifer(): boolean
+      ~isOcean(): boolean
+    }
+    interface WaterGenerator {
+      ~process(Island, Integer): void
+    }
+    abstract class LandWaterGenerator {
+      ~island: Island
+      ~uncheckedTiles: List<Tile>
+      +process(Island, Integer): void
+      #{abstract} getLayer(): Integer
+      +generateWater(Integer): boolean
+      #{abstract} canBeAdjacentWater(): boolean
+      -containsWater(List<Tile>): boolean
+    }
     class LakeGenerator
     class RiverGenerator
     class AquiferGenerator
@@ -55,8 +126,6 @@ package Features {
     class Aquifer
 
   }
-  class Lagoon
-
 }
 
 DiagramProfile .up.> Island.Island
