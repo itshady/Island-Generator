@@ -25,7 +25,7 @@ public abstract class ElevationUtil implements ElevationProfile {
      */
     public void process(Island container) {
         island = container;
-        center = determineMeshCentre();
+        center = island.center();
 
         setAllAltitudes();
     }
@@ -59,14 +59,6 @@ public abstract class ElevationUtil implements ElevationProfile {
                 }
             }
         }
-    }
-
-    /**
-     * Determines the centre point of the mesh.
-     * Returns the centre coordinate (Used to determine triangle)
-     */
-    protected Coordinate determineMeshCentre() {
-        return island.center();
     }
 
     protected double getDistance(Coordinate v1, Coordinate v2) {

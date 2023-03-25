@@ -1,6 +1,5 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Elevation;
 
-import Geometries.Vertex;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 
 public class MountainProfile extends ElevationUtil {
