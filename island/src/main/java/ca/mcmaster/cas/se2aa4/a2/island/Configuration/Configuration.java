@@ -54,6 +54,10 @@ public class Configuration {
         System.exit(0);
     }
 
+    /**
+     * Stores all CLI arguments and corresponding inputs into a hashmap
+     * @return
+     */
     public Map<String, String> export() {
         Map<String, String> result = new HashMap<>();
         for(Option o: cli.getOptions()){
@@ -62,6 +66,11 @@ public class Configuration {
         return result;
     }
 
+    /**
+     * Gets the specific value associated with a CLI argument
+     * @param key, String
+     * @return String
+     */
     public String export(String key) {
         return cli.getOptionValue(key);
     }

@@ -6,8 +6,13 @@ This is an island generator that works on already created meshes.
 | shortOption | longOption | Args? | Arg value | Desc | Required |
 |:--:|---------------|------|-------|-----|--------|
 | o | output | x | .mesh file | Specify the output mesh file | x |
-| m | mesh | x | String | Specifies the type of mesh to output: irregular, square, hex, honeycomb, diamond | x |
-| p | polygons | x | Integer | Number of polygons to output (Note: only for irregular meshes) |  |
-| r | relaxation | x | Integer | The Lloyd Relaxation constant (Note: only for irregular meshes) |  |
-| ht | height | x | Integer | Specifies the height of the svg (Note: only for irregular meshes) |  |
-| wt | width | x | Integer | Specifies the width of the svg (Note: only for irregular meshes) |  |
+| i | input | x | .mesh file | Specify the input mesh file | x |
+| shape | shape | x | String | Select the type of shape the island should be (circle, triangle, oval, square, threecircle) |  |
+| altitude | altitude | x | String | Selects the altitude profile for the island (crater, mountain, prairie) |  |
+| aquifer | aquifer | x | Integer | Specify the number of aquifers  |  |
+| lake | lake | x | Integer | Specify the number of lakes  |  |
+| river | river | x | Integer | Specify the number of rivers  |  |
+| soil | soil | x | String | Selects the soil profile for the island (Dry, Wet) |  |
+| biomes | biomes | x | String | Selects the whittaker diagram for the island (america, asia) |  |
+| visual | visual | x | String | Selects the visual mode for the island (altitude, biome, debug, lagoon, moisture) |  |
+

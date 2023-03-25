@@ -15,31 +15,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IslandToMeshConverter {
+
+    /**
+     * Converts all VertexDecorators, Borders, and Tiles to MeshADT type equivalents
+     * @param island, Island
+     * @return Mesh, MeshADT type
+     */
     public Mesh process(Island island) {
         Mesh mesh = new Mesh();
-        mesh.vertices = new VertexSet(convertToVertices(island.getVertexDecorators()));
-        mesh.segments = new SegmentSet(convertToSegments(island.getBorders()));
+        mesh.vertices = convertToVertices(island.getVertexDecorators());
+        mesh.segments = convertToSegments(island.getBorders());
 
         mesh.polygons = convertToPolygons(island.getTiles());
         return mesh;
     }
 
-    private List<Vertex> convertToVertices(List<VertexDecorator> decorators) {
-        List<Vertex> vertices = new ArrayList<>();
+    /**
+     * Collection of VertexDecorators are converted to MeshADT Vertices
+     * @param decorators, List<VertexDecorator>
+     * @return List<Vertex>
+     */
+    private VertexSet convertToVertices(List<VertexDecorator> decorators) {
+        VertexSet vertices = new VertexSet();
         for (VertexDecorator decorator : decorators) {
             vertices.add(decorator.getVertex());
         }
         return vertices;
     }
 
-    private List<Segment> convertToSegments(List<Border> borders) {
-        List<Segment> segments = new ArrayList<>();
+    /**
+     * Collection of Borders are converted to MeshADT Segments
+     * @param borders, List<Border>
+     * @return List<Segment>
+     */
+    private SegmentSet convertToSegments(List<Border> borders) {
+        SegmentSet segments = new SegmentSet();
         for (Border border : borders) {
             segments.add(border.getSegment());
         }
         return segments;
     }
 
+    /**
+     * Collection of Tiles are converted to MeshADT Polygons
+     * @param tiles, List<Tile>
+     * @return PolygonSet -> EnhancedSet of a Polygon List to prevent duplicates
+     */
     private PolygonSet convertToPolygons(List<Tile> tiles) {
         PolygonSet set = new PolygonSet();
         for (Tile tile : tiles) {

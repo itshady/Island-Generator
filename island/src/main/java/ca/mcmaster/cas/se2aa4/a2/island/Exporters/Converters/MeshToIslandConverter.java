@@ -20,6 +20,11 @@ public class MeshToIslandConverter {
     private final List<Border> borders = new ArrayList<>();
     private final List<Tile> tiles = new ArrayList<>();
 
+    /**
+     * Converts all MeshADT type vertices, segments, and polygons into Island type equivalents
+     * @param mesh, MeshADT
+     * @return Island
+     */
     public Island process(Mesh mesh) {
         Island island = new Island();
         convert(mesh.vertices);
@@ -29,6 +34,10 @@ public class MeshToIslandConverter {
         return island;
     }
 
+    /**
+     * Collection of Polygons are converted to Tiles
+     * @param polygons, PolygonSet -> EnhancedSet of Polygons to prevent duplicates
+     */
     private void convert(PolygonSet polygons) {
         for (Polygon polygon : polygons) {
             tiles.add(
@@ -41,6 +50,11 @@ public class MeshToIslandConverter {
         }
     }
 
+    /**
+     * Convert Segments into their Island Border equivalents for the Tiles
+     * @param segments, List<Segment>
+     * @return List<Border>
+     */
     private List<Border> getAssociatedBorders(List<Segment> segments) {
         List<Border> bordersList = new ArrayList<>();
         for (Segment segment : segments) {
@@ -50,6 +64,11 @@ public class MeshToIslandConverter {
         }
         return bordersList;
     }
+
+    /**
+     * Converts Segments into Borders
+     * @param segments, SegmentSet -> EnhancedSet of Segments to prevent duplicates
+     */
     private void convert(SegmentSet segments) {
         for (Segment segment : segments) {
             VertexDecorator v1 = vertexDecorators.get(segment.getV1().getId());
@@ -61,6 +80,10 @@ public class MeshToIslandConverter {
         }
     }
 
+    /**
+     * Converts Vertices into VertexDecorators
+     * @param vertices, VertexSet -> EnhancedSet of Vertices to prevent duplicates
+     */
     private void convert(VertexSet vertices) {
         for (Vertex vertex : vertices) {
             vertexDecorators.add(
