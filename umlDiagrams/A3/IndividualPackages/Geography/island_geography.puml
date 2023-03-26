@@ -2,12 +2,59 @@
 
 package Geography {
 
-  class Border
-  class BorderBuilder
-  class Tile
-  class TileBuilder
-  class VertexDecorator
-  class VertexDecoratorBuilder
+  class Border {
+    ~segment: Segment
+    ~v1: VertexDecorator
+    ~v2: VertexDecorator
+    ~water: BodyOfWater
+
+    +getSegment(): Segment
+    +{static} newBuilder(): BorderBuilder
+    #Border(Segment, VertexDecorator, VertexDecorator)
+  }
+  class BorderBuilder {
+    -segment: Segment
+    -v1: VertexDecorator
+    -v2: VertexDecorator
+    +addV1(VertexDecorator): BorderBuilder
+    +addV2(VertexDecorator): BorderBuilder
+    +addSegment(Segment): BorderBuilder
+    +build(): Border
+  }
+  class Tile {
+    ~polygon: Polygon
+    ~borders: List<Border>
+    ~centroid: VertexDecorator
+    ~JTSPolygon: JTS.Polygon
+    ~water: BodyOfWater
+    ~absorption: Double
+    ~soilProfile: SoilProfile
+    ~biome: Biome
+    ~isWaterCenter: boolean
+    #Tile(Polygon, List<Border>, VertexDecorator)
+  }
+  class TileBuilder {
+    -borders: List<Border>
+    -centroid: VertexDecorator
+    -polygon: Polygon
+    +addBorders(List<Border>): TileBuilder
+    +addPolygon(Polygon): TileBuilder
+    +addCentroid(VertexDecorator): TileBuilder
+    +build(): Tile
+  }
+  class VertexDecorator {
+    ~vertex: Vertex
+    ~isSpring: Boolean
+    ~altitude: Double
+    #VertexDecorator(Vertex)
+    +getX(): double
+    +getY(): double
+  }
+  class VertexDecoratorBuilder {
+    -vertex: Vertex
+    +addVertex(Vertex): VertexDecoratorBuilder
+    +build(): VertexDecorator
+  }
 
 }
 
@@ -41,29 +88,30 @@ package JTS {
 
 }
 
-Border *-- MeshADT.Geometries.Segment
-Border *-- Geography.VertexDecorator
-Border *-- Features.Water.BodyOfWater
+Tile *-up- MeshADT.Geometries.Polygon
+Tile *-down- Border
+Tile *-right- JTS.Polygon
+Tile *-up- Features.Biomes
+Tile *-up- Features.Soil
+Tile *-up- Features.Water
+Tile -left-> TileBuilder
 
-BorderBuilder *-- MeshADT.Geometries.Segment
-BorderBuilder *-- Geography.VertexDecorator
+TileBuilder *-down- Border
+TileBuilder *-down- VertexDecorator
+TileBuilder *-up- MeshADT.Geometries.Polygon
 
-Tile *-- MeshADT.Geometries.Polygon
-Tile *-- Geography.Border
-Tile *-- Geography.VertexDecorator
-Tile *-- JTS.Polygon
-Tile *-- Features.Water.BodyOfWater
-Tile *-- Features.Soil.SoilProfile
-Tile *-- Features.Biomes.Biome
+Border *-up- MeshADT.Geometries.Segment
+Border *-down- Geography.VertexDecorator
+Border *-up- Features.Water.BodyOfWater
+Border -left-> BorderBuilder
 
-TileBuilder *-- Geography.Border
-TileBuilder *-- Geography.VertexDecorator
-TileBuilder *-- MeshADT.Geometries.Polygon
+BorderBuilder *-up- MeshADT.Geometries.Segment
+BorderBuilder *-down- Geography.VertexDecorator
 
-VertexDecorator *-- MeshADT.Geometries.Vertex
+VertexDecorator *-up- MeshADT.Geometries.Vertex
+VertexDecorator -left-> VertexDecoratorBuilder
 
-VertexDecoratorBuilder *-- MeshADT.Geometries.Vertex
-
+VertexDecoratorBuilder *-up- MeshADT.Geometries.Vertex
 
 
 @enduml

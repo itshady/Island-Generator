@@ -4,24 +4,44 @@ title Island: Specification
 
 package Specification {
 
-  interface Buildable
+  interface Buildable {
+    ~build(): Island
+    ~create(): Buildable
+  }
   annotation Feature
   annotation PreFeature
   annotation PostFeature
-  class IslandBuilder
+  class IslandBuilder {
+    ~island: Island
+    +IslandBuilder(Island, Configuration)
+    -configure(Configuration): void
+    +create(): Buildable
+    +build(): Island
+  }
 
   package Factories {
 
-    interface FeatureRunner
-    class AltitudeFactory
-    class AquiferFactory
-    class BiomeFactory
+    interface FeatureRunner {
+      ~run(Island, Configuration): void
+    }
+    class AltitudeFactory {
+      -{static}{final} bindings: Map<String, Class>
+      -{static}{final} DEFAULT: String
+      +^run(Island, Configuration): void
+    }
+    class AquiferFactory {
+      +^run(Island, Configuration): void
+    }
+    class BiomeFactory {}
     class LakeFactory
     class RiverFactory
     class ShapeFactory
     class SoilFactory
     class SeedFactory
-    class SpecificationFactory
+    class SpecificationFactory {
+      -{static}{final} bindings: Map<Field, Class>
+      +{static} run(Field, Island, Configuration)
+    }
     class VisualizerFactory
 
   }

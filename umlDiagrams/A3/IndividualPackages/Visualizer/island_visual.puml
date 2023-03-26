@@ -4,13 +4,52 @@ title Island: Configuration
 
 package Visualizer {
 
-  interface Visualizer
-  abstract class Heatmap
-  class AltitudeVisualizer
-  class BiomeVisualizer
-  class DebugVisualizer
-  class LagoonVisualizer
-  class MoistureVisualizer
+  interface Visualizer {
+    ~process(Island): void
+  }
+  abstract class Heatmap {
+    -{static}{final} colors: Map<String, Color>
+    +^process(Island): void
+    #getTileColor(Tile): Color
+    -traverseTiles(List<Tile>): void
+    -traverseBorders(List<Border>): void
+    -traverseVertexDecorators(List<VertexDecorators>)
+  }
+  class AltitudeVisualizer {
+    #^getTileColor(Tile): Color
+  }
+  class BiomeVisualizer {
+    -{static}{final} colors: Map<String, Color>
+    +process(Island): void
+    #getTileColor(Tile): Color
+    -traverseTiles(List<Tile>): void
+    -traverseBorders(List<Border>): void
+    -traverseVertexDecorators(List<VertexDecorators>)
+  }
+  class DebugVisualizer {
+    -{static}{final} colors: Map<String, Color>
+    +process(Island): void
+    #getTileColor(Tile): Color
+    -traverseTiles(List<Tile>): void
+    -traverseBorders(List<Border>): void
+    -traverseVertexDecorators(List<VertexDecorators>)
+  }
+  class LagoonVisualizer {
+    -{static}{final} colors: Map<String, Color>
+    +process(Island): void
+    #getTileColor(Tile): Color
+    -traverseTiles(List<Tile>): void
+    -traverseBorders(List<Border>): void
+    -traverseVertexDecorators(List<VertexDecorators>)
+  }
+  class MoistureVisualizer {
+    -{static}{final} colors: Map<String, Color>
+    +process(Island): void
+    #getTileColor(Tile): Color
+    -traverseTiles(List<Tile>): void
+    -traverseBorders(List<Border>): void
+    -traverseVertexDecorators(List<VertexDecorators>)
+  }
 
 }
 
