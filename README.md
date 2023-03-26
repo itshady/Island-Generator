@@ -153,7 +153,7 @@ When you develop features and enrich the product, remember that you have first t
 
 ## Developer information
 
-Check [Island.md](./island/island.md), [Generator.md](./generator/generator.md) and [Visualizer.md](./visualizer/visualizer.md) for more in depth information, such as geometry properties, or command line args.
+Check [Island.md](./island/island.md), [Generator.md](./generator/generator.md) and [Visualizer.md](./visualizer/visualizer.md) for more in depth information, such as geometry properties, command line args, and whittaker diagram information.
 
 ## Backlog
 
