@@ -79,9 +79,9 @@ package Geography {
   }
 }
 
-Containers.Island *-- Geography.VertexDecorator
-Containers.Island *-- Geography.Border
-Containers.Island *-- Geography.Tile
+Island.Island *-- Geography.VertexDecorator
+Island.Island *-- Geography.Border
+Island.Island *-- Geography.Tile
 
 
 @enduml
