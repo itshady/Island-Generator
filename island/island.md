@@ -16,3 +16,7 @@ This is an island generator that works on already created meshes.
 | biomes | biomes | x | String | Selects the whittaker diagram for the island (america, asia) |  |
 | visual | visual | x | String | Selects the visual mode for the island (altitude, biome, debug, lagoon, moisture) |  |
 
+## Whittaker Diagrams 
+
+Here is how we distributed biomes for our Whittaker Diagrams:
+![Whittaker Diagram](whittaker.png)
