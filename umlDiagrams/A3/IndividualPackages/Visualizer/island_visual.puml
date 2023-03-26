@@ -1,6 +1,6 @@
 @startuml
 
-title Island: Configuration
+title Island: Visualizer
 
 package Visualizer {
 
