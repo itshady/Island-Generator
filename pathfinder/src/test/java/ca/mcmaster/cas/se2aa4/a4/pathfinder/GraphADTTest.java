@@ -1,5 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a4.pathfinder;
 
+import ca.mcmaster.cas.se2aa4.a4.pathfinder.Exceptions.IdAlreadyExists;
 import ca.mcmaster.cas.se2aa4.a4.pathfinder.Exceptions.NoSuchNodeExists;
 import org.junit.jupiter.api.Test;
 
@@ -9,10 +10,14 @@ class GraphADTTest {
     @Test
     void addAndRemoveNodes() {
         GraphADT graph = new GraphADT(false);
-        graph.addNode(0);
-        graph.addNode(1);
-        graph.addNode(2);
-        graph.addNode(3);
+        try {
+            graph.addNode(0);
+            graph.addNode(1);
+            graph.addNode(2);
+            graph.addNode(3);
+        } catch (IdAlreadyExists e) {
+            System.out.println(e.getMessage());
+        }
 
         assertEquals(4, graph.getNodes().size());
 
@@ -27,15 +32,15 @@ class GraphADTTest {
     @Test
     void addAndRemoveEdges_UnDiGraph() {
         GraphADT graph = new GraphADT(false);
-        graph.addNode(0);
-        graph.addNode(1);
-        graph.addNode(2);
-        graph.addNode(3);
-
         try {
+            graph.addNode(0);
+            graph.addNode(1);
+            graph.addNode(2);
+            graph.addNode(3);
+
             graph.addEdge(0, 1, 1, 0);
             graph.addEdge(1, 2, 1, 1);
-        } catch (NoSuchNodeExists e) {
+        } catch (NoSuchNodeExists | IdAlreadyExists e) {
             System.out.println(e.getMessage());
         }
 
@@ -49,15 +54,15 @@ class GraphADTTest {
     @Test
     void addAndRemoveEdges_DiGraph() {
         GraphADT graph = new GraphADT(true);
-        graph.addNode(0);
-        graph.addNode(1);
-        graph.addNode(2);
-        graph.addNode(3);
-
         try {
+            graph.addNode(0);
+            graph.addNode(1);
+            graph.addNode(2);
+            graph.addNode(3);
+
             graph.addEdge(0, 1, 1, 0);
             graph.addEdge(1, 2, 1, 1);
-        } catch (NoSuchNodeExists e) {
+        } catch (NoSuchNodeExists | IdAlreadyExists e) {
             System.out.println(e.getMessage());
         }
 
