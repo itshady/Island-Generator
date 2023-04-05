@@ -15,9 +15,13 @@ public class Node {
         UNVISITED, VISITED, VISITING,
     }
 
-    public Node(Integer id) {
+    protected Node(Integer id) {
         this.id = id;
         status = UNVISITED;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     @Override
@@ -31,5 +35,13 @@ public class Node {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "id=" + id +
+                ", status=" + status +
+                '}';
     }
 }

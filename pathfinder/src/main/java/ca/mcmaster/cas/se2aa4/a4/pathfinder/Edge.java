@@ -15,12 +15,24 @@ public class Edge {
         DISCOVERED, UNDISCOVERED,
     }
 
-    public Edge(Node n1, Node n2, Double weight, Integer id) {
+    protected Edge(Node n1, Node n2, Double weight, Integer id) {
         startNode = n1;
         endNode = n2;
         this.weight = weight;
         this.id = id;
         status = UNDISCOVERED;
+    }
+
+    public Node getStartNode() {
+        return startNode;
+    }
+
+    public Node getEndNode() {
+        return endNode;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     // equals if start and end node are the same (can't have 2 edges from one node to another)
@@ -35,5 +47,16 @@ public class Edge {
     @Override
     public int hashCode() {
         return Objects.hash(id, weight, startNode, endNode);
+    }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "id=" + id +
+                ", weight=" + weight +
+                ", startNode=" + startNode +
+                ", endNode=" + endNode +
+                ", status=" + status +
+                '}';
     }
 }
