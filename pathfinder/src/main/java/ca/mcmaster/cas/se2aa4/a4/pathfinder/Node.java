@@ -7,9 +7,9 @@ import java.util.Objects;
 import static ca.mcmaster.cas.se2aa4.a4.pathfinder.Node.NodeStatus.UNVISITED;
 
 public class Node {
-    private Integer id;
-    private NodeStatus status;
-
+    private final Integer id;
+    private final NodeStatus status;
+    private final List<Property> propertyList = new ArrayList<>();
 
     protected enum NodeStatus {
         UNVISITED, VISITED, VISITING,
@@ -22,6 +22,18 @@ public class Node {
 
     public Integer getId() {
         return id;
+    }
+
+    public void addProperty(Property property) {
+        propertyList.add(property);
+    }
+
+    public List<Property> getPropertyList() {
+        return propertyList;
+    }
+
+    public Property extractProperty(String key) {
+        return propertyList.stream().filter(e -> Objects.equals(e.getKey(), key)).findFirst().orElse(null);
     }
 
     @Override
