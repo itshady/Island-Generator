@@ -19,6 +19,16 @@ public class Dijkstra implements Pathfinder {
         return getPath(graph, startNode, destinationNode);
     }
 
+    @Override
+    public Map<Node, List<Edge>> getShortestPaths(GraphADT graph, Node source) {
+        dijkstras(graph, source);
+        Map<Node, List<Edge>> paths = new HashMap<>();
+        for (Node node : graph.getNodes()) {
+            paths.put(node, getPath(graph, source, node));
+        }
+        return paths;
+    }
+
     private void dijkstras(GraphADT graph, Node source) {
         // reset all node status
         graph.getAdjacencyList().keySet().forEach(e -> e.setStatus(Node.NodeStatus.UNVISITED));
