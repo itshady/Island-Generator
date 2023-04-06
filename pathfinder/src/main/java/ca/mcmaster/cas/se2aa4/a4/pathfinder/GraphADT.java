@@ -74,6 +74,10 @@ public class GraphADT {
         return edges;
     }
 
+    protected Map<Node, List<Edge>> getAdjacencyList() {
+        return adjacencyList;
+    }
+
     @Override
     public String toString() {
         StringBuilder string = new StringBuilder("GraphADT{\n" +

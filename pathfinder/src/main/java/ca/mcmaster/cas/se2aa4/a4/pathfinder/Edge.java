@@ -38,6 +38,10 @@ public class Edge {
         return id;
     }
 
+    public Double getWeight() {
+        return weight;
+    }
+
     public void addProperty(Property property) {
         propertyList.add(property);
     }

@@ -8,8 +8,9 @@ import static ca.mcmaster.cas.se2aa4.a4.pathfinder.Node.NodeStatus.UNVISITED;
 
 public class Node {
     private final Integer id;
-    private final NodeStatus status;
+    private NodeStatus status;
     private final List<Property> propertyList = new ArrayList<>();
+    private Double cost;
 
     protected enum NodeStatus {
         UNVISITED, VISITED, VISITING,
@@ -18,6 +19,22 @@ public class Node {
     protected Node(Integer id) {
         this.id = id;
         status = UNVISITED;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    public NodeStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(NodeStatus status) {
+        this.status = status;
     }
 
     public Integer getId() {
