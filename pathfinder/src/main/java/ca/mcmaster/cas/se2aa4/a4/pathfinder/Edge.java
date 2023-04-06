@@ -4,26 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static ca.mcmaster.cas.se2aa4.a4.pathfinder.Edge.EdgeStatus.UNDISCOVERED;
-
 public class Edge {
     private final Integer id;
     private final Double weight;
     private final Node startNode;
     private final Node endNode;
-    private EdgeStatus status;
     private final List<Property> propertyList = new ArrayList<>();
-
-    protected enum EdgeStatus {
-        DISCOVERED, UNDISCOVERED,
-    }
 
     protected Edge(Node n1, Node n2, Double weight, Integer id) {
         startNode = n1;
         endNode = n2;
         this.weight = weight;
         this.id = id;
-        status = UNDISCOVERED;
     }
 
     public Node getStartNode() {
@@ -75,7 +67,6 @@ public class Edge {
                 ", weight=" + weight +
                 ", startNode=" + startNode +
                 ", endNode=" + endNode +
-                ", status=" + status +
                 '}';
     }
 }
