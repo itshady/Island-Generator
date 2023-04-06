@@ -4,6 +4,7 @@ import ca.mcmaster.cas.se2aa4.a4.pathfinder.Exceptions.IdAlreadyExists;
 import ca.mcmaster.cas.se2aa4.a4.pathfinder.Exceptions.NoSuchNodeExists;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GraphADT {
     private final Map<Node, List<Edge>> adjacencyList = new HashMap<>();
@@ -58,6 +59,13 @@ public class GraphADT {
 
     public List<Node> getNodes() {
         return adjacencyList.keySet().stream().toList();
+    }
+
+    public List<Edge> getEdge(Integer id) {
+        return adjacencyList.values().stream()
+                .flatMap(Collection::stream)
+                .filter(obj -> Objects.equals(obj.getId(), id))
+                .collect(Collectors.toList());
     }
 
     public List<Edge> getEdges() {
