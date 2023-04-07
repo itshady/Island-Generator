@@ -4,6 +4,6 @@ import java.awt.*;
 
 public class Tertiary extends Road {
     public Tertiary() {
-        super(1, new Color(170, 170, 170));
+        super(1, new Color(128, 0, 0));
     }
 }

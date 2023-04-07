@@ -4,6 +4,6 @@ import java.awt.*;
 
 public class Secondary extends Road {
     public Secondary() {
-        super(2, new Color(128, 128, 128));
+        super(2, new Color(170, 164, 255, 245));
     }
 }

@@ -6,4 +6,9 @@ public class Village extends City {
     public Village() {
         super(5, Color.RED);
     }
+
+    @Override
+    public boolean isVillage() {
+        return true;
+    }
 }

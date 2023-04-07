@@ -6,4 +6,9 @@ public class Capitol extends City {
     public Capitol() {
         super(9, Color.MAGENTA);
     }
+
+    @Override
+    public boolean isCapitol() {
+        return true;
+    }
 }

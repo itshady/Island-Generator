@@ -5,6 +5,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Capitol;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.City;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Hamlet;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Village;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Networks.NonStarNetwork;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Networks.StarNetwork;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Highway;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Road;
@@ -37,7 +38,7 @@ public class CityGenerator {
         for (int i=0; i<numOfCities; i++) {
             Tile tile = landTiles.get(seed.nextInt(landTiles.size()));
             VertexDecorator city = tile.getCentroid();
-            if (city.isCity()) {
+            if (city.isCity() || tile.hasLake()) {
                 i--;
                 continue;
             }
@@ -45,6 +46,6 @@ public class CityGenerator {
             cities.add(city);
         }
 
-        new StarNetwork().process(island, cities);
+        new NonStarNetwork().process(island, cities);
     }
 }

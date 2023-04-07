@@ -1,6 +1,5 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Networks;
 
-import Geometries.Coordinate;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Capitol;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Highway;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.RoadGenerator;

@@ -1,5 +1,6 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Cities;
 
+import Geometries.Coordinate;
 import Geometries.Segment;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.BorderBuilder;
@@ -49,7 +50,7 @@ public class RoadGenerator {
             Border border = bordersBetweenCentroids.get(i);
             Integer startNode = centroidsOfInterest.indexOf(border.getV1());
             Integer endNode = centroidsOfInterest.indexOf(border.getV2());
-            Double distance = 1.0;
+            Double distance = distance(border.getV1().getVertex().getCoordinate(), border.getV2().getVertex().getCoordinate());
             try {
                 graph.addEdge(startNode, endNode, distance, i);
             } catch (IdAlreadyExists | NoSuchNodeExists e) {
@@ -82,5 +83,11 @@ public class RoadGenerator {
         }
 
         return result.values().stream().toList();
+    }
+
+    private double distance(Coordinate coord1, Coordinate coord2) {
+        double deltaX = coord2.getX() - coord1.getX();
+        double deltaY = coord2.getY() - coord1.getY();
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 }

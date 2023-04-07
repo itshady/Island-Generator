@@ -6,4 +6,9 @@ public class Hamlet extends City {
     public Hamlet() {
         super(4, new Color(191, 144, 0));
     }
+
+    @Override
+    public boolean isHamlet() {
+        return true;
+    }
 }

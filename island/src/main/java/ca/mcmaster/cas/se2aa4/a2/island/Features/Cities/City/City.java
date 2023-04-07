@@ -23,6 +23,18 @@ public abstract class City implements Cloneable {
         return color;
     }
 
+    public boolean isCapitol() {
+        return false;
+    }
+
+    public boolean isVillage() {
+        return false;
+    }
+
+    public boolean isHamlet() {
+        return false;
+    }
+
     @Override
     public City clone() {
         try {
