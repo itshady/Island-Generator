@@ -24,7 +24,6 @@ public class BiomeVisualizer implements Visualizer {
         colors.put("lake", new Color(103,168,209,255));
         colors.put("ocean", new Color(0,87,143,255));
         colors.put("river", new Color(103,168,209,255));
-        colors.put("road", Color.DARK_GRAY);
     }
 
     /**
@@ -62,7 +61,7 @@ public class BiomeVisualizer implements Visualizer {
                 border.setColor(colors.get("river"));
                 border.setThickness(border.getWater().multiplicity());
             } else if(border.hasRoad()) {
-                border.setColor(colors.get("road"));
+                border.setColor(border.getRoad().getColor());
                 border.setThickness(border.getRoad().getMultiplicity());
             } else {
                 border.setColor(Color.BLACK);
@@ -78,7 +77,7 @@ public class BiomeVisualizer implements Visualizer {
     private void traverseVertexDecorators(List<VertexDecorator> vertices) {
         for (VertexDecorator vertex : vertices) {
             if (vertex.isCity()) {
-                vertex.setColor(Color.RED);
+                vertex.setColor(vertex.getCity().getColor());
                 vertex.setThickness(vertex.getCity().getMultiplicity());
             } else if (vertex.isCentroid()) {
                 vertex.setThickness(0f);

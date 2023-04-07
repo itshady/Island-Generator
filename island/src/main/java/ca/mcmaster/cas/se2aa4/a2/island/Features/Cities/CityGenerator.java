@@ -7,6 +7,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Hamlet;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Village;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Highway;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Road;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Secondary;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;

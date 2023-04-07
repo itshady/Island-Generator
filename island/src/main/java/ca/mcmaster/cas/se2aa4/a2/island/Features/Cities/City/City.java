@@ -4,10 +4,11 @@ import java.awt.*;
 
 public abstract class City implements Cloneable {
     private Integer multiplicity;
-    private final Color color = Color.DARK_GRAY;
+    private Color color;
 
-    public City(Integer multiplicity) {
+    public City(Integer multiplicity, Color color) {
         this.multiplicity = multiplicity;
+        this.color = color;
     }
 
     public Integer getMultiplicity() {

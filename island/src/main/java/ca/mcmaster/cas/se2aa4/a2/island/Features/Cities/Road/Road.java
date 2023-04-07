@@ -1,13 +1,21 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road;
 
-public abstract class Road {
-    private Integer multiplicity;
+import java.awt.*;
 
-    public Road(Integer multiplicity) {
+public abstract class Road {
+    private final Integer multiplicity;
+    private final Color color;
+
+    public Road(Integer multiplicity, Color color) {
         this.multiplicity = multiplicity;
+        this.color = color;
     }
 
     public Integer getMultiplicity() {
         return multiplicity;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }
