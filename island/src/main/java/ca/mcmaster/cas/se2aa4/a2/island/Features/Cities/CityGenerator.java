@@ -5,6 +5,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Capitol;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.City;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Hamlet;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Village;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Networks.StarNetwork;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Highway;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Road;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Secondary;
@@ -44,31 +45,6 @@ public class CityGenerator {
             cities.add(city);
         }
 
-        VertexDecorator centralHub = getMostCentralCity(island, cities);
-        centralHub.setCity(new Capitol());
-        List<List<Border>> roads = new RoadGenerator().getRoads(island, cities, centralHub);
-        roads.forEach(road -> road.forEach(segment -> segment.setRoad(new Highway())));
-        List<Border> currentBorders = island.getBorders();
-        roads.forEach(currentBorders::addAll);
-        island.register(island.getVertexDecorators(), currentBorders, island.getTiles());
-    }
-
-    private VertexDecorator getMostCentralCity(Island island, List<VertexDecorator> cities) {
-        VertexDecorator minCentroid = cities.get(0);
-        double minDistance = distance(cities.get(0).getVertex().getCoordinate(), island.center());
-        for (VertexDecorator city : cities) {
-            double distance = distance(city.getVertex().getCoordinate(), island.center());
-            if (distance < minDistance) {
-                minCentroid = city;
-                minDistance = distance;
-            }
-        }
-        return minCentroid;
-    }
-
-    public double distance(Coordinate coord1, Coordinate coord2) {
-        double deltaX = coord2.getX() - coord1.getX();
-        double deltaY = coord2.getY() - coord1.getY();
-        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        new StarNetwork().process(island, cities);
     }
 }
