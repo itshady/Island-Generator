@@ -48,8 +48,8 @@ public abstract class VisualMode {
             double centre_y = v.getY() - (vertexThickness / 2.0d);
             Color old = canvas.getColor();
             if (isCentroid(v.getPropertiesList())) {
-                if (!isDebug()) continue;
-                canvas.setColor(Color.RED);
+                if (isDebug()) canvas.setColor(Color.RED);
+                else canvas.setColor(extractColor(v.getPropertiesList()));
             } else {
                 if (isDebug()) canvas.setColor(Color.BLACK);
                 else canvas.setColor(extractColor(v.getPropertiesList()));
