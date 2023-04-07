@@ -1,6 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Geography;
 
 import Geometries.Segment;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Road;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Water.BodyOfWater;
 
 import java.awt.*;
@@ -14,10 +15,23 @@ public class Border {
     VertexDecorator v1;
     VertexDecorator v2;
     BodyOfWater water;
+    Road road;
 
     public Segment getSegment() {
         return segment;
     }
+
+    public void setRoad(Road road) {
+        this.road = road;
+    }
+
+    public Road getRoad() {
+        return road;
+    }
+
+    public boolean hasRoad() {
+        return road != null;
+     }
 
     public static BorderBuilder newBuilder() {
         return new BorderBuilder();
