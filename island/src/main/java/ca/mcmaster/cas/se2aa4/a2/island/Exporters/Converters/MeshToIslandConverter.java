@@ -87,7 +87,7 @@ public class MeshToIslandConverter {
     private void convert(VertexSet vertices) {
         for (Vertex vertex : vertices) {
             vertexDecorators.add(
-                VertexDecorator.newBuilder().addVertex(vertex).build()
+                VertexDecorator.newBuilder().addVertex(vertex).setCentroid(vertex.isCentroid()).build()
             );
         }
     }

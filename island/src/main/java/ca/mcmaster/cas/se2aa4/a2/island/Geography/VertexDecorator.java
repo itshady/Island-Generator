@@ -1,6 +1,7 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Geography;
 
 import Geometries.Vertex;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.City;
 
 import java.awt.*;
 
@@ -11,6 +12,28 @@ public class VertexDecorator {
     Vertex vertex;
     Boolean isSpring = false;
     Double altitude;
+    City city;
+    boolean isCentroid = false;
+
+    public void setCentroid(boolean centroid) {
+        isCentroid = centroid;
+    }
+
+    public boolean isCentroid() {
+        return isCentroid;
+    }
+
+    public boolean isCity() {
+        return city != null;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public City getCity() {
+        return city;
+    }
 
     public boolean isSpring() {
         return isSpring;
@@ -20,7 +43,7 @@ public class VertexDecorator {
         isSpring = spring;
     }
 
-    public void setThickness(Float thickness) {
+    public void setThickness(float thickness) {
         vertex.setThickness(thickness);
     }
 
