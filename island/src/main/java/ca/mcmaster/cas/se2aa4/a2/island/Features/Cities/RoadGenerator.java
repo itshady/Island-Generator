@@ -21,11 +21,13 @@ public class RoadGenerator {
         List<VertexDecorator> centroidsOfInterest = new ArrayList<>();
         List<Border> bordersBetweenCentroids = new ArrayList<>();
         for (Tile tile : island.getLandTiles()) {
+            if (tile.hasLake()) continue;
             VertexDecorator centroid = tile.getCentroid();
             centroidsOfInterest.add(centroid);
-            // get all neighbour centroids that aren't in ocean
+            // get all neighbour centroids that aren't ocean or lake
             List<VertexDecorator> neighbours = tile.getNeighbours().stream()
-                    .map(island::getTile).filter(neighbor -> !neighbor.isOcean()).map(Tile::getCentroid).toList();
+                    .map(island::getTile).filter(neighbor -> !neighbor.isOcean() && !neighbor.hasLake())
+                    .map(Tile::getCentroid).toList();
 
             for (VertexDecorator neighbour : neighbours) {
                 bordersBetweenCentroids.add(Border.newBuilder()
