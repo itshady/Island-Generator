@@ -1,17 +1,12 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Cities;
 
-import Geometries.Coordinate;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Capitol;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.City;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Hamlet;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Village;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Networks.NonStarNetwork;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Networks.StarNetwork;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Highway;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Road;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Secondary;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Networks.Network;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Networks.NetworkUtil;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Seed;
-import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
@@ -31,7 +26,7 @@ public class CityGenerator {
         bindings.put(2, new Hamlet());
     }
 
-    public void process(Island island, Integer numOfCities) {
+    public void process(Island island, Integer numOfCities, Network network) {
         Seed seed = Seed.getInstance();
         List<Tile> landTiles = island.getLandTiles();
         List<VertexDecorator> cities = new ArrayList<>();
@@ -46,6 +41,6 @@ public class CityGenerator {
             cities.add(city);
         }
 
-        new NonStarNetwork().process(island, cities);
+        network.process(island, cities);
     }
 }

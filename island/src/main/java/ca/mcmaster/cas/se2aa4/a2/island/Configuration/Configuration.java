@@ -37,6 +37,7 @@ public class Configuration {
     public static final String SEED = "seed";
     @PostFeatures
     public static final String CITIES = "cities";
+    public static final String NETWORK = "network";
     @PostFeatures
     public static final String VISUAL = "visual";
 
@@ -100,6 +101,7 @@ public class Configuration {
         options.addOption(new Option(SEED, true, "Seed for the island generation"));
         options.addOption(new Option(VISUAL, true, "Visual Mode: Debug, Normal, Altitude, Moisture"));
         options.addOption(new Option(CITIES, true, "Number of cities on island"));
+        options.addOption(new Option(NETWORK, true, "Type of network to connect the cities: Star, NonStar"));
         // Global help
         options.addOption(new Option(HELP, false, "print help message"));
         return options;

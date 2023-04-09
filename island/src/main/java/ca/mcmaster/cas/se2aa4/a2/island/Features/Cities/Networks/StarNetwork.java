@@ -9,7 +9,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 
 import java.util.List;
 
-public class StarNetwork extends Network {
+public class StarNetwork extends NetworkUtil {
     public void process(Island island, List<VertexDecorator> cities) {
         VertexDecorator centralHub = getMostCentralCity(island, cities);
         centralHub.setCity(new Capitol());

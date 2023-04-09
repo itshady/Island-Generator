@@ -15,7 +15,7 @@ import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class NonStarNetwork extends Network {
+public class NonStarNetwork extends NetworkUtil {
     public void process(Island island, List<VertexDecorator> cities) {
         VertexDecorator centralHub = getMostCentralCity(island, cities);
         centralHub.setCity(new Capitol());
