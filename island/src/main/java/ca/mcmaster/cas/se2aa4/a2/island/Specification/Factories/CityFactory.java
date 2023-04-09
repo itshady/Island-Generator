@@ -21,6 +21,7 @@ public class CityFactory implements FeatureRunner {
             } else {
                 return;
             }
+            if (numOfCities <= 0) return;
             CityGenerator city = new CityGenerator();
             city.process(island, numOfCities);
         } catch (Exception e) {
