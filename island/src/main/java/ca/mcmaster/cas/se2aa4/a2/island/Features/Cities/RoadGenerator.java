@@ -1,15 +1,11 @@
 package ca.mcmaster.cas.se2aa4.a2.island.Features.Cities;
 
-import Geometries.Coordinate;
 import Geometries.Segment;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
-import ca.mcmaster.cas.se2aa4.a2.island.Geography.BorderBuilder;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import ca.mcmaster.cas.se2aa4.a4.pathfinder.*;
-import ca.mcmaster.cas.se2aa4.a4.pathfinder.Exceptions.IdAlreadyExists;
-import ca.mcmaster.cas.se2aa4.a4.pathfinder.Exceptions.NoSuchNodeExists;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +13,13 @@ import java.util.List;
 import java.util.Map;
 
 public class RoadGenerator {
+    /**
+     * Given cities and the central city, get a list of paths from the central city to all the rest.
+     * @param island
+     * @param cities
+     * @param source
+     * @return List of paths in the form of borders
+     */
     public List<List<Border>> getRoads(Island island, List<VertexDecorator> cities, VertexDecorator source) {
         List<VertexDecorator> centroidsOfInterest = new ArrayList<>();
         List<Border> bordersBetweenCentroids = new ArrayList<>();
@@ -37,39 +40,45 @@ public class RoadGenerator {
             }
         }
 
-        // add all nodes
-        GraphADT graph = new GraphADT(false);
-        for (int i=0; i<centroidsOfInterest.size(); i++) {
-            try {
-                graph.addNode(i);
-            } catch (IdAlreadyExists e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        // add all edges
-        for (int i=0; i<bordersBetweenCentroids.size(); i++) {
-            Border border = bordersBetweenCentroids.get(i);
-            Integer startNode = centroidsOfInterest.indexOf(border.getV1());
-            Integer endNode = centroidsOfInterest.indexOf(border.getV2());
-            Double distance = distance(border.getV1().getVertex().getCoordinate(), border.getV2().getVertex().getCoordinate());
-            try {
-                graph.addEdge(startNode, endNode, distance, i);
-            } catch (IdAlreadyExists | NoSuchNodeExists e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        GraphAdapter<VertexDecorator, Border> adapter = new IslandToGraphAdapter();
+        GraphADT graph = adapter.translate(centroidsOfInterest, bordersBetweenCentroids);
 
         Pathfinder pathfinder = new Dijkstra();
         Map<Node, List<Edge>> paths = pathfinder.getShortestPaths(graph, graph.getNode(centroidsOfInterest.indexOf(source)));
 
-        // remove all paths that aren't part of the cities
-        paths.entrySet().removeIf(entry -> {
+        paths = getUsefulPaths(cities, centroidsOfInterest, paths);
+
+        Map<VertexDecorator, List<Border>> result = translatePathsToIsland(centroidsOfInterest, bordersBetweenCentroids, paths);
+
+        return result.values().stream().toList();
+    }
+
+    /**
+     * Remove all paths that aren't part of the cities
+     * @param cities
+     * @param allCentroids
+     * @param paths
+     * @return Map with the important nodes and paths to them
+     */
+    private Map<Node, List<Edge>> getUsefulPaths(List<VertexDecorator> cities, List<VertexDecorator> allCentroids, Map<Node, List<Edge>> paths) {
+        Map<Node, List<Edge>> pathsCopy = new HashMap<>(paths);
+        pathsCopy.entrySet().removeIf(entry -> {
             Node node = entry.getKey();
-            VertexDecorator centroid = centroidsOfInterest.get(node.getId());
+            VertexDecorator centroid = allCentroids.get(node.getId());
             return centroid == null || !cities.contains(centroid);
         });
+        return pathsCopy;
+    }
 
+    /**
+     * Translates the graph paths back to island geometries.
+     * Node -> VertexDecorator, Edge -> Border
+     * @param centroidsOfInterest
+     * @param bordersBetweenCentroids
+     * @param paths
+     * @return Map holding path to a VertexDecorator from the central city
+     */
+    private Map<VertexDecorator, List<Border>> translatePathsToIsland(List<VertexDecorator> centroidsOfInterest, List<Border> bordersBetweenCentroids, Map<Node, List<Edge>> paths) {
         Map<VertexDecorator, List<Border>> result = new HashMap<>();
         for (Map.Entry<Node, List<Edge>> entry : paths.entrySet()) {
             Node node = entry.getKey();
@@ -83,13 +92,6 @@ public class RoadGenerator {
             }
             result.put(centroid, borders);
         }
-
-        return result.values().stream().toList();
-    }
-
-    private double distance(Coordinate coord1, Coordinate coord2) {
-        double deltaX = coord2.getX() - coord1.getX();
-        double deltaY = coord2.getY() - coord1.getY();
-        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        return result;
     }
 }

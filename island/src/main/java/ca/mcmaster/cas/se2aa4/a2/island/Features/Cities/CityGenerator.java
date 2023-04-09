@@ -17,15 +17,21 @@ import java.util.List;
 import java.util.Map;
 
 public class CityGenerator {
-    private static final Map<Integer, City> bindings = new HashMap();
+    private static final Map<Integer, City> bindings = new HashMap<>();
 
-    // Puts all the necessary features into the bindings map
+    // Puts all the different city types into the bindings map
     static {
         bindings.put(0, new Capitol());
         bindings.put(1, new Village());
         bindings.put(2, new Hamlet());
     }
 
+    /**
+     * Takes an island, then generates and connects a bunch of cities via the given network
+     * @param island
+     * @param numOfCities
+     * @param network
+     */
     public void process(Island island, Integer numOfCities, Network network) {
         Seed seed = Seed.getInstance();
         List<Tile> landTiles = island.getLandTiles();
