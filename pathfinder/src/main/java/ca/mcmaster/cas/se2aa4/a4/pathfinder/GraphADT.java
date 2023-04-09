@@ -6,6 +6,11 @@ import ca.mcmaster.cas.se2aa4.a4.pathfinder.Exceptions.NoSuchNodeExists;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Abstract data type (ADT) that represents a graph.
+ * The Graph is a collection of nodes and edges that connect them.
+ * GraphADT provides an interface for creating and manipulating graphs.
+ */
 public class GraphADT {
     private final Map<Node, List<Edge>> adjacencyList = new HashMap<>();
     private final boolean directed;

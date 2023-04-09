@@ -1,6 +1,8 @@
-package ca.mcmaster.cas.se2aa4.a2.island.Features.Cities;
+package ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Networks;
 
 import Geometries.Segment;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.GraphAdapter;
+import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.IslandToGraphAdapter;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Tile;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;

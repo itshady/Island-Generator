@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Edge used in Graph.
+ */
 public class Edge {
     private final Integer id;
     private final Double weight;

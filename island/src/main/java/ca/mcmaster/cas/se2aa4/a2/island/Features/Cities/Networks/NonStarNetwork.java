@@ -7,7 +7,6 @@ import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City.Village;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Highway;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Secondary;
 import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.Road.Tertiary;
-import ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.RoadGenerator;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.Border;
 import ca.mcmaster.cas.se2aa4.a2.island.Geography.VertexDecorator;
 import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
@@ -15,6 +14,12 @@ import ca.mcmaster.cas.se2aa4.a2.island.Island.Island;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * NonStarNetwork is a way to connect the cities via highways, secondary and tertiary roads.
+ * The central hub connects only to other capitols via highways. (this still follows a star network)
+ * The villages connect to the nearest capitol via secondary road.
+ * The hamlets connect to the nearest 2 either hamlets or villages via tertiary roads.
+ */
 public class NonStarNetwork extends NetworkUtil {
     public void process(Island island, List<VertexDecorator> cities) {
         VertexDecorator centralHub = getMostCentralCity(island, cities);
@@ -53,10 +58,18 @@ public class NonStarNetwork extends NetworkUtil {
         island.register(island.getVertexDecorators(), currentBorders, island.getTiles());
     }
 
-    private List<VertexDecorator> getNearbyCities(List<VertexDecorator> cities, Integer numOfCity, List<Class<? extends City>> klass, VertexDecorator source) {
+    /**
+     * Get the closest x number of cities that are of the given city Classes
+     * @param cities
+     * @param numOfCity
+     * @param cityClasses
+     * @param source
+     * @return List of nearby cities
+     */
+    private List<VertexDecorator> getNearbyCities(List<VertexDecorator> cities, Integer numOfCity, List<Class<? extends City>> cityClasses, VertexDecorator source) {
         Map<VertexDecorator, Double> distancesFromSource = new HashMap<>();
         for (VertexDecorator city : cities) {
-            if (city != source && klass.contains(city.getCity().getClass())) {
+            if (city != source && cityClasses.contains(city.getCity().getClass())) {
                 distancesFromSource.put(city, distance(source.getVertex().getCoordinate(), city.getVertex().getCoordinate()));
             }
         }

@@ -2,6 +2,10 @@ package ca.mcmaster.cas.se2aa4.a2.island.Features.Cities.City;
 
 import java.awt.*;
 
+/**
+ * A City is a property that a vertex can hold.
+ * They contain a multiplicity (radius) and a color.
+ */
 public abstract class City implements Cloneable {
     private Integer multiplicity;
     private Color color;

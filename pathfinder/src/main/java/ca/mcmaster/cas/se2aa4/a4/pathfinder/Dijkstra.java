@@ -6,7 +6,7 @@ public class Dijkstra implements Pathfinder {
     private final Map<Node, Node> path = new HashMap<>();
     private final Map<Node, Double> cost = new HashMap<>();
 
-    class NodeCostComparator implements Comparator<Node> {
+    static class NodeCostComparator implements Comparator<Node> {
         @Override
         public int compare(Node n1, Node n2) {
             return Double.compare(n1.getCost(), n2.getCost());

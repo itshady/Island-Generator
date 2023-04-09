@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static ca.mcmaster.cas.se2aa4.a4.pathfinder.Node.NodeStatus.UNVISITED;
-
+/**
+ * Node used in Graph.
+ */
 public class Node {
     private final Integer id;
     private NodeStatus status;
@@ -18,7 +19,7 @@ public class Node {
 
     protected Node(Integer id) {
         this.id = id;
-        status = UNVISITED;
+        status = NodeStatus.UNVISITED;
     }
 
     public Double getCost() {

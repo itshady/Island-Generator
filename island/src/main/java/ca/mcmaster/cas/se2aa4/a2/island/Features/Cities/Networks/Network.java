@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface Network {
     /**
-     * Add cities and roads to the island.
+     * Given a list of cities, add the cities and roads to the island.
      * @param island
      * @param cities
      */

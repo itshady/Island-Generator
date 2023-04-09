@@ -1,6 +1,12 @@
 package ca.mcmaster.cas.se2aa4.a4.pathfinder;
 
+/**
+ * Properties that can be added onto Nodes and Edges
+ */
 public class Property {
+    /**
+     * Builder to make property
+     */
     static class PropertyBuilder {
         private String key;
         private String value;
