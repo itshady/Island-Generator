@@ -82,7 +82,7 @@ class BellmanFordTest {
             System.out.println(e.getMessage());
         }
 
-        Pathfinder bellman = new BellmanFord();
+        BellmanFord bellman = new BellmanFord();
         List<Edge> path = bellman.getShortestPath(graph, graph.getNode(3), graph.getNode(0));
         assertEquals(1, path.size());
         assertTrue(graph.getEdge(0).contains(path.get(0)));
@@ -99,6 +99,8 @@ class BellmanFordTest {
         for (int i=0; i<actualShortestPath.size(); i++) {
             assertTrue(actualShortestPath.get(i).contains(path.get(i)));
         }
+
+        assertFalse(bellman.hasNegativeCycle());
     }
 
     @Test

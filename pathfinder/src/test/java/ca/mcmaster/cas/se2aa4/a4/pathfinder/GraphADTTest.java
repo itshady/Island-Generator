@@ -72,4 +72,45 @@ class GraphADTTest {
 
         assertEquals(1, graph.getEdges().size());
     }
+
+    @Test
+    void CantAddMultipleSameIdNodes() {
+        GraphADT graph = new GraphADT(false);
+        try {
+            graph.addNode(0);
+            graph.addNode(1);
+            graph.addNode(2);
+            assertThrows(IdAlreadyExists.class, () -> graph.addNode(2));
+        } catch (IdAlreadyExists e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    void CantAddMultipleSameIdEdges() {
+        GraphADT graph = new GraphADT(false);
+        try {
+            graph.addNode(0);
+            graph.addNode(1);
+            graph.addNode(2);
+            graph.addNode(3);
+
+            graph.addEdge(0, 1, 1, 0);
+            assertThrows(IdAlreadyExists.class, () -> graph.addEdge(1, 2, 1, 0));
+        } catch (NoSuchNodeExists | IdAlreadyExists e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    void CantAddEdgeWithoutExistingNode() {
+        GraphADT graph = new GraphADT(false);
+        try {
+            graph.addNode(0);
+
+            assertThrows(NoSuchNodeExists.class, () -> graph.addEdge(1, 0, 1, 0));
+        } catch (IdAlreadyExists e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

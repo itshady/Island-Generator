@@ -16,6 +16,10 @@ This is an island generator that works on already created meshes.
 | biomes | biomes | x | String | Selects the whittaker diagram for the island (america, asia) |  |
 | visual | visual | x | String | Selects the visual mode for the island (altitude, biome, debug, lagoon, moisture) |  |
 
+## Developer Information
+For PreFeatures, Features, and PostFeatures, the order of the feature fields in the Configuration class matters. 
+That is the order in which the Factories will be run within their respective subcategory. 
+
 ## Whittaker Diagrams 
 
 Here is how we distributed biomes for our Whittaker Diagrams:
