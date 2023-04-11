@@ -15,6 +15,13 @@ If you have make, run the following command in order:
 * To generate the island on top of the mesh
   * `make island`
 
+### Other Make Scenarios
+* Star Network
+  * `make island-urbanism-star`
+
+* NonStar Network
+  * `make island-urbanism-nonstar`
+
 This should generate a default implementation of the urbanism with the island generation.
 
 ### Without Make

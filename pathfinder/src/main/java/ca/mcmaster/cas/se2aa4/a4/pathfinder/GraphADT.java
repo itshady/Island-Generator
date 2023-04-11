@@ -85,15 +85,15 @@ public class GraphADT {
 
     @Override
     public String toString() {
-        StringBuilder string = new StringBuilder("GraphADT{\n" +
-                "adjacencyList=\n");
+        StringBuilder string = new StringBuilder("GraphADT {\n" +
+                "\tadjacencyList=\n");
         for (Map.Entry<Node, List<Edge>> entry : adjacencyList.entrySet()) {
             Node node = entry.getKey();
             List<Edge> edges = entry.getValue();
-            string.append(node.toString()).append(" -> ").append(edges).append("\n");
+            string.append("\t\t").append(node.toString()).append(" -> ").append(edges).append(",\n");
         }
 
-        string.append(", directed=").append(directed).append('}');
+        string.append("\tdirected=").append(directed).append("\n}");
         return string.toString();
     }
 }

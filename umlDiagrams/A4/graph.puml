@@ -54,6 +54,7 @@ package Pathfinder {
     +removeEdge(Integer)
     +getNode(Integer): Node
     +getNodes(): List<Node>
+    +getEdge(Integer): List<Edge>
     +getEdges(): List<Edge>
     #getAdjacencyList(): Map<Node, List<Edge>>
   }

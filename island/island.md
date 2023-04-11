@@ -15,8 +15,8 @@ This is an island generator that works on already created meshes.
 | soil | soil | x | String | Selects the soil profile for the island (Dry, Wet) |  |
 | biomes | biomes | x | String | Selects the whittaker diagram for the island (america, asia) |  |
 | visual | visual | x | String | Selects the visual mode for the island (altitude, biome, debug, lagoon, moisture) |  |
-| cities | cities | x | Integer |  |  |
-| network | network | x | String |  |  |
+| cities | cities | x | Integer | Number of cities on island |  |
+| network | network | x | String | Type of network to connect the cities: Star, NonStar |  |
 
 ## Developer Information
 For PreFeatures, Features, and PostFeatures, the order of the feature fields in the Configuration class matters. 

@@ -3,7 +3,15 @@ run:
 	cd visualizer && java -jar visualizer.jar -mesh ../generator/sample.mesh -output sample.svg
 
 island:
-	cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape ciRcLe -cities 40 -network nonstarhehe2 -altitude mountain -aquifer 2 -lake 7 -river 5 -soil DrY -biomes AmErIcA
+	cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circle -cities 40 -network nonstar -altitude mountain -aquifer 2 -lake 7 -river 5 -soil dry -biomes america
+	cd visualizer && java -jar visualizer.jar -mesh ../island/lagoon.mesh -output sample.svg
+
+island-urbanism-star:
+	cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circle -cities 40 -network star -altitude mountain -aquifer 2 -lake 7 -river 5 -soil dry -biomes america
+	cd visualizer && java -jar visualizer.jar -mesh ../island/lagoon.mesh -output sample.svg
+
+island-urbanism-nonstar:
+	cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circle -cities 40 -network nonstar -altitude mountain -aquifer 2 -lake 7 -river 5 -soil dry -biomes america
 	cd visualizer && java -jar visualizer.jar -mesh ../island/lagoon.mesh -output sample.svg
 
 island-lagoon:
