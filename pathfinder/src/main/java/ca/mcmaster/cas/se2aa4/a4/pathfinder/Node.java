@@ -22,19 +22,19 @@ public class Node {
         status = NodeStatus.UNVISITED;
     }
 
-    public Double getCost() {
+    protected Double getCost() {
         return cost;
     }
 
-    public void setCost(Double cost) {
+    protected void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public NodeStatus getStatus() {
+    protected NodeStatus getStatus() {
         return status;
     }
 
-    public void setStatus(NodeStatus status) {
+    protected void setStatus(NodeStatus status) {
         this.status = status;
     }
 

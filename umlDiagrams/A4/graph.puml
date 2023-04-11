@@ -1,0 +1,139 @@
+@startuml
+
+title Pathfinder
+
+package Pathfinder {
+
+  package Exceptions {
+
+    class NegativeCycleExists {
+      +^NegativeCycleExists(String[])
+    }
+
+    class NoSuchNodeExists {
+      +^NoSuchNodeExists(String[])
+    }
+
+    class IdAlreadyExists {
+      +^IdAlreadyExists(String[])
+    }
+
+  }
+
+  class BellmanFord {
+    -Map<Node, Double> cost
+    -Map<Node, Node> path
+    -boolean negativeCycle
+    +^getShortestPath(GraphADT, Node, Node): List<Edge>
+    +^getShortestPaths(GraphADT, Node): Map<Node, List<Edge>>
+    +hasNegativeCycle(): boolean
+    -bellmanford(GraphADT, Node) throws NegativeCycleExists
+  }
+
+  class Dijkstra {
+    -Map<Node, Double> cost
+    -Map<Node, Node> path
+    +^getShortestPath(GraphADT, Node, Node): List<Edge>
+    +^getShortestPaths(GraphADT, Node): Map<Node, List<Edge>>
+  }
+
+  interface Pathfinder {
+    +getShortestPath(GraphADT, Node, Node): List<Edge>
+    +getShortestPaths(GraphADT, Node): Map<Node, List<Edge>>
+  }
+
+  class GraphADT {
+    -Map<Node, List<Edge>> adjacencyList
+    -boolean directed
+
+    +GraphADT(boolean)
+    +addNode(Integer) throws IdAlreadyExists
+    +removeNode(Integer)
+    +addEdge(Integer, Integer, Double, Integer) throws NoSuchNodeExists, IdAlreadyExists
+    +addEdge(Integer, Integer, Integer, Integer) throws NoSuchNodeExists, IdAlreadyExists
+    +removeEdge(Integer)
+    +getNode(Integer): Node
+    +getNodes(): List<Node>
+    +getEdges(): List<Edge>
+    #getAdjacencyList(): Map<Node, List<Edge>>
+  }
+
+  class Node {
+    -Integer id
+    -NodeStatus status
+    -List<Property> propertyList
+    -Double cost
+
+    #Node(Integer): this
+    +addProperty(Property property)
+    +extractProperty(String): Property
+    +getPropertyList(): List<Property>
+    +getId(): Integer
+    #setStatus(NodeStatus)
+    #getStatus(): NodeStatus
+    #setCost(Double)
+    #getCost(): Double
+  }
+
+  enum NodeStatus {
+      UNVISITED
+      VISITING
+      VISITED
+    }
+
+  class Edge {
+    -Integer id;
+    -Double weight;
+    -Node startNode;
+    -Node endNode;
+    -List<Property> propertyList
+
+    #Edge(Node, Node, Double, Integer)
+    +getId(): Integer
+    +getStartNode(): Node
+    +getEndNode(): Node
+    +getWeight(): Double
+    +addProperty(Property)
+    +extractProperty(String): Property
+    +getPropertyList(): List<Property>
+  }
+
+  class Property {
+    -String key
+    -String value
+
+    +{static} newBuilder(): PropertyBuilder
+    +getKey(): String
+    +getValue(): String
+  }
+
+  class PropertyBuilder {
+    -String key
+    -String value
+
+    +setKey(String): this
+    +setValue(String): this
+    +build(): Property
+  }
+
+}
+
+NoSuchNodeExists --|> Pathfinder.Exceptions.Exception
+NegativeCycleExists -down-|> Pathfinder.Exceptions.Exception
+IdAlreadyExists --|> Pathfinder.Exceptions.Exception
+
+BellmanFord .up.|> Pathfinder
+Dijkstra .up.|> Pathfinder
+BellmanFord -[hidden]-> Exceptions
+Pathfinder ..> GraphADT
+
+GraphADT ..> Exceptions
+GraphADT "1" o-- "*" Edge
+GraphADT "1" o-- "*" Node
+Node *-- NodeStatus
+PropertyBuilder .left. Property
+Node "1" o-- "*" Property
+Edge "1" o-- "*" Property
+
+
+@enduml

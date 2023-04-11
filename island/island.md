@@ -18,7 +18,10 @@ This is an island generator that works on already created meshes.
 
 ## Developer Information
 For PreFeatures, Features, and PostFeatures, the order of the feature fields in the Configuration class matters. 
-That is the order in which the Factories will be run within their respective subcategory. 
+That is the order in which the Factories will be run within their respective subcategory.
+
+### Cities
+To find the shortest path between two cities, euclidean distance was used.
 
 ## Whittaker Diagrams 
 
