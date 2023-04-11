@@ -1,0 +1,71 @@
+@startuml
+
+participant SpecificationFactory
+participant SoilFactory
+participant SoilProfile
+participant BiomeFactory
+participant DiagramProfile
+participant CityFactory
+participant CityGenerator
+participant Network
+participant RoadGenerator
+participant IslandToGraphAdapter
+participant VisualizerFactory
+participant Visualizer
+participant Pathfinder
+activate SpecificationFactory
+SpecificationFactory -> SoilFactory : run(island, config)
+activate SoilFactory
+SoilFactory -> SoilProfile : process(island)
+activate SoilProfile
+SoilProfile --> SoilFactory
+deactivate SoilProfile
+SoilFactory --> SpecificationFactory
+deactivate SoilFactory
+
+SpecificationFactory -> BiomeFactory : run(island, config)
+activate BiomeFactory
+BiomeFactory -> DiagramProfile : process(island)
+activate DiagramProfile
+DiagramProfile --> BiomeFactory
+deactivate DiagramProfile
+BiomeFactory --> SpecificationFactory
+deactivate BiomeFactory
+
+SpecificationFactory -> CityFactory : run(island, config)
+activate CityFactory
+CityFactory -> CityGenerator : process(island, numOfCities, network)
+activate CityGenerator
+CityGenerator -> Network : process(island, cities)
+activate Network
+Network -> RoadGenerator : getRoads(island, cities, centralHub)
+activate RoadGenerator
+RoadGenerator -> IslandToGraphAdapter : translate(centroids, borders)
+activate IslandToGraphAdapter
+IslandToGraphAdapter --> RoadGenerator : GraphADT
+deactivate IslandToGraphAdapter
+RoadGenerator -> Pathfinder : getShortestPaths(graph, node)
+activate Pathfinder
+Pathfinder --> RoadGenerator : Paths
+deactivate Pathfinder
+RoadGenerator --> Network
+deactivate RoadGenerator
+Network --> CityGenerator
+deactivate Network
+CityGenerator --> CityFactory
+deactivate CityGenerator
+CityFactory --> SpecificationFactory
+deactivate CityFactory
+
+SpecificationFactory -> VisualizerFactory : run(island, config)
+activate VisualizerFactory
+VisualizerFactory -> Visualizer : process(island)
+activate Visualizer
+Visualizer --> VisualizerFactory
+deactivate Visualizer
+VisualizerFactory --> SpecificationFactory
+deactivate VisualizerFactory
+
+deactivate SpecificationFactory
+
+@enduml

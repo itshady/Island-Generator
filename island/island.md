@@ -18,6 +18,18 @@ This is an island generator that works on already created meshes.
 | cities | cities | x | Integer | Number of cities on island |  |
 | network | network | x | String | Type of network to connect the cities: Star, NonStar |  |
 
+## Networks
+### Star Network
+StarNetwork is a way to connect all cities (capitols, villages, hamlets).
+* The most central city connects to all other cities via highways.
+* In other words, all cities go through the central one.
+
+### NonStar Network
+NonStarNetwork is a way to connect the cities via highways, secondary and tertiary roads.
+* The central hub connects only to other capitols via highways. (this still follows a star network)
+* The villages connect to the nearest capitol via secondary road.
+* The hamlets connect to the nearest 2 either hamlets or villages via tertiary roads.
+
 ## Developer Information
 For PreFeatures, Features, and PostFeatures, the order of the feature fields in the Configuration class matters. 
 That is the order in which the Factories will be run within their respective subcategory.

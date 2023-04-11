@@ -1,0 +1,77 @@
+@startuml
+
+participant SpecificationFactory
+participant SeedFactory
+participant Seed
+participant ShapeFactory
+participant Shape
+participant AltitudeFactory
+participant ElevationProfile
+participant AquiferFactory
+participant AquiferGenerator
+participant RiverFactory
+participant RiverGenerator
+participant LakeFactory
+participant LakeGenerator
+participant JTS
+
+SpecificationFactory -> SeedFactory : run(island, config)
+activate SpecificationFactory
+activate SeedFactory
+SeedFactory -> Seed : getInstance(config.SEED)
+activate Seed
+Seed --> SeedFactory
+deactivate Seed
+SeedFactory --> SpecificationFactory :
+deactivate SeedFactory
+
+SpecificationFactory -> ShapeFactory : run(island, config)
+activate ShapeFactory
+ShapeFactory -> Shape : process(island)
+activate Shape
+Shape -> JTS : intersects(Polygon)
+activate JTS
+JTS --> Shape : boolean
+deactivate JTS
+Shape --> ShapeFactory
+deactivate Shape
+ShapeFactory --> SpecificationFactory :
+deactivate ShapeFactory
+
+SpecificationFactory -> AltitudeFactory : run(island, config)
+activate AltitudeFactory
+AltitudeFactory -> ElevationProfile : process(island)
+activate ElevationProfile
+ElevationProfile --> AltitudeFactory
+deactivate ElevationProfile
+AltitudeFactory --> SpecificationFactory :
+deactivate AltitudeFactory
+
+SpecificationFactory -> AquiferFactory : run(island, config)
+activate AquiferFactory
+AquiferFactory -> AquiferGenerator : process(island, numOfAquifers)
+activate AquiferGenerator
+AquiferGenerator --> AquiferFactory
+deactivate AquiferGenerator
+AquiferFactory --> SpecificationFactory
+deactivate AquiferFactory
+
+SpecificationFactory -> RiverFactory : run(island, config)
+activate RiverFactory
+RiverFactory -> RiverGenerator : process(island, numOfRivers)
+activate RiverGenerator
+RiverGenerator --> RiverFactory
+deactivate RiverGenerator
+RiverFactory --> SpecificationFactory
+deactivate RiverFactory
+
+SpecificationFactory -> LakeFactory : run(island, config)
+activate LakeFactory
+LakeFactory -> LakeGenerator : process(island, numOfLakes)
+activate LakeGenerator
+LakeGenerator --> LakeFactory
+deactivate LakeGenerator
+LakeFactory --> SpecificationFactory
+deactivate LakeFactory
+
+@enduml
