@@ -35,6 +35,8 @@ Run the following commands in order:
 
 Check out [Island Documentation](island/island.md) to see all the configurations for Island generation via CLI.
 
+Check out [Pathfinder Documentation](pathfinder/pathfinder.md) to see the GraphADT and Pathfinder functionality.
+
 # Assignment A2 + A3: Mesh Generator (A2) + Island Generator (A3)
 
   - Hady Ibrahim #1 [ibrahh14@mcmaster.ca]
