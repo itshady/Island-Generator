@@ -36,7 +36,7 @@ public class ShapeFactory implements FeatureRunner {
         try {
             String value = config.export(Configuration.SHAPE);
             value = value != null ? value.toLowerCase() : null;
-            Class shapeClass = bindings.get(value);
+            Class shapeClass = bindings.getOrDefault(value, Circle.class);
             Shape shape = ((Shape) shapeClass.getDeclaredConstructor().newInstance());
             shape.process(island);
         } catch (Exception e) {

@@ -25,7 +25,7 @@ public class VisualizerFactory implements FeatureRunner {
         try {
             String value = config.export(Configuration.VISUAL);
             value = value != null ? value.toLowerCase() : null;
-            Class visualizerClass = bindings.get(value);
+            Class visualizerClass = bindings.getOrDefault(value, BiomeVisualizer.class);
             Visualizer visualizer = ((Visualizer) visualizerClass.getDeclaredConstructor().newInstance());
             visualizer.process(island);
         } catch (Exception e) {

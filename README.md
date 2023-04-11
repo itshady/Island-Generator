@@ -1,3 +1,33 @@
+# Assignment A4: Urbanism and Graphs
+
+  - Hady Ibrahim #1 [ibrahh14@mcmaster.ca]
+
+### Installation instructions
+
+First follow A2 and A3 installation instructions below.
+
+### Make Scenarios
+If you have make, run the following command in order:
+
+* To create the base mesh:
+  * `make run-irregular-relaxed`
+
+* To generate the island on top of the mesh
+  * `make island`
+
+This should generate a default implementation of the urbanism with the island generation.
+
+### Without Make
+Run the following commands in order:
+* To create the base mesh in a sample.mesh file
+  * `cd generator && java -jar generator.jar -m irregular -r 100 -p 1000 -o sample.mesh`
+* To generate the island with urbanism in a lagoon.mesh file
+  * `cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circLe -cities 40 -network nonstar -altitude mountain -aquifer 2 -lake 7 -river 5 -soil dry -biomes america`
+* To visualize the final mesh in sample.svg
+  * `cd visualizer && java -jar visualizer.jar -mesh ../island/lagoon.mesh -output sample.svg`
+
+Check out [Island Documentation](island/island.md) to see all the configurations for Island generation via CLI.
+
 # Assignment A2 + A3: Mesh Generator (A2) + Island Generator (A3)
 
   - Hady Ibrahim #1 [ibrahh14@mcmaster.ca]

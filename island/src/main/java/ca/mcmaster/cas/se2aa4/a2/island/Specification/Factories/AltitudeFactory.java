@@ -36,7 +36,7 @@ public class AltitudeFactory implements FeatureRunner {
         try {
             String value = config.export(Configuration.ALTITUDE);
             value = value != null ? value.toLowerCase() : null;
-            Class altitudeClass = bindings.get(value);
+            Class altitudeClass = bindings.getOrDefault(value, MountainProfile.class);
             ElevationProfile shape = ((ElevationProfile) altitudeClass.getDeclaredConstructor().newInstance());
             shape.process(island);
         } catch (Exception e) {

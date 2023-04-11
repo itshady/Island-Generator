@@ -41,7 +41,7 @@ public class CityFactory implements FeatureRunner {
 
             String networkInput = config.export(Configuration.NETWORK);
             networkInput = networkInput != null ? networkInput.toLowerCase() : null;
-            Class networkClass = bindings.get(networkInput);
+            Class networkClass = bindings.getOrDefault(networkInput, StarNetwork.class);
             Network network = ((Network) networkClass.getDeclaredConstructor().newInstance());
             CityGenerator city = new CityGenerator();
             city.process(island, numOfCities, network);

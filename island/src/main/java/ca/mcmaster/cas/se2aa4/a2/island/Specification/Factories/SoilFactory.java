@@ -34,7 +34,7 @@ public class SoilFactory implements FeatureRunner {
         try {
             String value = config.export(Configuration.SOIL);
             value = value != null ? value.toLowerCase() : null;
-            Class soilClass = bindings.get(value);
+            Class soilClass = bindings.getOrDefault(value, DryProfile.class);
             SoilProfile soil = ((SoilProfile) soilClass.getDeclaredConstructor().newInstance());
             soil.process(island);
         } catch (Exception e) {

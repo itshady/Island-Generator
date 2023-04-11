@@ -34,7 +34,7 @@ public class BiomeFactory implements FeatureRunner {
         try {
             String value = config.export(Configuration.BIOME);
             value = value != null ? value.toLowerCase() : null;
-            Class diagramClass = bindings.get(value);
+            Class diagramClass = bindings.getOrDefault(value, AmericaProfile.class);
             DiagramProfile diagram = ((DiagramProfile) diagramClass.getDeclaredConstructor().newInstance());
             diagram.process(island);
         } catch (Exception e) {
