@@ -7,11 +7,11 @@ island:
 	cd visualizer && java -jar visualizer.jar -mesh ../island/lagoon.mesh -output sample.svg
 
 island-urbanism-star:
-	cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circle -cities 40 -network star -altitude mountain -aquifer 2 -lake 7 -river 5 -soil dry -biomes america
+	cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circle -cities 40 -network star -seed 1680719757 -altitude mountain -aquifer 2 -lake 7 -river 5 -soil dry -biomes america
 	cd visualizer && java -jar visualizer.jar -mesh ../island/lagoon.mesh -output sample.svg
 
 island-urbanism-nonstar:
-	cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circle -cities 40 -network nonstar -altitude mountain -aquifer 2 -lake 7 -river 5 -soil dry -biomes america
+	cd island && java -jar island.jar -i ../generator/sample.mesh -o lagoon.mesh -shape circle -cities 40 -network nonstar -seed 1680719757 -altitude mountain -aquifer 2 -lake 7 -river 5 -soil dry -biomes america
 	cd visualizer && java -jar visualizer.jar -mesh ../island/lagoon.mesh -output sample.svg
 
 island-lagoon:

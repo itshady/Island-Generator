@@ -22,7 +22,7 @@ If you have make, run the following command in order:
 * NonStar Network
   * `make island-urbanism-nonstar`
 
-This should generate a default implementation of the urbanism with the island generation.
+This should generate a default implementation of the urbanism with the island generation, both using the same seed.
 
 ### Without Make
 Run the following commands in order:
