@@ -7,15 +7,15 @@ package Pathfinder {
   package Exceptions {
 
     class NegativeCycleExists {
-      +^NegativeCycleExists(String[])
+      +^NegativeCycleExists(String)
     }
 
     class NoSuchNodeExists {
-      +^NoSuchNodeExists(String[])
+      +^NoSuchNodeExists(String)
     }
 
     class IdAlreadyExists {
-      +^IdAlreadyExists(String[])
+      +^IdAlreadyExists(String)
     }
 
   }
@@ -35,6 +35,7 @@ package Pathfinder {
     -Map<Node, Node> path
     +^getShortestPath(GraphADT, Node, Node): List<Edge>
     +^getShortestPaths(GraphADT, Node): Map<Node, List<Edge>>
+    -dijkstras(GraphADT, Node)
   }
 
   interface Pathfinder {
