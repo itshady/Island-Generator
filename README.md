@@ -45,6 +45,12 @@ Check out [Pathfinder Documentation](pathfinder/pathfinder.md) to see the GraphA
 
 ## How to run the product
 
+### Prerequisites
+
+- Maven
+- Java
+- Make (optional, but helpful)
+
 ### Installation instructions
 
 This product is handled by Maven, as a multi-module project. We assume here that you have cloned the project in a directory named `A2`
