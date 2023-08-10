@@ -4,7 +4,7 @@
 
 ### Installation instructions
 
-First follow A2 and A3 installation instructions below.
+First follow [A2 and A3 installation instructions](#how-to-run-the-product) below.
 
 ### Make Scenarios
 If you have make, run the following command in order:
