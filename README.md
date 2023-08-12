@@ -1,3 +1,6 @@
+# Video Explanation of the Final Product
+
+
 # Assignment A4: Urbanism and Graphs
 
   - Hady Ibrahim #1 [ibrahh14@mcmaster.ca]
@@ -36,6 +39,10 @@ Run the following commands in order:
 Check out [Island Documentation](island/island.md) to see all the configurations for Island generation via CLI.
 
 Check out [Pathfinder Documentation](pathfinder/pathfinder.md) to see the GraphADT and Pathfinder functionality.
+
+### UML Diagram
+
+![UML Diagram for the Pathfinder](umlDiagrams/A4/graph.png)
 
 # Assignment A2 + A3: Mesh Generator (A2) + Island Generator (A3)
 
