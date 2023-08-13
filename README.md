@@ -1,4 +1,4 @@
-# Video Explanation of the Final Product
+# Video of the Final Product
 
 https://github.com/itshady/Island-Generator/assets/62480520/b8186bcd-8cb5-4293-bf83-491e7603d30a
 
